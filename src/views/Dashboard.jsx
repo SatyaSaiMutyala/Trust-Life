@@ -458,10 +458,9 @@ const Dashboard = (props) => {
                     locations={[0, 0.16]}
                     style={{ flex: 1 }}
                 >
-                <ScrollView showsVerticalScrollIndicator={false}>
-                        <View style={{
+                    <View style={{
                             paddingTop: ms(50),
-                            paddingBottom: ms(20),
+                            paddingBottom: ms(10),
                         }}>
                             <View
                                 style={{
@@ -584,55 +583,10 @@ const Dashboard = (props) => {
                                 />
                             </TouchableOpacity>
 
-                            {/* Top Service Cards */}
-                            <ScrollView
-                                horizontal
-                                showsHorizontalScrollIndicator={false}
-                                contentContainerStyle={{ paddingHorizontal: ms(15), paddingVertical: ms(5), flexGrow: 1, justifyContent: 'center' }}
-                            >
-                                <TouchableOpacity
-                                    style={{ marginHorizontal: ms(2) }}
-                                    onPress={() => navigateToTests('Home Lab')}
-                                >
-                                    <Image
-                                        source={require('../assets/img/top-lab.png')}
-                                        style={styles.topServiceImage}
-                                    />
-                                </TouchableOpacity>
+                    </View>
 
-                                <TouchableOpacity
-                                    style={{ marginHorizontal: ms(2) }}
-                                    onPress={() => showSnack('warning', 'Doctor Consultation is coming soon!')}
-                                >
-                                    <Image
-                                        source={require('../assets/img/top-doctor.png')}
-                                        style={styles.topServiceImage}
-                                    />
-                                </TouchableOpacity>
-
-                                <TouchableOpacity
-                                    style={{ marginHorizontal: ms(2) }}
-                                    onPress={() => showSnack('warning', 'Medicine booking is coming soon!')}
-                                >
-                                    <Image
-                                        source={require('../assets/img/top-medicienes.png')}
-                                        style={styles.topServiceImage}
-                                    />
-                                </TouchableOpacity>
-
-                                <TouchableOpacity
-                                    style={{ marginHorizontal: ms(2) }}
-                                    onPress={() => showSnack('warning', 'Ambulance is coming soon!')}
-                                >
-                                    <Image
-                                        source={require('../assets/img/ambulance.png')}
-                                        style={styles.topServiceImage}
-                                    />
-                                </TouchableOpacity>
-                            </ScrollView>
-                        </View>
-
-                    {/* <View style={{ marginTop: ms(-80) }}>
+                    <ScrollView showsVerticalScrollIndicator={false}>
+                        {/* <View style={{ marginTop: ms(-80) }}>
                         <ScrollView
                             horizontal={true}
                             showsHorizontalScrollIndicator={false}
@@ -642,8 +596,8 @@ const Dashboard = (props) => {
                         </ScrollView>
                     </View> */}
 
-                    {/* Track your Test Section */}
-                    {/* <View style={styles.trackSection}>
+                        {/* Track your Test Section */}
+                        {/* <View style={styles.trackSection}>
                         <TouchableOpacity
                             style={[styles.trackItem, { backgroundColor: '#FFEDD5' }]}
                             onPress={() => navigation.navigate('LabOrders')}
@@ -675,8 +629,8 @@ const Dashboard = (props) => {
                         </TouchableOpacity>
                     </View> */}
 
-                    {/* Recently Booked Tests */}
-                    {/* <View style={styles.recentTestsSection}>
+                        {/* Recently Booked Tests */}
+                        {/* <View style={styles.recentTestsSection}>
                         <Text style={styles.recentTestsHeading}>Recently Booked Tests</Text>
                         <ScrollView
                             horizontal
@@ -718,8 +672,8 @@ const Dashboard = (props) => {
                         </ScrollView>
                     </View> */}
 
-                    {/* Tests you need today to keep healthy */}
-                    {/* <View style={styles.needTestsSection}>
+                        {/* Tests you need today to keep healthy */}
+                        {/* <View style={styles.needTestsSection}>
                         <Text style={styles.needTestsHeading}>Tests you need today to keep healthy</Text>
                         <ScrollView
                             horizontal
@@ -780,8 +734,8 @@ const Dashboard = (props) => {
                         </ScrollView>
                     </View> */}
 
-                    {/* Recently Viewed Tests */}
-                    {/* <View style={styles.viewedTestsSection}>
+                        {/* Recently Viewed Tests */}
+                        {/* <View style={styles.viewedTestsSection}>
                         <Text style={styles.viewedTestsHeading}>Recently Viewed Tests</Text>
                         <ScrollView
                             horizontal
@@ -822,8 +776,8 @@ const Dashboard = (props) => {
                         </ScrollView>
                     </View> */}
 
-                    {/* Popular Blood Test for Section */}
-                    {/* <View style={styles.popularSection}>
+                        {/* Popular Blood Test for Section */}
+                        {/* <View style={styles.popularSection}>
                         <Text style={styles.popularHeading}>Popular Blood Test for</Text>
                         <View style={styles.popularGrid}>
                             {[
@@ -848,273 +802,292 @@ const Dashboard = (props) => {
                         </View>
                     </View> */}
 
-                    {/* Your Health Status Section */}
-                    <View style={styles.healthStatusSection}>
-                        <Text style={styles.healthStatusHeading}>Your Health Status</Text>
-                        <LinearGradient
-                            colors={['#3A9E91', '#5AB8AC', '#3A9E91']}
-                            start={{ x: 0, y: 0 }}
-                            end={{ x: 1, y: 1 }}
-                            style={styles.healthCard}
-                        >
-                            <View style={styles.healthCardContent}>
-                                {/* Left Side */}
-                                <View style={styles.healthCardLeft}>
-                                    <View style={styles.healthBadge}>
-                                        <Icon type={Icons.MaterialCommunityIcons} name="heart-pulse" size={ms(14)} color="#fff" />
-                                        <Text style={styles.healthBadgeText}>Vital Health Score</Text>
+                        {/* Your Health Status Section */}
+                        <View style={styles.healthStatusSection}>
+                            <Text style={styles.healthStatusHeading}>My Health Summary</Text>
+                            <LinearGradient
+                                colors={['#3A9E91', '#5AB8AC', '#3A9E91']}
+                                start={{ x: 0, y: 0 }}
+                                end={{ x: 1, y: 1 }}
+                                style={styles.healthCard}
+                            >
+                                <View style={styles.healthCardContent}>
+                                    {/* Left Side */}
+                                    <View style={styles.healthCardLeft}>
+                                        <View style={styles.healthBadge}>
+                                            <Icon type={Icons.MaterialCommunityIcons} name="heart-pulse" size={ms(14)} color="#fff" />
+                                            <Text style={styles.healthBadgeText}>Vital Health Score</Text>
+                                        </View>
+                                        <Text style={styles.healthGoodText}>Good</Text>
+                                        <Text style={styles.healthDescription}>
+                                            Based Your test Score will Change,Based Your test Score will Change
+                                        </Text>
+                                        <TouchableOpacity onPress={() => navigation.navigate('AnalysisCheck')} style={{ paddingVertical: ms(10), flexDirection: 'row' }}>
+                                            <Text style={{ paddingVertical: ms(10), paddingHorizontal: ms(10), backgroundColor: whiteColor, borderRadius: ms(20), fontSize: ms(10), fontWeight: 'bold', color: blackColor }}>Check Health Status</Text>
+                                        </TouchableOpacity>
                                     </View>
-                                    <Text style={styles.healthGoodText}>Good</Text>
-                                    <Text style={styles.healthDescription}>
-                                        Based Your test Score will Change,Based Your test Score will Change
-                                    </Text>
-                                    <TouchableOpacity onPress={() => navigation.navigate('AnalysisCheck')} style={{paddingVertical:ms(10), flexDirection:'row'}}>
-                                        <Text style={{paddingVertical:ms(10), paddingHorizontal:ms(10), backgroundColor:whiteColor, borderRadius:ms(20), fontSize:ms(10), fontWeight:'bold', color:blackColor}}>Check Health Status</Text>
-                                    </TouchableOpacity>
+
+                                    {/* Right Side - Gauge */}
+                                    <View style={styles.healthGaugeContainer}>
+                                        <Svg width={ms(120)} height={ms(85)} viewBox="0 0 150 105">
+                                            <Defs>
+                                                <SvgLinearGradient id="gaugeGrad" x1="0" y1="0" x2="1" y2="0">
+                                                    <Stop offset="0" stopColor="#F44336" />
+                                                    <Stop offset="0.2" stopColor="#FF9800" />
+                                                    <Stop offset="0.4" stopColor="#FFC107" />
+                                                    <Stop offset="0.6" stopColor="#8BC34A" />
+                                                    <Stop offset="1" stopColor="#4CAF50" />
+                                                </SvgLinearGradient>
+                                            </Defs>
+                                            {/* Background arc track */}
+                                            <Path
+                                                d="M 15 88 A 60 60 0 0 1 135 88"
+                                                fill="none"
+                                                stroke="rgba(255,255,255,0.15)"
+                                                strokeWidth="12"
+                                                strokeLinecap="round"
+                                            />
+                                            {/* Colored gradient arc */}
+                                            <Path
+                                                d="M 15 88 A 60 60 0 0 1 135 88"
+                                                fill="none"
+                                                stroke="url(#gaugeGrad)"
+                                                strokeWidth="12"
+                                                strokeLinecap="round"
+                                            />
+                                            {/* White inner circle background */}
+                                            <Circle cx="75" cy="88" r="38" fill="rgba(255,255,255,0.15)" />
+                                            {/* Needle pointing at 87% (angle ~23.4° from right) */}
+                                            <Line
+                                                x1="75"
+                                                y1="88"
+                                                x2="110"
+                                                y2="70"
+                                                stroke="#fff"
+                                                strokeWidth="2"
+                                                strokeLinecap="round"
+                                            />
+                                            {/* Needle center dot */}
+                                            <Circle cx="75" cy="88" r="4" fill="#fff" />
+                                            {/* Score number */}
+                                            <SvgText x="75" y="78" textAnchor="middle" fontSize="32" fontWeight="bold" fill="#fff">87</SvgText>
+                                            {/* 0 and 100 labels */}
+                                            <SvgText x="18" y="103" textAnchor="middle" fontSize="12" fill="rgba(255,255,255,0.6)">0</SvgText>
+                                            <SvgText x="132" y="103" textAnchor="middle" fontSize="12" fill="rgba(255,255,255,0.6)">100</SvgText>
+                                        </Svg>
+                                    </View>
                                 </View>
-
-                                {/* Right Side - Gauge */}
-                                <View style={styles.healthGaugeContainer}>
-                                    <Svg width={ms(120)} height={ms(85)} viewBox="0 0 150 105">
-                                        <Defs>
-                                            <SvgLinearGradient id="gaugeGrad" x1="0" y1="0" x2="1" y2="0">
-                                                <Stop offset="0" stopColor="#F44336" />
-                                                <Stop offset="0.2" stopColor="#FF9800" />
-                                                <Stop offset="0.4" stopColor="#FFC107" />
-                                                <Stop offset="0.6" stopColor="#8BC34A" />
-                                                <Stop offset="1" stopColor="#4CAF50" />
-                                            </SvgLinearGradient>
-                                        </Defs>
-                                        {/* Background arc track */}
-                                        <Path
-                                            d="M 15 88 A 60 60 0 0 1 135 88"
-                                            fill="none"
-                                            stroke="rgba(255,255,255,0.15)"
-                                            strokeWidth="12"
-                                            strokeLinecap="round"
-                                        />
-                                        {/* Colored gradient arc */}
-                                        <Path
-                                            d="M 15 88 A 60 60 0 0 1 135 88"
-                                            fill="none"
-                                            stroke="url(#gaugeGrad)"
-                                            strokeWidth="12"
-                                            strokeLinecap="round"
-                                        />
-                                        {/* White inner circle background */}
-                                        <Circle cx="75" cy="88" r="38" fill="rgba(255,255,255,0.15)" />
-                                        {/* Needle pointing at 87% (angle ~23.4° from right) */}
-                                        <Line
-                                            x1="75"
-                                            y1="88"
-                                            x2="110"
-                                            y2="70"
-                                            stroke="#fff"
-                                            strokeWidth="2"
-                                            strokeLinecap="round"
-                                        />
-                                        {/* Needle center dot */}
-                                        <Circle cx="75" cy="88" r="4" fill="#fff" />
-                                        {/* Score number */}
-                                        <SvgText x="75" y="78" textAnchor="middle" fontSize="32" fontWeight="bold" fill="#fff">87</SvgText>
-                                        {/* 0 and 100 labels */}
-                                        <SvgText x="18" y="103" textAnchor="middle" fontSize="12" fill="rgba(255,255,255,0.6)">0</SvgText>
-                                        <SvgText x="132" y="103" textAnchor="middle" fontSize="12" fill="rgba(255,255,255,0.6)">100</SvgText>
-                                    </Svg>
-                                </View>
-                            </View>
-                        </LinearGradient>
-                    </View>
-
-                    {/* Track your Health journey */}
-                    <View style={styles.healthJourneySection}>
-                        <Text style={styles.healthJourneyHeading}>Track your Health journey</Text>
-                        <View style={styles.healthJourneyGrid}>
-                            <TouchableOpacity
-                                style={styles.healthJourneyCard}
-                                onPress={() => navigation.navigate('HealthTrend', { type: 'sleep' })}
-                            >
-                                <LinearGradient
-                                    colors={['#E2FFFB7D', '#208A7B']}
-                                    start={{ x: 0, y: 0 }}
-                                    end={{ x: 0, y: 1 }}
-                                    locations={[0, 18]}
-                                    style={styles.healthJourneyGradient}
-                                >
-                                    <View style={styles.healthJourneyImageWrap}>
-                                        <Image source={require('../assets/img/sleep-track.png')} style={styles.healthJourneyImage} />
-                                    </View>
-                                    <View style={styles.healthJourneyTextWrap}>
-                                        <Text style={styles.healthJourneyTitle}>Sleep Tracking</Text>
-                                        <Text style={styles.healthJourneySub}>Manage your Sleep through your app</Text>
-                                    </View>
-                                </LinearGradient>
-                            </TouchableOpacity>
-
-                            <TouchableOpacity
-                                style={styles.healthJourneyCard}
-                                onPress={() => navigation.navigate('HealthTrend', { type: 'exercise' })}
-                            >
-                                <LinearGradient
-                                    colors={['#E2FFFB7D', '#208A7B']}
-                                    start={{ x: 0, y: 0 }}
-                                    end={{ x: 0, y: 1 }}
-                                    locations={[0, 18]}
-                                    style={styles.healthJourneyGradient}
-                                >
-                                    <View style={styles.healthJourneyImageWrap}>
-                                        <Image source={require('../assets/img/exercise-track.png')} style={styles.healthJourneyImage} />
-                                    </View>
-                                    <View style={styles.healthJourneyTextWrap}>
-                                        <Text style={styles.healthJourneyTitle}>Exercise Tracking</Text>
-                                        <Text style={styles.healthJourneySub}>Manage your Sleep through your app</Text>
-                                    </View>
-                                </LinearGradient>
-                            </TouchableOpacity>
-
-                            <TouchableOpacity
-                                style={styles.healthJourneyCard}
-                                onPress={() => navigation.navigate('HealthTrend', { type: 'food' })}
-                            >
-                                <LinearGradient
-                                    colors={['#E2FFFB7D', '#208A7B']}
-                                    start={{ x: 0, y: 0 }}
-                                    end={{ x: 0, y: 1 }}
-                                    locations={[0, 18]}
-                                    style={styles.healthJourneyGradient}
-                                >
-                                    <View style={styles.healthJourneyImageWrap}>
-                                        <Image source={require('../assets/img/food-track.png')} style={styles.healthJourneyImage} />
-                                    </View>
-                                    <View style={styles.healthJourneyTextWrap}>
-                                        <Text style={styles.healthJourneyTitle}>Food Tracking</Text>
-                                        <Text style={styles.healthJourneySub}>Manage your Sleep through your app</Text>
-                                    </View>
-                                </LinearGradient>
-                            </TouchableOpacity>
-
-                            <TouchableOpacity
-                                style={styles.healthJourneyCard}
-                                onPress={() => navigation.navigate('HealthTrend', { type: 'medication' })}
-                            >
-                                <LinearGradient
-                                    colors={['#E2FFFB7D', '#208A7B']}
-                                    start={{ x: 0, y: 0 }}
-                                    end={{ x: 0, y: 1 }}
-                                    locations={[0, 18]}
-                                    style={styles.healthJourneyGradient}
-                                >
-                                    <View style={styles.healthJourneyImageWrap}>
-                                        <Image source={require('../assets/img/medical-track.png')} style={styles.healthJourneyImage} />
-                                    </View>
-                                    <View style={styles.healthJourneyTextWrap}>
-                                        <Text style={styles.healthJourneyTitle}>Medication Tracking</Text>
-                                        <Text style={styles.healthJourneySub}>Manage your Sleep through your app</Text>
-                                    </View>
-                                </LinearGradient>
-                            </TouchableOpacity>
+                            </LinearGradient>
                         </View>
-                    </View>
 
-                    {/* Medical Log Book */}
-                    <View style={styles.medicalLogSection}>
-                        <Text style={styles.medicalLogHeading}>Medical Log Book</Text>
-                        <View style={styles.medicalLogGrid}>
-                            {[
-                                { name: 'Heart Rate', image: require('../assets/img/heartRate.png'), route: 'HeartRateLog' },
-                                { name: 'Blood Pressure', image: require('../assets/img/blood_pressure.png'), route: 'BloodPressureLog' },
-                                { name: 'Glucose', image: require('../assets/img/glucose.png'), route: 'GlucoseLog' },
-                                { name: 'Temperature', image: require('../assets/img/temprature.png'), route: 'TemperatureLog' },
-                                { name: 'Menstrual Cycle', image: require('../assets/img/menstrualcycle.png'), route: 'MenstrualCycleLog' },
-                                { name: 'Weight Management', image: require('../assets/img/weightmanagement.png'), route: 'WeightLog' },
-                                { name: 'Vaccination', image: require('../assets/img/Vaccination.png'), route: 'VaccinationLog' },
-                            ].map((item, index) => (
+                        {/* Track your Health journey */}
+                        <View style={styles.healthJourneySection}>
+                            <Text style={styles.healthJourneyHeading}>My Health journey</Text>
+                            <View style={styles.healthJourneyGrid}>
                                 <TouchableOpacity
-                                    key={index}
-                                    style={styles.medicalLogCard}
-                                    onPress={() => {
-                                        if (item.route === 'HeartRateLog') {
-                                            navigation.navigate('HeartRateLog');
-                                        } else if (item.route === 'BloodPressureLog') {
-                                            navigation.navigate('BloodPressureLog');
-                                        } else if (item.route === 'GlucoseLog') {
-                                            navigation.navigate('GlucoseLog');
-                                        } else if (item.route === 'TemperatureLog') {
-                                            navigation.navigate('TemperatureLog');
-                                        } else if (item.route === 'MenstrualCycleLog') {
-                                            navigation.navigate('MenstrualCycleLog');
-                                            navigation.navigate('TemperatureLog');
-                                        } else if (item.route === 'WeightLog') {
-                                            navigation.navigate('WeightManagementLog');
-                                        } else if (item.route === 'VaccinationLog') {
-                                            navigation.navigate('VaccinationLog');
-                                        } else {
-                                            showSnack('warning', `${item.name} log coming soon!`);
-                                        }
-                                    }}
-                                    activeOpacity={0.7}
+                                    style={styles.healthJourneyCard}
+                                    onPress={() => navigation.navigate('HealthTrend', { type: 'sleep' })}
                                 >
-                                    <View style={styles.medicalLogImageWrap}>
-                                        {item.image ? (
-                                            <Image source={item.image} style={styles.medicalLogImage} />
-                                        ) : (
-                                            <Icon type={Icons.MaterialCommunityIcons} name="needle" size={ms(40)} color={primaryColor} />
-                                        )}
-                                    </View>
-                                    <Text style={styles.medicalLogText} numberOfLines={2}>{item.name}</Text>
+                                    <LinearGradient
+                                        colors={['#E2FFFB7D', '#208A7B']}
+                                        start={{ x: 0, y: 0 }}
+                                        end={{ x: 0, y: 1 }}
+                                        locations={[0, 18]}
+                                        style={styles.healthJourneyGradient}
+                                    >
+                                        <View style={styles.healthJourneyImageWrap}>
+                                            <Image source={require('../assets/img/sleep-track.png')} style={styles.healthJourneyImage} />
+                                        </View>
+                                        <View style={styles.healthJourneyTextWrap}>
+                                            <Text style={styles.healthJourneyTitle}>Sleep Tracking</Text>
+                                            <Text style={styles.healthJourneySub}>Manage your Sleep through your app</Text>
+                                        </View>
+                                    </LinearGradient>
                                 </TouchableOpacity>
-                            ))}
+
+                                <TouchableOpacity
+                                    style={styles.healthJourneyCard}
+                                    onPress={() => navigation.navigate('HealthTrend', { type: 'exercise' })}
+                                >
+                                    <LinearGradient
+                                        colors={['#E2FFFB7D', '#208A7B']}
+                                        start={{ x: 0, y: 0 }}
+                                        end={{ x: 0, y: 1 }}
+                                        locations={[0, 18]}
+                                        style={styles.healthJourneyGradient}
+                                    >
+                                        <View style={styles.healthJourneyImageWrap}>
+                                            <Image source={require('../assets/img/exercise-track.png')} style={styles.healthJourneyImage} />
+                                        </View>
+                                        <View style={styles.healthJourneyTextWrap}>
+                                            <Text style={styles.healthJourneyTitle}>Exercise Tracking</Text>
+                                            <Text style={styles.healthJourneySub}>Manage your Sleep through your app</Text>
+                                        </View>
+                                    </LinearGradient>
+                                </TouchableOpacity>
+
+                                <TouchableOpacity
+                                    style={styles.healthJourneyCard}
+                                    onPress={() => navigation.navigate('HealthTrend', { type: 'food' })}
+                                >
+                                    <LinearGradient
+                                        colors={['#E2FFFB7D', '#208A7B']}
+                                        start={{ x: 0, y: 0 }}
+                                        end={{ x: 0, y: 1 }}
+                                        locations={[0, 18]}
+                                        style={styles.healthJourneyGradient}
+                                    >
+                                        <View style={styles.healthJourneyImageWrap}>
+                                            <Image source={require('../assets/img/food-track.png')} style={styles.healthJourneyImage} />
+                                        </View>
+                                        <View style={styles.healthJourneyTextWrap}>
+                                            <Text style={styles.healthJourneyTitle}>Food Tracking</Text>
+                                            <Text style={styles.healthJourneySub}>Manage your Sleep through your app</Text>
+                                        </View>
+                                    </LinearGradient>
+                                </TouchableOpacity>
+
+                                <TouchableOpacity
+                                    style={styles.healthJourneyCard}
+                                    onPress={() => navigation.navigate('MedicationTracking')}
+                                >
+                                    <LinearGradient
+                                        colors={['#E2FFFB7D', '#208A7B']}
+                                        start={{ x: 0, y: 0 }}
+                                        end={{ x: 0, y: 1 }}
+                                        locations={[0, 18]}
+                                        style={styles.healthJourneyGradient}
+                                    >
+                                        <View style={styles.healthJourneyImageWrap}>
+                                            <Image source={require('../assets/img/medical-track.png')} style={styles.healthJourneyImage} />
+                                        </View>
+                                        <View style={styles.healthJourneyTextWrap}>
+                                            <Text style={styles.healthJourneyTitle}>Medication Tracking</Text>
+                                            <Text style={styles.healthJourneySub}>Manage your Sleep through your app</Text>
+                                        </View>
+                                    </LinearGradient>
+                                </TouchableOpacity>
+                            </View>
                         </View>
-                    </View>
 
-                    {/* What members say */}
-                    <View style={styles.membersSaySection}>
-                        <Text style={styles.membersSayHeading}>What Members Say</Text>
-                        <ScrollView
-                            horizontal
-                            showsHorizontalScrollIndicator={false}
-                            contentContainerStyle={{ paddingHorizontal: ms(5) }}
-                        >
-                            {[
-                                { name: 'Rajesh', rating: '4.5', review: 'Good experience, on time report Delivered , Great experience...' },
-                                { name: 'Raghu', rating: '4.5', review: 'Good experience, on time report Delivered , Great experience...' },
-                                { name: 'Vikram', rating: '4.5', review: 'Good experience, on time report Delivered , Great experience...' },
-                            ].map((item, index) => (
-                                <View key={index} style={styles.memberCard}>
-                                    <View style={styles.memberCardTop}>
-                                        <View style={styles.memberAvatar}>
-                                            <Icon type={Icons.MaterialIcons} name="person" size={ms(22)} color={grayColor} />
+                        {/* Medical Log Book */}
+                        <View style={styles.medicalLogSection}>
+                            <Text style={styles.medicalLogHeading}>My Health Monitoring</Text>
+                            <View style={styles.medicalLogGrid}>
+                                {[
+                                    { name: 'Heart Rate', image: require('../assets/img/heartRate.png'), route: 'HeartRateLog' },
+                                    { name: 'Blood Pressure', image: require('../assets/img/blood_pressure.png'), route: 'BloodPressureLog' },
+                                    { name: 'Glucose', image: require('../assets/img/glucose.png'), route: 'GlucoseLog' },
+                                    { name: 'Temperature', image: require('../assets/img/temprature.png'), route: 'TemperatureLog' },
+                                    { name: 'Menstrual Cycle', image: require('../assets/img/menstrualcycle.png'), route: 'MenstrualCycleLog' },
+                                    { name: 'Weight Management', image: require('../assets/img/weightmanagement.png'), route: 'WeightLog' },
+                                    { name: 'Vaccination', image: require('../assets/img/Vaccination.png'), route: 'VaccinationLog' },
+                                    { name: 'Migraine', image: require('../assets/img/migraine.png'), route: 'MigraineLog' },
+                                ].map((item, index) => (
+                                    <TouchableOpacity
+                                        key={index}
+                                        style={styles.medicalLogCard}
+                                        onPress={() => {
+                                            if (item.route === 'HeartRateLog') {
+                                                navigation.navigate('HeartRateLog');
+                                            } else if (item.route === 'BloodPressureLog') {
+                                                navigation.navigate('BloodPressureLog');
+                                            } else if (item.route === 'GlucoseLog') {
+                                                navigation.navigate('GlucoseLog');
+                                            } else if (item.route === 'TemperatureLog') {
+                                                navigation.navigate('TemperatureLog');
+                                            } else if (item.route === 'MenstrualCycleLog') {
+                                                navigation.navigate('MenstrualCycleLog');
+                                            } else if (item.route === 'WeightLog') {
+                                                navigation.navigate('WeightManagementLog');
+                                            } else if (item.route === 'VaccinationLog') {
+                                                navigation.navigate('VaccinationLog');
+                                            } else if (item.route === 'MigraineLog') {
+                                                navigation.navigate('MigraineLog');
+                                            } else {
+                                                showSnack('warning', `${item.name} log coming soon!`);
+                                            }
+                                        }}
+                                        activeOpacity={0.7}
+                                    >
+                                        <View style={styles.medicalLogImageWrap}>
+                                            {item.image ? (
+                                                <Image source={item.image} style={styles.medicalLogImage} />
+                                            ) : (
+                                                <Icon type={Icons.MaterialCommunityIcons} name="needle" size={ms(40)} color={primaryColor} />
+                                            )}
                                         </View>
-                                        <Text style={styles.memberName}>{item.name}</Text>
-                                        <View style={styles.memberRatingBadge}>
-                                            <Icon type={Icons.AntDesign} name="star" size={ms(10)} color="#fff" />
-                                            <Text style={styles.memberRatingText}>{item.rating}</Text>
+                                        <Text style={styles.medicalLogText} numberOfLines={2}>{item.name}</Text>
+                                    </TouchableOpacity>
+                                ))}
+                            </View>
+                        </View>
+
+
+                        {/* Top Service Cards */}
+                        <View style={styles.healthServiceSection}>
+                            <Text style={styles.healthServiceHeading}>My Health Service</Text>
+                            <View style={styles.healthServiceGrid}>
+                                {[
+                                    { image: require('../assets/img/top-lab.png'), onPress: () => navigateToTests('Home Lab') },
+                                    { image: require('../assets/img/top-doctor.png'), onPress: () => showSnack('warning', 'Doctor Consultation is coming soon!') },
+                                    { image: require('../assets/img/top-medicienes.png'), onPress: () => showSnack('warning', 'Medicine booking is coming soon!') },
+                                    { image: require('../assets/img/ambulance.png'), onPress: () => showSnack('warning', 'Ambulance is coming soon!') },
+                                ].map((item, index) => (
+                                    <TouchableOpacity key={index} onPress={item.onPress}>
+                                        <Image source={item.image} style={styles.topServiceImage} />
+                                    </TouchableOpacity>
+                                ))}
+                            </View>
+                        </View>
+                        {/* What members say */}
+                        <View style={styles.membersSaySection}>
+                            <Text style={styles.membersSayHeading}>What Members Say</Text>
+                            <ScrollView
+                                horizontal
+                                showsHorizontalScrollIndicator={false}
+                                contentContainerStyle={{ paddingHorizontal: ms(5) }}
+                            >
+                                {[
+                                    { name: 'Rajesh', rating: '4.5', review: 'Good experience, on time report Delivered , Great experience...' },
+                                    { name: 'Raghu', rating: '4.5', review: 'Good experience, on time report Delivered , Great experience...' },
+                                    { name: 'Vikram', rating: '4.5', review: 'Good experience, on time report Delivered , Great experience...' },
+                                ].map((item, index) => (
+                                    <View key={index} style={styles.memberCard}>
+                                        <View style={styles.memberCardTop}>
+                                            <View style={styles.memberAvatar}>
+                                                <Icon type={Icons.MaterialIcons} name="person" size={ms(22)} color={grayColor} />
+                                            </View>
+                                            <Text style={styles.memberName}>{item.name}</Text>
+                                            <View style={styles.memberRatingBadge}>
+                                                <Icon type={Icons.AntDesign} name="star" size={ms(10)} color="#fff" />
+                                                <Text style={styles.memberRatingText}>{item.rating}</Text>
+                                            </View>
                                         </View>
+                                        <Text style={styles.memberReview} numberOfLines={3}>{item.review}</Text>
                                     </View>
-                                    <Text style={styles.memberReview} numberOfLines={3}>{item.review}</Text>
-                                </View>
-                            ))}
-                        </ScrollView>
-                    </View>
+                                ))}
+                            </ScrollView>
+                        </View>
 
-                    {/* <View>
+                        {/* <View>
                         {testCategory()}
                     </View> */}
 
-                    {/* <View>
+                        {/* <View>
                         <TopServiceComponent />
                     </View> */}
 
-                    {/* <View style={{ margin: 5 }} />
+                        {/* <View style={{ margin: 5 }} />
                     <View>
                         <HealthChecksGrid />
                     </View> */}
 
-                    <View style={{ margin: 10 }} />
-                    <View>
-                        <FooterComponent />
-                    </View>
-                </ScrollView>
+                        <View style={{ margin: 10 }} />
+                        <View>
+                            <FooterComponent />
+                        </View>
+                    </ScrollView>
                 </LinearGradient>
             )}
 
@@ -1212,6 +1185,25 @@ const styles = StyleSheet.create({
         fontSize: ms(16),
         color: '#000',
         paddingVertical: 0,
+    },
+    healthServiceSection: {
+        marginHorizontal: ms(15),
+        backgroundColor: '#F1F5F9',
+        borderRadius: ms(15),
+        paddingVertical: ms(20),
+    },
+    healthServiceHeading: {
+        fontSize: ms(16),
+        fontWeight: '600',
+        marginBottom: ms(10),
+        textAlign: 'center',
+        color: blackColor,
+    },
+    healthServiceGrid: {
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+        paddingVertical: ms(5),
     },
     topServiceCard: {
         // backgroundColor: whiteColor,
@@ -1574,8 +1566,11 @@ const styles = StyleSheet.create({
 
     // Health Status Section
     healthStatusSection: {
-        paddingHorizontal: ms(15),
-        marginTop: ms(10),
+        marginHorizontal: ms(15),
+        backgroundColor: '#F1F5F9',
+        borderRadius: ms(15),
+        paddingVertical: ms(15),
+        paddingHorizontal: ms(10),
         marginBottom: ms(10),
     },
     healthStatusHeading: {
@@ -1588,8 +1583,6 @@ const styles = StyleSheet.create({
     healthCard: {
         borderRadius: ms(16),
         padding: ms(18),
-        borderWidth: 1.5,
-        borderColor: 'rgba(255,255,255,0.35)',
     },
     healthCardContent: {
         flexDirection: 'row',
@@ -1633,7 +1626,11 @@ const styles = StyleSheet.create({
 
     // Track your Health journey
     healthJourneySection: {
-        paddingHorizontal: ms(15),
+        marginHorizontal: ms(15),
+        backgroundColor: '#F1F5F9',
+        borderRadius: ms(15),
+        paddingVertical: ms(15),
+        paddingHorizontal: ms(10),
         marginTop: ms(15),
         marginBottom: ms(10),
     },
@@ -1651,7 +1648,7 @@ const styles = StyleSheet.create({
         gap: ms(15),
     },
     healthJourneyCard: {
-        width: (width - ms(50)) / 2,
+        width: (width - ms(65)) / 2,
         borderTopLeftRadius: ms(50),
         borderTopRightRadius: ms(50),
         borderBottomRightRadius: ms(10),
@@ -1695,7 +1692,10 @@ const styles = StyleSheet.create({
 
     // Medical Log Book
     medicalLogSection: {
-        paddingHorizontal: ms(15),
+        marginHorizontal: ms(15),
+        backgroundColor: '#F1F5F9',
+        borderRadius: ms(15),
+        paddingVertical: ms(15),
         marginTop: ms(15),
         marginBottom: ms(10),
     },
@@ -1704,6 +1704,7 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         color: '#000',
         marginBottom: ms(15),
+        textAlign:'center'
     },
     medicalLogGrid: {
         flexDirection: 'row',
@@ -1743,8 +1744,8 @@ const styles = StyleSheet.create({
     membersSaySection: {
         marginTop: ms(15),
         marginBottom: ms(10),
-        marginHorizontal:ms(15),
-        paddingVertical:ms(5)
+        marginHorizontal: ms(15),
+        paddingVertical: ms(5)
     },
     membersSayHeading: {
         fontSize: ms(16),

@@ -32,10 +32,6 @@ const TestSearchResultsScreen = () => {
   const [profilePic, setProfilePic] = useState(null);
   const [locationModal, setLocationModal] = useState(false);
   const [savedLocation, setSavedLocation] = useState(null);
-  const [activeFilters, setActiveFilters] = useState([]);
-
-  const filterChips = ['Men', 'women', 'Kids'];
-
   useEffect(() => {
     loadSavedLocation();
   }, []);
@@ -146,14 +142,17 @@ const TestSearchResultsScreen = () => {
       <View style={styles.cardBody}>
         {/* Left Section */}
         <View style={styles.cardLeft}>
-          <Text style={styles.cardTestName}>
-            Glycosylated Haemoglobin{'\n'}(GHb/HbA1c)
-          </Text>
+          {/* Lab Logo */}
+          <View style={styles.cardLogoContainer}>
+            <Image source={item.logo} style={styles.cardLogo} resizeMode="contain" />
+          </View>
+
+          {/* Pricing Row */}
           <View style={styles.cardPricing}>
             <View style={styles.cardPricingLabels}>
               <Text style={styles.cardPriceLabel}>MRP</Text>
               <Text style={styles.cardPriceLabel}>Discount</Text>
-              <Text style={styles.cardPriceLabel}>{'Net\nAmount'}</Text>
+              <Text style={styles.cardPriceLabel}>Net Amount</Text>
             </View>
             <View style={styles.cardPricingValues}>
               <Text style={styles.cardMrp}>₹{item.mrp}</Text>
@@ -268,7 +267,7 @@ const TestSearchResultsScreen = () => {
             </View>
           </View>
 
-          {/* Search Bar - Active with test name */}
+          {/* Search Bar */}
           <TouchableOpacity
             style={styles.searchContainer}
             onPress={() => {}}
@@ -284,7 +283,7 @@ const TestSearchResultsScreen = () => {
               pointerEvents="none"
             />
             <TouchableOpacity onPress={() => navigation.goBack()}>
-              <Icon type={Icons.Ionicons} name="close" color="#999" size={ms(20)} />
+              <Icon type={Icons.Ionicons} name="close-circle" size={ms(20)} color="#999" />
             </TouchableOpacity>
           </TouchableOpacity>
         </View>
@@ -307,39 +306,17 @@ const TestSearchResultsScreen = () => {
               </View>
             )}
 
-            {/* Filter Chips */}
-            <ScrollView
-              horizontal
-              showsHorizontalScrollIndicator={false}
-              style={styles.filterScrollView}
-              contentContainerStyle={styles.filterScrollContent}
-            >
-              <TouchableOpacity
-                style={[styles.filterChip, activeFilters.length > 0 && styles.filterChipActive]}
-                onPress={() => navigation.navigate('LabFilterScreen')}
-              >
-                <Icon type={Icons.Ionicons} name="options-outline" size={ms(16)} color={activeFilters.length > 0 ? whiteColor : blackColor} />
-                <Text style={[styles.filterChipText, activeFilters.length > 0 && styles.filterChipTextActive]}>Filters</Text>
-                {activeFilters.length > 0 && (
-                  <TouchableOpacity onPress={() => setActiveFilters([])}>
-                    <Icon type={Icons.Ionicons} name="close-circle" size={ms(16)} color={whiteColor} />
-                  </TouchableOpacity>
-                )}
-              </TouchableOpacity>
-              {filterChips.map((chip, index) => (
-                <TouchableOpacity
-                  key={index}
-                  style={[styles.filterChip, activeFilters.includes(chip) && styles.filterChipActive]}
-                  onPress={() => {
-                    setActiveFilters(prev =>
-                      prev.includes(chip) ? prev.filter(f => f !== chip) : [...prev, chip]
-                    );
-                  }}
-                >
-                  <Text style={[styles.filterChipText, activeFilters.includes(chip) && styles.filterChipTextActive]}>{chip}</Text>
-                </TouchableOpacity>
-              ))}
-            </ScrollView>
+            {/* Description Card */}
+            <View style={styles.descriptionCard}>
+              <Text style={styles.descriptionTitle}>{testData.testName}</Text>
+              <Text style={styles.descriptionText}>
+                {testData.description}
+                <Text style={styles.viewMoreText}> view more</Text>
+              </Text>
+            </View>
+
+            {/* Test Providing Lab Title */}
+            <Text style={styles.sectionTitle}>Test  Providing lab</Text>
 
             {/* Lab Cards List */}
             <View style={styles.labCardsContainer}>
@@ -522,41 +499,41 @@ const styles = StyleSheet.create({
     width: ms(120),
     height: ms(60),
   },
-  filterScrollView: {
-    marginBottom: ms(15),
-  },
-  filterScrollContent: {
-    gap: ms(8),
-    paddingRight: ms(10),
-  },
-  filterChip: {
-    flexDirection: 'row',
-    alignItems: 'center',
+  descriptionCard: {
     backgroundColor: whiteColor,
-    borderRadius: ms(20),
-    paddingHorizontal: ms(14),
-    paddingVertical: vs(8),
-    gap: ms(6),
+    borderRadius: ms(16),
+    padding: ms(16),
+    marginBottom: ms(20),
     borderWidth: 1,
-    borderColor: '#E0E0E0',
+    borderColor: '#E5E7EB',
   },
-  filterChipActive: {
-    backgroundColor: primaryColor,
-    borderColor: primaryColor,
-  },
-  filterChipText: {
-    fontSize: ms(13),
-    fontWeight: '500',
+  descriptionTitle: {
+    fontSize: ms(14),
+    fontWeight: 'bold',
     color: blackColor,
+    textAlign: 'center',
+    marginBottom: vs(10),
   },
-  filterChipTextActive: {
-    color: whiteColor,
+  descriptionText: {
+    fontSize: ms(12),
+    color: '#888',
+    lineHeight: ms(19),
+  },
+  viewMoreText: {
+    color: primaryColor,
+    fontWeight: '600',
+  },
+  sectionTitle: {
+    fontSize: ms(16),
+    fontWeight: 'bold',
+    color: blackColor,
+    marginBottom: ms(15),
   },
   labCardsContainer: {
     gap: ms(12),
   },
 
-  // Updated Lab Card - Two Column Layout
+  // Lab Card
   labCard: {
     backgroundColor: '#F1F5F9',
     borderRadius: ms(12),
@@ -570,12 +547,15 @@ const styles = StyleSheet.create({
     padding: ms(14),
     justifyContent: 'space-between',
   },
-  cardTestName: {
-    fontSize: ms(13),
-    fontWeight: 'bold',
-    color: blackColor,
-    lineHeight: ms(18),
+  cardLogoContainer: {
+    height: ms(50),
+    justifyContent: 'center',
+    alignItems: 'flex-start',
     marginBottom: vs(12),
+  },
+  cardLogo: {
+    width: ms(100),
+    height: ms(45),
   },
   cardPricing: {
     gap: vs(4),
@@ -586,11 +566,10 @@ const styles = StyleSheet.create({
     marginBottom: vs(2),
   },
   cardPriceLabel: {
-    fontSize: ms(12),
+    fontSize: ms(11),
     color: '#888',
     fontWeight: '500',
     flex: 1,
-    textAlign:'center'
   },
   cardPricingValues: {
     flexDirection: 'row',
@@ -601,40 +580,30 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: blackColor,
     flex: 1,
-    textAlign:'center'
+    textDecorationLine: 'line-through',
+    textDecorationColor: '#EF4444',
   },
   cardDiscount: {
     fontSize: ms(13),
     fontWeight: 'bold',
     color: blackColor,
     flex: 1,
-    textAlign:'center'
   },
   cardNet: {
     fontSize: ms(13),
     fontWeight: 'bold',
     color: blackColor,
     flex: 1,
-    textAlign:'center'
   },
   cardRight: {
-    width: ms(110),
-    backgroundColor: '#CBD5E1',
+    width: ms(100),
+    backgroundColor: '#E2E8F0',
     alignItems: 'center',
     justifyContent: 'center',
-    paddingVertical: vs(5),
+    paddingVertical: vs(10),
     paddingHorizontal: ms(8),
-    margin:ms(10),
-    borderRadius:ms(20)
-  },
-  cardImageBox: {
-    width: ms(55),
-    height: ms(45),
-    borderRadius: ms(8),
-    backgroundColor: '#D5E0D8',
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginBottom: vs(6),
+    margin: ms(10),
+    borderRadius: ms(16),
   },
   cardReportIn: {
     fontSize: ms(10),

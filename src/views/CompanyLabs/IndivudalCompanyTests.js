@@ -279,13 +279,9 @@ const IndivudalCompanyTests = () => {
               style={styles.searchInput}
               placeholder="Search test or lab"
               placeholderTextColor="#999"
-              value="Glycosylated Haemoglobin"
               editable={false}
               pointerEvents="none"
             />
-            <TouchableOpacity onPress={() => navigation.goBack()}>
-              <Icon type={Icons.Ionicons} name="close" color="#999" size={ms(20)} />
-            </TouchableOpacity>
           </TouchableOpacity>
         </View>
 
@@ -601,7 +597,9 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: blackColor,
     flex: 1,
-    textAlign:'center'
+    textAlign:'center',
+    textDecorationLine: 'line-through',
+    textDecorationColor: '#EF4444',
   },
   cardDiscount: {
     fontSize: ms(13),

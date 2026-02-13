@@ -112,21 +112,20 @@ const FooterComponent = () => {
                 </View>
             </LinearGradient>
 
-                <View style={{ flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 5, marginVertical:ms(10) }}>
+                {/* <View style={{ flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 5, marginVertical:ms(10) }}>
                     <Text style={styles.footerCopyright}>
                         Powdered by
                     </Text>
                     <Image source={require('../assets/img/3dlogo.png')} style={{ width: 150, height: 60, resizeMode: 'contain' }} />
-                </View>
+                </View> */}
 
             {/* Quality Assurance Section */}
-            <View style={styles.qualitySection}>
+            {/* <View style={styles.qualitySection}>
                 <Text style={styles.qualityTitle}>
                     Certified safety and quality fulfilled by
                 </Text>
                 <Text style={styles.qualitySubtitle}>Trust Lab Diagnostics</Text>
 
-                {/* Certifications */}
                 <View style={styles.certificationsContainer}>
                     {certifications.map((cert, index) => (
                         <View key={index} style={styles.certificationItem}>
@@ -139,7 +138,7 @@ const FooterComponent = () => {
                         </View>
                     ))}
                 </View>
-            </View>
+            </View> */}
 
             {/* Footer Section */}
             {/* <View style={styles.footer}>
@@ -195,7 +194,7 @@ const styles = StyleSheet.create({
         marginHorizontal: wp(4),
         borderRadius: ms(16),
         padding: ms(16),
-        marginBottom: hp(2),
+        marginBottom: hp(8),
     },
     statsTitle: {
         fontSize: ms(20),

@@ -470,6 +470,7 @@ const styles = StyleSheet.create({
     headerGradient: {
         flex: 1,
         paddingTop: ms(50),
+        paddingBottom:ms(50)
     },
     header: {
         flexDirection: 'row',

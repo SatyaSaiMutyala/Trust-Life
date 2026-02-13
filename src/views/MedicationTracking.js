@@ -193,6 +193,18 @@ const MedicationTracking = () => {
         >
             {/* Top Header Row */}
             <View style={styles.topRow}>
+                {/* Back Button */}
+                <TouchableOpacity
+                    onPress={() => navigation.goBack()}
+                    style={styles.backButton}
+                >
+                    <Icon
+                        type={Icons.Ionicons}
+                        name="arrow-back"
+                        size={ms(20)}
+                        color={primaryColor}
+                    />
+                </TouchableOpacity>
                 <Text style={styles.headerTitle}>Medication Tracking</Text>
                 <View style={styles.headerIcons}>
                     <TouchableOpacity style={styles.iconCircle} onPress={() => navigation.navigate('Notifications')}>
@@ -257,6 +269,7 @@ const MedicationTracking = () => {
             >
                 {/* Top Header Row */}
                 <View style={styles.topRow}>
+
                     <View>
                         <Text style={styles.headerTitle}>Medication Tracking</Text>
                         <Text style={styles.dateText}>{getCurrentDate()}</Text>
@@ -428,8 +441,18 @@ const styles = StyleSheet.create({
     topRow: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        alignItems: 'flex-start',
+        alignItems: 'center',
         marginBottom: vs(15),
+    },
+    backButton: {
+        width: ms(34),
+        height: ms(34),
+        borderRadius: ms(17),
+        justifyContent: 'center',
+        alignItems: 'center',
+        // marginRight: ms(8),
+        backgroundColor: whiteColor,
+
     },
     headerTitle: {
         fontSize: ms(20),

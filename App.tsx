@@ -106,6 +106,7 @@ import AllAddress from './src/views/AllAddress';
 import OrderScreen from './src/views/OrderScreen';
 import OrderTracking from './src/views/OrderTrackingScreen';
 import { primaryColor } from './src/utils/globalColors';
+import CustomBottomTabBar from './src/components/BottomNavBar/CustomBottomTabBar';
 import OTPScreen from './src/views/OtpScreen';
 import OtpOptionScreen from './src/views/OtpOptionScreen';
 import { s, vs, ms } from 'react-native-size-matters';
@@ -203,6 +204,10 @@ import VaccinationLog from './src/views/Vaccination/VaccinationLog';
 import VaccinationDashboard from './src/views/Vaccination/VaccinationDashboard';
 import AddVaccination from './src/views/Vaccination/AddVaccination';
 import VaccinationReadings from './src/views/Vaccination/VaccinationReadings';
+import MigraineLog from './src/views/Migraine/MigraineLog';
+import MigraineDashboard from './src/views/Migraine/MigraineDashboard';
+import AddMigraine from './src/views/Migraine/AddMigraine';
+import MigraineReadings from './src/views/Migraine/MigraineReadings';
 
 
 const forFade = ({ current, next }) => {
@@ -238,36 +243,26 @@ const TabArr = [
   {
     route: 'Home',
     label: 'Home',
-    activeImg: require('./src/assets/img/home_active2.png'),
-    inactiveImg: require('./src/assets/img/home_inactive1.png'),
     component: Dashboard,
   },
   {
     route: 'Reports',
-    label: 'Records',
-    activeImg: require('./src/assets/img/active_records.png'),
-    inactiveImg: require('./src/assets/img/inactive_records.png'),
+    label: 'Medical\nRecords',
     component: PatientHealthRecords,
   },
   {
-    route: 'HealthTrend',
-    label: 'Trend',
-    activeImg: require('./src/assets/img/analysis_active2.png'),
-    inactiveImg: require('./src/assets/img/analysis_inactive1.png'),
-    component: HealthTrend,
+    route: 'TrustMD',
+    label: 'Trust\nMD',
+    component: Dashboard,
   },
   {
-    route: 'MedicationTracking',
-    label: 'Tracking',
-    activeImg: require('./src/assets/img/active_pill.png'),
-    inactiveImg: require('./src/assets/img/inactive_pill.png'),
-    component: MedicationTracking,
+    route: 'HealthTrend',
+    label: 'Health\nTrend',
+    component: HealthTrend,
   },
   {
     route: 'More',
     label: 'More',
-    activeImg: require('./src/assets/img/active_more.png'),
-    inactiveImg: require('./src/assets/img/inactive_more.png'),
     component: More,
   },
 ];
@@ -409,81 +404,11 @@ const { width, height } = Dimensions.get('window');
 
 
 function TabNavigator() {
-  const insets = useSafeAreaInsets();
-  const bottomPadding = insets.bottom > 0 ? insets.bottom + 4 : ms(12); // Extra buffer for Android gesture nav
-
   return (
     <Tab.Navigator
       initialRouteName="Home"
-      screenOptions={({ route }) => ({
-        headerShown: false,
-        tabBarShowLabel: true,
-        // Remove fixed height - let content determine it
-        tabBarStyle: {
-          paddingBottom: bottomPadding,
-          paddingTop: ms(8),
-          paddingHorizontal: ms(12),
-          minHeight: ms(60),
-          borderTopEndRadius: 10,
-          borderTopStartRadius: 10,
-          backgroundColor: '#fff',
-          elevation: 8,
-
-          shadowColor: '#000',
-          shadowOffset: { width: 0, height: -2 },
-          shadowOpacity: 0.1,
-          shadowRadius: 4,
-          maxWidth: 600,
-          alignSelf: 'center',
-          width: '100%',
-        },
-        tabBarActiveTintColor: primaryColor,
-        tabBarInactiveTintColor: '#999',
-        // Add Android-specific icon/label spacing
-        tabBarIconStyle: {
-          marginBottom: Platform.OS === 'android' ? 2 : 0,
-        },
-        tabBarLabelStyle: {
-          marginTop: Platform.OS === 'android' ? -2 : -3,
-          marginBottom: Platform.OS === 'android' ? 8 : 10,
-        },
-        tabBarIcon: ({ focused }) => {
-          const item = TabArr.find(tab => tab.route === route.name);
-          return (
-            <View style={{
-              alignItems: 'center',
-              justifyContent: 'center',
-              paddingVertical: 4, // Content-based vertical space
-              minHeight: 28,
-            }}>
-              <Image
-                source={focused ? item.activeImg : item.inactiveImg}
-                resizeMode="contain"
-                style={{
-                  width: ms(24),
-                  height: ms(24),
-                }}
-              />
-            </View>
-          );
-        },
-        tabBarLabel: ({ focused }) => {
-          const item = TabArr.find(tab => tab.route === route.name);
-          return (
-            <Text
-              style={{
-                fontSize: ms(11),
-                fontWeight: focused ? '800' : '500',
-                color: focused ? primaryColor : '#999',
-                includeFontPadding: false,
-                marginTop: 3
-              }}
-            >
-              {item.label}
-            </Text>
-          );
-        },
-      })}
+      tabBar={(props) => <CustomBottomTabBar {...props} />}
+      screenOptions={{ headerShown: false }}
     >
       {TabArr.map(item => (
         <Tab.Screen
@@ -506,7 +431,7 @@ function App() {
       <SafeAreaProvider>
         <PaperProvider>
         <SnackProvider>
-          <NavigationContainer theme={{ ...DefaultTheme, colors: { ...DefaultTheme.colors, background: '#fff' } }}>
+          <NavigationContainer theme={{ ...DefaultTheme, colors: { ...DefaultTheme.colors, background: '#F1F5F9' } }}>
             <Stack.Navigator initialRouteName="Splash" screenOptions={{ headerShown: false }} >
               <Stack.Screen name="SelectedTest" component={SelectedTest} options={{ headerShown: false }} />
               <Stack.Screen name='RelevanceDetails' component={RelevanceDetailsScreen} options={{ headerShown: false }} />
@@ -684,6 +609,10 @@ function App() {
               <Stack.Screen name='VaccinationDashboard' component={VaccinationDashboard} options={{headerShown:false}}/>
               <Stack.Screen name='AddVaccination' component={AddVaccination} options={{headerShown:false}}/>
               <Stack.Screen name='VaccinationReadings' component={VaccinationReadings} options={{headerShown:false}}/>
+              <Stack.Screen name='MigraineLog' component={MigraineLog} options={{headerShown:false}}/>
+              <Stack.Screen name='MigraineDashboard' component={MigraineDashboard} options={{headerShown:false}}/>
+              <Stack.Screen name='AddMigraine' component={AddMigraine} options={{headerShown:false}}/>
+              <Stack.Screen name='MigraineReadings' component={MigraineReadings} options={{headerShown:false}}/>
               <Stack.Screen
                 name="ViewAllPatients"
                 component={ViewAllPatients}

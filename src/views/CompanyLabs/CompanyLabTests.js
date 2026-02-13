@@ -125,7 +125,7 @@ const CompanyLabTests = () => {
           <TouchableOpacity
             key={lab.id}
             style={styles.labCard}
-            onPress={() => navigation.navigate('TestSearchResultsScreen', { lab: { id: lab.id, name: lab.name, image: lab.image } })}
+            onPress={() => navigation.navigate('IndivudalCompanyTests', { lab: { id: lab.id, name: lab.name, image: lab.image } })}
           >
             <View style={styles.labImageContainer}>
               <Image source={lab.image} style={styles.labImage} resizeMode="contain" />
@@ -235,7 +235,7 @@ const CompanyLabTests = () => {
           {/* Search Bar - Exactly matching Dashboard */}
           <TouchableOpacity
             style={styles.searchContainer}
-            onPress={() => navigation.navigate('IndivudalCompanyTests')}
+            onPress={() => navigation.navigate('TestSearchResultsScreen')}
             activeOpacity={1}
           >
             <Icon type={Icons.Feather} name="search" color="#999" size={ms(20)} style={{ marginRight: s(4) }} />
