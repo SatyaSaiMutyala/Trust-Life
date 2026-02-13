@@ -1,0 +1,27 @@
+# Node.js dependencies
+node_modules/
+
+# Gradle build folder
+.gradle/
+
+# Logs
+*.log
+logs/
+
+# Build directories
+build/
+dist/
+
+# Environment files
+.env
+.env.local
+
+# IDE settings
+.idea/
+.vscode/
+
+# Operating system files
+.DS_Store
+Thumbs.db
+
+nul

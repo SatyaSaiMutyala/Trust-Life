@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "279296623026",
+    "project_id": "trust-life",
+    "storage_bucket": "trust-life.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:279296623026:android:c96700bf0369a1339d64ab",
+        "android_client_info": {
+          "package_name": "com.app.trustlife"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBIt8jht9qAjbUvi-qrvrqMCa2MP3lGntc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

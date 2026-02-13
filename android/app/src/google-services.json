@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "406272435716",
+    "project_id": "trustlab-bb58d",
+    "storage_bucket": "trustlab-bb58d.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:406272435716:android:046f57d22405cc43adb751",
+        "android_client_info": {
+          "package_name": "com.app.trustlife"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBLjL6baFbo6L-cI7KFOxmYOS07SQE56Qg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
