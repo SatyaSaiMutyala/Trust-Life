@@ -295,6 +295,13 @@ export const light_colors = [
 export const regular = "GoogleSans-Medium";
 export const bold = "GoogleSans-Bold";
 
+//Nutrition API (API Ninjas - https://api-ninjas.com/api/nutrition)
+export const NUTRITION_API_KEY = "MHVVPutmxYLprDNMXUx3LL6RONHYziGUiZB7ini1";
+
+// USDA FoodData Central API (https://fdc.nal.usda.gov)
+export const USDA_API_KEY = "8PG6dvOIaIftPTL9yhH923kYYq3azArH2fZg8qhh";
+export const USDA_BASE_URL = "https://api.nal.usda.gov/fdc/v1";
+
 //Map
 export const GOOGLE_KEY = "AIzaSyDLVwCSkXWOjo49WNNwx7o0DSwomoFvbP0";
 // export const GOOGLE_KEY = "AIzaSyCN2IHs3XcDggn1kOP0UqNPnxIUl0OTEnI";

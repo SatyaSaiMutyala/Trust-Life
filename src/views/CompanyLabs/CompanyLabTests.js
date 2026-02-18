@@ -128,7 +128,7 @@ const CompanyLabTests = () => {
             onPress={() => navigation.navigate('IndivudalCompanyTests', { lab: { id: lab.id, name: lab.name, image: lab.image } })}
           >
             <View style={styles.labImageContainer}>
-              <Image source={lab.image} style={styles.labImage} resizeMode="contain" />
+              <Image source={lab.image} style={lab.id === 1 ? styles.labImageLarge : styles.labImage} resizeMode="contain" />
             </View>
             <Text style={styles.labName} numberOfLines={2}>
               {lab.name}
@@ -457,8 +457,12 @@ const styles = StyleSheet.create({
     marginBottom: ms(8),
   },
   labImage: {
-    width: '100%',
-    height: '100%',
+    width: ms(65),
+    height: ms(65),
+  },
+  labImageLarge: {
+    width: ms(100),
+    height: ms(100),
   },
   labName: {
     fontSize: ms(10),

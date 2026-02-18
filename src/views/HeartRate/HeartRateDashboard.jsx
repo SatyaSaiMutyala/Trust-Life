@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import {
     SafeAreaView,
     StyleSheet,
@@ -8,56 +8,157 @@ import {
     TouchableOpacity,
     Dimensions,
     Image,
+    Alert,
+    ActivityIndicator,
 } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import Svg, { Path, Line, Circle, Defs, LinearGradient as SvgLinearGradient, Stop } from 'react-native-svg';
 import Modal from 'react-native-modal';
 import { ms, vs } from 'react-native-size-matters';
 import { StatusBar2 } from '../../components/StatusBar';
 import Icon, { Icons } from '../../components/Icons';
 import { blackColor, whiteColor, primaryColor } from '../../utils/globalColors';
+import { connectAndMonitorHeartRate } from '../../utils/BleHeartRateService';
 
 const { width } = Dimensions.get('window');
 
 const TIME_TABS = ['Day', 'Week', 'Month', '3Mon', 'Yearly'];
 
+const MAX_BPM_HISTORY = 20; // Max data points to show on chart
+
 const HeartRateDashboard = () => {
     const navigation = useNavigation();
+    const route = useRoute();
     const [selectedTab, setSelectedTab] = useState('Day');
     const [readingMode, setReadingMode] = useState('manual'); // 'manual' or 'device'
     const [showBottomSheet, setShowBottomSheet] = useState(false);
 
-    const subtitleText = readingMode === 'manual' ? 'Manual Reading' : 'Device Connected';
+    // BLE device state
+    const [connectedDevice, setConnectedDevice] = useState(null);
+    const [liveBpm, setLiveBpm] = useState(null);
+    const [bpmHistory, setBpmHistory] = useState([]);
+    const [deviceReadings, setDeviceReadings] = useState([]);
+    const [isConnecting, setIsConnecting] = useState(false);
+    const disconnectRef = useRef(null);
 
-    // Sample readings data (replace with real data from API/storage)
-    const readings = [
+    // Handle route params from SearchNearbyDevices
+    useEffect(() => {
+        const params = route.params;
+        if (params?.connectedDevice) {
+            setConnectedDevice(params.connectedDevice);
+            setReadingMode('device');
+            if (params.initialBpm) {
+                setLiveBpm(params.initialBpm);
+                addBpmReading(params.initialBpm);
+            }
+            // Start monitoring heart rate from this device
+            startMonitoring(params.connectedDevice.id, params.connectedDevice.name);
+        }
+    }, [route.params?.connectedDevice?.id]);
+
+    const addBpmReading = useCallback((bpm) => {
+        const now = new Date();
+        const dateStr = now.toLocaleDateString('en-US', {
+            weekday: 'short', day: '2-digit', month: 'short', year: 'numeric',
+        }) + ', ' + now.toLocaleTimeString('en-US', {
+            hour: '2-digit', minute: '2-digit', hour12: true,
+        });
+
+        setBpmHistory((prev) => {
+            const updated = [...prev, bpm];
+            return updated.length > MAX_BPM_HISTORY ? updated.slice(-MAX_BPM_HISTORY) : updated;
+        });
+
+        setDeviceReadings((prev) => {
+            const newReading = { id: `ble-${Date.now()}`, date: dateStr, bpm };
+            const updated = [newReading, ...prev];
+            return updated.slice(0, 20);
+        });
+    }, []);
+
+    const startMonitoring = useCallback(async (deviceId, deviceName) => {
+        setIsConnecting(true);
+        const result = await connectAndMonitorHeartRate(
+            deviceId,
+            (bpm) => {
+                setLiveBpm(bpm);
+                addBpmReading(bpm);
+                setIsConnecting(false);
+            },
+            () => {
+                Alert.alert('Disconnected', `${deviceName} has been disconnected.`);
+                setConnectedDevice(null);
+                setLiveBpm(null);
+                disconnectRef.current = null;
+            },
+            (error) => {
+                console.warn('BLE monitor error:', error);
+                Alert.alert('Connection Lost', `Lost connection to ${deviceName}.`);
+                setConnectedDevice(null);
+                setLiveBpm(null);
+                setIsConnecting(false);
+                disconnectRef.current = null;
+            },
+        );
+
+        if (result) {
+            disconnectRef.current = result.disconnect;
+            setIsConnecting(false);
+        } else {
+            setIsConnecting(false);
+        }
+    }, [addBpmReading]);
+
+    // Cleanup on unmount
+    useEffect(() => {
+        return () => {
+            if (disconnectRef.current) {
+                disconnectRef.current();
+            }
+        };
+    }, []);
+
+    // Determine subtitle text
+    const subtitleText = readingMode === 'device'
+        ? connectedDevice ? `${connectedDevice.name}` : 'No Device Connected'
+        : 'Manual Reading';
+
+    // Sample manual readings data
+    const manualReadings = [
         { id: '1', date: 'Mon, 11 Feb,2026,12:30 PM', bpm: 25 },
         { id: '2', date: 'Mon, 11 Feb,2026,12:30 PM', bpm: 25 },
         { id: '3', date: 'Mon, 11 Feb,2026,12:30 PM', bpm: 25 },
         { id: '4', date: 'Mon, 11 Feb,2026,12:30 PM', bpm: 25 },
     ];
 
+    const readings = readingMode === 'device' ? deviceReadings : manualReadings;
     const hasData = readings.length > 0;
 
     // Chart dimensions
     const chartWidth = width - ms(80);
     const chartHeight = vs(120);
 
-    // Sample BPM data points (normalized 0-1 for Y axis, where 0 = top, 1 = bottom)
-    const dataPoints = [
-        { x: 0, y: 0.85 },
-        { x: 0.12, y: 0.7 },
-        { x: 0.24, y: 0.55 },
-        { x: 0.36, y: 0.45 },
-        { x: 0.48, y: 0.38 },
-        { x: 0.6, y: 0.35 },
-        { x: 0.72, y: 0.4 },
-        { x: 0.84, y: 0.5 },
-        { x: 1, y: 0.6 },
-    ];
+    // Build chart data points from BPM history or use sample data
+    const chartMaxBpm = 200;
+    const dataPoints = readingMode === 'device' && bpmHistory.length > 1
+        ? bpmHistory.map((bpm, i) => ({
+            x: i / (bpmHistory.length - 1),
+            y: 1 - (bpm / chartMaxBpm), // normalize: higher BPM = higher on chart (lower y)
+        }))
+        : [
+            { x: 0, y: 0.85 },
+            { x: 0.12, y: 0.7 },
+            { x: 0.24, y: 0.55 },
+            { x: 0.36, y: 0.45 },
+            { x: 0.48, y: 0.38 },
+            { x: 0.6, y: 0.35 },
+            { x: 0.72, y: 0.4 },
+            { x: 0.84, y: 0.5 },
+            { x: 1, y: 0.6 },
+        ];
 
-    // Highlighted point index (the one showing "25 BPM" tooltip)
-    const highlightIndex = 5;
+    // Highlighted point is always the last data point
+    const highlightIndex = dataPoints.length - 1;
 
     // Create smooth curve path
     const createCurvePath = () => {
@@ -92,8 +193,10 @@ const HeartRateDashboard = () => {
     // X-axis labels
     const xLabels = ['12:00', '12:00', '12:00', '12:00', '12:00'];
 
-    // Y-axis labels
-    const yLabels = ['40', '30', '20', '10', '0'];
+    // Y-axis labels — dynamic for device mode
+    const yLabels = readingMode === 'device' && bpmHistory.length > 0
+        ? ['200', '150', '100', '50', '0']
+        : ['40', '30', '20', '10', '0'];
 
     return (
         <SafeAreaView style={styles.container}>
@@ -151,6 +254,26 @@ const HeartRateDashboard = () => {
                         <Icon type={Icons.Ionicons} name="chevron-forward" color={blackColor} size={ms(20)} />
                     </TouchableOpacity>
                 </View>
+
+                {/* Live BPM Display (device mode) */}
+                {readingMode === 'device' && connectedDevice && (
+                    <View style={styles.liveBpmContainer}>
+                        {isConnecting ? (
+                            <View style={styles.liveBpmRow}>
+                                <ActivityIndicator size="small" color={primaryColor} />
+                                <Text style={styles.liveBpmConnecting}>Connecting...</Text>
+                            </View>
+                        ) : liveBpm ? (
+                            <View style={styles.liveBpmRow}>
+                                <Icon type={Icons.Ionicons} name="heart" color="#FF4757" size={ms(22)} />
+                                <Text style={styles.liveBpmValue}>{liveBpm}</Text>
+                                <Text style={styles.liveBpmUnit}>BPM</Text>
+                            </View>
+                        ) : (
+                            <Text style={styles.liveBpmWaiting}>Waiting for heart rate data...</Text>
+                        )}
+                    </View>
+                )}
 
                 {/* BPM Chart */}
                 <View style={styles.chartCard}>
@@ -228,7 +351,9 @@ const HeartRateDashboard = () => {
                                 styles.bpmTooltip,
                                 { left: highlightPoint.x - ms(30), top: highlightPoint.y - vs(35) }
                             ]}>
-                                <Text style={styles.bpmTooltipText}>25 BPM</Text>
+                                <Text style={styles.bpmTooltipText}>
+                                    {readingMode === 'device' && liveBpm ? `${liveBpm} BPM` : '25 BPM'}
+                                </Text>
                             </View>
 
                             {/* X-axis labels */}
@@ -327,8 +452,13 @@ const HeartRateDashboard = () => {
                     <TouchableOpacity
                         style={styles.preferredOption}
                         onPress={() => {
-                            setReadingMode('device');
                             setShowBottomSheet(false);
+                            if (connectedDevice) {
+                                setReadingMode('device');
+                            } else {
+                                // No device connected — navigate to pairing flow
+                                navigation.navigate('SmartDeviceTracking');
+                            }
                         }}
                     >
                         <View style={styles.preferredOptionLeft}>
@@ -490,6 +620,38 @@ const styles = StyleSheet.create({
         fontSize: ms(14),
         fontWeight: '600',
         color: blackColor,
+    },
+
+    // Live BPM
+    liveBpmContainer: {
+        alignItems: 'center',
+        marginBottom: vs(10),
+        paddingHorizontal: ms(15),
+    },
+    liveBpmRow: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        gap: ms(8),
+    },
+    liveBpmValue: {
+        fontSize: ms(32),
+        fontWeight: 'bold',
+        color: '#FF4757',
+    },
+    liveBpmUnit: {
+        fontSize: ms(14),
+        fontWeight: '600',
+        color: '#888',
+        marginTop: vs(6),
+    },
+    liveBpmConnecting: {
+        fontSize: ms(14),
+        color: primaryColor,
+        fontWeight: '600',
+    },
+    liveBpmWaiting: {
+        fontSize: ms(13),
+        color: '#999',
     },
 
     // Chart

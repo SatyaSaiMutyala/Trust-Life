@@ -137,6 +137,7 @@ import ReferralEarnings from './src/views/ReferralEarnings';
 import SettingsMore from './src/views/Settings';
 import ChangePassword from './src/views/ChangePassword';
 import SetNewPassword from './src/views/SetNewPassword';
+import CheckHealthStatus from './src/views/CheckHealthStatus';
 import ChangeMobileNumber from './src/views/ChangeMobileNumber';
 import FingerprintSettings from './src/views/FingerprintSettings';
 import PDFViewer from './src/views/PDFViewer';
@@ -208,6 +209,26 @@ import MigraineLog from './src/views/Migraine/MigraineLog';
 import MigraineDashboard from './src/views/Migraine/MigraineDashboard';
 import AddMigraine from './src/views/Migraine/AddMigraine';
 import MigraineReadings from './src/views/Migraine/MigraineReadings';
+import FoodTrackingDashboard from './src/views/FoodTracking/FoodTrackingDashboard';
+import FoodSearchResults from './src/views/FoodTracking/FoodSearchResults';
+import FoodNutritionDetail from './src/views/FoodTracking/FoodNutritionDetail';
+import ExerciseTrackingDashboard from './src/views/ExerciseTracking/ExerciseTrackingDashboard';
+import SelectExercise from './src/views/ExerciseTracking/SelectExercise';
+import ExerciseDetailForm from './src/views/ExerciseTracking/ExerciseDetailForm';
+import SleepTrackingDashboard from './src/views/SleepTracking/SleepTrackingDashboard';
+import AddSleepEntry from './src/views/SleepTracking/AddSleepEntry';
+import SleepReadings from './src/views/SleepTracking/SleepReadings';
+import DoctorConsultation from './src/views/Doctor/DoctorConsultation';
+import DoctorSearchScreen from './src/views/Doctor/DoctorSearchScreen';
+import DoctorSpecialistList from './src/views/Doctor/DoctorSpecialistList';
+import DoctorFilters from './src/views/Doctor/DoctorFilters';
+import DoctorProfileScreen from './src/views/Doctor/DoctorProfileScreen';
+import ReviewAppointmentScreen from './src/views/Doctor/ReviewAppointmentScreen';
+import PatientDetailsScreen from './src/views/Doctor/PatientDetailsScreen';
+import PaymentSuccessScreen from './src/views/Doctor/PaymentSuccessScreen';
+import AppointmentConfirmedScreen from './src/views/Doctor/AppointmentConfirmedScreen';
+import DoctorAppointments from './src/views/Doctor/DoctorAppointments';
+import DoctorAppointmentDetail from './src/views/Doctor/DoctorAppointmentDetail';
 
 
 const forFade = ({ current, next }) => {
@@ -442,6 +463,7 @@ function App() {
               <Stack.Screen name='otpOptionScreen' component={OtpOptionScreen} options={{ headerShown: false }} />
               <Stack.Screen name="AnalysisChart" component={AnalysisChart} options={{ headerShown: false }} />
               <Stack.Screen name="AnalysisCheck" component={Analysis} options={{ headerShown: false }} />
+              <Stack.Screen name="CheckHealthStatus" component={CheckHealthStatus} options={{ headerShown: false }} />
               <Stack.Screen name="MyOrder" component={MyOrders} options={{ headerShown: true }} />
               <Stack.Screen name="ListFamilyMembers" component={ListFamilyMembers} options={{ headerShown: false }} />
               <Stack.Screen name="AddFamilyMember" component={AddFamilyMember} options={{ headerShown: false }} />
@@ -613,6 +635,26 @@ function App() {
               <Stack.Screen name='MigraineDashboard' component={MigraineDashboard} options={{headerShown:false}}/>
               <Stack.Screen name='AddMigraine' component={AddMigraine} options={{headerShown:false}}/>
               <Stack.Screen name='MigraineReadings' component={MigraineReadings} options={{headerShown:false}}/>
+              <Stack.Screen name='FoodTrackingDashboard' component={FoodTrackingDashboard} options={{headerShown:false}}/>
+              <Stack.Screen name='FoodSearchResults' component={FoodSearchResults} options={{headerShown:false}}/>
+              <Stack.Screen name='FoodNutritionDetail' component={FoodNutritionDetail} options={{headerShown:false}}/>
+              <Stack.Screen name='ExerciseTrackingDashboard' component={ExerciseTrackingDashboard} options={{headerShown:false}}/>
+              <Stack.Screen name='SelectExercise' component={SelectExercise} options={{headerShown:false}}/>
+              <Stack.Screen name='ExerciseDetailForm' component={ExerciseDetailForm} options={{headerShown:false}}/>
+              <Stack.Screen name='SleepTrackingDashboard' component={SleepTrackingDashboard} options={{headerShown:false}}/>
+              <Stack.Screen name='AddSleepEntry' component={AddSleepEntry} options={{headerShown:false}}/>
+              <Stack.Screen name='SleepReadings' component={SleepReadings} options={{headerShown:false}}/>
+              <Stack.Screen name='DoctorConsultation' component={DoctorConsultation} options={{headerShown:false}}/>
+              <Stack.Screen name='DoctorSearchScreen' component={DoctorSearchScreen} options={{headerShown:false}}/>
+              <Stack.Screen name='DoctorSpecialistList' component={DoctorSpecialistList} options={{headerShown:false}}/>
+              <Stack.Screen name='DoctorFilters' component={DoctorFilters} options={{headerShown:false}}/>
+              <Stack.Screen name='DoctorProfileScreen' component={DoctorProfileScreen} options={{headerShown:false}}/>
+              <Stack.Screen name='ReviewAppointmentScreen' component={ReviewAppointmentScreen} options={{headerShown:false}}/>
+              <Stack.Screen name='PatientDetailsScreen' component={PatientDetailsScreen} options={{headerShown:false}}/>
+              <Stack.Screen name='PaymentSuccessScreen' component={PaymentSuccessScreen} options={{headerShown:false}}/>
+              <Stack.Screen name='AppointmentConfirmedScreen' component={AppointmentConfirmedScreen} options={{headerShown:false}}/>
+              <Stack.Screen name='DoctorAppointments' component={DoctorAppointments} options={{headerShown:false}}/>
+              <Stack.Screen name='DoctorAppointmentDetail' component={DoctorAppointmentDetail} options={{headerShown:false}}/>
               <Stack.Screen
                 name="ViewAllPatients"
                 component={ViewAllPatients}

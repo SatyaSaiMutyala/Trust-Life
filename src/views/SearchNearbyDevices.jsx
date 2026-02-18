@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {
     SafeAreaView,
     StyleSheet,
@@ -8,43 +8,136 @@ import {
     FlatList,
     Image,
     TouchableOpacity,
+    ActivityIndicator,
+    Alert,
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { ms, vs } from 'react-native-size-matters';
 import { StatusBar2 } from '../components/StatusBar';
 import Icon, { Icons } from '../components/Icons';
 import { blackColor, whiteColor, primaryColor } from '../utils/globalColors';
-
-const MOCK_DEVICES = [
-    {
-        id: '1',
-        name: 'Sony Smart watch',
-        model: 'SGBH466',
-        image: require('../assets/img/smartwatch.png'),
-        paired: true,
-    },
-];
+import {
+    requestBlePermissions,
+    scanForHeartRateDevices,
+    connectAndMonitorHeartRate,
+} from '../utils/BleHeartRateService';
 
 const SearchNearbyDevices = () => {
     const navigation = useNavigation();
     const [search, setSearch] = useState('');
+    const [devices, setDevices] = useState([]);
+    const [isScanning, setIsScanning] = useState(false);
+    const [connectingId, setConnectingId] = useState(null);
+    const stopScanRef = useRef(null);
 
-    const filteredDevices = MOCK_DEVICES.filter((d) =>
+    useEffect(() => {
+        startScan();
+        return () => {
+            if (stopScanRef.current) {
+                stopScanRef.current();
+            }
+        };
+    }, []);
+
+    const startScan = async () => {
+        const granted = await requestBlePermissions();
+        if (!granted) {
+            Alert.alert('Permission Denied', 'Bluetooth permissions are required to scan for devices.');
+            return;
+        }
+
+        setDevices([]);
+        setIsScanning(true);
+
+        stopScanRef.current = scanForHeartRateDevices(
+            (device) => {
+                setDevices((prev) => {
+                    if (prev.find((d) => d.id === device.id)) return prev;
+                    return [...prev, device];
+                });
+            },
+            (error) => {
+                console.warn('BLE scan error:', error);
+                setIsScanning(false);
+            },
+        );
+
+        // Stop scanning after 15 seconds
+        setTimeout(() => {
+            if (stopScanRef.current) {
+                stopScanRef.current();
+                stopScanRef.current = null;
+            }
+            setIsScanning(false);
+        }, 15000);
+    };
+
+    const handleConnect = async (device) => {
+        // Stop scanning first
+        if (stopScanRef.current) {
+            stopScanRef.current();
+            stopScanRef.current = null;
+            setIsScanning(false);
+        }
+
+        setConnectingId(device.id);
+
+        const result = await connectAndMonitorHeartRate(
+            device.id,
+            (bpm) => {
+                // Navigate back to dashboard with connected device info
+                navigation.navigate('HeartRateDashboard', {
+                    connectedDevice: {
+                        id: device.id,
+                        name: device.name,
+                    },
+                    initialBpm: bpm,
+                });
+            },
+            () => {
+                Alert.alert('Disconnected', `${device.name} has been disconnected.`);
+            },
+            (error) => {
+                console.warn('BLE connect error:', error);
+                if (error?.message === 'NO_HEART_RATE_SERVICE') {
+                    console.log('[BLE] Services found on device:', error.services);
+                    Alert.alert(
+                        'Heart Rate Not Supported',
+                        `${device.name} connected successfully but does not expose the standard Heart Rate Service. This device may use a proprietary protocol.\n\nCompatible devices: Polar H10, Polar OH1, Garmin HRM, or any device with standard BLE Heart Rate profile.`,
+                    );
+                } else {
+                    Alert.alert('Connection Failed', `Could not connect to ${device.name}. Make sure the device is nearby and try again.`);
+                }
+                setConnectingId(null);
+            },
+        );
+
+        if (!result) {
+            setConnectingId(null);
+        }
+    };
+
+    const filteredDevices = devices.filter((d) =>
         d.name.toLowerCase().includes(search.toLowerCase())
     );
 
     const renderDevice = ({ item }) => (
         <View style={styles.deviceCard}>
-            <Image source={item.image} style={styles.deviceImage} />
+            <Image source={require('../assets/img/smartwatch.png')} style={styles.deviceImage} />
             <View style={styles.deviceInfo}>
                 <Text style={styles.deviceName}>{item.name}</Text>
-                <Text style={styles.deviceModel}>Model : {item.model}</Text>
+                <Text style={styles.deviceModel}>Signal: {item.rssi} dBm</Text>
             </View>
-            <View style={[styles.badge, item.paired ? styles.badgePaired : styles.badgeDefault]}>
-                <Text style={[styles.badgeText, item.paired && styles.badgeTextPaired]}>
-                    {item.paired ? 'Paired' : 'Connect'}
-                </Text>
-            </View>
+            {connectingId === item.id ? (
+                <ActivityIndicator size="small" color={primaryColor} />
+            ) : (
+                <TouchableOpacity
+                    style={[styles.badge, styles.badgeDefault]}
+                    onPress={() => handleConnect(item)}
+                >
+                    <Text style={styles.badgeText}>Connect</Text>
+                </TouchableOpacity>
+            )}
         </View>
     );
 
@@ -58,20 +151,33 @@ const SearchNearbyDevices = () => {
                     <Icon type={Icons.Ionicons} name="arrow-back" color={blackColor} size={ms(22)} />
                 </TouchableOpacity>
                 <Text style={styles.headerTitle}>Search Nearby Devices</Text>
-                <View style={{ width: ms(40) }} />
+                <TouchableOpacity onPress={startScan} disabled={isScanning}>
+                    <Icon type={Icons.Ionicons} name="refresh" color={isScanning ? '#CCC' : primaryColor} size={ms(22)} />
+                </TouchableOpacity>
             </View>
 
             {/* Description */}
             <Text style={styles.description}>
-                Scan and find available devices to connect and start syncing your heart rate readings easily.
+                {isScanning
+                    ? 'Scanning for nearby Bluetooth devices...'
+                    : `Found ${devices.length} device${devices.length !== 1 ? 's' : ''}. Tap a device to connect.`
+                }
             </Text>
+
+            {/* Scanning Indicator */}
+            {isScanning && (
+                <View style={styles.scanningRow}>
+                    <ActivityIndicator size="small" color={primaryColor} />
+                    <Text style={styles.scanningText}>Scanning...</Text>
+                </View>
+            )}
 
             {/* Search Input */}
             <View style={styles.searchContainer}>
                 <Icon type={Icons.Ionicons} name="search" color="#999" size={ms(18)} />
                 <TextInput
                     style={styles.searchInput}
-                    placeholder="Smart Device"
+                    placeholder="Search devices"
                     placeholderTextColor="#999"
                     value={search}
                     onChangeText={setSearch}
@@ -85,10 +191,15 @@ const SearchNearbyDevices = () => {
                 keyExtractor={(item) => item.id}
                 contentContainerStyle={styles.listContainer}
                 ListEmptyComponent={
-                    <View style={styles.emptyContainer}>
-                        <Icon type={Icons.Ionicons} name="bluetooth-outline" color="#CCC" size={ms(40)} />
-                        <Text style={styles.emptyText}>No devices found</Text>
-                    </View>
+                    !isScanning && (
+                        <View style={styles.emptyContainer}>
+                            <Icon type={Icons.Ionicons} name="bluetooth-outline" color="#CCC" size={ms(40)} />
+                            <Text style={styles.emptyText}>No devices found</Text>
+                            <TouchableOpacity onPress={startScan}>
+                                <Text style={styles.retryText}>Tap to scan again</Text>
+                            </TouchableOpacity>
+                        </View>
+                    )
                 }
             />
         </SafeAreaView>
@@ -127,8 +238,20 @@ const styles = StyleSheet.create({
         lineHeight: ms(20),
         paddingHorizontal: ms(20),
         marginTop: vs(5),
-        marginBottom: vs(15),
+        marginBottom: vs(10),
         textAlign: 'center',
+    },
+    scanningRow: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+        gap: ms(8),
+        marginBottom: vs(10),
+    },
+    scanningText: {
+        fontSize: ms(12),
+        color: primaryColor,
+        fontWeight: '600',
     },
 
     // Search
@@ -211,5 +334,10 @@ const styles = StyleSheet.create({
     emptyText: {
         fontSize: ms(14),
         color: '#999',
+    },
+    retryText: {
+        fontSize: ms(13),
+        color: primaryColor,
+        fontWeight: '600',
     },
 });
