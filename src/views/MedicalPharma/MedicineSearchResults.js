@@ -1,0 +1,640 @@
+import React, { useState, useEffect } from 'react';
+import {
+  StyleSheet,
+  View,
+  SafeAreaView,
+  Dimensions,
+  Text,
+  ScrollView,
+  TouchableOpacity,
+  Image,
+  TextInput,
+  Modal,
+  Pressable,
+  Alert,
+} from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import LinearGradient from 'react-native-linear-gradient';
+import { s, ms, vs } from 'react-native-size-matters';
+import Geolocation from '@react-native-community/geolocation';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import Icon, { Icons } from '../../components/Icons';
+import { StatusBar2 } from '../../components/StatusBar';
+import { globalGradient, primaryColor, whiteColor, blackColor } from '../../utils/globalColors';
+import { GOOGLE_KEY } from '../../config/Constants';
+
+const { width } = Dimensions.get('window');
+
+const MedicineSearchResults = () => {
+  const navigation = useNavigation();
+  const [searchText, setSearchText] = useState('Paracetamol 500mg');
+  const [profilePic, setProfilePic] = useState(null);
+  const [locationModal, setLocationModal] = useState(false);
+  const [savedLocation, setSavedLocation] = useState(null);
+
+  useEffect(() => {
+    loadSavedLocation();
+  }, []);
+
+  const loadSavedLocation = async () => {
+    try {
+      const data = await AsyncStorage.getItem('location');
+      if (data) {
+        const loc = JSON.parse(data);
+        setSavedLocation(loc);
+      }
+    } catch (error) {
+      console.log('Error loading saved location:', error);
+    }
+  };
+
+  const fetchCurrentLocation = () => {
+    Geolocation.getCurrentPosition(
+      async (position) => {
+        const { latitude, longitude } = position.coords;
+        try {
+          const res = await fetch(
+            `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=${GOOGLE_KEY}`
+          );
+          const json = await res.json();
+          const address = json.results?.length > 0
+            ? json.results[0].formatted_address
+            : 'Location detected';
+
+          const locationData = { latitude, longitude, address };
+          await AsyncStorage.setItem('location', JSON.stringify(locationData));
+          setSavedLocation(locationData);
+        } catch (e) {
+          console.log('Geocoding error:', e);
+          const locationData = { latitude, longitude, address: 'Location detected' };
+          setSavedLocation(locationData);
+        }
+        setLocationModal(false);
+      },
+      (error) => {
+        console.log('Location error:', error);
+        Alert.alert('Location Error', 'Please enable location permissions');
+        setLocationModal(false);
+      },
+      { enableHighAccuracy: true, timeout: 15000 }
+    );
+  };
+
+  // Medicine data
+  const medicineData = {
+    medicineName: 'Paracetamol 500mg',
+    description: 'Contaminated Specimen, Incomplete Test Requisition Form, Insufficient specimen quantity (QNS), Improper specimen for the test, Leaking or broken...',
+    providers: [
+      {
+        id: 1,
+        name: 'MedPlus Mart',
+        logo: require('../../assets/img/medpluse.png'),
+        productImage: require('../../assets/img/medicans.png'),
+        mrp: '480',
+        discount: '20%',
+        netAmount: '350',
+      },
+      {
+        id: 2,
+        name: 'Apollo Pharmacy',
+        logo: require('../../assets/img/apollologo.png'),
+        productImage: require('../../assets/img/medicans.png'),
+        mrp: '480',
+        discount: '20%',
+        netAmount: '350',
+      },
+      {
+        id: 3,
+        name: 'Netmeds',
+        logo: require('../../assets/img/netmeds.png'),
+        productImage: require('../../assets/img/medicans.png'),
+        mrp: '480',
+        discount: '20%',
+        netAmount: '350',
+      },
+    ],
+  };
+
+  const renderProviderCard = (item) => (
+    <TouchableOpacity
+      key={item.id}
+      style={styles.providerCard}
+      activeOpacity={0.8}
+      onPress={() => navigation.navigate('MedicineDetail', { medicine: medicineData, productImage: item.productImage })}
+    >
+      <View style={styles.cardBody}>
+        {/* Left: Logo + Pricing */}
+        <View style={styles.cardLeft}>
+          <View style={styles.cardLogoContainer}>
+            <Image source={item.logo} style={styles.cardLogo} resizeMode="contain" />
+          </View>
+
+          <View style={styles.cardPricing}>
+            <View style={styles.cardPricingLabels}>
+              <Text style={styles.cardPriceLabel}>MRP</Text>
+              <Text style={styles.cardPriceLabel}>Discount</Text>
+              <Text style={styles.cardPriceLabel}>Net Amount</Text>
+            </View>
+            <View style={styles.cardPricingValues}>
+              <Text style={styles.cardMrp}>₹{item.mrp}</Text>
+              <Text style={styles.cardDiscount}>{item.discount}</Text>
+              <Text style={styles.cardNet}>₹{item.netAmount}</Text>
+            </View>
+          </View>
+        </View>
+
+        {/* Right: Product Image + ADD */}
+        <View style={styles.cardRight}>
+          <Image source={item.productImage} style={styles.productImage} resizeMode="contain" />
+          <TouchableOpacity
+            style={styles.cardAddButton}
+            onPress={() => console.log('Add to cart', item.id)}
+          >
+            <Text style={styles.cardAddText}>ADD</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
+    </TouchableOpacity>
+  );
+
+  return (
+    <SafeAreaView style={styles.container}>
+      <StatusBar2 />
+      <LinearGradient
+        colors={globalGradient}
+        start={{ x: 0, y: 0 }}
+        end={{ x: 0, y: 3 }}
+        locations={[0, 0.16]}
+        style={{ flex: 1 }}
+      >
+        {/* Header */}
+        <View style={styles.headerWrapper}>
+          <View style={styles.headerContent}>
+            <TouchableOpacity
+              onPress={() => navigation.goBack()}
+              style={styles.backButton}
+            >
+              <Icon
+                type={Icons.Ionicons}
+                name="arrow-back"
+                size={ms(20)}
+                color={primaryColor}
+              />
+            </TouchableOpacity>
+
+            <View style={styles.headerTextContainer}>
+              <View style={styles.greetingRow}>
+                <Text style={styles.greetingText}>Hello,</Text>
+                <Text
+                  numberOfLines={1}
+                  ellipsizeMode="tail"
+                  style={styles.userName}
+                >
+                  {global.customer_name || 'Suresh'}
+                </Text>
+              </View>
+              <TouchableOpacity onPress={() => setLocationModal(true)}>
+                <Text
+                  numberOfLines={1}
+                  ellipsizeMode="tail"
+                  style={styles.locationText}
+                >
+                  {savedLocation?.address || 'Set your location'} ▼
+                </Text>
+              </TouchableOpacity>
+            </View>
+
+            {/* Right Section */}
+            <View style={styles.rightHeaderSection}>
+              <TouchableOpacity
+                onPress={() => navigation.navigate('Notifications')}
+                style={styles.headerButton}
+              >
+                <Icon
+                  type={Icons.Ionicons}
+                  name="notifications-outline"
+                  size={ms(18)}
+                  color={blackColor}
+                />
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                onPress={() => navigation.navigate('PharmCart')}
+                style={styles.headerButton}
+              >
+                <Icon
+                  type={Icons.Ionicons}
+                  name="cart-outline"
+                  size={ms(18)}
+                  color={blackColor}
+                />
+              </TouchableOpacity>
+
+              <TouchableOpacity onPress={() => navigation.navigate('Profile')}>
+                {profilePic ? (
+                  <Image
+                    source={{ uri: profilePic }}
+                    style={styles.profileImage}
+                  />
+                ) : (
+                  <View style={[styles.profileImage, styles.defaultProfileIcon]}>
+                    <Icon type={Icons.MaterialIcons} name="person" size={ms(18)} color={blackColor} />
+                  </View>
+                )}
+              </TouchableOpacity>
+            </View>
+          </View>
+
+          {/* Search Bar */}
+          <View style={styles.searchContainer}>
+            <Icon type={Icons.Feather} name="search" color="#999" size={ms(20)} style={{ marginRight: s(4) }} />
+            <TextInput
+              style={styles.searchInput}
+              placeholder="Search for Medicines"
+              placeholderTextColor="#999"
+              value={searchText}
+              onChangeText={setSearchText}
+            />
+            <TouchableOpacity onPress={() => navigation.goBack()}>
+              <Icon type={Icons.Ionicons} name="close-circle" size={ms(20)} color="#999" />
+            </TouchableOpacity>
+          </View>
+        </View>
+
+        {/* Main Content */}
+        <View style={styles.contentContainer}>
+          {/* Results Header */}
+          <View style={styles.resultsHeader}>
+            <Text style={styles.resultsTitle}>Medicine Search Results</Text>
+          </View>
+
+          <ScrollView
+            showsVerticalScrollIndicator={false}
+            contentContainerStyle={styles.scrollContent}
+          >
+            {/* Description Card */}
+            <View style={styles.descriptionCard}>
+              <Text style={styles.descriptionTitle}>{medicineData.medicineName}</Text>
+              <Text style={styles.descriptionText}>
+                {medicineData.description}
+                <Text style={styles.viewMoreText}> view more</Text>
+              </Text>
+            </View>
+
+            {/* Medicine Provider Title */}
+            <Text style={styles.sectionTitle}>Medicine Provider</Text>
+
+            {/* Provider Cards */}
+            <View style={styles.providerCardsContainer}>
+              {medicineData.providers.map((provider) => renderProviderCard(provider))}
+            </View>
+
+            <View style={{ height: ms(30) }} />
+          </ScrollView>
+        </View>
+      </LinearGradient>
+
+      {/* Location Bottom Sheet Modal */}
+      <Modal
+        visible={locationModal}
+        animationType="slide"
+        transparent={true}
+        onRequestClose={() => setLocationModal(false)}
+      >
+        <View style={styles.modalOverlay}>
+          <Pressable
+            style={styles.modalBackdrop}
+            onPress={() => setLocationModal(false)}
+          />
+          <View style={styles.bottomSheetContainer}>
+            <View style={styles.pullBar} />
+
+            <TouchableOpacity
+              style={styles.optionRow}
+              onPress={fetchCurrentLocation}
+              activeOpacity={0.7}
+            >
+              <View style={styles.iconBox}>
+                <Icon type={Icons.MaterialIcons} name="gps-fixed" size={ms(20)} color="#1BA672" />
+              </View>
+              <View style={{ flex: 1 }}>
+                <Text style={styles.optionTitle}>Current location</Text>
+                <Text style={styles.optionSubtitle}>Allow location to get accurate delivery</Text>
+              </View>
+            </TouchableOpacity>
+
+            <View style={styles.sheetDivider} />
+
+            <TouchableOpacity
+              style={styles.optionRow}
+              onPress={() => {
+                setLocationModal(false);
+                navigation.navigate('LocationSearch');
+              }}
+            >
+              <View style={styles.iconBox}>
+                <Icon type={Icons.MaterialIcons} name="location-on" size={ms(20)} color="#000" />
+              </View>
+              <Text style={styles.optionTitle}>Select different location</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
+    </SafeAreaView>
+  );
+};
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: whiteColor,
+  },
+  headerWrapper: {
+    paddingTop: ms(50),
+    paddingBottom: ms(20),
+  },
+  headerContent: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: ms(30),
+    paddingHorizontal: ms(10),
+  },
+  backButton: {
+    width: ms(34),
+    height: ms(34),
+    borderRadius: ms(17),
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginRight: ms(8),
+    backgroundColor: whiteColor,
+  },
+  headerTextContainer: {
+    flex: 1,
+    marginRight: ms(8),
+  },
+  greetingRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  greetingText: {
+    color: '#fff',
+    fontSize: ms(15),
+    fontWeight: 'bold',
+  },
+  userName: {
+    color: '#fff',
+    fontSize: ms(15),
+    fontWeight: 'bold',
+    marginLeft: 4,
+    flexShrink: 1,
+  },
+  locationText: {
+    color: '#fff',
+    fontSize: ms(10),
+    maxWidth: ms(200),
+  },
+  rightHeaderSection: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: ms(6),
+  },
+  headerButton: {
+    backgroundColor: whiteColor,
+    width: ms(34),
+    height: ms(34),
+    borderRadius: ms(17),
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  profileImage: {
+    width: ms(34),
+    height: ms(34),
+    borderRadius: ms(17),
+    borderWidth: 1.5,
+    borderColor: whiteColor,
+  },
+  defaultProfileIcon: {
+    backgroundColor: whiteColor,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  searchContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: whiteColor,
+    borderRadius: ms(25),
+    paddingHorizontal: ms(18),
+    paddingVertical: vs(10),
+    marginHorizontal: ms(15),
+    marginBottom: vs(10),
+  },
+  searchInput: {
+    flex: 1,
+    fontSize: ms(16),
+    color: '#000',
+    paddingVertical: 0,
+  },
+  contentContainer: {
+    flex: 1,
+    marginHorizontal: ms(20),
+  },
+  scrollContent: {
+    paddingTop: ms(10),
+    paddingBottom: ms(30),
+  },
+  resultsHeader: {
+    marginBottom: ms(10),
+  },
+  resultsTitle: {
+    fontSize: ms(18),
+    fontWeight: '400',
+    color: blackColor,
+  },
+
+  // Description card
+  descriptionCard: {
+    backgroundColor: whiteColor,
+    borderRadius: ms(16),
+    padding: ms(16),
+    marginBottom: ms(20),
+    borderWidth: 1,
+    borderColor: '#E5E7EB',
+  },
+  descriptionTitle: {
+    fontSize: ms(14),
+    fontWeight: 'bold',
+    color: blackColor,
+    textAlign: 'center',
+    marginBottom: vs(10),
+  },
+  descriptionText: {
+    fontSize: ms(12),
+    color: '#888',
+    lineHeight: ms(19),
+  },
+  viewMoreText: {
+    color: primaryColor,
+    fontWeight: '600',
+  },
+
+  sectionTitle: {
+    fontSize: ms(16),
+    fontWeight: 'bold',
+    color: blackColor,
+    marginBottom: ms(15),
+  },
+
+  providerCardsContainer: {
+    gap: ms(12),
+  },
+
+  // Provider card
+  providerCard: {
+    backgroundColor: '#F1F5F9',
+    borderRadius: ms(12),
+    overflow: 'hidden',
+  },
+  cardBody: {
+    flexDirection: 'row',
+  },
+  cardLeft: {
+    flex: 1,
+    padding: ms(14),
+    justifyContent: 'space-between',
+  },
+  cardLogoContainer: {
+    height: ms(50),
+    justifyContent: 'center',
+    alignItems: 'flex-start',
+    marginBottom: vs(12),
+  },
+  cardLogo: {
+    width: ms(100),
+    height: ms(45),
+  },
+  cardPricing: {
+    gap: vs(4),
+  },
+  cardPricingLabels: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: vs(2),
+  },
+  cardPriceLabel: {
+    fontSize: ms(11),
+    color: '#888',
+    fontWeight: '500',
+    flex: 1,
+  },
+  cardPricingValues: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  cardMrp: {
+    fontSize: ms(13),
+    fontWeight: 'bold',
+    color: blackColor,
+    flex: 1,
+    textDecorationLine: 'line-through',
+    textDecorationColor: '#EF4444',
+  },
+  cardDiscount: {
+    fontSize: ms(13),
+    fontWeight: 'bold',
+    color: blackColor,
+    flex: 1,
+  },
+  cardNet: {
+    fontSize: ms(13),
+    fontWeight: 'bold',
+    color: blackColor,
+    flex: 1,
+  },
+
+  // Right side: product image + ADD
+  cardRight: {
+    width: ms(110),
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: vs(10),
+    paddingHorizontal: ms(8),
+    margin: ms(10),
+    borderRadius: ms(25),
+    backgroundColor: whiteColor
+  },
+  productImage: {
+    width: ms(90),
+    height: ms(70),
+    marginBottom: vs(8),
+  },
+  cardAddButton: {
+    backgroundColor: primaryColor,
+    paddingHorizontal: ms(22),
+    paddingVertical: vs(7),
+    borderRadius: ms(6),
+  },
+  cardAddText: {
+    color: whiteColor,
+    fontSize: ms(12),
+    fontWeight: 'bold',
+  },
+
+  // Location Bottom Sheet
+  modalOverlay: {
+    flex: 1,
+    justifyContent: 'flex-end',
+    backgroundColor: 'transparent',
+  },
+  modalBackdrop: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  },
+  bottomSheetContainer: {
+    backgroundColor: '#fff',
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
+    paddingHorizontal: 20,
+    paddingBottom: 30,
+    paddingTop: 10,
+    elevation: 10,
+  },
+  pullBar: {
+    width: 40,
+    height: 4,
+    backgroundColor: '#DADADA',
+    borderRadius: 2,
+    alignSelf: 'center',
+    marginBottom: 20,
+  },
+  optionRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingVertical: 10,
+  },
+  iconBox: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    backgroundColor: '#F1F5F9',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginRight: 12,
+  },
+  optionTitle: {
+    fontSize: ms(14),
+    fontWeight: '600',
+    color: blackColor,
+  },
+  optionSubtitle: {
+    fontSize: ms(11),
+    color: '#888',
+    marginTop: 2,
+  },
+  sheetDivider: {
+    height: 1,
+    backgroundColor: '#EEE',
+    marginVertical: 2,
+  },
+});
+
+export default MedicineSearchResults;

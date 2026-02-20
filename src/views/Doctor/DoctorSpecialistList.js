@@ -228,8 +228,6 @@ const styles = StyleSheet.create({
         paddingHorizontal: ms(12),
         paddingVertical: vs(7),
         borderRadius: ms(20),
-        borderWidth: 1,
-        borderColor: '#D0D0D0',
         backgroundColor: whiteColor,
         marginRight: ms(8),
     },

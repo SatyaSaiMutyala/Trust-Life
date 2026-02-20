@@ -821,7 +821,7 @@ const Dashboard = (props) => {
                                         <Text style={styles.healthDescription}>
                                             Based Your test Score will Change,Based Your test Score will Change
                                         </Text>
-                                        <TouchableOpacity onPress={() => navigation.navigate('CheckHealthStatus')} style={{ paddingVertical: ms(10), flexDirection: 'row' }}>
+                                        <TouchableOpacity onPress={() => navigation.navigate('CheckHealthStatus', { fromStack: true })} style={{ paddingVertical: ms(10), flexDirection: 'row' }}>
                                             <Text style={{ paddingVertical: ms(10), paddingHorizontal: ms(10), backgroundColor: whiteColor, borderRadius: ms(20), fontSize: ms(10), fontWeight: 'bold', color: blackColor }}>Check Health Status</Text>
                                         </TouchableOpacity>
                                     </View>
@@ -881,7 +881,7 @@ const Dashboard = (props) => {
 
                         {/* Track your Health journey */}
                         <View style={styles.healthJourneySection}>
-                            <Text style={styles.healthJourneyHeading}>My Health journey</Text>
+                            <Text style={styles.healthJourneyHeading}>My Health Continuum</Text>
                             <View style={styles.healthJourneyGrid}>
                                 <TouchableOpacity
                                     style={styles.healthJourneyCard}
@@ -1030,7 +1030,7 @@ const Dashboard = (props) => {
                                 {[
                                     { image: require('../assets/img/top-lab.png'), onPress: () => navigateToTests('Home Lab') },
                                     { image: require('../assets/img/top-doctor.png'), onPress: () => navigation.navigate('DoctorConsultation') },
-                                    { image: require('../assets/img/top-medicienes.png'), onPress: () => showSnack('warning', 'Medicine booking is coming soon!') },
+                                    { image: require('../assets/img/top-medicienes.png'), onPress: () => navigation.navigate('CompanyMedicines') },
                                     { image: require('../assets/img/ambulance.png'), onPress: () => showSnack('warning', 'Ambulance is coming soon!') },
                                 ].map((item, index) => (
                                     <TouchableOpacity key={index} onPress={item.onPress}>

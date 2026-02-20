@@ -18,6 +18,7 @@ import { StatusBar2 } from '../../components/StatusBar';
 import Icon, { Icons } from '../../components/Icons';
 import { blackColor, whiteColor, primaryColor, globalGradient } from '../../utils/globalColors';
 import StandaloneBottomBar from '../../components/BottomNavBar/StandaloneBottomBar';
+import DoctorAppointmentsContent from './DoctorAppointmentsContent';
 
 const { width } = Dimensions.get('window');
 const CARD_GAP = ms(12);
@@ -88,6 +89,7 @@ const DoctorConsultation = () => {
     const navigation = useNavigation();
     const [search] = useState('');
     const [profilePic, setProfilePic] = useState(null);
+    const [bottomTab, setBottomTab] = useState('doctors');
 
     useEffect(() => {
         AsyncStorage.getItem('profile_picture').then((saved) => {
@@ -123,83 +125,86 @@ const DoctorConsultation = () => {
     return (
         <SafeAreaView style={styles.container}>
             <StatusBar2 />
-            <LinearGradient
-                colors={[primaryColor, '#F1F5F9']}
-                start={{ x: 0, y: 0 }}
-                end={{ x: 0, y: 3 }}
-                locations={[0, 0.18]}
-                style={styles.gradientWrapper}
-            >
-                {/* ── Header ── */}
-                <View style={styles.header}>
-                    {/* Left: avatar + name + date */}
-                    <View style={styles.headerLeft}>
-                        <TouchableOpacity onPress={() => navigation.navigate('Profile')} style={styles.avatarCircle}>
-                            {profilePic ? (
-                                <Image source={{ uri: profilePic }} style={styles.avatarImage} />
-                            ) : (
-                                <Icon type={Icons.MaterialIcons} name="person" size={ms(22)} color={primaryColor} />
-                            )}
-                        </TouchableOpacity>
-                        <View style={styles.headerTextWrap}>
-                            <Text style={styles.headerName} numberOfLines={1}>
-                                {global.customer_name || 'User'}
-                            </Text>
-                            <Text style={styles.headerDate}>{todayDate}</Text>
-                        </View>
-                    </View>
 
-                    {/* Right: notification icons */}
-                    <View style={styles.headerRight}>
-                        <TouchableOpacity
-                            style={styles.iconBtn}
-                            onPress={() => navigation.navigate('Notifications')}
-                        >
-                            <Icon type={Icons.Ionicons} name="notifications-outline" size={ms(20)} color={blackColor} />
-                        </TouchableOpacity>
-                        <TouchableOpacity
-                            style={styles.iconBtn}
-                            onPress={() => navigation.navigate('Notifications')}
-                        >
-                            <Icon type={Icons.Ionicons} name="notifications-outline" size={ms(20)} color={blackColor} />
-                        </TouchableOpacity>
-                    </View>
-                </View>
-
-                {/* ── Search Bar ── */}
-                <TouchableOpacity
-                    style={styles.searchBar}
-                    activeOpacity={0.8}
-                    onPress={() => navigation.navigate('DoctorSearchScreen')}
+            {bottomTab === 'doctors' ? (
+                <LinearGradient
+                    colors={[primaryColor, '#F1F5F9']}
+                    start={{ x: 0, y: 0 }}
+                    end={{ x: 0, y: 3 }}
+                    locations={[0, 0.18]}
+                    style={styles.gradientWrapper}
                 >
-                    <Icon type={Icons.Feather} name="search" color="#999" size={ms(18)} />
-                    <Text style={styles.searchPlaceholder}>Search for Specialized Doctors</Text>
-                    <Icon type={Icons.Ionicons} name="options-outline" color={primaryColor} size={ms(20)} />
-                </TouchableOpacity>
-
-                {/* ── Grid ── */}
-                <FlatList
-                    data={filtered}
-                    renderItem={renderCard}
-                    keyExtractor={(item) => item.id}
-                    numColumns={2}
-                    showsVerticalScrollIndicator={false}
-                    contentContainerStyle={styles.grid}
-                    ListHeaderComponent={
-                        <Text style={styles.titleText}>
-                            Find the Right Specialist for{'\n'}Your Health Needs
-                        </Text>
-                    }
-                    ListEmptyComponent={
-                        <View style={styles.emptyWrap}>
-                            <Icon type={Icons.Ionicons} name="search-outline" color="#CCC" size={ms(40)} />
-                            <Text style={styles.emptyText}>No specialties found</Text>
+                    {/* ── Header ── */}
+                    <View style={styles.header}>
+                        <View style={styles.headerLeft}>
+                            <TouchableOpacity onPress={() => navigation.navigate('Profile')} style={styles.avatarCircle}>
+                                {profilePic ? (
+                                    <Image source={{ uri: profilePic }} style={styles.avatarImage} />
+                                ) : (
+                                    <Icon type={Icons.MaterialIcons} name="person" size={ms(22)} color={primaryColor} />
+                                )}
+                            </TouchableOpacity>
+                            <View style={styles.headerTextWrap}>
+                                <Text style={styles.headerName} numberOfLines={1}>
+                                    {global.customer_name || 'User'}
+                                </Text>
+                                <Text style={styles.headerDate}>{todayDate}</Text>
+                            </View>
                         </View>
-                    }
-                />
-            </LinearGradient>
 
-            <StandaloneBottomBar activeTab="doctors" />
+                        <View style={styles.headerRight}>
+                            <TouchableOpacity
+                                style={styles.iconBtn}
+                                onPress={() => navigation.navigate('Notifications')}
+                            >
+                                <Icon type={Icons.Ionicons} name="notifications-outline" size={ms(20)} color={blackColor} />
+                            </TouchableOpacity>
+                            <TouchableOpacity
+                                style={styles.iconBtn}
+                                onPress={() => navigation.navigate('Notifications')}
+                            >
+                                <Icon type={Icons.Ionicons} name="headset-outline" size={ms(20)} color={blackColor} />
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+
+                    {/* ── Search Bar ── */}
+                    <TouchableOpacity
+                        style={styles.searchBar}
+                        activeOpacity={0.8}
+                        onPress={() => navigation.navigate('DoctorSearchScreen')}
+                    >
+                        <Icon type={Icons.Feather} name="search" color="#999" size={ms(18)} />
+                        <Text style={styles.searchPlaceholder}>Search for Specialized Doctors</Text>
+                        <Icon type={Icons.Ionicons} name="options-outline" color={primaryColor} size={ms(20)} />
+                    </TouchableOpacity>
+
+                    {/* ── Grid ── */}
+                    <FlatList
+                        data={filtered}
+                        renderItem={renderCard}
+                        keyExtractor={(item) => item.id}
+                        numColumns={2}
+                        showsVerticalScrollIndicator={false}
+                        contentContainerStyle={styles.grid}
+                        ListHeaderComponent={
+                            <Text style={styles.titleText}>
+                                Find the Right Specialist for{'\n'}Your Health Needs
+                            </Text>
+                        }
+                        ListEmptyComponent={
+                            <View style={styles.emptyWrap}>
+                                <Icon type={Icons.Ionicons} name="search-outline" color="#CCC" size={ms(40)} />
+                                <Text style={styles.emptyText}>No specialties found</Text>
+                            </View>
+                        }
+                    />
+                </LinearGradient>
+            ) : (
+                <DoctorAppointmentsContent />
+            )}
+
+            <StandaloneBottomBar activeTab={bottomTab} onTabChange={setBottomTab} />
         </SafeAreaView>
     );
 };

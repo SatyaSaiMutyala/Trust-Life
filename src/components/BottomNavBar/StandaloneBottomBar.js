@@ -11,7 +11,7 @@ import Icon, { Icons } from '../Icons';
 import { whiteColor, primaryColor } from '../../utils/globalColors';
 
 // activeTab: 'back' | 'doctors' | 'appointments' | 'more'
-const StandaloneBottomBar = ({ activeTab = 'doctors' }) => {
+const StandaloneBottomBar = ({ activeTab = 'doctors', onTabChange }) => {
     const navigation = useNavigation();
 
     return (
@@ -28,7 +28,7 @@ const StandaloneBottomBar = ({ activeTab = 'doctors' }) => {
                 </Text>
             </TouchableOpacity>
 
-            <TouchableOpacity style={styles.navItem} onPress={() => navigation.navigate('DoctorConsultation')}>
+            <TouchableOpacity style={styles.navItem} onPress={() => onTabChange ? onTabChange('doctors') : navigation.navigate('DoctorConsultation')}>
                 <Icon
                     type={Icons.MaterialCommunityIcons}
                     name="stethoscope"
@@ -42,7 +42,7 @@ const StandaloneBottomBar = ({ activeTab = 'doctors' }) => {
 
             <TouchableOpacity
                 style={styles.navItem}
-                onPress={() => navigation.navigate('DoctorAppointments')}
+                onPress={() => onTabChange ? onTabChange('appointments') : navigation.navigate('DoctorAppointments')}
             >
                 <Icon
                     type={Icons.Ionicons}
@@ -57,7 +57,7 @@ const StandaloneBottomBar = ({ activeTab = 'doctors' }) => {
 
             <TouchableOpacity
                 style={styles.navItem}
-                onPress={() => navigation.navigate('More')}
+                onPress={() => onTabChange ? onTabChange('more') : navigation.navigate('More')}
             >
                 <Icon
                     type={Icons.Ionicons}

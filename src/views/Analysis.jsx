@@ -332,11 +332,11 @@ const Analysis = () => {
 
         <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: vs(30) }}>
           {/* Health Score Ring */}
-          <View style={styles.Analysis}>
+          {/* <View style={styles.Analysis}>
             <RingComponent size={140} outerRadius={70} percentage={progress} />
             <Text style={styles.healthScoreTitle}>Health Score</Text>
             <Text style={styles.calculatedFromReport}>Calculated from test report</Text>
-          </View>
+          </View> */}
 
           {/* Human Body Image */}
           <View style={styles.humanBodyContainer}>

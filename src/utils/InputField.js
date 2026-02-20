@@ -26,6 +26,7 @@ const InputField = ({
     editable = true,
     containerStyle,
     disabled = false,
+    multiline = false,
 }) => {
     const [secure, setSecure] = useState(isSecure);
 
@@ -47,14 +48,14 @@ const InputField = ({
             {label && <Text style={styles.label}>{label}</Text>}
             <Wrapper
                 {...wrapperProps}
-                style={[styles.container, containerStyle, disabled && styles.disabledContainer]}>
+                style={[styles.container, multiline && { height: 'auto', minHeight: vs(80), alignItems: 'flex-start' }, containerStyle, disabled && styles.disabledContainer]}>
                 {onPressIn ? (
                     <Text style={[styles.input, !value && { color: '#A0A0A0' }]}>
                         {value || placeholder}
                     </Text>
                 ) : (
                     <TextInput
-                        style={styles.input}
+                        style={[styles.input, multiline && { textAlignVertical: 'top', paddingTop: vs(8) }]}
                         placeholder={placeholder}
                         placeholderTextColor="#A0A0A0"
                         underlineColorAndroid="transparent"
@@ -64,6 +65,7 @@ const InputField = ({
                         secureTextEntry={secure}
                         editable={editable}
                         maxLength={maxLength}
+                        multiline={multiline}
                     />
                 )}
 

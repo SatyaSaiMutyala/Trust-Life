@@ -22,7 +22,7 @@ const AnalysisList = () => {
   const navigation = useNavigation();
 
   const navigate = (item) => {
-    navigation.navigate('AnalysisChart');
+    navigation.navigate('HealthAnalysisScreen');
   };
 
   const Item = ({ item }) => {

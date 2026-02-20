@@ -7,7 +7,7 @@ import {
     ScrollView,
     TouchableOpacity,
 } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import Svg, { Path, Circle, G, Line, Text as SvgText } from 'react-native-svg';
 import { ms, vs } from 'react-native-size-matters';
 import { StatusBar2 } from '../components/StatusBar';
@@ -165,6 +165,8 @@ const CheckBtn = ({ onPress }) => (
 // ── Main screen ───────────────────────────────────────────────────────────
 const CheckHealthStatus = () => {
     const navigation = useNavigation();
+    const route = useRoute();
+    const fromStack = route.params?.fromStack;
 
     return (
         <SafeAreaView style={styles.container}>
@@ -172,9 +174,11 @@ const CheckHealthStatus = () => {
 
             {/* Header */}
             <View style={styles.header}>
-                <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backBtn}>
-                    <Icon type={Icons.Ionicons} name="arrow-back" size={ms(22)} color={blackColor} />
-                </TouchableOpacity>
+                {fromStack && (
+                    <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backBtn}>
+                        <Icon type={Icons.Ionicons} name="arrow-back" size={ms(22)} color={blackColor} />
+                    </TouchableOpacity>
+                )}
                 <Text style={styles.headerTitle}>Check Health Status</Text>
             </View>
 

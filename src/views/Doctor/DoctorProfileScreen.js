@@ -22,12 +22,12 @@ const { width } = Dimensions.get('window');
 
 // ── Wave generator ─────────────────────────────────────────────────────────────
 const WAVE_H = vs(28);
-const NUM_WAVES = 13;
+const NUM_WAVES = 18;
 
 const buildWave = (w) => {
     const period = w / NUM_WAVES;
     const midY = vs(14);
-    const amp = vs(6);
+    const amp = vs(10);
     let wave = '';
     for (let i = 0; i < NUM_WAVES; i++) {
         const cx = ((i + 0.5) * period).toFixed(1);
@@ -136,7 +136,7 @@ const DoctorProfileScreen = () => {
                             <Icon
                                 type={Icons.MaterialIcons}
                                 name="person"
-                                size={ms(115)}
+                                size={ms(140)}
                                 color="rgba(255,255,255,0.55)"
                             />
                         </View>
@@ -194,35 +194,32 @@ const DoctorProfileScreen = () => {
                         return (
                             <TouchableOpacity
                                 key={d.date}
-                                style={styles.dayCol}
+                                style={[
+                                    styles.dateBubble,
+                                    isToday && !isSelected && styles.dateBubbleToday,
+                                    isSelected && styles.dateBubbleSelected,
+                                ]}
                                 onPress={() => setSelectedDay(d.date)}
                                 activeOpacity={0.7}
                             >
                                 <Text
                                     style={[
                                         styles.dayLabel,
-                                        (isSelected || isToday) && styles.dayLabelActive,
+                                        isToday && !isSelected && styles.dayLabelToday,
+                                        isSelected && styles.dayLabelSelected,
                                     ]}
                                 >
                                     {d.day}
                                 </Text>
-                                <View
+                                <Text
                                     style={[
-                                        styles.dateBubble,
-                                        isToday && !isSelected && styles.dateBubbleToday,
-                                        isSelected && styles.dateBubbleSelected,
+                                        styles.dateNum,
+                                        isToday && !isSelected && styles.dateNumToday,
+                                        isSelected && styles.dateNumSelected,
                                     ]}
                                 >
-                                    <Text
-                                        style={[
-                                            styles.dateNum,
-                                            isToday && !isSelected && styles.dateNumToday,
-                                            isSelected && styles.dateNumSelected,
-                                        ]}
-                                    >
-                                        {d.date}
-                                    </Text>
-                                </View>
+                                    {d.date}
+                                </Text>
                             </TouchableOpacity>
                         );
                     })}
@@ -255,7 +252,6 @@ const DoctorProfileScreen = () => {
                                     style={[
                                         styles.slotTime,
                                         isBooked && { color: '#EF5350' },
-                                        isSelected && { color: whiteColor },
                                     ]}
                                 >
                                     {slot.time}
@@ -265,14 +261,12 @@ const DoctorProfileScreen = () => {
                                         style={[
                                             styles.slotDot,
                                             { backgroundColor: isBooked ? '#EF5350' : '#4CAF50' },
-                                            isSelected && { backgroundColor: whiteColor },
                                         ]}
                                     />
                                     <Text
                                         style={[
                                             styles.slotStatusText,
                                             { color: isBooked ? '#EF5350' : '#4CAF50' },
-                                            isSelected && { color: whiteColor },
                                         ]}
                                     >
                                         {isBooked ? 'Booked' : 'Available'}
@@ -386,17 +380,17 @@ const styles = StyleSheet.create({
     },
     reviewsText: {
         fontSize: ms(11),
-        color: 'rgba(255,255,255,0.7)',
+        color: blackColor,
     },
     avatarWrap: {
-        width: ms(120),
+        width: ms(150),
         alignItems: 'center',
         justifyContent: 'center',
     },
     avatarBg: {
-        width: ms(120),
-        height: ms(120),
-        borderRadius: ms(60),
+        width: ms(150),
+        height: ms(150),
+        borderRadius: ms(75),
         backgroundColor: 'rgba(255,255,255,0.18)',
         justifyContent: 'center',
         alignItems: 'center',
@@ -458,36 +452,37 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         marginBottom: vs(22),
     },
-    dayCol: {
-        alignItems: 'center',
-        gap: vs(5),
-    },
     dayLabel: {
-        fontSize: ms(10),
+        fontSize: ms(11),
         color: '#999',
         fontWeight: '500',
     },
-    dayLabelActive: {
+    dayLabelToday: {
         color: primaryColor,
         fontWeight: '600',
     },
+    dayLabelSelected: {
+        color: whiteColor,
+        fontWeight: '600',
+    },
     dateBubble: {
-        width: ms(32),
-        height: ms(32),
-        borderRadius: ms(16),
+        width: ms(42),
+        height: ms(56),
+        borderRadius: ms(12),
         justifyContent: 'center',
         alignItems: 'center',
+        gap: vs(2),
     },
     dateBubbleToday: {
-        backgroundColor: '#B2DFDB',
+        backgroundColor: '#D5EDE8',
     },
     dateBubbleSelected: {
         backgroundColor: primaryColor,
     },
     dateNum: {
-        fontSize: ms(12),
+        fontSize: ms(14),
         color: '#555',
-        fontWeight: '500',
+        fontWeight: '600',
     },
     dateNumToday: {
         color: primaryColor,
@@ -519,18 +514,16 @@ const styles = StyleSheet.create({
         width: SLOT_WIDTH,
         paddingVertical: vs(9),
         alignItems: 'center',
-        borderRadius: ms(10),
-        borderWidth: 1.5,
-        borderColor: '#4CAF50',
-        backgroundColor: whiteColor,
+        borderRadius: ms(12),
+        backgroundColor: '#E8F5E9',
     },
     slotBooked: {
-        borderColor: '#EF5350',
-        backgroundColor: '#FFF3F3',
+        backgroundColor: '#FFEBEE',
     },
     slotSelected: {
+        borderWidth: 2,
         borderColor: primaryColor,
-        backgroundColor: primaryColor,
+        backgroundColor: '#D5F0E8',
     },
     slotTime: {
         fontSize: ms(13),

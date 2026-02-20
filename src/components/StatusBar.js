@@ -1,7 +1,7 @@
 import React from 'react';
 import { StatusBar as Sb } from 'react-native';
 import * as colors from '../assets/css/Colors';
-import { primaryColor } from '../utils/globalColors';
+import { primaryColor, whiteColor } from '../utils/globalColors';
 
 export function StatusBar(props){
 	return <Sb
@@ -18,6 +18,26 @@ export function StatusBar2(){
 	    barStyle = "light-content"
 	    hidden = {false}
 	    backgroundColor = {primaryColor}
+	    translucent = {false}
+	    networkActivityIndicatorVisible = {true}
+	 />
+}
+
+export function StatusBar3(){
+	return <Sb
+	    barStyle = "dark-content"
+	    hidden = {false}
+	    backgroundColor = {whiteColor}
+	    translucent = {false}
+	    networkActivityIndicatorVisible = {true}
+	 />
+}
+
+export function StatusBar4(){
+	return <Sb
+	    barStyle = "dark-content"
+	    hidden = {false}
+	    backgroundColor = '#F1F5F9'
 	    translucent = {false}
 	    networkActivityIndicatorVisible = {true}
 	 />

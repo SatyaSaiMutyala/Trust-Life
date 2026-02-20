@@ -229,6 +229,20 @@ import PaymentSuccessScreen from './src/views/Doctor/PaymentSuccessScreen';
 import AppointmentConfirmedScreen from './src/views/Doctor/AppointmentConfirmedScreen';
 import DoctorAppointments from './src/views/Doctor/DoctorAppointments';
 import DoctorAppointmentDetail from './src/views/Doctor/DoctorAppointmentDetail';
+import RescheduleAppointmentDetails from './src/views/Doctor/RescheduleAppointmentDetails';
+import CompanyMedicines from './src/views/MedicalPharma/CompanyMedicines';
+import MedicineSearchResults from './src/views/MedicalPharma/MedicineSearchResults';
+import MedicineDetail from './src/views/MedicalPharma/MedicineDetail';
+import IndividualCompanyMedicines from './src/views/MedicalPharma/IndividualCompanyMedicines';
+import MedicineFilters from './src/views/MedicalPharma/MedicineFilters';
+import TrustMDPatientDetails from './src/views/TrustMD/TrustMDPatientDetails';
+import MedicalTimelineScreen from './src/views/TrustMD/MedicalTimelineScreen';
+import MedicalSummaryScreen from './src/views/TrustMD/MedicalSummaryScreen';
+import AddDoctorNoteScreen from './src/views/TrustMD/AddDoctorNoteScreen';
+import ViewDoctorNoteScreen from './src/views/TrustMD/ViewDoctorNoteScreen';
+import DoctorNoteDetailScreen from './src/views/TrustMD/DoctorNoteDetailScreen';
+import DoctorPrescriptionScreen from './src/views/TrustMD/DoctorPrescriptionScreen';
+import ViewPrescriptionScreen from './src/views/TrustMD/ViewPrescriptionScreen';
 
 
 const forFade = ({ current, next }) => {
@@ -274,12 +288,12 @@ const TabArr = [
   {
     route: 'TrustMD',
     label: 'Trust\nMD',
-    component: Dashboard,
+    component: TrustMDPatientDetails,
   },
   {
     route: 'HealthTrend',
     label: 'Health\nTrend',
-    component: HealthTrend,
+    component: CheckHealthStatus,
   },
   {
     route: 'More',
@@ -655,6 +669,20 @@ function App() {
               <Stack.Screen name='AppointmentConfirmedScreen' component={AppointmentConfirmedScreen} options={{headerShown:false}}/>
               <Stack.Screen name='DoctorAppointments' component={DoctorAppointments} options={{headerShown:false}}/>
               <Stack.Screen name='DoctorAppointmentDetail' component={DoctorAppointmentDetail} options={{headerShown:false}}/>
+              <Stack.Screen name='RescheduleAppointmentDetails' component={RescheduleAppointmentDetails} options={{headerShown:false}}/>
+              <Stack.Screen name='CompanyMedicines' component={CompanyMedicines} options={{headerShown:false}}/>
+              <Stack.Screen name='MedicineSearchResults' component={MedicineSearchResults} options={{headerShown:false}}/>
+              <Stack.Screen name='MedicineDetail' component={MedicineDetail} options={{headerShown:false}}/>
+              <Stack.Screen name='IndividualCompanyMedicines' component={IndividualCompanyMedicines} options={{headerShown:false}}/>
+              <Stack.Screen name='MedicineFilters' component={MedicineFilters} options={{headerShown:false}}/>
+              <Stack.Screen name='TrustMD' component={TrustMDPatientDetails} options={{headerShown:false}}/>
+              <Stack.Screen name='MedicalTimelineScreen' component={MedicalTimelineScreen} options={{headerShown:false}}/>
+              <Stack.Screen name='MedicalSummaryScreen' component={MedicalSummaryScreen} options={{headerShown:false}}/>
+              <Stack.Screen name='AddDoctorNoteScreen' component={AddDoctorNoteScreen} options={{headerShown:false}}/>
+              <Stack.Screen name='ViewDoctorNoteScreen' component={ViewDoctorNoteScreen} options={{headerShown:false}}/>
+              <Stack.Screen name='DoctorNoteDetailScreen' component={DoctorNoteDetailScreen} options={{headerShown:false}}/>
+              <Stack.Screen name='DoctorPrescriptionScreen' component={DoctorPrescriptionScreen} options={{headerShown:false}}/>
+              <Stack.Screen name='ViewPrescriptionScreen' component={ViewPrescriptionScreen} options={{headerShown:false}}/>
               <Stack.Screen
                 name="ViewAllPatients"
                 component={ViewAllPatients}
