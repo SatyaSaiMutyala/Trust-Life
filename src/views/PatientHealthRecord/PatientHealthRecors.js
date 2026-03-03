@@ -16,7 +16,8 @@ import { bold } from '../../config/Constants';
 import { blackColor, globalGradient, whiteColor } from '../../utils/globalColors';
 import { ms, vs } from 'react-native-size-matters';
 
-const { width } = Dimensions.get('window');
+const { width, height } = Dimensions.get('window');
+const GRID_IMAGE_HEIGHT = (height - ms(50) - vs(20) - vs(80) - vs(30)) / 3 - ms(38);
 
 const CARD_DATA = [
     {
@@ -41,7 +42,7 @@ const CARD_DATA = [
         id: 'medical_bills',
         title: 'Medical Bills',
         image: require('../../assets/img/mb.png'),
-        route: 'MedicalRecordsVault',
+        route: 'MedicalBills',
     },
     {
         id: 'patient_note',
@@ -82,7 +83,7 @@ const PatientHealthRecords = () => {
                     contentContainerStyle={styles.scrollContent}
                 >
                     {/* Banner Card - Patient & Medical Summary */}
-                    <TouchableOpacity
+                    {/* <TouchableOpacity
                         style={styles.bannerCard}
                         activeOpacity={0.8}
                         onPress={() => navigation.navigate('PatientMedicalSummary')}
@@ -104,7 +105,7 @@ const PatientHealthRecords = () => {
                                 <Text style={styles.bannerTitle}>Patient & Medical  Summary</Text>
                             </View>
                         </LinearGradient>
-                    </TouchableOpacity>
+                    </TouchableOpacity> */}
 
                     {/* Grid Cards */}
                     <View style={styles.grid}>
@@ -158,7 +159,9 @@ const styles = StyleSheet.create({
         marginBottom: vs(20),
     },
     scrollContent: {
-        paddingBottom: vs(30),
+        flexGrow: 1,
+        justifyContent: 'center',
+        paddingBottom: vs(80),
     },
 
     // Banner Card
@@ -203,8 +206,9 @@ const styles = StyleSheet.create({
     grid: {
         flexDirection: 'row',
         flexWrap: 'wrap',
-        justifyContent: 'space-between',
-        gap: vs(10),
+        justifyContent: 'center',
+        columnGap: ms(15),
+        rowGap: vs(10),
     },
 
     // Grid Card
@@ -221,7 +225,7 @@ const styles = StyleSheet.create({
         paddingTop: ms(8),
     },
     gridImageWrap: {
-        height: ms(100),
+        height: GRID_IMAGE_HEIGHT,
         alignItems: 'center',
         justifyContent: 'center',
     },

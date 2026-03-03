@@ -1,180 +1,315 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
-    SafeAreaView,
-    StyleSheet,
-    Text,
-    View,
-    ScrollView,
-    TouchableOpacity,
+    SafeAreaView, StyleSheet, Text, View,
+    ScrollView, TouchableOpacity, Image,
+    Modal,
 } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
-import Svg, { Path, Circle, G, Line, Text as SvgText } from 'react-native-svg';
 import { ms, vs } from 'react-native-size-matters';
-import { StatusBar2 } from '../components/StatusBar';
+import Svg, {
+    Circle, Defs, Line,
+    LinearGradient as SvgLinearGradient,
+    RadialGradient, Stop,
+} from 'react-native-svg';
+import { StatusBar3 } from '../components/StatusBar';
 import Icon, { Icons } from '../components/Icons';
 import { blackColor, whiteColor, primaryColor } from '../utils/globalColors';
+import { bold, regular } from '../config/Constants';
 
-// ── Gauge helpers ─────────────────────────────────────────────────────────
-const toRad = (deg) => (deg * Math.PI) / 180;
+// ── Score Gauge (same as HealthScoreDetails) ─────────────────────────────────
+const GAUGE_SIZE = ms(190);
+const CX = GAUGE_SIZE / 2;
+const CY = GAUGE_SIZE / 2;
+const R  = ms(76);
+const STROKE_W = ms(17);
+const SCORE     = 320;
+const MIN_SCORE = 300;
+const MAX_SCORE = 900;
+const NORMALIZED = Math.max(0, Math.min(1, (SCORE - MIN_SCORE) / (MAX_SCORE - MIN_SCORE)));
+const CIRCUMFERENCE = 2 * Math.PI * R;
+const ARC_DEG   = 240;
+const START_DEG = 150;
+const ARC_LEN   = (ARC_DEG / 360) * CIRCUMFERENCE;
+const DASH_OFFSET = ARC_LEN * (1 - NORMALIZED);
 
-const polar = (cx, cy, r, deg) => ({
+const toRad  = (d) => (d * Math.PI) / 180;
+const polar  = (cx, cy, r, deg) => ({
     x: cx + r * Math.cos(toRad(deg)),
     y: cy + r * Math.sin(toRad(deg)),
 });
 
-// Stroke-based arc path from startDeg → endDeg (clockwise, SVG y-down)
-const arcD = (cx, cy, r, start, end) => {
-    const s = polar(cx, cy, r, start);
-    const e = polar(cx, cy, r, end);
-    const large = end - start > 180 ? 1 : 0;
-    return `M ${s.x.toFixed(2)} ${s.y.toFixed(2)} A ${r} ${r} 0 ${large} 1 ${e.x.toFixed(2)} ${e.y.toFixed(2)}`;
-};
-
-// ── Gauge config ──────────────────────────────────────────────────────────
-const CX = 95;
-const CY = 100;
-const R = 80;
-const SW = 18;    // stroke width
-const GAP = 3;     // degrees gap between segments
-const SCORE = 82;
-
-// 180°=left → 360°=right, clockwise through the top (270°=top)
-// score 100 → 180° (stable, far left)
-// score 0   → 360° (critical, far right)
-const scoreToAngle = (s) => 180 + (1 - s / 100) * 180;
-const NEEDLE_ANGLE = scoreToAngle(SCORE); // 212.4°
-
-const SEGMENTS = [
-    { color: '#4CAF50', start: 180 + GAP, end: 225 - GAP, label: 'Stable', labelDeg: 202 },
-    { color: '#FF9800', start: 225 + GAP, end: 270 - GAP, label: 'Moderate', labelDeg: 247 },
-    { color: '#FFD600', start: 270 + GAP, end: 315 - GAP, label: 'Attention', labelDeg: 292 },
-    { color: '#F44336', start: 315 + GAP, end: 360 - GAP, label: 'Critical', labelDeg: 337 },
-];
-
-// ── HealthGauge ────────────────────────────────────────────────────────────
-const HealthGauge = () => {
-    // Needle: triangle pointing from center toward arc
-    const tip = polar(CX, CY, R - SW / 2 - 2, NEEDLE_ANGLE);
-    const perp1 = polar(CX, CY, 5, NEEDLE_ANGLE + 90);
-    const perp2 = polar(CX, CY, 5, NEEDLE_ANGLE - 90);
-    const needlePath = `M ${tip.x.toFixed(1)} ${tip.y.toFixed(1)} L ${perp1.x.toFixed(1)} ${perp1.y.toFixed(1)} L ${perp2.x.toFixed(1)} ${perp2.y.toFixed(1)} Z`;
-
-    return (
-        <Svg width={190} height={105} viewBox="0 0 190 105">
-            {/* Background track */}
-            <Path
-                d={arcD(CX, CY, R, 181, 359)}
-                fill="none"
-                stroke="#E8E8E8"
-                strokeWidth={SW}
-                strokeLinecap="butt"
+const ScoreGauge = () => (
+    <View style={styles.gaugeWrap}>
+        <Svg width={GAUGE_SIZE} height={GAUGE_SIZE}>
+            <Defs>
+                <SvgLinearGradient id="ckArcGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <Stop offset="0%"   stopColor="#0C5E50" />
+                    <Stop offset="40%"  stopColor="#1A7E70" />
+                    <Stop offset="100%" stopColor="#3BB89A" />
+                </SvgLinearGradient>
+                <RadialGradient id="ckGlow" cx="50%" cy="50%" r="55%">
+                    <Stop offset="55%"  stopColor="#1A7E70" stopOpacity="0.15" />
+                    <Stop offset="100%" stopColor="#1A7E70" stopOpacity="0" />
+                </RadialGradient>
+                <RadialGradient id="ckInner" cx="50%" cy="46%" r="50%">
+                    <Stop offset="0%"   stopColor="#FFFFFF" />
+                    <Stop offset="80%"  stopColor="#FFFFFF" />
+                    <Stop offset="92%"  stopColor="#F2F2F2" />
+                    <Stop offset="100%" stopColor="#D5D5D5" />
+                </RadialGradient>
+            </Defs>
+            {/* Background arc */}
+            <Circle cx={CX} cy={CY} r={R}
+                fill="none" stroke="#F1F5F9" strokeWidth={STROKE_W}
+                strokeDasharray={`${ARC_LEN} ${CIRCUMFERENCE}`}
+                strokeLinecap="round"
+                transform={`rotate(${START_DEG}, ${CX}, ${CY})`}
             />
-
-            {/* Colored segments */}
-            {SEGMENTS.map((seg) => {
-                const lp = polar(CX, CY, R, seg.labelDeg);
-                const rot = seg.labelDeg - 270;
+            {/* Progress arc */}
+            <Circle cx={CX} cy={CY} r={R}
+                fill="none" stroke="url(#ckArcGrad)" strokeWidth={STROKE_W}
+                strokeDasharray={`${ARC_LEN} ${CIRCUMFERENCE}`}
+                strokeDashoffset={DASH_OFFSET}
+                strokeLinecap="round"
+                transform={`rotate(${START_DEG}, ${CX}, ${CY})`}
+            />
+            {/* Inner circle */}
+            <Circle cx={CX} cy={CY} r={R - ms(6)} fill="url(#ckInner)" />
+            {/* Tick marks */}
+            {Array.from({ length: 7 }).map((_, i) => {
+                const angle = START_DEG + (ARC_DEG / 6) * i;
+                const s = polar(CX, CY, R - ms(11), angle);
+                const e = polar(CX, CY, R - ms(22), angle);
                 return (
-                    <G key={seg.label}>
-                        <Path
-                            d={arcD(CX, CY, R, seg.start, seg.end)}
-                            fill="none"
-                            stroke={seg.color}
-                            strokeWidth={SW}
-                            strokeLinecap="butt"
-                        />
-                        <SvgText
-                            x={lp.x.toFixed(1)}
-                            y={lp.y.toFixed(1)}
-                            fontSize="7.5"
-                            fontWeight="600"
-                            fill={whiteColor}
-                            textAnchor="middle"
-                            alignmentBaseline="middle"
-                            transform={`rotate(${rot.toFixed(1)}, ${lp.x.toFixed(1)}, ${lp.y.toFixed(1)})`}
-                        >
-                            {seg.label}
-                        </SvgText>
-                    </G>
+                    <Line key={i} x1={s.x} y1={s.y} x2={e.x} y2={e.y}
+                        stroke="#D1D5DB" strokeWidth={ms(1.5)} strokeLinecap="round" />
                 );
             })}
-
-            {/* Needle */}
-            <Path d={needlePath} fill="#222" />
-
-            {/* Center dot */}
-            <Circle cx={CX} cy={CY} r={5} fill="#444" />
-
-            {/* Score circle */}
-            <Circle cx={CX} cy={CY} r={19} fill={primaryColor} />
-            <SvgText
-                x={CX}
-                y={CY - 3}
-                textAnchor="middle"
-                alignmentBaseline="middle"
-                fontSize="11"
-                fontWeight="bold"
-                fill={whiteColor}
-            >
-                {SCORE}
-            </SvgText>
-            <SvgText
-                x={CX}
-                y={CY + 7}
-                textAnchor="middle"
-                alignmentBaseline="middle"
-                fontSize="5"
-                fill={whiteColor}
-            >
-                Score
-            </SvgText>
         </Svg>
+        {/* Center text */}
+        <View style={styles.gaugeCenterText}>
+            <Text style={styles.gaugeScore}>{SCORE}</Text>
+            <Text style={styles.gaugeOutOf}>out of {MAX_SCORE}</Text>
+        </View>
+        {/* Min/Max labels */}
+        <Text style={[styles.gaugeMinMax, {
+            position: 'absolute',
+            left: polar(CX, CY, R + STROKE_W / 2 + ms(8), START_DEG).x - ms(16),
+            top:  polar(CX, CY, R + STROKE_W / 2 + ms(8), START_DEG).y - ms(4),
+        }]}>{MIN_SCORE}</Text>
+        <Text style={[styles.gaugeMinMax, {
+            position: 'absolute',
+            left: polar(CX, CY, R + STROKE_W / 2 + ms(8), START_DEG + ARC_DEG).x - ms(4),
+            top:  polar(CX, CY, R + STROKE_W / 2 + ms(8), START_DEG + ARC_DEG).y - ms(4),
+        }]}>{MAX_SCORE}</Text>
+    </View>
+);
+
+// ── Breakdown Data (same as HealthScoreDetails) ───────────────────────────────
+const BREAKDOWN_DATA = [
+    {
+        title: 'Regularity of Health Actions',
+        score: 18, total: 25, color: '#3B82F6',
+        desc: "You've taken health action regularly with no long gaps",
+        tooltip: 'Increased by 2 points + 18/25',
+        tooltipDesc: "You've taken health action regularly with no long gaps",
+    },
+    {
+        title: 'Consistency Over time',
+        score: 21, total: 25, color: '#F59E0B',
+        desc: 'Your engagement has been steady month over month',
+        tooltip: 'Stable at 21/25',
+        tooltipDesc: 'Your engagement has been steady month over month',
+    },
+    {
+        title: 'Follow - through on Medical Guidance',
+        score: 14, total: 20, color: '#10B981',
+        desc: 'Some recommended follow-ups are pending',
+        tooltip: 'Decreased by 1 point + 14/20',
+        tooltipDesc: 'Some recommended follow-ups are pending',
+    },
+    {
+        title: 'Stability of health Indicators',
+        score: 12, total: 15, color: '#3B82F6', secondColor: '#F59E0B',
+        desc: 'Your health markers are being monitored consistently',
+        tooltip: 'Stable at 12/15',
+        tooltipDesc: 'Your health markers are being monitored consistently',
+    },
+    {
+        title: 'Preventive care engagement',
+        score: 11, total: 15, color: '#06B6D4',
+        desc: 'You are mostly on track with preventive care',
+        tooltip: 'Increased by 1 point + 11/15',
+        tooltipDesc: 'You are mostly on track with preventive care',
+    },
+];
+
+// ── Breakdown Item ────────────────────────────────────────────────────────────
+const BreakdownItem = ({ item, showTooltip, onToggleTooltip }) => {
+    const pct = (item.score / item.total) * 100;
+    return (
+        <View style={styles.bdItem}>
+            <View style={styles.bdHeader}>
+                <Text style={styles.bdTitle}>{item.title}</Text>
+                <View style={styles.bdScoreRow}>
+                    <Text style={styles.bdScore}>{item.score}/{item.total}</Text>
+                    <TouchableOpacity onPress={onToggleTooltip}>
+                        <Icon type={Icons.Ionicons} name="information-circle-outline" size={ms(18)} color="#C0C0C0" />
+                    </TouchableOpacity>
+                </View>
+            </View>
+            <View style={styles.bdProgressBg}>
+                {item.secondColor ? (
+                    <View style={{ flexDirection: 'row', height: '100%' }}>
+                        <View style={[styles.bdProgressFill, { backgroundColor: item.color, width: `${pct * 0.6}%` }]} />
+                        <View style={[styles.bdProgressFill, { backgroundColor: item.secondColor, width: `${pct * 0.4}%` }]} />
+                    </View>
+                ) : (
+                    <View style={[styles.bdProgressFill, { backgroundColor: item.color, width: `${pct}%` }]} />
+                )}
+            </View>
+            <Text style={styles.bdDesc}>{item.desc}</Text>
+            {showTooltip && (
+                <View style={styles.tooltip}>
+                    <Text style={styles.tooltipTitle}>{item.tooltip}</Text>
+                    <Text style={styles.tooltipDesc}>{item.tooltipDesc}</Text>
+                </View>
+            )}
+        </View>
     );
 };
 
-// ── Reusable pieces ───────────────────────────────────────────────────────
-const Card = ({ children }) => <View style={styles.card}>{children}</View>;
+// ── Score Details Bottom Sheet ────────────────────────────────────────────────
+const ScoreDetailsSheet = ({ visible, onClose }) => {
+    const [activeTooltip, setActiveTooltip] = useState(null);
+    return (
+        <Modal visible={visible} transparent animationType="slide" onRequestClose={onClose}>
+            <TouchableOpacity style={styles.sheetOverlay} activeOpacity={1} onPress={onClose} />
+            <View style={styles.sheet}>
+                <View style={styles.sheetHandle} />
+                <View style={styles.sheetHeader}>
+                    <Text style={styles.sheetTitle}>Health Progression Score Details</Text>
+                    <TouchableOpacity onPress={onClose} style={styles.sheetClose}>
+                        <Icon type={Icons.Ionicons} name="close" size={ms(22)} color={blackColor} />
+                    </TouchableOpacity>
+                </View>
+                <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.sheetScroll}>
+                    {BREAKDOWN_DATA.map((item, i) => (
+                        <BreakdownItem
+                            key={i}
+                            item={item}
+                            showTooltip={activeTooltip === i}
+                            onToggleTooltip={() => setActiveTooltip(activeTooltip === i ? null : i)}
+                        />
+                    ))}
+                    <View style={{ height: vs(20) }} />
+                </ScrollView>
+            </View>
+        </Modal>
+    );
+};
 
-const CardHeader = ({ label, value, valueGreen }) => (
-    <View style={styles.cardRow}>
-        <Text style={styles.cardLabel}>{label}</Text>
-        <Text style={[styles.cardValue, valueGreen && { color: primaryColor }]}>{value}</Text>
+// ── Health Progression Story ──────────────────────────────────────────────────
+const PROGRESSION_DATA = [
+    { score: 614, date: '24 Feb, 2019', condition: 'Hypothyroidism Diagnosed', doctor: 'Dr. Sarah Smith', visit: 'Routine Check', points: '-13 Pts', isPositive: false, showArrow: true },
+    { score: 627, date: '24 Feb, 2019', condition: 'Hypothyroidism Diagnosed', doctor: 'Dr. Sarah Smith', visit: 'Routine Check', points: '-7 Pts',  isPositive: false, showArrow: false },
+];
+
+// ── Timeline Score Badge (oval + right-pointing arrow) ───────────────────────
+const TimelineBadge = ({ score }) => (
+    <View style={styles.tlBadgeRow}>
+        <View style={styles.tlOval}>
+            <Text style={styles.tlOvalText}>{score}</Text>
+        </View>
+        <View style={styles.tlArrow} />
     </View>
 );
 
-const SubRow = ({ label, value }) => (
-    <View style={styles.subRow}>
-        <Text style={styles.subLabel}>{label}</Text>
-        <Text style={styles.subValue}>{value}</Text>
+// ── Single Timeline Row ───────────────────────────────────────────────────────
+const TimelineRow = ({ item, isLast }) => (
+    <View style={styles.tlRow}>
+        {/* Left: badge + connector line */}
+        <View style={styles.tlLeft}>
+            <TimelineBadge score={item.score} />
+            {!isLast && <View style={styles.tlConnector} />}
+        </View>
+        {/* Right: content */}
+        <View style={styles.tlContent}>
+            <Text style={styles.tlDate}>{item.date}</Text>
+            <View style={styles.tlConditionRow}>
+                <Text style={styles.tlCondition} numberOfLines={1}>{item.condition}</Text>
+                <View style={styles.tlPointsRow}>
+                    <Text style={[styles.tlPoints, { color: item.isPositive ? '#10B981' : '#EF4444' }]}>
+                        {item.points}
+                    </Text>
+                    {item.showArrow && (
+                        <Icon
+                            type={Icons.Ionicons}
+                            name={item.isPositive ? 'arrow-up' : 'arrow-down'}
+                            size={ms(12)}
+                            color={item.isPositive ? '#10B981' : '#EF4444'}
+                            style={{ marginLeft: ms(2) }}
+                        />
+                    )}
+                </View>
+            </View>
+            <Text style={styles.tlDoctor}>{item.doctor} • {item.visit}</Text>
+        </View>
     </View>
 );
 
-const BulletRow = ({ label, value }) => (
-    <View style={styles.subRow}>
-        <Text style={styles.subLabel}>• {label}</Text>
-        <Text style={styles.subValue}>{value}</Text>
-    </View>
-);
-
-const CheckBtn = ({ onPress }) => (
-    <TouchableOpacity style={styles.checkBtn} activeOpacity={0.8} onPress={onPress}>
-        <Text style={styles.checkBtnText}>Check Details</Text>
+// ── Active Health Condition Grid Cell ────────────────────────────────────────
+const ConditionItem = ({ label, count, onPress }) => (
+    <TouchableOpacity style={styles.gridCell} onPress={onPress} activeOpacity={0.7}>
+        <View style={styles.gridCellTop}>
+            <Text style={styles.gridCellLabel} numberOfLines={1}>{label}</Text>
+            <Icon type={Icons.Ionicons} name="chevron-forward" size={ms(13)} color={blackColor} />
+        </View>
+        <View style={[styles.gridBadge, { marginTop: vs(8) }]}>
+            <Text style={styles.gridBadgeText}>{count}</Text>
+        </View>
     </TouchableOpacity>
 );
 
-// ── Main screen ───────────────────────────────────────────────────────────
+// ── Lifestyle Grid Cell ───────────────────────────────────────────────────────
+const LifestyleItem = ({ label, count, image, onPress }) => (
+    <TouchableOpacity style={styles.gridCell} onPress={onPress} activeOpacity={0.7}>
+        <View style={styles.gridCellTop}>
+            <Text style={styles.gridCellLabel} numberOfLines={1}>{label}</Text>
+            <Icon type={Icons.Ionicons} name="chevron-forward" size={ms(13)} color={blackColor} />
+        </View>
+        <View style={styles.lifestyleBottom}>
+            <View style={styles.gridBadge}>
+                <Text style={styles.gridBadgeText}>{count}</Text>
+            </View>
+            {image && <Image source={image} style={styles.lifestyleImage} resizeMode="contain" />}
+        </View>
+    </TouchableOpacity>
+);
+
+// ── Organ Row ─────────────────────────────────────────────────────────────────
+const OrganRow = ({ label, count, showBorder }) => (
+    <View style={[styles.dataRow, showBorder && styles.rowBorderTop]}>
+        <Text style={styles.dataRowLabel}>{label}</Text>
+        <Text style={styles.dataRowCount}>{count}</Text>
+        <Icon type={Icons.Ionicons} name="chevron-forward-circle-outline" size={ms(18)} color="#C0C0C0" />
+    </View>
+);
+
+// ── Main Screen ───────────────────────────────────────────────────────────────
 const CheckHealthStatus = () => {
     const navigation = useNavigation();
     const route = useRoute();
-    const fromStack = route.params?.fromStack;
+    const fromDashboard = route.params?.fromDashboard;
+    const [sheetVisible, setSheetVisible] = useState(false);
 
     return (
         <SafeAreaView style={styles.container}>
-            <StatusBar2 />
+            <StatusBar3 />
 
             {/* Header */}
             <View style={styles.header}>
-                {fromStack && (
+                {fromDashboard && (
                     <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backBtn}>
                         <Icon type={Icons.Ionicons} name="arrow-back" size={ms(22)} color={blackColor} />
                     </TouchableOpacity>
@@ -184,80 +319,87 @@ const CheckHealthStatus = () => {
 
             <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.scroll}>
 
-                {/* ── Card 1: Health Score ── */}
-                <Card>
-                    <Text style={styles.cardTitle}>My Health Score card</Text>
-                    <View style={styles.scoreRow}>
-                        <View style={{ flex: 1 }}>
-                            <Text style={styles.statusLabel}>Health Status</Text>
-                            <Text style={[styles.statusValue, { color: '#4CAF50' }]}>Stable</Text>
-                            <View style={{ marginTop: vs(10), alignSelf: 'flex-start' }}>
-                                <CheckBtn />
-                            </View>
-                        </View>
-                        <HealthGauge />
-                    </View>
-                </Card>
+                {/* ── My Health Continuity Score ── */}
+                <View style={styles.card}>
+                    <ScoreGauge />
+                    <Text style={styles.scoreStable}>Stable</Text>
+                    <Text style={styles.scoreDesc}>
+                        Your engagement with health has been{'\n'}consistent over the last 3 months
+                    </Text>
+                    <TouchableOpacity
+                        style={styles.checkScoreBtn}
+                        activeOpacity={0.85}
+                        onPress={() => setSheetVisible(true)}
+                    >
+                        <Text style={styles.checkScoreBtnText}>Check Score Details</Text>
+                    </TouchableOpacity>
+                </View>
 
-                {/* ── Card 2: Health Risk Alerts ── */}
-                <Card>
-                    <CardHeader label="My Health Risk Alerts :" value="0" />
-                    <View style={styles.btnRight}>
-                        <CheckBtn />
-                    </View>
-                </Card>
+                {/* ── Health Progression Story ── */}
+                <View style={styles.card}>
+                    <Text style={styles.cardTitle}>Health Progression story</Text>
 
-                {/* ── Card 3: Active Health Conditions ── */}
-                <Card>
-                    <CardHeader label="My Active Health Conditions :" value="2" />
-                    <SubRow label="Acute :" value="0" />
-                    <SubRow label="Chronic :" value="0" />
-                    <SubRow label="Chronic Progressive :" value="0" />
-                    <SubRow label="Genetic :" value="0" />
-                    <SubRow label="Life threats :" value="0" />
-                    <View style={styles.btnRight}>
-                        <CheckBtn />
+                    {/* Black pill header */}
+                    <View style={styles.progressionPill}>
+                        <Text style={styles.progressionPillText}>Score</Text>
+                        <Text style={[styles.progressionPillText, { marginLeft: ms(30) }]}>Health Variation</Text>
                     </View>
-                </Card>
 
-                {/* ── Card 4: Vitals Monitoring ── */}
-                <Card>
-                    <CardHeader label="My Vitals Monitoring :" value="Stable : 10" />
-                    <SubRow label="Concern :" value="0" />
-                    <SubRow label="Needs Attention :" value="0" />
-                    <View style={styles.btnRight}>
-                        <CheckBtn onPress={() => navigation.navigate('AnalysisCheck')} />
+                    {/* Timeline rows */}
+                    <View style={{ alignSelf: 'stretch', marginTop: vs(8) }}>
+                        {PROGRESSION_DATA.map((item, i) => (
+                            <TimelineRow key={i} item={item} isLast={i === PROGRESSION_DATA.length - 1} />
+                        ))}
                     </View>
-                </Card>
 
-                {/* ── Card 5: Lifestyle Habits ── */}
-                <Card>
-                    <CardHeader label="My Lifestyle Habits Monitoring :" value="Stable" valueGreen />
-                    <SubRow label="Food Habits :" value="0" />
-                    <SubRow label="Sleep/Rest :" value="0" />
-                    <SubRow label="Fitness :" value="0" />
-                    <View style={{ flexDirection: 'row', alignItems: 'center', paddingVertical: vs(3) }}>
-                        <Text style={{ fontSize: ms(13), color: '#444', flex: 1 }}>Medication</Text>
-                        <Text style={{ fontSize: ms(13), color: '#444', fontWeight: '500', width: ms(90) }}>0</Text>
-                    </View>
-                    <View style={styles.btnRight}>
-                        <CheckBtn />
-                    </View>
-                </Card>
+                    <TouchableOpacity
+                        style={styles.viewProgressBtn}
+                        onPress={() => navigation.navigate('HealthProgressionStoryScreen')}
+                    >
+                        <Text style={styles.viewProgressText}>View Health Progress</Text>
+                        <Icon type={Icons.Ionicons} name="chevron-forward" size={ms(14)} color={primaryColor} />
+                    </TouchableOpacity>
+                </View>
 
-                {/* ── Card 6: Health Monitoring ── */}
-                <Card>
-                    <CardHeader label="My Health Monitoring :" value="Stable" />
-                    <BulletRow label="BP :" value="Stable" />
-                    <BulletRow label="Glucose :" value="Stable" />
-                    <BulletRow label="Menstrual Cycle :" value="Stable" />
-                    <View style={styles.btnRight}>
-                        <CheckBtn />
+                {/* ── My Active Health Conditions ── */}
+                <View style={styles.card}>
+                    <Text style={styles.cardTitle}>My Active Health Conditions</Text>
+                    <View style={styles.grid}>
+                        <ConditionItem label="Acute" count="4" onPress={() => navigation.navigate('AcuteConditionsScreen')} />
+                        <ConditionItem label="Chronic" count="4" onPress={() => navigation.navigate('ChronicConditionsScreen')} />
+                        <ConditionItem label="Chronic infec..." count="4" onPress={() => navigation.navigate('ChronicProgressiveScreen')} />
+                        <ConditionItem label="Genetic" count="4" />
+                        <ConditionItem label="Life threats" count="4" onPress={() => navigation.navigate('LifeThreatsScreen')} />
+                        <ConditionItem label="Preventive" count="4" />
                     </View>
-                </Card>
+                </View>
 
-                <View style={{ height: vs(30) }} />
+                {/* ── Organs Health Status ── */}
+                <View style={styles.card}>
+                    <Text style={styles.cardTitle}>Organs Health Status :</Text>
+                    <OrganRow label="Total organs monitor" count="10" />
+                    <OrganRow label="Stable" count="6" showBorder />
+                    <OrganRow label="Needs Attention" count="4" showBorder />
+                </View>
+
+                {/* ── Lifestyle Influence ── */}
+                <View style={styles.card}>
+                    <Text style={styles.cardTitle}>Lifestyle Influence :</Text>
+                    <View style={styles.grid}>
+                        <LifestyleItem label="Diet"      count="4" image={require('../assets/img/lsdite.png')} />
+                        <LifestyleItem label="Sleep"     count="4" image={require('../assets/img/lssleep.png')} />
+                        <LifestyleItem label="Fitness"   count="4" image={require('../assets/img/lsfitness.png')} />
+                        <LifestyleItem label="Medicat..."count="4" image={require('../assets/img/lsmedication.png')} />
+                        <LifestyleItem label="Alcohol"   count="4" image={require('../assets/img/lsalchol.png')} />
+                        <LifestyleItem label="Smoking"   count="4" image={require('../assets/img/lssmoking.png')} />
+                    </View>
+                </View>
+
+                <View style={{ height: vs(80) }} />
             </ScrollView>
+
+            {/* ── Score Details Bottom Sheet ── */}
+            <ScoreDetailsSheet visible={sheetVisible} onClose={() => setSheetVisible(false)} />
         </SafeAreaView>
     );
 };
@@ -265,125 +407,167 @@ const CheckHealthStatus = () => {
 export default CheckHealthStatus;
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
+    container: { flex: 1, backgroundColor: '#F2F5F8' },
+
+    // ── Header ──────────────────────────────────────────────────────────────────
+    header: {
+        flexDirection: 'row', alignItems: 'center',
+        paddingHorizontal: ms(15), paddingTop: ms(50), paddingBottom: ms(12),
         backgroundColor: whiteColor,
     },
+    backBtn: { marginRight: ms(12), width: ms(32), alignItems: 'flex-start' },
+    headerTitle: { fontSize: ms(16), fontWeight: 'bold', color: blackColor },
 
-    // ── Header
-    header: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        paddingHorizontal: ms(15),
-        paddingTop: ms(50),
-        paddingBottom: ms(12),
-    },
-    backBtn: {
-        marginRight: ms(12),
-        width: ms(32),
-        alignItems: 'flex-start',
-    },
-    headerTitle: {
-        fontSize: ms(16),
-        fontWeight: 'bold',
-        color: blackColor,
-    },
+    scroll: { paddingHorizontal: ms(14), paddingTop: vs(14), paddingBottom: vs(20), gap: vs(12) },
 
-    scroll: {
-        paddingHorizontal: ms(14),
-        paddingTop: vs(14),
-        paddingBottom: vs(20),
-        gap: vs(12),
-    },
-
-    // ── Card
+    // ── White Card ───────────────────────────────────────────────────────────────
     card: {
-        backgroundColor: '#F1F5F9',
-        borderRadius: ms(10),
-        padding: ms(14),
+        backgroundColor: whiteColor, borderRadius: ms(14),
+        padding: ms(16), alignItems: 'center',
     },
     cardTitle: {
-        fontSize: ms(14),
-        fontWeight: 'bold',
-        color: blackColor,
-        marginBottom: vs(8),
+        fontSize: ms(14), fontWeight: '700', color: blackColor,
+        marginBottom: vs(12), alignSelf: 'flex-start',
     },
 
-    // ── Score section
-    scoreRow: {
-        flexDirection: 'row',
-        alignItems: 'center',
+    // ── Score Gauge ───────────────────────────────────────────────────────────────
+    gaugeWrap: { alignItems: 'center', marginTop: vs(8) },
+    gaugeCenterText: {
+        position: 'absolute', width: GAUGE_SIZE, height: GAUGE_SIZE,
+        justifyContent: 'center', alignItems: 'center',
+    },
+    gaugeScore:  { fontSize: ms(38), fontWeight: 'bold', color: '#166B5E' },
+    gaugeOutOf:  { fontSize: ms(11), color: '#777', marginTop: vs(-2) },
+    gaugeMinMax: { fontSize: ms(13), color: '#666', fontWeight: '600' },
+
+    scoreStable: { fontSize: ms(18), fontWeight: 'bold', color: blackColor, marginTop: vs(8) },
+    scoreDesc: {
+        fontSize: ms(12), color: '#888', textAlign: 'center',
+        lineHeight: ms(20), marginTop: vs(4),
+    },
+    checkScoreBtn: {
+        backgroundColor: primaryColor, borderRadius: ms(25),
+        paddingHorizontal: ms(28), paddingVertical: vs(12),
+        marginTop: vs(16), marginBottom: vs(4),
+    },
+    checkScoreBtnText: { color: whiteColor, fontSize: ms(13), fontWeight: '700' },
+
+    // ── Health Progression Story ──────────────────────────────────────────────────
+    progressionPill: {
+        flexDirection: 'row', alignSelf: 'stretch',
+        backgroundColor: blackColor, borderRadius: ms(30),
+        paddingVertical: vs(10), paddingHorizontal: ms(20),
+        marginBottom: vs(4),
+    },
+    progressionPillText: { color: whiteColor, fontSize: ms(13), fontWeight: '700' },
+
+    // ── Timeline ──────────────────────────────────────────────────────────────
+    tlRow: { flexDirection: 'row', alignItems: 'flex-start' },
+    tlLeft: { alignItems: 'center', width: ms(88), marginRight: ms(8) },
+    tlBadgeRow: { flexDirection: 'row', alignItems: 'center' },
+    tlOval: {
+        backgroundColor: primaryColor, borderRadius: ms(22),
+        paddingHorizontal: ms(14), paddingVertical: vs(7),
+        minWidth: ms(58), alignItems: 'center',
+    },
+    tlOvalText: { color: whiteColor, fontSize: ms(13), fontWeight: 'bold' },
+    tlArrow: {
+        width: 0, height: 0,
+        borderTopWidth: ms(9), borderTopColor: 'transparent',
+        borderBottomWidth: ms(9), borderBottomColor: 'transparent',
+        borderLeftWidth: ms(11), borderLeftColor: primaryColor,
+    },
+    tlConnector: { width: ms(2.5), flex: 1, minHeight: vs(22), backgroundColor: primaryColor },
+    tlContent: { flex: 1, paddingTop: vs(4), paddingBottom: vs(12) },
+    tlDate: { fontSize: ms(10), color: '#9CA3AF', marginBottom: vs(2) },
+    tlConditionRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
+    tlCondition: { fontSize: ms(12), fontWeight: '700', color: blackColor, flex: 1, marginRight: ms(6) },
+    tlPointsRow: { flexDirection: 'row', alignItems: 'center' },
+    tlPoints: { fontSize: ms(12), fontWeight: '700' },
+    tlDoctor: { fontSize: ms(10), color: '#9CA3AF', marginTop: vs(2) },
+
+    viewProgressBtn: {
+        flexDirection: 'row', alignItems: 'center',
+        alignSelf: 'flex-start', marginTop: vs(6),
+        backgroundColor: '#F3F4F6', borderRadius: ms(20),
+        paddingVertical: vs(7), paddingHorizontal: ms(14),
+    },
+    viewProgressText: { fontSize: ms(12), color: primaryColor, fontWeight: '700', marginRight: ms(4) },
+
+    // ── Grid ─────────────────────────────────────────────────────────────────────
+    grid: { flexDirection: 'row', flexWrap: 'wrap', gap: ms(10), alignSelf: 'stretch' },
+    gridCell: {
+        width: '47.5%', backgroundColor: '#F3F4F6',
+        borderRadius: ms(10), padding: ms(12), minHeight: vs(80),
         justifyContent: 'space-between',
-        marginBottom: vs(8),
     },
-    statusLabel: {
-        fontSize: ms(11),
-        color: '#888',
+    gridCellTop: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
+    gridCellLabel: { fontSize: ms(13), fontWeight: '600', color: blackColor, flex: 1 },
+    gridBadge: {
+        width: ms(32), height: ms(32), borderRadius: ms(16),
+        backgroundColor: blackColor, justifyContent: 'center', alignItems: 'center',
     },
-    statusValue: {
-        fontSize: ms(14),
-        fontWeight: 'bold',
-        marginTop: vs(2),
+    gridBadgeText: { color: whiteColor, fontSize: ms(14), fontWeight: 'bold' },
+    lifestyleBottom: {
+        flexDirection: 'row', alignItems: 'flex-end',
+        justifyContent: 'space-between', marginTop: vs(8),
     },
+    lifestyleImage: { width: ms(55), height: ms(55) },
 
-    // ── Card header row
-    cardRow: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        marginBottom: vs(6),
-    },
-    cardLabel: {
-        fontSize: ms(13),
-        fontWeight: '600',
-        color: blackColor,
-        flex: 1,
-        flexWrap: 'wrap',
-    },
-    cardValue: {
-        fontSize: ms(13),
-        fontWeight: 'bold',
-        color: blackColor,
-        width: ms(90),
-    },
+    // ── Data Row ─────────────────────────────────────────────────────────────────
+    dataRow: { flexDirection: 'row', alignItems: 'center', paddingVertical: vs(10), alignSelf: 'stretch' },
+    rowBorderTop: { borderTopWidth: 1, borderTopColor: '#F0F0F0' },
+    dataRowLabel: { flex: 1, fontSize: ms(13), color: '#333' },
+    dataRowCount: { fontSize: ms(13), fontWeight: '600', color: blackColor, marginRight: ms(8) },
 
-    // ── Sub rows
-    subRow: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        paddingVertical: vs(3),
+    // ── Bottom Sheet ─────────────────────────────────────────────────────────────
+    sheetOverlay: {
+        flex: 1, backgroundColor: 'rgba(0,0,0,0.4)',
     },
-    subLabel: {
-        fontSize: ms(13),
-        color: '#444',
+    sheet: {
+        backgroundColor: whiteColor,
+        borderTopLeftRadius: ms(20), borderTopRightRadius: ms(20),
+        paddingHorizontal: ms(20), paddingTop: ms(12),
+        maxHeight: '80%',
     },
-    subValue: {
-        fontSize: ms(13),
-        color: '#444',
-        fontWeight: '500',
-        width: ms(90),
+    sheetHandle: {
+        width: ms(40), height: ms(4), borderRadius: ms(2),
+        backgroundColor: '#D1D5DB', alignSelf: 'center', marginBottom: vs(12),
     },
+    sheetHeader: {
+        flexDirection: 'row', alignItems: 'center',
+        justifyContent: 'space-between', marginBottom: vs(16),
+    },
+    sheetTitle: { fontSize: ms(15), fontWeight: '700', color: blackColor, flex: 1 },
+    sheetClose: {
+        width: ms(30), height: ms(30), borderRadius: ms(15),
+        backgroundColor: '#F3F4F6', justifyContent: 'center', alignItems: 'center',
+    },
+    sheetScroll: { paddingBottom: vs(10) },
 
-    // ── Buttons
-    btnRight: {
-        alignItems: 'flex-end',
-        marginTop: vs(8),
+    // ── Breakdown Item ────────────────────────────────────────────────────────────
+    bdItem: {
+        backgroundColor: whiteColor, borderRadius: ms(12),
+        padding: ms(14), marginBottom: vs(10),
+        borderWidth: 1, borderColor: '#F3F4F6',
     },
-    rowWithBtn: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        gap: ms(10),
+    bdHeader: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' },
+    bdTitle: { fontSize: ms(13), fontWeight: '700', color: blackColor, flex: 1 },
+    bdScoreRow: { flexDirection: 'row', alignItems: 'center', gap: ms(6) },
+    bdScore: { fontSize: ms(13), fontWeight: '700', color: blackColor },
+    bdProgressBg: {
+        height: vs(6), backgroundColor: '#E8E8E8',
+        borderRadius: ms(3), overflow: 'hidden', marginTop: vs(8),
     },
-    checkBtn: {
-        backgroundColor: primaryColor,
-        borderRadius: ms(20),
-        paddingHorizontal: ms(14),
-        paddingVertical: vs(6),
+    bdProgressFill: { height: '100%', borderRadius: ms(3) },
+    bdDesc: { fontSize: ms(11), color: '#999', marginTop: vs(4) },
+
+    // ── Tooltip ───────────────────────────────────────────────────────────────────
+    tooltip: {
+        backgroundColor: '#F9FAFB', borderRadius: ms(8),
+        padding: ms(10), marginTop: vs(8),
+        borderWidth: 1, borderColor: '#E5E7EB',
     },
-    checkBtnText: {
-        color: whiteColor,
-        fontSize: ms(12),
-        fontWeight: '600',
-    },
+    tooltipTitle: { fontSize: ms(12), fontWeight: '700', color: blackColor },
+    tooltipDesc: { fontSize: ms(11), color: '#888', marginTop: vs(2) },
 });

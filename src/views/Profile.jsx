@@ -362,10 +362,9 @@ const Profile = (props) => {
           contentContainerStyle={styles.scrollContent}
         >
           {/* Personal Information Card */}
-          <View style={styles.personalCard}>
+          {/* <View style={styles.personalCard}>
             <Text style={styles.cardSectionTitle}>Personal Information</Text>
 
-            {/* Profile Row */}
             <View style={styles.profileRow}>
               <TouchableOpacity onPress={select_photo} activeOpacity={0.8}>
                 <View style={styles.profileImageWrapper}>
@@ -401,7 +400,6 @@ const Profile = (props) => {
               </TouchableOpacity>
             </View>
 
-            {/* Info Rows */}
             <View style={styles.infoSection}>
               <View style={styles.infoRow}>
                 <Text style={styles.infoLabel}>Surname</Text>
@@ -418,9 +416,8 @@ const Profile = (props) => {
                 <Text style={styles.infoValue}>{formatDOBDisplay(date) || '-'}</Text>
               </View>
             </View>
-          </View>
+          </View> */}
 
-          {/* Manage Your Details */}
           <Text style={styles.manageSectionTitle}>Manage Your Details</Text>
 
           {MANAGE_ITEMS.map((item) => (

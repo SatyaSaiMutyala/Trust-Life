@@ -23,6 +23,9 @@ import Faq from './src/views/Faq';
 import FaqCategories from './src/views/FaqCategories';
 import FaqDetails from './src/views/FaqDetails';
 import PrivacyPolicies from './src/views/PrivacyPolicies';
+import TermsOfServiceScreen from './src/views/TermsOfServiceScreen';
+import UserConsentAgreementScreen from './src/views/UserConsentAgreementScreen';
+import PrivacyPolicyScreen from './src/views/PrivacyPolicyScreen';
 import Otp from './src/views/Otp';
 import DoctorList from './src/views/DoctorList';
 import Hospital from './src/views/Hospital';
@@ -122,6 +125,7 @@ import FullBodyCheckUpScreen from './src/views/FullBodyCheckUpScreen';
 import VitaminScreen from './src/views/VitaminScreen';
 import SearchItems from './src/views/SearchItems';
 import MedicalRecordsVault from './src/views/MedicalRecordsVault';
+import BioMarkerDetailScreen from './src/views/BioMarkerDetailScreen';
 import UploadHealthReport from './src/views/UploadHealthReport';
 import MedicationTracking from './src/views/MedicationTracking';
 import AddMedicines from './src/views/AddMedicines';
@@ -138,6 +142,8 @@ import SettingsMore from './src/views/Settings';
 import ChangePassword from './src/views/ChangePassword';
 import SetNewPassword from './src/views/SetNewPassword';
 import CheckHealthStatus from './src/views/CheckHealthStatus';
+import HealthScoreDetails from './src/views/HealthScoreDetails';
+import HealthProgressionStoryScreen from './src/views/HealthProgressionStoryScreen';
 import ChangeMobileNumber from './src/views/ChangeMobileNumber';
 import FingerprintSettings from './src/views/FingerprintSettings';
 import PDFViewer from './src/views/PDFViewer';
@@ -165,11 +171,15 @@ import PatientMedicalSummary from './src/views/PatientHealthRecord/PatientMedica
 import DoctorNotes from './src/views/PatientHealthRecord/DoctorNotes';
 import LabReports from './src/views/PatientHealthRecord/LabReports';
 import MedicationPrescription from './src/views/PatientHealthRecord/MedicationPrescription';
+import AddPrescriptionScreen from './src/views/PatientHealthRecord/AddPrescriptionScreen';
 import PrescriptionDetail from './src/views/PatientHealthRecord/PrescriptionDetail';
 import PatientNote from './src/views/PatientHealthRecord/PatientNote';
 import NoteDetail from './src/views/PatientHealthRecord/NoteDetail';
 import AddPatientNote from './src/views/PatientHealthRecord/AddPatientNote';
 import MedicalRecords from './src/views/PatientHealthRecord/MedicalRecords';
+import UploadMedicalRecord from './src/views/PatientHealthRecord/UploadMedicalRecord';
+import MedicalBills from './src/views/PatientHealthRecord/MedicalBills';
+import UploadMedicalBill from './src/views/PatientHealthRecord/UploadMedicalBill';
 import HeartRateLog from './src/views/HeartRate/HeartRateLog';
 import HeartRateDashboard from './src/views/HeartRate/HeartRateDashboard';
 import AddHeartRateReading from './src/views/HeartRate/AddHeartRateReading';
@@ -218,6 +228,7 @@ import ExerciseDetailForm from './src/views/ExerciseTracking/ExerciseDetailForm'
 import SleepTrackingDashboard from './src/views/SleepTracking/SleepTrackingDashboard';
 import AddSleepEntry from './src/views/SleepTracking/AddSleepEntry';
 import SleepReadings from './src/views/SleepTracking/SleepReadings';
+import Tracking from './src/views/Tracking/Tracking';
 import DoctorConsultation from './src/views/Doctor/DoctorConsultation';
 import DoctorSearchScreen from './src/views/Doctor/DoctorSearchScreen';
 import DoctorSpecialistList from './src/views/Doctor/DoctorSpecialistList';
@@ -243,6 +254,39 @@ import ViewDoctorNoteScreen from './src/views/TrustMD/ViewDoctorNoteScreen';
 import DoctorNoteDetailScreen from './src/views/TrustMD/DoctorNoteDetailScreen';
 import DoctorPrescriptionScreen from './src/views/TrustMD/DoctorPrescriptionScreen';
 import ViewPrescriptionScreen from './src/views/TrustMD/ViewPrescriptionScreen';
+import AddLabTestScreen from './src/views/TrustMD/AddLabTestScreen';
+import ViewLabTestsScreen from './src/views/TrustMD/ViewLabTestsScreen';
+import ViewLabTestDetailScreen from './src/views/TrustMD/ViewLabTestDetailScreen';
+import AsthmaIntroScreen from './src/views/Asthma/AsthmaIntroScreen';
+import AsthmaDashboard from './src/views/Asthma/AsthmaDashboard';
+import AddAsthmaDetails from './src/views/Asthma/AddAsthmaDetails';
+import AsthmaReadings from './src/views/Asthma/AsthmaReadings';
+import MusculoskeletalIntroScreen from './src/views/Musculoskeletal/MusculoskeletalIntroScreen';
+import MusculoskeletalDashboard from './src/views/Musculoskeletal/MusculoskeletalDashboard';
+import AddMusculoskeletalDetails from './src/views/Musculoskeletal/AddMusculoskeletalDetails';
+import MusculoskeletalReadings from './src/views/Musculoskeletal/MusculoskeletalReadings';
+import ProfileScreen from './src/views/More/ProfileScreen';
+import AccessLogScreen from './src/views/More/AccessLogScreen';
+import AccessDetailScreen from './src/views/More/AccessDetailScreen';
+import AcuteConditionsScreen from './src/views/Progress/AcuteConditionsScreen';
+import ChronicConditionsScreen from './src/views/Progress/ChronicConditionsScreen';
+import ChronicDetailScreen from './src/views/Progress/ChronicDetailScreen';
+import ChronicProgressiveScreen from './src/views/Progress/ChronicProgressiveScreen';
+import ChronicProgressiveDetailScreen from './src/views/Progress/ChronicProgressiveDetailScreen';
+import ConditionDetailScreen from './src/views/Progress/ConditionDetailScreen';
+import LifeThreatsScreen from './src/views/Progress/LifeThreatsScreen';
+import LifeThreatsDetailScreen from './src/views/Progress/LifeThreatsDetailScreen';
+import ConcernsScreen from './src/views/Progress/ConcernsScreen';
+import ConcernsDetailScreen from './src/views/Progress/ConcernsDetailScreen';
+import NeedAttentionScreen from './src/views/Progress/NeedAttentionScreen';
+import NeedAttentionDetailScreen from './src/views/Progress/NeedAttentionDetailScreen';
+import ConsentManagerScreen from './src/views/More/ConsentManagerScreen';
+import AddConsentManagerScreen from './src/views/More/AddConsentManagerScreen';
+import AnnualTrustReportScreen from './src/views/More/AnnualTrustReportScreen';
+import DataTransparencyCenterScreen from './src/views/More/DataTransparencyCenterScreen';
+import MedicineCartScreen from './src/views/MedicalPharma/MedicineCartScreen';
+import MedicinePaymentSuccessScreen from './src/views/MedicalPharma/PaymentSuccessScreen';
+import MedicineOrderPlacedScreen from './src/views/MedicalPharma/OrderPlacedScreen';
 
 
 const forFade = ({ current, next }) => {
@@ -282,13 +326,13 @@ const TabArr = [
   },
   {
     route: 'Reports',
-    label: 'Medical\nRecords',
-    component: PatientHealthRecords,
+    label: 'Tracking',
+    component: Tracking,
   },
   {
-    route: 'TrustMD',
-    label: 'Trust\nMD',
-    component: TrustMDPatientDetails,
+    route: 'PatientHealthRecords',
+    label: 'Records',
+    component: PatientHealthRecords,
   },
   {
     route: 'HealthTrend',
@@ -478,6 +522,8 @@ function App() {
               <Stack.Screen name="AnalysisChart" component={AnalysisChart} options={{ headerShown: false }} />
               <Stack.Screen name="AnalysisCheck" component={Analysis} options={{ headerShown: false }} />
               <Stack.Screen name="CheckHealthStatus" component={CheckHealthStatus} options={{ headerShown: false }} />
+              <Stack.Screen name="HealthScoreDetails" component={HealthScoreDetails} options={{ headerShown: false }} />
+              <Stack.Screen name="HealthProgressionStoryScreen" component={HealthProgressionStoryScreen} options={{ headerShown: false }} />
               <Stack.Screen name="MyOrder" component={MyOrders} options={{ headerShown: true }} />
               <Stack.Screen name="ListFamilyMembers" component={ListFamilyMembers} options={{ headerShown: false }} />
               <Stack.Screen name="AddFamilyMember" component={AddFamilyMember} options={{ headerShown: false }} />
@@ -517,6 +563,9 @@ function App() {
               <Stack.Screen name="CreatePassword" component={CreatePassword} options={{ headerShown: false }} />
               <Stack.Screen name="Password" component={Password} options={{ headerShown: false }} />
               <Stack.Screen name="PrivacyPolicies" component={PrivacyPolicies} options={{ title: 'Privacy Policies' }} />
+              <Stack.Screen name="TermsOfServiceScreen" component={TermsOfServiceScreen} options={{ title: 'Terms of Service' }} />
+              <Stack.Screen name="UserConsentAgreementScreen" component={UserConsentAgreementScreen} options={{ title: 'User Consent Agreement' }} />
+              <Stack.Screen name="PrivacyPolicyScreen" component={PrivacyPolicyScreen} options={{ title: 'Privacy Policy' }} />
               <Stack.Screen name="DoctorCategories" component={DoctorCategories} options={{ title: 'Common Symptoms' }} />
               <Stack.Screen name="TermsAndConditions" component={TermsAndConditions} options={{ title: 'Terms and Conditions' }} />
               <Stack.Screen name="CreateAppointment" component={CreateAppointment} options={{ title: 'Create Appointment' }} />
@@ -565,6 +614,7 @@ function App() {
               <Stack.Screen name='VitaminScreen' component={VitaminScreen} options={{headerShown:false}} />
               <Stack.Screen name='SearchItems' component={SearchItems} options={{headerShown:false}}/>
               <Stack.Screen name='MedicalRecordsVault' component={MedicalRecordsVault} options={{headerShown:false}}/>
+              <Stack.Screen name='BioMarkerDetail' component={BioMarkerDetailScreen} options={{headerShown:false}}/>
               <Stack.Screen name='UploadHealthReport' component={UploadHealthReport} options={{headerShown:false}}/>
               <Stack.Screen name='MedicationTracking' component={MedicationTracking} options={{headerShown:false}}/>
               <Stack.Screen name='AddMedicines' component={AddMedicines} options={{headerShown:false}}/>
@@ -605,11 +655,15 @@ function App() {
               <Stack.Screen name='DoctorNotes' component={DoctorNotes} options={{headerShown:false}}/>
               <Stack.Screen name='LabReports' component={LabReports} options={{headerShown:false}}/>
               <Stack.Screen name='MedicationPrescription' component={MedicationPrescription} options={{headerShown:false}}/>
+              <Stack.Screen name='AddPrescription' component={AddPrescriptionScreen} options={{headerShown:false}}/>
               <Stack.Screen name='PrescriptionDetail' component={PrescriptionDetail} options={{headerShown:false}}/>
               <Stack.Screen name='PatientNote' component={PatientNote} options={{headerShown:false}}/>
               <Stack.Screen name='NoteDetail' component={NoteDetail} options={{headerShown:false}}/>
               <Stack.Screen name='AddPatientNote' component={AddPatientNote} options={{headerShown:false}}/>
               <Stack.Screen name='MedicalRecords' component={MedicalRecords} options={{headerShown:false}}/>
+              <Stack.Screen name='UploadMedicalRecord' component={UploadMedicalRecord} options={{headerShown:false}}/>
+              <Stack.Screen name='MedicalBills' component={MedicalBills} options={{headerShown:false}}/>
+              <Stack.Screen name='UploadMedicalBill' component={UploadMedicalBill} options={{headerShown:false}}/>
               <Stack.Screen name='HeartRateLog' component={HeartRateLog} options={{headerShown:false}}/>
               <Stack.Screen name='HeartRateDashboard' component={HeartRateDashboard} options={{headerShown:false}}/>
               <Stack.Screen name='AddHeartRateReading' component={AddHeartRateReading} options={{headerShown:false}}/>
@@ -683,6 +737,39 @@ function App() {
               <Stack.Screen name='DoctorNoteDetailScreen' component={DoctorNoteDetailScreen} options={{headerShown:false}}/>
               <Stack.Screen name='DoctorPrescriptionScreen' component={DoctorPrescriptionScreen} options={{headerShown:false}}/>
               <Stack.Screen name='ViewPrescriptionScreen' component={ViewPrescriptionScreen} options={{headerShown:false}}/>
+              <Stack.Screen name='AddLabTestScreen' component={AddLabTestScreen} options={{headerShown:false}}/>
+              <Stack.Screen name='ViewLabTestsScreen' component={ViewLabTestsScreen} options={{headerShown:false}}/>
+              <Stack.Screen name='ViewLabTestDetailScreen' component={ViewLabTestDetailScreen} options={{headerShown:false}}/>
+              <Stack.Screen name='AsthmaIntroScreen' component={AsthmaIntroScreen} options={{headerShown:false}}/>
+              <Stack.Screen name='AsthmaDashboard' component={AsthmaDashboard} options={{headerShown:false}}/>
+              <Stack.Screen name='AddAsthmaDetails' component={AddAsthmaDetails} options={{headerShown:false}}/>
+              <Stack.Screen name='AsthmaReadings' component={AsthmaReadings} options={{headerShown:false}}/>
+              <Stack.Screen name='MusculoskeletalIntroScreen' component={MusculoskeletalIntroScreen} options={{headerShown:false}}/>
+              <Stack.Screen name='MusculoskeletalDashboard' component={MusculoskeletalDashboard} options={{headerShown:false}}/>
+              <Stack.Screen name='AddMusculoskeletalDetails' component={AddMusculoskeletalDetails} options={{headerShown:false}}/>
+              <Stack.Screen name='MusculoskeletalReadings' component={MusculoskeletalReadings} options={{headerShown:false}}/>
+              <Stack.Screen name='ProfileScreen' component={ProfileScreen} options={{headerShown:false}}/>
+              <Stack.Screen name='AccessLogScreen' component={AccessLogScreen} options={{headerShown:false}}/>
+              <Stack.Screen name='AccessDetailScreen' component={AccessDetailScreen} options={{headerShown:false}}/>
+              <Stack.Screen name='AcuteConditionsScreen' component={AcuteConditionsScreen} options={{headerShown:false}}/>
+              <Stack.Screen name='ChronicConditionsScreen' component={ChronicConditionsScreen} options={{headerShown:false}}/>
+              <Stack.Screen name='ChronicDetailScreen' component={ChronicDetailScreen} options={{headerShown:false}}/>
+              <Stack.Screen name='ChronicProgressiveScreen' component={ChronicProgressiveScreen} options={{headerShown:false}}/>
+              <Stack.Screen name='ChronicProgressiveDetailScreen' component={ChronicProgressiveDetailScreen} options={{headerShown:false}}/>
+              <Stack.Screen name='ConditionDetailScreen' component={ConditionDetailScreen} options={{headerShown:false}}/>
+              <Stack.Screen name='LifeThreatsScreen' component={LifeThreatsScreen} options={{headerShown:false}}/>
+              <Stack.Screen name='LifeThreatsDetailScreen' component={LifeThreatsDetailScreen} options={{headerShown:false}}/>
+              <Stack.Screen name='ConcernsScreen' component={ConcernsScreen} options={{headerShown:false}}/>
+              <Stack.Screen name='ConcernsDetailScreen' component={ConcernsDetailScreen} options={{headerShown:false}}/>
+              <Stack.Screen name='NeedAttentionScreen' component={NeedAttentionScreen} options={{headerShown:false}}/>
+              <Stack.Screen name='NeedAttentionDetailScreen' component={NeedAttentionDetailScreen} options={{headerShown:false}}/>
+              <Stack.Screen name='ConsentManagerScreen' component={ConsentManagerScreen} options={{headerShown:false}}/>
+              <Stack.Screen name='AddConsentManagerScreen' component={AddConsentManagerScreen} options={{headerShown:false}}/>
+              <Stack.Screen name='AnnualTrustReportScreen' component={AnnualTrustReportScreen} options={{headerShown:false}}/>
+              <Stack.Screen name='DataTransparencyCenterScreen' component={DataTransparencyCenterScreen} options={{headerShown:false}}/>
+              <Stack.Screen name='MedicineCartScreen' component={MedicineCartScreen} options={{headerShown:false}}/>
+              <Stack.Screen name='MedicinePaymentSuccessScreen' component={MedicinePaymentSuccessScreen} options={{headerShown:false}}/>
+              <Stack.Screen name='MedicineOrderPlacedScreen' component={MedicineOrderPlacedScreen} options={{headerShown:false}}/>
               <Stack.Screen
                 name="ViewAllPatients"
                 component={ViewAllPatients}

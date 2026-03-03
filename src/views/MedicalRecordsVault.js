@@ -12,7 +12,6 @@ import { StatusBar2 } from '../components/StatusBar';
 import { bold, docIcon, img_url, regular } from '../config/Constants';
 import Icon, { Icons } from '../components/Icons';
 import { blackColor, globalGradient, whiteColor, primaryColor, grayColor } from '../utils/globalColors';
-import PrimaryButton from '../utils/primaryButton';
 import MedicalRecordsShimmer from '../components/MedicalRecordsShimmer';
 
 const { width } = Dimensions.get('window');
@@ -54,7 +53,7 @@ const MedicalRecordsVault = () => {
     const dispatch = useDispatch();
     const { data: labReports, loading } = useSelector(state => state.lab_reports);
 
-    const [activeTab, setActiveTab] = useState(route.params?.activeTab || 'Lab'); // 'Lab' or 'Upload'
+    const [activeTab, setActiveTab] = useState(route.params?.activeTab || 'Lab'); // 'Lab' or 'Bio'
     const [profilePic, setProfilePic] = useState(null);
     const [selectedMember, setSelectedMember] = useState('My self');
     const [reports, setReports] = useState([]);
@@ -116,26 +115,46 @@ const MedicalRecordsVault = () => {
         setReports(dummyReports);
     };
 
-    const renderEmptyState = () => (
-        <View style={styles.contentArea}>
-            <View style={styles.imageContainer}>
-                <Image
-                    source={require('../assets/img/vaultFamily1.png')}
-                    style={styles.illustration}
-                    resizeMode="contain"
-                />
+    const bioMarkersData = [
+        { code: 'GLU002', name: 'Glucose', count: 3 },
+        { code: 'BP001', name: 'Blood Pressure', count: 4 },
+        { code: 'CHL003', name: 'Cholesterol', count: 4 },
+        { code: 'OXY005', name: 'Oxygen Saturation', count: 3 },
+        { code: 'OXY005', name: 'Oxygen Saturation', count: 3 },
+        { code: 'BP001', name: 'Blood Pressure', count: 4 },
+        { code: 'BP001', name: 'Blood Pressure', count: 4 },
+        { code: 'BP001', name: 'Blood Pressure', count: 4 },
+        { code: 'BP001', name: 'Blood Pressure', count: 4 },
+        { code: 'BP001', name: 'Blood Pressure', count: 4 },
+        { code: 'BP001', name: 'Blood Pressure', count: 4 },
+    ];
+
+    const renderBioMarkersTab = () => (
+        <View style={styles.bioContainer}>
+            {/* Table Header */}
+            <View style={styles.bioHeaderRow}>
+                <Text style={[styles.bioHeaderText, { flex: 0.8 }]}>Code</Text>
+                <Text style={[styles.bioHeaderText, { flex: 1.2, textAlign: 'center' }]}>Bio-Markers</Text>
+                <Text style={[styles.bioHeaderText, { flex: 0.5, textAlign: 'right', marginRight: ms(20) }]}>Count</Text>
             </View>
-            <View style={styles.textContainer}>
-                <Text style={styles.mainTitle}>
-                    Add Your Family's Health{"\n"}Records. Track Their Status.
-                </Text>
-                <Text style={styles.description}>
-                    Store your family's health records securely, add reports easily, and track their status anytime.
-                </Text>
-            </View>
-            <View style={{ width: '100%' }}>
-                <PrimaryButton onPress={() => navigation.navigate('UploadHealthReport')} title='Upload Health Report' />
-            </View>
+
+            {/* Table Rows */}
+            <FlatList
+                data={bioMarkersData}
+                keyExtractor={(item, index) => index.toString()}
+                showsVerticalScrollIndicator={false}
+                contentContainerStyle={{ paddingBottom: vs(90), paddingHorizontal: ms(2) }}
+                renderItem={({ item }) => (
+                    <TouchableOpacity style={styles.bioRow} activeOpacity={0.7} onPress={() => navigation.navigate('BioMarkerDetail', { name: item.name, code: item.code })}>
+                        <Text style={[styles.bioCode, { flex: 0.8 }]}>{item.code}</Text>
+                        <Text style={[styles.bioName, { flex: 1.2, textAlign: 'center' }]}>{item.name}</Text>
+                        <View style={{ flex: 0.5, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end' }}>
+                            <Text style={styles.bioCount}>{item.count}</Text>
+                            <Icon type={Icons.Ionicons} name="chevron-forward" color="#9CA3AF" size={ms(16)} />
+                        </View>
+                    </TouchableOpacity>
+                )}
+            />
         </View>
     );
 
@@ -267,10 +286,12 @@ const MedicalRecordsVault = () => {
                 style={styles.headerGradient}
             >
                 <View style={styles.topRow}>
-                    <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
-                        <Icon type={Icons.Ionicons} name="arrow-back" color={blackColor} size={ms(20)} />
-                    </TouchableOpacity>
-                    <Text style={styles.headerTitle} numberOfLines={1} ellipsizeMode="tail">Medical Records Vault</Text>
+                    {route.name !== 'TrustMD' && (
+                        <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
+                            <Icon type={Icons.Ionicons} name="arrow-back" color={blackColor} size={ms(20)} />
+                        </TouchableOpacity>
+                    )}
+                    <Text style={styles.headerTitle} numberOfLines={1} ellipsizeMode="tail">Medical Records</Text>
                     <View style={styles.headerIcons}>
                         <TouchableOpacity style={styles.iconCircle} onPress={() => navigation.navigate('Notifications')}>
                             <Icon type={Icons.MaterialIcons} name="notifications-none" size={ms(20)} color={blackColor} />
@@ -283,7 +304,7 @@ const MedicalRecordsVault = () => {
                                 />
                             ) : (
                                 <View style={[styles.profileImage, styles.defaultProfileIcon]}>
-                                    <Icon type={Icons.MaterialIcons} name="person" size={ms(20)} color={grayColor} />
+                                    <Icon type={Icons.MaterialIcons} name="person" size={ms(20)} color={blackColor} />
                                 </View>
                             )}
                         </TouchableOpacity>
@@ -301,11 +322,11 @@ const MedicalRecordsVault = () => {
                         </Text>
                     </TouchableOpacity>
                     <TouchableOpacity
-                        style={[styles.tab, activeTab === 'Upload' && styles.activeTab]}
-                        onPress={() => setActiveTab('Upload')}
+                        style={[styles.tab, activeTab === 'Bio' && styles.activeTab]}
+                        onPress={() => setActiveTab('Bio')}
                     >
-                        <Text style={[styles.tabText, activeTab === 'Upload' && styles.activeTabText]}>
-                            Upload Health Report
+                        <Text style={[styles.tabText, activeTab === 'Bio' && styles.activeTabText]}>
+                            Bio-markers
                         </Text>
                     </TouchableOpacity>
                 </View>
@@ -314,11 +335,22 @@ const MedicalRecordsVault = () => {
                 {loading && isInitialLoad ? (
                     <MedicalRecordsShimmer activeTab={activeTab} />
                 ) : (
-                    activeTab === 'Upload' ? (
-                        renderEmptyState()
+                    activeTab === 'Bio' ? (
+                        renderBioMarkersTab()
                     ) : (
                         renderLabReportsList()
                     )
+                )}
+
+                {/* Floating Upload Button on Lab Reports tab */}
+                {activeTab === 'Lab' && (
+                    <TouchableOpacity
+                        style={styles.fab}
+                        activeOpacity={0.85}
+                        onPress={() => navigation.navigate('UploadHealthReport')}
+                    >
+                        <Icon type={Icons.Feather} name="plus" size={ms(26)} color={whiteColor} />
+                    </TouchableOpacity>
                 )}
             </LinearGradient>
         </SafeAreaView>
@@ -497,7 +529,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: ms(5),
     },
     reportsList: {
-        paddingBottom: vs(20),
+        paddingBottom: vs(90),
     },
     // List Item Styles (Same as More.jsx ProfileListItem)
     listItemContainer: {
@@ -645,5 +677,63 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         lineHeight: ms(22),
         paddingHorizontal: ms(10),
+    },
+    // FAB
+    fab: {
+        position: 'absolute',
+        bottom: vs(100),
+        right: ms(20),
+        width: ms(56),
+        height: ms(56),
+        borderRadius: ms(28),
+        backgroundColor: primaryColor,
+        justifyContent: 'center',
+        alignItems: 'center',
+        elevation: 6,
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 3 },
+        shadowOpacity: 0.25,
+        shadowRadius: 6,
+    },
+    // Bio-markers
+    bioContainer: {
+        flex: 1,
+        paddingTop: vs(15),
+    },
+    bioHeaderRow: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        paddingHorizontal: ms(15),
+        marginBottom: vs(10),
+    },
+    bioHeaderText: {
+        fontSize: ms(14),
+        fontFamily: bold,
+        color: '#6B7280',
+    },
+    bioRow: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        paddingVertical: vs(18),
+        paddingHorizontal: ms(15),
+        backgroundColor: '#f1F5F9',
+        borderRadius: ms(12),
+        marginBottom: vs(8),
+    },
+    bioCode: {
+        fontSize: ms(13),
+        fontFamily: bold,
+        color: '#374151',
+    },
+    bioName: {
+        fontSize: ms(14),
+        fontFamily: bold,
+        color: '#1F2937',
+    },
+    bioCount: {
+        fontSize: ms(14),
+        fontFamily: bold,
+        color: '#374151',
+        marginRight: ms(4),
     },
 });

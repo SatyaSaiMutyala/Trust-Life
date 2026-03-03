@@ -46,6 +46,8 @@ const PersonalDetails = () => {
     const [profileImage, setProfileImage] = useState(null);
     const [firstName, setFirstName] = useState('');
     const [middleName, setMiddleName] = useState('');
+    const [email, setEmail] = useState('');
+    const [mobileNumber, setMobileNumber] = useState('');
     const [surname, setSurname] = useState('');
     const [gender, setGender] = useState('');
     const [defaultDate, setDefaultDate] = useState(new Date());
@@ -339,6 +341,21 @@ const PersonalDetails = () => {
                             value={age}
                             editable={false}
                             disabled={true}
+                        />
+
+                        {/* email */}
+                        <InputField
+                            label="Email"
+                            placeholder="Enter Email"
+                            value={email}
+                            onChangeText={setEmail}
+                        />
+                        {/* Surname */}
+                        <InputField
+                            label="Mobile Number"
+                            placeholder="Enter Mobile Number"
+                            value={mobileNumber}
+                            onChangeText={setMobileNumber}
                         />
 
                         {/* Family Doctor Details */}

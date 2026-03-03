@@ -21,44 +21,24 @@ import { blackColor, primaryColor, whiteColor } from '../utils/globalColors';
 
 const { width } = Dimensions.get('window');
 
-// --- Profile List Item Component (Original Style) ---
-const ProfileListItem = ({ item, onPress }) => (
-    <TouchableOpacity onPress={onPress} style={styles.listItemContainer}>
-        {/* Left Icon */}
-        <View style={styles.listItemIconWrapper}>
-            <Icon
-                type={item.type}
-                name={item.icon}
-                color={blackColor}
-                style={{ fontSize: ms(20) }}
-            />
+// --- Section Row Item ---
+const SectionRow = ({ icon, iconType, title, onPress, isLast }) => (
+    <TouchableOpacity
+        onPress={onPress}
+        style={[styles.sectionRow, !isLast && styles.sectionRowBorder]}
+        activeOpacity={0.6}
+    >
+        <View style={styles.sectionRowIconWrap}>
+            <Icon type={iconType} name={icon} color={blackColor} size={ms(20)} />
         </View>
-
-        {/* Title and Subtitle */}
-        <View style={styles.listItemTextContent}>
-            <Text style={styles.listItemTitle}>{item.title}</Text>
-            {item.subtitle && (
-                <Text style={styles.listItemSubtitle} numberOfLines={1} ellipsizeMode='tail'>
-                    {item.subtitle}
-                </Text>
-            )}
-        </View>
-
-        {/* Right Arrow */}
-        <View style={styles.listItemArrowWrapper}>
-            <Icon
-                type={Icons.Ionicons}
-                name="chevron-forward-outline"
-                color={blackColor}
-                style={{ fontSize: ms(20) }}
-            />
-        </View>
+        <Text style={styles.sectionRowTitle}>{title}</Text>
+        <Icon type={Icons.Ionicons} name="chevron-forward" color="#9CA3AF" size={ms(18)} />
     </TouchableOpacity>
 );
 
-// --- Quick Action Button Component ---
+// --- Quick Action Button ---
 const QuickActionButton = ({ icon, iconType, label, onPress }) => (
-    <TouchableOpacity style={styles.quickActionBtn} onPress={onPress}>
+    <TouchableOpacity style={styles.quickActionBtn} onPress={onPress} activeOpacity={0.7}>
         <View style={styles.quickActionIconWrapper}>
             <Icon type={iconType} name={icon} color={blackColor} size={ms(18)} />
         </View>
@@ -70,7 +50,7 @@ const More = (props) => {
     const navigation = useNavigation();
     const [visible, setVisible] = useState(false);
     const [profilePic, setProfilePic] = useState(null);
-    const walletAmount = 200; // TODO: Fetch from API
+    const walletAmount = 200;
 
     useEffect(() => {
         loadProfilePic();
@@ -87,96 +67,8 @@ const More = (props) => {
         }
     };
 
-    // Profile menu items
-    const profileData = [
-        {
-            id: 1,
-            title: 'Personal Information',
-            subtitle: 'Enter your basic details for accurate health...',
-            icon: 'person-outline',
-            type: Icons.Ionicons,
-            action: 'Profile'
-        },
-        {
-            id: 2,
-            title: 'My Prescriptions',
-            subtitle: 'View and manage your saved prescripti...',
-            icon: 'medical-outline',
-            type: Icons.Ionicons,
-            action: 'My Prescriptions'
-        },
-        {
-            id: 3,
-            title: 'Address Book',
-            subtitle: 'Edit, Add and manage your delivery ad...',
-            icon: 'add-circle-outline',
-            type: Icons.Ionicons,
-            action: 'Address Book'
-        },
-        {
-            id: 4,
-            title: 'Privacy Policy',
-            subtitle: 'Your data, your control—learn more her...',
-            icon: 'lock-closed-outline',
-            type: Icons.Ionicons,
-            action: 'Privacy Policies'
-        },
-        {
-            id: 5,
-            title: 'Subscription',
-            subtitle: 'Manage your subscription plans and ben...',
-            icon: 'card-outline',
-            type: Icons.Ionicons,
-            action: 'Subscription'
-        },
-        {
-            id: 6,
-            title: 'Terms and conditions',
-            subtitle: 'Your data, your control—learn more her...',
-            icon: 'document-text-outline',
-            type: Icons.Ionicons,
-            action: 'Terms'
-        },
-    ];
-
-    const logoutItem = {
-        id: 7,
-        title: 'Logout',
-        icon: 'log-out-outline',
-        type: Icons.Ionicons,
-        action: 'Logout'
-    };
-
-    // --- Handlers ---
-    const handleItemPress = async (actionName) => {
-        if (actionName === "Profile") {
-            navigation.navigate("Profile");
-        } else if (actionName === 'My Booking') {
-            navigation.navigate("LabOrders");
-        } else if (actionName === 'Address Book') {
-            navigation.navigate("Address");
-        } else if (actionName === 'Privacy Policies') {
-            navigation.navigate("PrivacyPolicies");
-        } else if (actionName === 'Help') {
-            navigation.navigate("FaqCategories");
-        } else if (actionName === 'Logout') {
-            showDialog();
-        } else if (actionName === 'My Prescriptions') {
-            navigation.navigate("MyPrescriptions");
-        } else if (actionName === 'Subscription') {
-            navigation.navigate("SubscriptionPlans", { hasPlan: true });
-        } else if (actionName === 'Terms') {
-            navigation.navigate("TermsAndConditions");
-        }
-    };
-
-    const showDialog = () => {
-        setVisible(true);
-    };
-
-    const handleCancel = () => {
-        setVisible(false);
-    };
+    const showDialog = () => setVisible(true);
+    const handleCancel = () => setVisible(false);
 
     const handleLogout = async () => {
         setVisible(false);
@@ -208,12 +100,9 @@ const More = (props) => {
                 </TouchableOpacity>
             ) : (
                 <View style={styles.mainContainer}>
-                    {/* Header with Gradient */}
-                    <View
-                        style={styles.headerGradient}
-                    >
+                    {/* Header */}
+                    <View style={styles.headerGradient}>
                         <View style={styles.headerSection}>
-                            {/* Profile Image */}
                             {profilePic || props.profile_picture ? (
                                 <Image
                                     source={{ uri: profilePic || `${img_url}${props.profile_picture}` }}
@@ -224,14 +113,10 @@ const More = (props) => {
                                     <Icon type={Icons.MaterialIcons} name="person" size={ms(30)} color={blackColor} />
                                 </View>
                             )}
-
-                            {/* Welcome Text */}
                             <View style={styles.welcomeContainer}>
                                 <Text style={styles.welcomeText}>Welcome</Text>
                                 <Text style={styles.userName}>{global.customer_name || 'User'}</Text>
                             </View>
-
-                            {/* Header Icons */}
                             <View style={styles.headerIcons}>
                                 <TouchableOpacity style={styles.iconCircle} onPress={() => navigation.navigate('Notifications')}>
                                     <Icon type={Icons.Ionicons} name="notifications-outline" size={ms(20)} color={blackColor} />
@@ -242,102 +127,221 @@ const More = (props) => {
                             </View>
                         </View>
 
-                        {/* White Body Content */}
                         {/* Wallet Card */}
                         <View style={styles.walletCard}>
-                            <Text style={styles.walletLabel}>Wallet Amount</Text>
+                            <View style={styles.walletLeft}>
+                                <Text style={styles.walletLabel}>Wallet Amount</Text>
+                                <Text style={styles.walletSubtext}>Use this wallet amount in test Booking</Text>
+                            </View>
                             <Text style={styles.walletAmount}>₹{walletAmount}</Text>
-                            <Text style={styles.walletSubtext}>Pay instantly using your wallet.</Text>
                         </View>
-
                     </View>
+
                     <ScrollView
                         style={styles.scrollView}
                         showsVerticalScrollIndicator={false}
                         contentContainerStyle={styles.scrollContent}
                     >
+                        {/* TrustMD Card */}
+                        <TouchableOpacity
+                            style={styles.trustMDCard}
+                            activeOpacity={0.7}
+                            onPress={() => navigation.navigate('TrustMD')}
+                        >
+                            <Image
+                                source={require('../assets/img/md.png')}
+                                style={styles.trustMDImage}
+                                resizeMode="contain"
+                            />
+                            <View style={styles.trustMDTextWrap}>
+                                <Text style={styles.trustMDTitle}>TrustMD</Text>
+                                <Text style={styles.trustMDDesc}>Patient health overview for tracking progress and risks.</Text>
+                            </View>
+                        </TouchableOpacity>
+
                         {/* Quick Actions */}
                         <View style={styles.quickActionsRow}>
                             <QuickActionButton
                                 icon="calendar-outline"
                                 iconType={Icons.Ionicons}
-                                label="My  Bookings"
+                                label={"My  Bookings"}
                                 onPress={() => navigation.navigate('LabOrders')}
                             />
                             <QuickActionButton
                                 icon="people-outline"
                                 iconType={Icons.Ionicons}
-                                label="Invite & Friends"
+                                label={"Invite & Friends"}
                                 onPress={() => navigation.navigate('InviteFriends')}
                             />
                             <QuickActionButton
                                 icon="headset-outline"
                                 iconType={Icons.Ionicons}
-                                label="Help Us"
+                                label="Support"
                                 onPress={() => navigation.navigate('FaqCategories')}
                             />
                         </View>
 
-                        {/* Profile List Items */}
-                        <View style={styles.listContainer}>
-                            {profileData.map((item) => (
-                                <ProfileListItem
-                                    key={item.id}
-                                    item={item}
-                                    onPress={() => handleItemPress(item.action)}
-                                />
-                            ))}
-
-                            {/* Logout Item */}
-                            <ProfileListItem
-                                item={logoutItem}
-                                onPress={() => handleItemPress(logoutItem.action)}
+                        {/* ACCOUNT Section */}
+                        <Text style={styles.sectionHeader}>ACCOUNT</Text>
+                        <View style={styles.sectionCard}>
+                            <SectionRow
+                                icon="person-outline"
+                                iconType={Icons.Ionicons}
+                                title="Profile"
+                                onPress={() => navigation.navigate('ProfileScreen')}
+                            />
+                            <SectionRow
+                                icon="people-outline"
+                                iconType={Icons.Ionicons}
+                                title="Personal Details"
+                                onPress={() => navigation.navigate('Profile')}
+                            />
+                            <SectionRow
+                                icon="add-circle-outline"
+                                iconType={Icons.Ionicons}
+                                title="Address Book"
+                                onPress={() => navigation.navigate('Address')}
+                                isLast
                             />
                         </View>
+
+                        {/* DATA & TRANSPARENCY Section */}
+                        <Text style={styles.sectionHeader}>DATA & TRANSPARENCY</Text>
+                        <View style={styles.sectionCard}>
+                            <SectionRow
+                                icon="shield-checkmark-outline"
+                                iconType={Icons.Ionicons}
+                                title="Data Access Log"
+                                onPress={() => navigation.navigate('AccessLogScreen')}
+                            />
+                            <SectionRow
+                                icon="document-lock-outline"
+                                iconType={Icons.Ionicons}
+                                title="Data Transparency Center"
+                                onPress={() => navigation.navigate('DataTransparencyCenterScreen')}
+                                isLast
+                            />
+                        </View>
+
+                        {/* TRUST Section */}
+                        <Text style={styles.sectionHeader}>TRUST</Text>
+                        <View style={styles.sectionCard}>
+                            <SectionRow
+                                icon="hand-left-outline"
+                                iconType={Icons.Ionicons}
+                                title="Consent Manager"
+                                onPress={() => navigation.navigate('ConsentManagerScreen')}
+                            />
+                            <SectionRow
+                                icon="document-text-outline"
+                                iconType={Icons.Ionicons}
+                                title="Annual Trust Report"
+                                onPress={() => navigation.navigate('AnnualTrustReportScreen')}
+                                isLast
+                            />
+                        </View>
+
+                        {/* BILLING Section */}
+                        <Text style={styles.sectionHeader}>BILLING</Text>
+                        <View style={styles.sectionCard}>
+                            <SectionRow
+                                icon="gift-outline"
+                                iconType={Icons.Ionicons}
+                                title="Incentives / Discounts"
+                                onPress={() => navigation.navigate('ReferralEarnings')}
+                            />
+                            <SectionRow
+                                icon="options-outline"
+                                iconType={Icons.Ionicons}
+                                title="Subscription"
+                                onPress={() => navigation.navigate('SubscriptionPlans', { hasPlan: true })}
+                                isLast
+                            />
+                        </View>
+
+                        {/* SECURITY DETAILS Section */}
+                        <Text style={styles.sectionHeader}>SECURITY DETAILS</Text>
+                        <View style={styles.sectionCard}>
+                            <SectionRow
+                                icon="lock-closed-outline"
+                                iconType={Icons.Ionicons}
+                                title="Security Center"
+                                onPress={() => navigation.navigate('PrivacyPolicies')}
+                            />
+                            <SectionRow
+                                icon="shield-checkmark-outline"
+                                iconType={Icons.Ionicons}
+                                title="Privacy Policy"
+                                onPress={() => navigation.navigate('PrivacyPolicyScreen')}
+                            />
+                            <SectionRow
+                                icon="document-text-outline"
+                                iconType={Icons.Ionicons}
+                                title="Terms of Service"
+                                onPress={() => navigation.navigate('TermsOfServiceScreen')}
+                            />
+                            <SectionRow
+                                icon="hand-left-outline"
+                                iconType={Icons.Ionicons}
+                                title="User Consent Agreement"
+                                onPress={() => navigation.navigate('UserConsentAgreementScreen')}
+                                isLast
+                            />
+                        </View>
+
+                        {/* Logout */}
+                        <TouchableOpacity
+                            style={styles.logoutRow}
+                            activeOpacity={0.6}
+                            onPress={showDialog}
+                        >
+                            <View style={styles.sectionRowIconWrap}>
+                                <Icon type={Icons.Ionicons} name="log-out-outline" color={blackColor} size={ms(20)} />
+                            </View>
+                            <Text style={styles.sectionRowTitle}>Logout</Text>
+                            <Icon type={Icons.Ionicons} name="chevron-forward" color="#9CA3AF" size={ms(18)} />
+                        </TouchableOpacity>
                     </ScrollView>
                 </View>
-            )
-            }
+            )}
 
             {/* Logout Dialog */}
-            {
-                visible && (
-                    <View style={styles.dialogOverlay}>
-                        <View style={styles.dialogContainer}>
-                            <Icon
-                                type={Icons.Feather}
-                                name="log-out"
-                                color={primaryColor}
-                                size={ms(30)}
-                                style={{ marginBottom: vs(15) }}
-                            />
-                            <Text style={styles.dialogTitle}>Logout</Text>
-                            <Text style={styles.dialogMessage}>Are you sure you want to log out?</Text>
-                            <View style={styles.dialogActions}>
-                                <TouchableOpacity onPress={handleCancel} style={styles.dialogCancelBtn}>
-                                    <Text style={styles.dialogCancelText}>Cancel</Text>
-                                </TouchableOpacity>
-                                <TouchableOpacity onPress={handleLogout} style={styles.dialogLogoutBtn}>
-                                    <LinearGradient
-                                        colors={['#006D5D', '#50A89C']}
-                                        style={styles.dialogLogoutGradient}
-                                    >
-                                        <Text style={styles.dialogLogoutText}>Yes, Logout</Text>
-                                    </LinearGradient>
-                                </TouchableOpacity>
-                            </View>
+            {visible && (
+                <View style={styles.dialogOverlay}>
+                    <View style={styles.dialogContainer}>
+                        <Icon
+                            type={Icons.Feather}
+                            name="log-out"
+                            color={primaryColor}
+                            size={ms(30)}
+                            style={{ marginBottom: vs(15) }}
+                        />
+                        <Text style={styles.dialogTitle}>Logout</Text>
+                        <Text style={styles.dialogMessage}>Are you sure you want to log out?</Text>
+                        <View style={styles.dialogActions}>
+                            <TouchableOpacity onPress={handleCancel} style={styles.dialogCancelBtn}>
+                                <Text style={styles.dialogCancelText}>Cancel</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity onPress={handleLogout} style={styles.dialogLogoutBtn}>
+                                <LinearGradient
+                                    colors={['#006D5D', '#50A89C']}
+                                    style={styles.dialogLogoutGradient}
+                                >
+                                    <Text style={styles.dialogLogoutText}>Yes, Logout</Text>
+                                </LinearGradient>
+                            </TouchableOpacity>
                         </View>
                     </View>
-                )
-            }
-        </SafeAreaView >
+                </View>
+            )}
+        </SafeAreaView>
     );
 };
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: whiteColor,
+        backgroundColor: '#F1F5F9',
     },
     mainContainer: {
         flex: 1,
@@ -354,14 +358,13 @@ const styles = StyleSheet.create({
         marginTop: vs(10),
     },
 
-    // Header with Gradient
+    // Header
     headerGradient: {
         paddingHorizontal: ms(20),
         paddingTop: ms(50),
-        // paddingBottom: vs(20),
         backgroundColor: primaryColor,
-        borderBottomEndRadius:ms(25),
-        borderBottomStartRadius:ms(25)
+        borderBottomEndRadius: ms(25),
+        borderBottomStartRadius: ms(25),
     },
     headerSection: {
         flexDirection: 'row',
@@ -407,72 +410,107 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
 
-    // White Body Content
-    scrollView: {
-        flex: 1,
-        backgroundColor: whiteColor,
-    },
-    scrollContent: {
-        paddingHorizontal: ms(20),
-        paddingTop: vs(20),
-        paddingBottom: vs(100),
-    },
-
     // Wallet Card
     walletCard: {
         backgroundColor: whiteColor,
         borderRadius: ms(16),
-        padding: ms(15),
+        paddingHorizontal: ms(18),
+        paddingVertical: vs(14),
+        marginTop: ms(25),
         marginBottom: vs(20),
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
         shadowColor: '#000',
         shadowOffset: { width: 0, height: 2 },
         shadowOpacity: 0.08,
         shadowRadius: 8,
         elevation: 3,
-        borderWidth: 1,
-        borderColor: '#F0F0F0',
-        marginTop:ms(25)
+    },
+    walletLeft: {
+        flex: 1,
+        marginRight: ms(10),
     },
     walletLabel: {
-        fontFamily: regular,
-        fontSize: ms(13),
-        color: blackColor,
-        marginBottom: vs(5),
-    },
-    walletAmount: {
         fontFamily: bold,
-        fontSize: ms(28),
+        fontSize: ms(14),
         color: blackColor,
-        marginBottom: vs(5),
+        marginBottom: vs(3),
     },
     walletSubtext: {
         fontFamily: regular,
         fontSize: ms(10),
+        color: '#6B7280',
+    },
+    walletAmount: {
+        fontFamily: bold,
+        fontSize: ms(26),
         color: blackColor,
+    },
+
+    // ScrollView
+    scrollView: {
+        flex: 1,
+        backgroundColor: '#F1F5F9',
+    },
+    scrollContent: {
+        paddingHorizontal: ms(20),
+        paddingTop: vs(15),
+        paddingBottom: vs(100),
+    },
+
+    // TrustMD Card
+    trustMDCard: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        backgroundColor: whiteColor,
+        borderRadius: ms(14),
+        paddingHorizontal: ms(16),
+        paddingVertical: vs(16),
+        marginBottom: vs(18),
+    },
+    trustMDImage: {
+        width: ms(44),
+        height: ms(44),
+        borderRadius: ms(22),
+        marginRight: ms(14),
+    },
+    trustMDTextWrap: {
+        flex: 1,
+    },
+    trustMDTitle: {
+        fontFamily: bold,
+        fontSize: ms(14),
+        color: blackColor,
+        marginBottom: vs(2),
+    },
+    trustMDDesc: {
+        fontFamily: regular,
+        fontSize: ms(10),
+        color: '#6B7280',
     },
 
     // Quick Actions
     quickActionsRow: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        marginBottom: vs(25),
+        marginBottom: vs(20),
     },
     quickActionBtn: {
         alignItems: 'center',
         width: (width - ms(60)) / 3,
-        backgroundColor:'#F9FAFB',
-        paddingVertical:ms(12),
-        borderRadius:ms(10)
+        backgroundColor: whiteColor,
+        paddingVertical: ms(14),
+        borderRadius: ms(12),
     },
     quickActionIconWrapper: {
-        backgroundColor: whiteColor,
+        backgroundColor: '#F3F4F6',
         width: ms(40),
         height: ms(40),
-        borderRadius: ms(30),
+        borderRadius: ms(20),
         justifyContent: 'center',
         alignItems: 'center',
         marginBottom: vs(8),
-
     },
     quickActionLabel: {
         fontFamily: regular,
@@ -481,44 +519,51 @@ const styles = StyleSheet.create({
         textAlign: 'center',
     },
 
-    // List Items
-    listContainer: {
-        gap: vs(10),
+    // Section Headers & Cards
+    sectionHeader: {
+        fontFamily: bold,
+        fontSize: ms(11),
+        color: '#9CA3AF',
+        letterSpacing: 0.5,
+        marginBottom: vs(8),
+        marginTop: vs(5),
     },
-    listItemContainer: {
+    sectionCard: {
+        backgroundColor: whiteColor,
+        borderRadius: ms(14),
+        paddingHorizontal: ms(16),
+        marginBottom: vs(10),
+    },
+    sectionRow: {
         flexDirection: 'row',
         alignItems: 'center',
-        paddingVertical: vs(15),
-        paddingHorizontal: ms(15),
-        backgroundColor: '#F9FAFB',
-        marginBottom: ms(0),
-        borderRadius: ms(10),
+        paddingVertical: vs(12),
     },
-    listItemIconWrapper: {
-        width: ms(35),
-        height: ms(35),
+    sectionRowIconWrap: {
+        width: ms(36),
+        height: ms(36),
+        borderRadius: ms(18),
+        backgroundColor: '#F3F4F6',
         justifyContent: 'center',
         alignItems: 'center',
-        marginRight: ms(15),
+        marginRight: ms(14),
     },
-    listItemTextContent: {
+    sectionRowTitle: {
         flex: 1,
-        justifyContent: 'center',
-    },
-    listItemTitle: {
         fontFamily: regular,
         fontSize: ms(14),
         color: blackColor,
     },
-    listItemSubtitle: {
-        fontSize: ms(10),
-        color: '#6B7280',
-        marginTop: vs(2),
-    },
-    listItemArrowWrapper: {
-        width: ms(20),
-        justifyContent: 'center',
-        alignItems: 'flex-end',
+
+    // Logout
+    logoutRow: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        backgroundColor: whiteColor,
+        borderRadius: ms(14),
+        paddingHorizontal: ms(16),
+        paddingVertical: vs(15),
+        marginTop: vs(5),
     },
 
     // Logout Dialog
@@ -538,7 +583,7 @@ const styles = StyleSheet.create({
         borderTopRightRadius: ms(25),
         padding: ms(25),
         alignItems: 'center',
-        paddingBottom: vs(40),
+        paddingBottom: vs(65),
     },
     dialogTitle: {
         fontFamily: bold,

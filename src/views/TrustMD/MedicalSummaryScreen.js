@@ -29,7 +29,7 @@ const SUMMARY_DATA = [
 
 const VIEW_CARDS = [
     { image: require('../../assets/img/vdn.png'), label: 'View\nDoctor Notes', screen: 'ViewDoctorNoteScreen' },
-    { image: require('../../assets/img/vlr.png'), label: 'View\nLab Reports' },
+    { image: require('../../assets/img/vlr.png'), label: 'View\nLab Reports', screen: 'ViewLabTestsScreen' },
     { image: require('../../assets/img/vmp.png'), label: 'View\nMedication Presc...', screen: 'ViewPrescriptionScreen' },
 ];
 

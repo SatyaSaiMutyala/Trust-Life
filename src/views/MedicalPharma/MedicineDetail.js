@@ -92,7 +92,7 @@ const MedicineDetail = () => {
             <View style={styles.heroRightIcons}>
               <TouchableOpacity
                 style={styles.heroIconBtn}
-                onPress={() => navigation.navigate('PharmCart')}
+                onPress={() => navigation.navigate('MedicineCartScreen')}
               >
                 <Icon type={Icons.Ionicons} name="cart-outline" size={ms(18)} color={blackColor} />
                 <View style={styles.cartBadge}>

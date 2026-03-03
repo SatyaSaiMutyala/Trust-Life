@@ -21,7 +21,7 @@ import Swiper from 'react-native-swiper';
 import TestCategoriesGrid from './TestCategoriesGrid';
 import { HealthChecksGrid, TopServiceComponent } from './TopServiceComponent';
 import LinearGradient from 'react-native-linear-gradient';
-import { blackColor, globalGradient, primaryColor, whiteColor, grayColor } from '../utils/globalColors';
+import { blackColor, globalGradient, primaryColor, whiteColor, grayColor, globalGradient2 } from '../utils/globalColors';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useSnack } from '../context/GlobalSnackBarContext';
 
@@ -29,11 +29,83 @@ import { useSnack } from '../context/GlobalSnackBarContext';
 import { s, vs, ms, mvs } from 'react-native-size-matters';
 import Geolocation from '@react-native-community/geolocation';
 import { TextInput } from 'react-native';
-import Svg, { Path, Circle, Line, Text as SvgText, Defs, LinearGradient as SvgLinearGradient, Stop } from 'react-native-svg';
+import Svg, { Circle, Defs, LinearGradient as SvgLinearGradient, RadialGradient, Stop, Polyline, Polygon, Line } from 'react-native-svg';
 // import CominSoon from "../assets/json/comingsoon.json";
 // import ComingSoon from "../assets/coming.mp4";
 // import LottieView from 'lottie-react-native';
 // import Video from 'react-native-video';
+
+// ── Score Ring helpers ─────────────────────────────────────────────────
+const DASH_RING_SIZE = ms(105);
+const DASH_RING_CX = DASH_RING_SIZE / 2;
+const DASH_RING_CY = DASH_RING_SIZE / 2;
+const DASH_RING_R = ms(36);
+const DASH_RING_STROKE = ms(12);
+const DASH_RING_ARC_DEG = 300;
+const DASH_RING_START_DEG = 120;
+
+const dashToRad = (deg) => (deg * Math.PI) / 180;
+const dashPolar = (cx, cy, r, deg) => ({
+    x: cx + r * Math.cos(dashToRad(deg)),
+    y: cy + r * Math.sin(dashToRad(deg)),
+});
+
+const DASH_RING_CIRC = 2 * Math.PI * DASH_RING_R;
+const DASH_RING_ARC_LEN = (DASH_RING_ARC_DEG / 360) * DASH_RING_CIRC;
+
+const DashScoreRing = () => (
+    <View style={{ width: DASH_RING_SIZE, height: DASH_RING_SIZE }}>
+        <Svg width={DASH_RING_SIZE} height={DASH_RING_SIZE}>
+            <Defs>
+                <SvgLinearGradient id="dRing3d" x1="0" y1="0" x2="1" y2="1">
+                    <Stop offset="0%"   stopColor="#094A3D" />
+                    <Stop offset="30%"  stopColor="#1A8A68" />
+                    <Stop offset="50%"  stopColor="#2CB888" />
+                    <Stop offset="70%"  stopColor="#1A8A68" />
+                    <Stop offset="100%" stopColor="#094A3D" />
+                </SvgLinearGradient>
+                <RadialGradient id="dRingInner" cx="50%" cy="46%" r="50%">
+                    <Stop offset="0%"   stopColor="#FFFFFF" />
+                    <Stop offset="78%"  stopColor="#F8F8F8" />
+                    <Stop offset="92%"  stopColor="#EBEBEB" />
+                    <Stop offset="100%" stopColor="#D0D0D0" />
+                </RadialGradient>
+                <RadialGradient id="dRingGlow" cx="50%" cy="50%" r="50%">
+                    <Stop offset="68%"  stopColor="#1A7E70" stopOpacity="0.18" />
+                    <Stop offset="100%" stopColor="#1A7E70" stopOpacity="0" />
+                </RadialGradient>
+            </Defs>
+            <Circle cx={DASH_RING_CX} cy={DASH_RING_CY} r={DASH_RING_R + ms(8)} fill="url(#dRingGlow)" />
+            <Circle
+                cx={DASH_RING_CX} cy={DASH_RING_CY} r={DASH_RING_R}
+                fill="none" stroke="url(#dRing3d)"
+                strokeWidth={DASH_RING_STROKE}
+                strokeDasharray={`${DASH_RING_ARC_LEN} ${DASH_RING_CIRC}`}
+                strokeLinecap="round"
+                transform={`rotate(${DASH_RING_START_DEG}, ${DASH_RING_CX}, ${DASH_RING_CY})`}
+            />
+            <Circle
+                cx={DASH_RING_CX} cy={DASH_RING_CY}
+                r={DASH_RING_R - DASH_RING_STROKE / 2 - ms(2)}
+                fill="url(#dRingInner)"
+            />
+        </Svg>
+        <View style={{ position: 'absolute', width: DASH_RING_SIZE, height: DASH_RING_SIZE, justifyContent: 'center', alignItems: 'center' }}>
+            <Text style={{ fontSize: ms(17), fontWeight: 'bold', color: '#1A4E44', lineHeight: ms(20) }}>320</Text>
+            <Text style={{ fontSize: ms(8), color: '#555', textAlign: 'center' }}>Out of 900</Text>
+        </View>
+        <Text style={{
+            position: 'absolute', color: '#fff', fontSize: ms(9), fontWeight: '600',
+            left: dashPolar(DASH_RING_CX, DASH_RING_CY, DASH_RING_R + DASH_RING_STROKE / 2 + ms(4), DASH_RING_START_DEG).x - ms(11),
+            top:  dashPolar(DASH_RING_CX, DASH_RING_CY, DASH_RING_R + DASH_RING_STROKE / 2 + ms(4), DASH_RING_START_DEG).y - ms(2),
+        }}>300</Text>
+        <Text style={{
+            position: 'absolute', color: '#fff', fontSize: ms(9), fontWeight: '600',
+            left: dashPolar(DASH_RING_CX, DASH_RING_CY, DASH_RING_R + DASH_RING_STROKE / 2 + ms(4), DASH_RING_START_DEG + DASH_RING_ARC_DEG).x - ms(2),
+            top:  dashPolar(DASH_RING_CX, DASH_RING_CY, DASH_RING_R + DASH_RING_STROKE / 2 + ms(4), DASH_RING_START_DEG + DASH_RING_ARC_DEG).y - ms(2),
+        }}>900</Text>
+    </View>
+);
 
 const Dashboard = (props) => {
     const navigation = useNavigation();
@@ -49,6 +121,7 @@ const Dashboard = (props) => {
     const [locationModal, setLocationModal] = useState(false);
     const [savedLocation, setSavedLocation] = useState(null);
     const [profilePic, setProfilePic] = useState(null);
+    const [isSecondUser, setIsSecondUser] = useState(true);
     const LOCATION_KEY = 'SAVED_LOCATION';
 
     const doctor_categories = () => {
@@ -451,7 +524,7 @@ const Dashboard = (props) => {
                 <DashboardShimmer />
             ) : (
                 <LinearGradient
-                    colors={globalGradient}
+                    colors={globalGradient2}
                     start={{ x: 0, y: 0 }}
                     end={{ x: 0, y: 3 }}
                     locations={[0, 0.16]}
@@ -801,83 +874,325 @@ const Dashboard = (props) => {
                         </View>
                     </View> */}
 
-                        {/* Your Health Status Section */}
-                        <View style={styles.healthStatusSection}>
-                            <Text style={styles.healthStatusHeading}>My Health Summary</Text>
+                        {/* ── MY HEALTH SUMMARY — shown for ALL users ── */}
+                        <View style={styles2.healthSummarySection}>
+                            <Text style={styles2.hsSectionTitle}>My Health Summary</Text>
+
                             <LinearGradient
-                                colors={['#3A9E91', '#5AB8AC', '#3A9E91']}
+                                colors={['#4DBBA3', '#339985']}
                                 start={{ x: 0, y: 0 }}
                                 end={{ x: 1, y: 1 }}
-                                style={styles.healthCard}
+                                style={styles2.hsOuterWrapper}
                             >
-                                <View style={styles.healthCardContent}>
-                                    {/* Left Side */}
-                                    <View style={styles.healthCardLeft}>
-                                        <View style={styles.healthBadge}>
-                                            <Icon type={Icons.MaterialCommunityIcons} name="heart-pulse" size={ms(14)} color="#fff" />
-                                            <Text style={styles.healthBadgeText}>Vital Health Score</Text>
-                                        </View>
-                                        <Text style={styles.healthGoodText}>Good</Text>
-                                        <Text style={styles.healthDescription}>
-                                            Based Your test Score will Change,Based Your test Score will Change
-                                        </Text>
-                                        <TouchableOpacity onPress={() => navigation.navigate('CheckHealthStatus', { fromStack: true })} style={{ paddingVertical: ms(10), flexDirection: 'row' }}>
-                                            <Text style={{ paddingVertical: ms(10), paddingHorizontal: ms(10), backgroundColor: whiteColor, borderRadius: ms(20), fontSize: ms(10), fontWeight: 'bold', color: blackColor }}>Check Health Status</Text>
-                                        </TouchableOpacity>
+                                <LinearGradient
+                                    colors={['#2BAB97', '#1A7E70']}
+                                    start={{ x: 0, y: 0 }}
+                                    end={{ x: 1, y: 1 }}
+                                    style={styles2.hsInnerCard}
+                                >
+                                    {/* "Health Progression Score" pill */}
+                                    <View style={styles2.hsPill}>
+                                        <Text style={styles2.hsPillText}>Health Progression Score</Text>
                                     </View>
 
-                                    {/* Right Side - Gauge */}
-                                    <View style={styles.healthGaugeContainer}>
-                                        <Svg width={ms(120)} height={ms(85)} viewBox="0 0 150 105">
-                                            <Defs>
-                                                <SvgLinearGradient id="gaugeGrad" x1="0" y1="0" x2="1" y2="0">
-                                                    <Stop offset="0" stopColor="#F44336" />
-                                                    <Stop offset="0.2" stopColor="#FF9800" />
-                                                    <Stop offset="0.4" stopColor="#FFC107" />
-                                                    <Stop offset="0.6" stopColor="#8BC34A" />
-                                                    <Stop offset="1" stopColor="#4CAF50" />
-                                                </SvgLinearGradient>
-                                            </Defs>
-                                            {/* Background arc track */}
-                                            <Path
-                                                d="M 15 88 A 60 60 0 0 1 135 88"
-                                                fill="none"
-                                                stroke="rgba(255,255,255,0.15)"
-                                                strokeWidth="12"
-                                                strokeLinecap="round"
-                                            />
-                                            {/* Colored gradient arc */}
-                                            <Path
-                                                d="M 15 88 A 60 60 0 0 1 135 88"
-                                                fill="none"
-                                                stroke="url(#gaugeGrad)"
-                                                strokeWidth="12"
-                                                strokeLinecap="round"
-                                            />
-                                            {/* White inner circle background */}
-                                            <Circle cx="75" cy="88" r="38" fill="rgba(255,255,255,0.15)" />
-                                            {/* Needle pointing at 87% (angle ~23.4° from right) */}
-                                            <Line
-                                                x1="75"
-                                                y1="88"
-                                                x2="110"
-                                                y2="70"
-                                                stroke="#fff"
-                                                strokeWidth="2"
-                                                strokeLinecap="round"
-                                            />
-                                            {/* Needle center dot */}
-                                            <Circle cx="75" cy="88" r="4" fill="#fff" />
-                                            {/* Score number */}
-                                            <SvgText x="75" y="78" textAnchor="middle" fontSize="32" fontWeight="bold" fill="#fff">87</SvgText>
-                                            {/* 0 and 100 labels */}
-                                            <SvgText x="18" y="103" textAnchor="middle" fontSize="12" fill="rgba(255,255,255,0.6)">0</SvgText>
-                                            <SvgText x="132" y="103" textAnchor="middle" fontSize="12" fill="rgba(255,255,255,0.6)">100</SvgText>
-                                        </Svg>
+                                    {/* Chart (left) + Ring (right) */}
+                                    <View style={styles2.hsBody}>
+
+                                        {/* LEFT — Stable label + Y-axis + SVG chart */}
+                                        <View style={styles2.hsChartCol}>
+                                            <Text style={styles2.hsStableLabel}>Stable</Text>
+                                            <View style={styles2.hsChartRow}>
+                                                <View style={styles2.hsYAxis}>
+                                                    {[800, 700, 600, 500, 400].map(v => (
+                                                        <Text key={v} style={styles2.hsYLabel}>{v}</Text>
+                                                    ))}
+                                                </View>
+                                                <Svg width={ms(128)} height={ms(70)} viewBox="0 0 128 60">
+                                                    <Polyline
+                                                        points="0,48 26,34 52,44 78,28 104,42 128,30"
+                                                        fill="none"
+                                                        stroke="rgba(255,255,255,0.92)"
+                                                        strokeWidth="2.5"
+                                                        strokeLinecap="round"
+                                                        strokeLinejoin="round"
+                                                    />
+                                                </Svg>
+                                            </View>
+                                            <View style={styles2.hsXLine} />
+                                            <View style={styles2.hsXLabels}>
+                                                {['Oct 25', 'Oct 25', 'Oct 25', 'Oct 25', 'Oct 25'].map((l, i) => (
+                                                    <Text key={i} style={styles2.hsXLabel}>{l}</Text>
+                                                ))}
+                                            </View>
+                                        </View>
+
+                                        {/* RIGHT — Arc Score Ring */}
+                                        <View style={styles2.hsRingCol}>
+                                            <DashScoreRing />
+
+                                            {/* +12 This Month pill */}
+                                            <TouchableOpacity style={styles2.hsTrendBtn}>
+                                                <Icon type={Icons.Feather} name="arrow-up" size={ms(12)} color={whiteColor} />
+                                                <Text style={styles2.hsTrendBtnText}>+12 This Month</Text>
+                                            </TouchableOpacity>
+                                        </View>
                                     </View>
-                                </View>
+                                </LinearGradient>
+
+                                {/* White "View Detailed" pill */}
+                                <TouchableOpacity
+                                    style={styles2.hsViewBtn}
+                                    onPress={() => navigation.navigate('CheckHealthStatus', { fromDashboard: true })}
+                                >
+                                    <Text style={styles2.hsViewBtnText}>View Detailed Health Progression</Text>
+                                    <Icon type={Icons.Ionicons} name="chevron-forward" size={ms(16)} color={blackColor} />
+                                </TouchableOpacity>
                             </LinearGradient>
                         </View>
+
+                        {/* ── SECOND USER COMPONENTS ── */}
+                        {isSecondUser && <>
+
+                        {/* ── CONTINUITY TRACKER ── */}
+                        <View style={styles2.continuityTrackerSection}>
+                            <View style={styles2.continuityCard}>
+
+                                <Text style={styles2.continuityCardTitle}>Continuity Tracker</Text>
+
+                                <View style={styles2.medicationRow}>
+                                    <Text style={styles2.medicationLabel}>Medication</Text>
+                                    <Text style={styles2.medicationDate}>Last updated  Thu, Mar 02,2026</Text>
+                                </View>
+
+                                <View style={styles2.streakSection}>
+                                    <View style={styles2.streakLeft}>
+                                        <Text style={styles2.streakTitle}>Active Days Streak</Text>
+                                        <Text style={styles2.streakMaintain}>3 more days to maintain your streak</Text>
+                                    </View>
+                                    <View style={styles2.streakRight}>
+                                        <Text style={styles2.streakDaysNumber}>4/7</Text>
+                                        <Text style={styles2.streakDaysLabel}> days</Text>
+                                    </View>
+                                </View>
+
+                                <View style={styles2.progressBarTrack}>
+                                    <View style={[styles2.progressBarFill, { width: `${(4 / 7) * 100}%` }]} />
+                                </View>
+
+                                <View style={styles2.daysRow}>
+                                    {['M', 'T', 'W', 'T', 'F', 'S', 'S'].map((day, index) => (
+                                        <View
+                                            key={index}
+                                            style={[
+                                                styles2.dayCircle,
+                                                index < 4 ? styles2.dayCircleActive : styles2.dayCircleInactive,
+                                            ]}
+                                        >
+                                            <Text style={[
+                                                styles2.dayLabel,
+                                                index < 4 ? styles2.dayLabelActive : styles2.dayLabelInactive,
+                                            ]}>
+                                                {day}
+                                            </Text>
+                                        </View>
+                                    ))}
+                                </View>
+
+                            </View>
+                        </View>
+
+                        {/* ── TODAY'S HEALTH SIGNAL ── */}
+                        <View style={styles2.healthSignalSection}>
+                            <View style={styles2.healthSignalCard}>
+
+                                {/* Badge */}
+                                <View style={styles2.hsBadge}>
+                                    <Text style={styles2.hsBadgeText}>Today's Health Signal</Text>
+                                </View>
+
+                                {/* Title */}
+                                <Text style={styles2.hsTitle}>Blood Pressure – Persistently Elevated</Text>
+
+                                {/* Chart */}
+                                <View style={styles2.hsChartWrapper}>
+                                    <Svg width="100%" height={ms(110)} viewBox="0 0 300 100" preserveAspectRatio="none">
+                                        <Defs>
+                                            <SvgLinearGradient id="hsChartGrad" x1="0" y1="0" x2="0" y2="1">
+                                                <Stop offset="0" stopColor="#FF6B35" stopOpacity="0.45" />
+                                                <Stop offset="1" stopColor="#FF6B35" stopOpacity="0.02" />
+                                            </SvgLinearGradient>
+                                        </Defs>
+                                        {/* Area fill */}
+                                        <Polygon
+                                            points="0,100 0,76 60,60 120,46 180,33 240,20 300,8 300,100"
+                                            fill="url(#hsChartGrad)"
+                                        />
+                                        {/* Line */}
+                                        <Polyline
+                                            points="0,76 60,60 120,46 180,33 240,20 300,8"
+                                            fill="none"
+                                            stroke="#FF6B35"
+                                            strokeWidth="2.5"
+                                            strokeLinejoin="round"
+                                            strokeLinecap="round"
+                                        />
+                                        {/* Vertical dashed marker at last point */}
+                                        <Line x1="300" y1="2" x2="300" y2="100" stroke="#FF6B35" strokeWidth="1.5" strokeDasharray="4,3" />
+                                        {/* Data point dots */}
+                                        {[[0,76],[60,60],[120,46],[180,33],[240,20],[300,8]].map(([cx, cy], i) => (
+                                            <Circle key={i} cx={cx} cy={cy} r="4" fill="#FF6B35" />
+                                        ))}
+                                    </Svg>
+                                    {/* 180/20 callout — top-right above vertical line */}
+                                    <View style={styles2.hsValueCallout}>
+                                        <Text style={styles2.hsValueText}>180/20</Text>
+                                    </View>
+                                </View>
+
+                                {/* X-axis labels */}
+                                <View style={styles2.hsXAxis}>
+                                    {['12 Feb','13 Mar','25 Apr','21 May','12 June','12 July'].map((lbl, i) => (
+                                        <Text key={i} style={styles2.hsXLabel}>{lbl}</Text>
+                                    ))}
+                                </View>
+
+                                {/* Pattern Explanation */}
+                                <Text style={styles2.hsSectionHeader}>Pattern Explanation</Text>
+                                <Text style={styles2.hsSectionBody}>
+                                    Your blood pressure readings have been consistently above the healthy range for the past 5 months, indicating a persistent elevation trend that requires attention.
+                                </Text>
+
+                                {/* Health Impact */}
+                                <Text style={styles2.hsSectionHeader}>Health Impact</Text>
+                                <View style={styles2.hsBulletRow}>
+                                    <View style={styles2.hsBulletDot} />
+                                    <Text style={styles2.hsBulletText}>Increased risk of heart disease and stroke</Text>
+                                </View>
+                                <View style={styles2.hsBulletRow}>
+                                    <View style={styles2.hsBulletDot} />
+                                    <Text style={styles2.hsBulletText}>Potential kidney damage over time if left unmanaged</Text>
+                                </View>
+
+                                {/* Peer Comparison */}
+                                <View style={styles2.hsPeerRow}>
+                                    <Icon type={Icons.MaterialIcons} name="people" size={ms(18)} color="#FF6B35" />
+                                    <Text style={styles2.hsPeerText}>Blood Pressure: Higher Than Most Peers</Text>
+                                </View>
+                                <Text style={styles2.hsPeerDesc}>
+                                    Your readings are higher than 78% of people in your age and health group.
+                                </Text>
+
+                                {/* Suggestion box */}
+                                <View style={styles2.hsSuggestionBox}>
+                                    <Text style={styles2.hsSuggestionTitle}>Suggestion</Text>
+                                    <Text style={styles2.hsSuggestionBody}>
+                                        Consider reducing sodium intake, increasing physical activity, and consulting your doctor about medication options to bring your blood pressure to a healthier range.
+                                    </Text>
+                                </View>
+
+                            </View>
+                        </View>
+
+                        {/* ── MY ACTIVE CONDITION ── */}
+                        <View style={styles2.macSection}>
+                            <View style={styles2.macCard}>
+
+                                {/* Badge */}
+                                <View style={styles2.macBadge}>
+                                    <View style={styles2.macBadgeDot} />
+                                    <Text style={styles2.macBadgeText}>My Active Condition</Text>
+                                </View>
+
+                                {/* Condition rows */}
+                                <View style={styles2.macRow}>
+                                    <Text style={styles2.macConditionName}>Diabetes</Text>
+                                    <View style={styles2.macStatusBadgeStable}>
+                                        <Text style={styles2.macStatusTextStable}>Stable</Text>
+                                    </View>
+                                </View>
+
+                                <View style={styles2.macRow}>
+                                    <Text style={styles2.macConditionName}>Hypertension</Text>
+                                    <View style={styles2.macStatusBadgeMonitor}>
+                                        <Text style={styles2.macStatusTextMonitor}>Needs Monitoring</Text>
+                                    </View>
+                                </View>
+
+                            </View>
+                        </View>
+
+                        {/* ── VITAL ORGAN SNAPSHOT ── */}
+                        <View style={styles2.vosSection}>
+                            <Text style={styles2.vosSectionTitle}>Vital Organ Snapshot</Text>
+                            <View style={styles2.vosGrid}>
+                                {[
+                                    { emoji: '🫀', organ: 'Heart',     status: 'Optimal'   },
+                                    { emoji: '🫁', organ: 'Liver',     status: 'Stable'    },
+                                    { emoji: '🫘', organ: 'Kidney',    status: 'Normal'    },
+                                    { emoji: '🫁', organ: 'Lungs',     status: 'Efficient' },
+                                    { emoji: '🧬', organ: 'Metabolic', status: 'Active'    },
+                                    { emoji: '🛡️', organ: 'Immune',    status: 'Strong'    },
+                                ].map((item, index) => (
+                                    <View key={index} style={styles2.vosCard}>
+                                        <Text style={styles2.vosEmoji}>{item.emoji}</Text>
+                                        <Text style={styles2.vosOrganName}>{item.organ}</Text>
+                                        <Text style={styles2.vosStatus}>{item.status}</Text>
+                                    </View>
+                                ))}
+                            </View>
+                        </View>
+
+                        {/* ── LIFESTYLE IMPACT SUMMARY ── */}
+                        <View style={styles2.lisCard}>
+                            <Text style={styles2.lisSectionTitle}>Lifestyle Impact Summary</Text>
+                            {[
+                                { iconType: Icons.Ionicons,              iconName: 'moon',            iconColor: '#7B61FF', label: 'Sleep Quality',    status: 'Strong',   statusType: 'strong'   },
+                                { iconType: Icons.MaterialCommunityIcons, iconName: 'lightning-bolt', iconColor: '#FF6B35', label: 'Daily Activity',   status: 'Moderate', statusType: 'moderate' },
+                                { iconType: Icons.Ionicons,              iconName: 'restaurant',      iconColor: '#2E7D32', label: 'Nutrition Intake', status: 'Strong',   statusType: 'strong'   },
+                                { iconType: Icons.MaterialCommunityIcons, iconName: 'head-cog',       iconColor: '#1565C0', label: 'Stress Levels',   status: 'Moderate', statusType: 'moderate' },
+                            ].map((item, index, arr) => (
+                                <View key={index}>
+                                    <View style={styles2.lisRow}>
+                                        <Icon type={item.iconType} name={item.iconName} size={ms(22)} color={item.iconColor} />
+                                        <Text style={styles2.lisLabel}>{item.label}</Text>
+                                        <View style={item.statusType === 'strong' ? styles2.lisBadgeStrong : styles2.lisBadgeModerate}>
+                                            <Text style={item.statusType === 'strong' ? styles2.lisBadgeTextStrong : styles2.lisBadgeTextModerate}>{item.status}</Text>
+                                        </View>
+                                    </View>
+                                </View>
+                            ))}
+                        </View>
+
+                        {/* ── NOTIFICATIONS ── */}
+                        <View style={styles2.notifCard}>
+                            <Text style={styles2.notifTitle}>Notifications</Text>
+                            {[
+                                { iconType: Icons.MaterialIcons, iconName: 'biotech',    iconBg: '#E8F5E9', iconColor: '#2E7D32', title: 'HbA1c Screening',     subtitle: 'Due based on your metabolic trends.' },
+                                { iconType: Icons.Ionicons,      iconName: 'water',      iconBg: '#E3F2FD', iconColor: '#1565C0', title: 'Tablets refill',       subtitle: 'Add New set of tablets Here'          },
+                                { iconType: Icons.Ionicons,      iconName: 'water',      iconBg: '#E3F2FD', iconColor: '#1565C0', title: 'Increase Hydration',   subtitle: 'Aim for 8 glasses to support liver function.' },
+                            ].map((item, index, arr) => (
+                                <View key={index}>
+                                    <View style={styles2.notifRow}>
+                                        <View style={[styles2.notifIconWrap, { backgroundColor: item.iconBg }]}>
+                                            <Icon type={item.iconType} name={item.iconName} size={ms(20)} color={item.iconColor} />
+                                        </View>
+                                        <View style={styles2.notifTextWrap}>
+                                            <Text style={styles2.notifItemTitle}>{item.title}</Text>
+                                            <Text style={styles2.notifItemSub}>{item.subtitle}</Text>
+                                        </View>
+                                        <TouchableOpacity style={styles2.notifClose}>
+                                            <Icon type={Icons.Ionicons} name="close" size={ms(14)} color="#999999" />
+                                        </TouchableOpacity>
+                                    </View>
+                                </View>
+                            ))}
+                        </View>
+
+                        </>}
+                        {/* ── END SECOND USER COMPONENTS ── */}
+
+                        {/* ── FIRST USER COMPONENTS ── */}
+                        {!isSecondUser && <>
 
                         {/* Track your Health journey */}
                         <View style={styles.healthJourneySection}>
@@ -982,6 +1297,8 @@ const Dashboard = (props) => {
                                     { name: 'Weight Management', image: require('../assets/img/weightmanagement.png'), route: 'WeightLog' },
                                     { name: 'Vaccination', image: require('../assets/img/Vaccination.png'), route: 'VaccinationLog' },
                                     { name: 'Migraine', image: require('../assets/img/migraine.png'), route: 'MigraineLog' },
+                                    { name: 'Asthma', image: require('../assets/img/astama.png'), route: 'AsthmaIntroScreen' },
+                                    { name: 'Musculo Skeletal', image: require('../assets/img/skeletal.png'), route: 'MusculoskeletalIntroScreen' },
                                 ].map((item, index) => (
                                     <TouchableOpacity
                                         key={index}
@@ -1003,6 +1320,10 @@ const Dashboard = (props) => {
                                                 navigation.navigate('VaccinationLog');
                                             } else if (item.route === 'MigraineLog') {
                                                 navigation.navigate('MigraineLog');
+                                            } else if (item.route === 'AsthmaIntroScreen') {
+                                                navigation.navigate('AsthmaIntroScreen');
+                                            } else if (item.route === 'MusculoskeletalIntroScreen') {
+                                                navigation.navigate('MusculoskeletalIntroScreen');
                                             } else {
                                                 showSnack('warning', `${item.name} log coming soon!`);
                                             }
@@ -1022,6 +1343,8 @@ const Dashboard = (props) => {
                             </View>
                         </View>
 
+                        </>}
+                        {/* ── END FIRST USER COMPONENTS ── */}
 
                         {/* Top Service Cards */}
                         <View style={styles.healthServiceSection}>
@@ -1031,7 +1354,7 @@ const Dashboard = (props) => {
                                     { image: require('../assets/img/top-lab.png'), onPress: () => navigateToTests('Home Lab') },
                                     { image: require('../assets/img/top-doctor.png'), onPress: () => navigation.navigate('DoctorConsultation') },
                                     { image: require('../assets/img/top-medicienes.png'), onPress: () => navigation.navigate('CompanyMedicines') },
-                                    { image: require('../assets/img/ambulance.png'), onPress: () => showSnack('warning', 'Ambulance is coming soon!') },
+                                    { image: require('../assets/img/ambulance.png'), onPress: () => Linking.openURL('tel:108') },
                                 ].map((item, index) => (
                                     <TouchableOpacity key={index} onPress={item.onPress}>
                                         <Image source={item.image} style={styles.topServiceImage} />
@@ -1391,7 +1714,6 @@ const styles = StyleSheet.create({
         borderBottomRightRadius: ms(10),
         paddingVertical: ms(4),
         alignItems: 'center',
-
     },
     needTestBadgeText: {
         fontSize: ms(8),
@@ -1621,6 +1943,30 @@ const styles = StyleSheet.create({
     },
     healthGaugeContainer: {
         alignItems: 'center',
+        marginRight: -ms(8),
+        marginVertical: -vs(10),
+    },
+    healthRingCenterText: {
+        position: 'absolute',
+        width: ms(140),
+        height: ms(140),
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    healthRingScore: {
+        fontSize: ms(28),
+        fontWeight: 'bold',
+        color: blackColor,
+    },
+    healthRingSubtext: {
+        fontSize: ms(9),
+        color: '#666',
+        marginTop: vs(1),
+    },
+    healthRingLabel: {
+        fontSize: ms(11),
+        fontWeight: '700',
+        color: whiteColor,
     },
 
     // Track your Health journey
@@ -1692,7 +2038,7 @@ const styles = StyleSheet.create({
     // Medical Log Book
     medicalLogSection: {
         marginHorizontal: ms(15),
-        backgroundColor: '#F1F5F9',
+        // backgroundColor: '#F1F5F9',
         borderRadius: ms(15),
         paddingVertical: ms(15),
         marginTop: ms(15),
@@ -1942,6 +2288,610 @@ const styles = StyleSheet.create({
         marginVertical: 2,
     },
 
+});
+
+// ── Health Summary + Continuity Tracker styles ─────────────────────────────
+const styles2 = StyleSheet.create({
+
+    // ── Health Summary Section ──────────────────────────────────────
+    healthSummarySection: {
+        marginTop: ms(5),
+        marginBottom: ms(15),
+        paddingHorizontal: ms(15),
+    },
+    hsSectionTitle: {
+        fontSize: ms(18),
+        fontWeight: 'bold',
+        color: '#000',
+        textAlign: 'center',
+        marginBottom: ms(12),
+    },
+    hsOuterWrapper: {
+        borderRadius: ms(22),
+        padding: ms(12),
+        shadowColor: '#000',
+    },
+    hsInnerCard: {
+        borderRadius: ms(18),
+        padding: ms(14),
+        overflow: 'hidden',
+        marginBottom: ms(12),
+    },
+    hsPill: {
+        backgroundColor: 'rgba(0,0,0,0.22)',
+        borderRadius: ms(20),
+        paddingVertical: ms(8),
+        paddingHorizontal: ms(16),
+        alignSelf: 'center',
+        marginBottom: ms(12),
+    },
+    hsPillText: {
+        color: '#fff',
+        fontWeight: 'bold',
+        fontSize: ms(14),
+        textAlign: 'center',
+    },
+    hsBody: {
+        flexDirection: 'row',
+        alignItems: 'flex-start',
+    },
+    hsChartCol: {
+        flex: 1,
+        marginRight: ms(6),
+    },
+    hsStableLabel: {
+        color: '#fff',
+        fontWeight: 'bold',
+        fontSize: ms(13),
+        marginBottom: ms(4),
+    },
+    hsChartRow: {
+        flexDirection: 'row',
+        alignItems: 'flex-start',
+    },
+    hsYAxis: {
+        height: ms(70),
+        justifyContent: 'space-between',
+        alignItems: 'flex-end',
+        paddingRight: ms(3),
+    },
+    hsYLabel: {
+        color: 'rgba(255,255,255,0.82)',
+        fontSize: ms(8),
+    },
+    hsXLine: {
+        height: 1,
+        backgroundColor: 'rgba(255,255,255,0.40)',
+        marginTop: ms(2),
+    },
+    hsXLabels: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        marginTop: ms(3),
+    },
+    hsXLabel: {
+        color: 'rgba(255,255,255,0.78)',
+        fontSize: ms(7),
+    },
+    hsRingCol: {
+        alignItems: 'center',
+    },
+    hsRingRow: {
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
+    hsMinMaxTxt: {
+        color: '#fff',
+        fontSize: ms(11),
+        fontWeight: '600',
+        marginHorizontal: ms(3),
+    },
+    hsRingWrap: {
+        width: ms(90),
+        height: ms(90),
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    hsRingOverlay: {
+        position: 'absolute',
+        width: ms(90),
+        height: ms(90),
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    hsScoreNum: {
+        fontSize: ms(22),
+        fontWeight: 'bold',
+        color: '#1A4E44',
+        lineHeight: ms(25),
+    },
+    hsScoreOf: {
+        fontSize: ms(9),
+        color: '#555',
+        textAlign: 'center',
+    },
+    hsTrendBtn: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        backgroundColor: 'rgba(255,255,255,0.20)',
+        borderRadius: ms(20),
+        paddingVertical: ms(5),
+        paddingHorizontal: ms(12),
+        marginTop: ms(8),
+    },
+    hsTrendBtnText: {
+        color: '#fff',
+        fontSize: ms(11),
+        fontWeight: '600',
+        marginLeft: ms(4),
+    },
+    hsViewBtn: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: '#fff',
+        borderRadius: ms(30),
+        paddingVertical: ms(14),
+        paddingHorizontal: ms(16),
+    },
+    hsViewBtnText: {
+        fontSize: ms(14),
+        fontWeight: 'bold',
+        color: '#000',
+        marginRight: ms(4),
+    },
+
+    // ── Continuity Tracker ──────────────────────────────────────────
+    continuityTrackerSection: {
+        marginBottom: ms(12),
+    },
+    continuityCard: {
+        backgroundColor: whiteColor,
+        borderRadius: ms(16),
+        marginHorizontal: ms(15),
+        paddingHorizontal: ms(14),
+        paddingVertical: ms(14),
+    },
+    continuityCardTitle: {
+        fontSize: ms(15),
+        fontWeight: 'bold',
+        color: '#000',
+        marginBottom: ms(10),
+    },
+    medicationRow: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        marginBottom: ms(12),
+    },
+    medicationLabel: {
+        fontSize: ms(13),
+        fontWeight: '400',
+        color: '#000',
+    },
+    medicationDate: {
+        fontSize: ms(10),
+        color: '#AAAAAA',
+    },
+    streakSection: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        marginBottom: ms(10),
+    },
+    streakLeft: {
+        flex: 1,
+        paddingRight: ms(8),
+    },
+    streakTitle: {
+        fontSize: ms(13),
+        fontWeight: 'bold',
+        color: '#000',
+        marginBottom: ms(3),
+    },
+    streakMaintain: {
+        fontSize: ms(10),
+        color: '#AAAAAA',
+    },
+    streakRight: {
+        flexDirection: 'row',
+        alignItems: 'baseline',
+    },
+    streakDaysNumber: {
+        fontSize: ms(17),
+        fontWeight: 'bold',
+        color: '#000',
+    },
+    streakDaysLabel: {
+        fontSize: ms(12),
+        fontWeight: '400',
+        color: '#AAAAAA',
+    },
+    progressBarTrack: {
+        height: ms(9),
+        backgroundColor: '#EBEBEB',
+        borderRadius: ms(5),
+        marginBottom: ms(12),
+        overflow: 'hidden',
+    },
+    progressBarFill: {
+        height: '100%',
+        backgroundColor: '#2979FF',
+        borderRadius: ms(5),
+    },
+    daysRow: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+    },
+    dayCircle: {
+        width: ms(32),
+        height: ms(32),
+        borderRadius: ms(16),
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    dayCircleActive: {
+        backgroundColor: '#2979FF',
+    },
+    dayCircleInactive: {
+        backgroundColor: '#F0F0F0',
+    },
+    dayLabel: {
+        fontSize: ms(10),
+        fontWeight: '600',
+    },
+    dayLabelActive: {
+        color: '#FFFFFF',
+    },
+    dayLabelInactive: {
+        color: '#BBBBBB',
+    },
+
+    /* ── Today's Health Signal ── */
+    healthSignalSection: {
+        marginBottom: ms(14),
+    },
+    healthSignalCard: {
+        backgroundColor: whiteColor,
+        borderRadius: ms(16),
+        marginHorizontal: ms(15),
+        paddingHorizontal: ms(14),
+        paddingVertical: ms(16),
+    },
+    hsBadge: {
+        alignSelf: 'flex-start',
+        backgroundColor: '#FFF0E8',
+        borderRadius: ms(20),
+        paddingHorizontal: ms(12),
+        paddingVertical: ms(5),
+        marginBottom: ms(10),
+    },
+    hsBadgeText: {
+        fontSize: ms(11),
+        fontWeight: '600',
+        color: '#FF6B35',
+    },
+    hsTitle: {
+        fontSize: ms(15),
+        fontWeight: 'bold',
+        color: '#111111',
+        marginBottom: ms(12),
+        lineHeight: ms(22),
+    },
+    hsChartWrapper: {
+        position: 'relative',
+        marginBottom: ms(4),
+    },
+    hsValueCallout: {
+        position: 'absolute',
+        top: ms(2),
+        right: ms(2),
+        backgroundColor: '#FF6B35',
+        borderRadius: ms(6),
+        paddingHorizontal: ms(7),
+        paddingVertical: ms(3),
+    },
+    hsValueText: {
+        fontSize: ms(11),
+        fontWeight: 'bold',
+        color: '#FFFFFF',
+    },
+    hsXAxis: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        marginBottom: ms(14),
+        paddingHorizontal: ms(2),
+    },
+    hsXLabel: {
+        fontSize: ms(9),
+        color: '#AAAAAA',
+        textAlign: 'center',
+    },
+    hsSectionHeader: {
+        fontSize: ms(13),
+        fontWeight: 'bold',
+        color: '#111111',
+        marginBottom: ms(5),
+        marginTop: ms(4),
+    },
+    hsSectionBody: {
+        fontSize: ms(12),
+        color: '#555555',
+        lineHeight: ms(18),
+        marginBottom: ms(10),
+    },
+    hsBulletRow: {
+        flexDirection: 'row',
+        alignItems: 'flex-start',
+        marginBottom: ms(5),
+    },
+    hsBulletDot: {
+        width: ms(6),
+        height: ms(6),
+        borderRadius: ms(3),
+        backgroundColor: '#111111',
+        marginTop: ms(5),
+        marginRight: ms(8),
+    },
+    hsBulletText: {
+        flex: 1,
+        fontSize: ms(12),
+        color: '#444444',
+        lineHeight: ms(18),
+    },
+    hsPeerRow: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginTop: ms(12),
+        marginBottom: ms(5),
+        gap: ms(6),
+    },
+    hsPeerText: {
+        fontSize: ms(13),
+        fontWeight: 'bold',
+        color: '#FF6B35',
+    },
+    hsPeerDesc: {
+        fontSize: ms(12),
+        color: '#666666',
+        lineHeight: ms(18),
+        marginBottom: ms(12),
+    },
+    hsSuggestionBox: {
+        backgroundColor: '#F8F8F8',
+        borderRadius: ms(12),
+        paddingHorizontal: ms(12),
+        paddingVertical: ms(12),
+    },
+    hsSuggestionTitle: {
+        fontSize: ms(13),
+        fontWeight: 'bold',
+        color: '#111111',
+        marginBottom: ms(5),
+    },
+    hsSuggestionBody: {
+        fontSize: ms(12),
+        color: '#555555',
+        lineHeight: ms(18),
+    },
+
+    /* ── My Active Condition ── */
+    macSection: {
+        marginBottom: ms(14),
+    },
+    macCard: {
+        backgroundColor: '#FFFFFF',
+        borderRadius: ms(16),
+        marginHorizontal: ms(15),
+        paddingHorizontal: ms(14),
+        paddingVertical: ms(12),
+    },
+    macBadge: {
+        alignSelf: 'flex-start',
+        flexDirection: 'row',
+        alignItems: 'center',
+        backgroundColor: '#1A6B42',
+        borderRadius: ms(20),
+        paddingHorizontal: ms(14),
+        paddingVertical: ms(7),
+        marginBottom: ms(16),
+        gap: ms(3),
+    },
+    macBadgeDot: {
+        width: ms(8),
+        height: ms(8),
+        borderRadius: ms(4),
+        backgroundColor: '#FFFFFF',
+    },
+    macBadgeText: {
+        fontSize: ms(13),
+        fontWeight: '600',
+        color: '#FFFFFF',
+    },
+    macRow: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        paddingVertical: ms(12),
+    },
+    macDivider: {
+        height: 1,
+        backgroundColor: '#F0F0F0',
+    },
+    macConditionName: {
+        fontSize: ms(14),
+        fontWeight: '500',
+        color: '#111111',
+    },
+    macStatusBadgeStable: {
+        backgroundColor: '#E8F7EE',
+        borderRadius: ms(20),
+        paddingHorizontal: ms(14),
+        paddingVertical: ms(5),
+    },
+    macStatusTextStable: {
+        fontSize: ms(13),
+        fontWeight: '600',
+        color: '#1A6B42',
+    },
+    macStatusBadgeMonitor: {
+        backgroundColor: '#FFF4E5',
+        borderRadius: ms(20),
+        paddingHorizontal: ms(14),
+        paddingVertical: ms(5),
+    },
+    macStatusTextMonitor: {
+        fontSize: ms(13),
+        fontWeight: '600',
+        color: '#E07B00',
+    },
+
+    /* ── Lifestyle Impact Summary ── */
+    lisCard: {
+        backgroundColor: '#FFFFFF',
+        borderRadius: ms(16),
+        marginHorizontal: ms(15),
+        marginBottom: ms(14),
+        paddingHorizontal: ms(16),
+        paddingVertical: ms(16),
+    },
+    lisSectionTitle: {
+        fontSize: ms(17),
+        fontWeight: 'bold',
+        color: '#111111',
+        marginBottom: ms(12),
+    },
+    lisRow: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        paddingVertical: ms(12),
+        gap: ms(12),
+    },
+    lisLabel: {
+        flex: 1,
+        fontSize: ms(14),
+        color: '#111111',
+        fontWeight: '400',
+    },
+    lisBadgeStrong: {
+        backgroundColor: '#E8F5E9',
+        borderRadius: ms(20),
+        paddingHorizontal: ms(14),
+        paddingVertical: ms(5),
+    },
+    lisBadgeTextStrong: {
+        fontSize: ms(13),
+        fontWeight: '600',
+        color: '#2E7D32',
+    },
+    lisBadgeModerate: {
+        backgroundColor: '#FFF4E5',
+        borderRadius: ms(20),
+        paddingHorizontal: ms(14),
+        paddingVertical: ms(5),
+    },
+    lisBadgeTextModerate: {
+        fontSize: ms(13),
+        fontWeight: '600',
+        color: '#E07B00',
+    },
+    lisDivider: {
+        height: 1,
+        backgroundColor: '#F0F0F0',
+    },
+
+    /* ── Notifications ── */
+    notifCard: {
+        backgroundColor: '#FFFFFF',
+        borderRadius: ms(16),
+        marginHorizontal: ms(15),
+        marginBottom: ms(14),
+        paddingHorizontal: ms(16),
+        paddingVertical: ms(16),
+    },
+    notifTitle: {
+        fontSize: ms(17),
+        fontWeight: 'bold',
+        color: '#111111',
+        marginBottom: ms(12),
+    },
+    notifRow: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        paddingVertical: ms(12),
+        gap: ms(12),
+    },
+    notifIconWrap: {
+        width: ms(42),
+        height: ms(42),
+        borderRadius: ms(12),
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    notifTextWrap: {
+        flex: 1,
+    },
+    notifItemTitle: {
+        fontSize: ms(13),
+        fontWeight: '600',
+        color: '#111111',
+        marginBottom: ms(3),
+    },
+    notifItemSub: {
+        fontSize: ms(11),
+        color: '#888888',
+        lineHeight: ms(16),
+    },
+    notifClose: {
+        width: ms(28),
+        height: ms(28),
+        borderRadius: ms(14),
+        backgroundColor: '#F4F5F7',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+
+    /* ── Vital Organ Snapshot ── */
+    vosSection: {
+        marginBottom: ms(14),
+        marginHorizontal: ms(15),
+        backgroundColor: '#FFFFFF',
+        borderRadius: ms(16),
+        padding: ms(16),
+    },
+    vosSectionTitle: {
+        fontSize: ms(17),
+        fontWeight: 'bold',
+        color: '#111111',
+        marginBottom: ms(14),
+    },
+    vosGrid: {
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+        gap: ms(12),
+    },
+    vosCard: {
+        width: '47%',
+        backgroundColor: '#F1F5F9',
+        borderRadius: ms(16),
+        paddingHorizontal: ms(14),
+        paddingVertical: ms(16),
+    },
+    vosEmoji: {
+        fontSize: ms(38),
+        marginBottom: ms(10),
+    },
+    vosOrganName: {
+        fontSize: ms(12),
+        fontWeight: '400',
+        color: '#888888',
+        marginBottom: ms(4),
+    },
+    vosStatus: {
+        fontSize: ms(16),
+        fontWeight: 'bold',
+        color: '#111111',
+    },
 });
 
 function mapStateToProps(state) {

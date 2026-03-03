@@ -106,7 +106,7 @@ const TrustMDPatientDetails = () => {
                 </View>
 
                 {/* ── Patient Card ── */}
-                <View style={styles.card}>
+                <TouchableOpacity style={styles.card} onPress={() => navigation.navigate('PatientMedicalSummary')}>
                     <View style={styles.patientRow}>
                         <View style={styles.patientAvatar}>
                             <Icon type={Icons.MaterialIcons} name="person" size={ms(32)} color="#90CAF9" />
@@ -120,7 +120,7 @@ const TrustMDPatientDetails = () => {
                         </View>
                         <Text style={styles.patientAge}>27y, 3m, 6d</Text>
                     </View>
-                </View>
+                </TouchableOpacity>
 
                 {/* ── Visit Summary ── */}
                 <View style={{padding:ms(10)}}>
@@ -128,7 +128,7 @@ const TrustMDPatientDetails = () => {
                     <View style={styles.visitRow}>
                         {[
                             { image: require('../../assets/img/mdvs1.png'), screen: 'AddDoctorNoteScreen' },
-                            { image: require('../../assets/img/mdvs2.png')},
+                            { image: require('../../assets/img/mdvs2.png'), screen: 'AddLabTestScreen'},
                             { image: require('../../assets/img/mdvs3.png'), screen:'DoctorPrescriptionScreen'},
                         ].map((item, idx) => (
                             <TouchableOpacity key={idx} style={styles.visitItem} activeOpacity={0.7} onPress={() => item.screen && navigation.navigate(item.screen)}>

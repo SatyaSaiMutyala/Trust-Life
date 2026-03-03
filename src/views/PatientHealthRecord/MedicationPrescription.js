@@ -22,36 +22,57 @@ import {
 } from '../../utils/globalColors';
 import { ms, vs } from 'react-native-size-matters';
 
-// Dummy grouped data
-const GROUPED_RECORDS = [
+// Dummy prescription data
+const GROUPED_PRESCRIPTIONS = [
     {
-        date: 'Mon, 07 Feb, 2026, 12:44:35',
+        date: 'Mon, 07 Feb, 2026',
         records: [
-            { id: '1', name: 'Suresh Kumar' },
-            { id: '2', name: 'Suresh Kumar' },
+            { id: '1', medicine: 'Paracetamol', dosage: '500mg', duration: '2 Weeks', time: 'Morning' },
+            { id: '2', medicine: 'Amoxicillin', dosage: '250mg', duration: '1 Week', time: 'Evening' },
         ],
     },
     {
-        date: 'Mon, 07 Feb, 2026, 12:55:35',
+        date: 'Tue, 08 Feb, 2026',
         records: [
-            { id: '3', name: 'Suresh Kumar' },
+            { id: '3', medicine: 'Cetirizine', dosage: '10mg', duration: '5 Days', time: 'Night' },
         ],
     },
     {
-        date: 'Mon, 07 Feb, 2026, 13:55:35',
+        date: 'Wed, 09 Feb, 2026',
         records: [
-            { id: '4', name: 'Suresh Kumar' },
-            { id: '5', name: 'Suresh Kumar' },
+            { id: '4', medicine: 'Ibuprofen', dosage: '400mg', duration: '3 Days', time: 'Morning' },
+            { id: '5', medicine: 'Metformin', dosage: '500mg', duration: '4 Weeks', time: 'Evening' },
         ],
     },
 ];
+
+// Dummy bio-markers data
+const BIO_MARKERS_DATA = [
+    { code: 'GLU002', name: 'Glucose', count: 3 },
+    { code: 'BP001', name: 'Blood Pressure', count: 4 },
+    { code: 'CHL003', name: 'Cholesterol', count: 4 },
+    { code: 'OXY005', name: 'Oxygen Saturation', count: 3 },
+    { code: 'OXY005', name: 'Oxygen Saturation', count: 3 },
+    { code: 'BP001', name: 'Blood Pressure', count: 4 },
+    { code: 'BP001', name: 'Blood Pressure', count: 4 },
+];
+
+const getTimeIcon = (time) => {
+    switch (time) {
+        case 'Morning': return 'sunny-outline';
+        case 'Evening': return 'partly-sunny-outline';
+        case 'Night': return 'moon-outline';
+        default: return 'time-outline';
+    }
+};
 
 const MedicationPrescription = () => {
     const navigation = useNavigation();
     const route = useRoute();
     const title = route.params?.title || 'Medication Prescription';
+    const [activeTab, setActiveTab] = useState('Prescription');
     const [searchText, setSearchText] = useState('');
-    const [records] = useState(GROUPED_RECORDS);
+    const [records] = useState(GROUPED_PRESCRIPTIONS);
     const [selectionMode, setSelectionMode] = useState(false);
     const [selectedIds, setSelectedIds] = useState([]);
 
@@ -68,7 +89,7 @@ const MedicationPrescription = () => {
         if (selectionMode) {
             setSelectedIds((prev) => {
                 const updated = prev.includes(id)
-                    ? prev.filter((item) => item !== id)
+                    ? prev.filter((i) => i !== id)
                     : [...prev, id];
                 if (updated.length === 0) {
                     setSelectionMode(false);
@@ -77,7 +98,7 @@ const MedicationPrescription = () => {
             });
         } else {
             navigation.navigate('PrescriptionDetail', {
-                name: item.name,
+                name: item.medicine,
                 date: groupDate,
             });
         }
@@ -99,24 +120,23 @@ const MedicationPrescription = () => {
             <Text style={styles.emptyDesc}>
                 Add your medication prescriptions to keep it{'\n'}organized and easy to access.
             </Text>
-            <TouchableOpacity style={styles.addRecordsBtn} activeOpacity={0.7} onPress={() => navigation.navigate('UploadPrescription')}>
-                <Icon
-                    type={Icons.Feather}
-                    name="plus"
-                    color={whiteColor}
-                    size={ms(18)}
-                />
-                <Text style={styles.addRecordsBtnText}>Add Prescriptions</Text>
+            <TouchableOpacity
+                style={styles.addRecordsBtn}
+                activeOpacity={0.7}
+                onPress={() => navigation.navigate('AddPrescription')}
+            >
+                <Icon type={Icons.Feather} name="plus" color={whiteColor} size={ms(18)} />
+                <Text style={styles.addRecordsBtnText}>Add Prescription</Text>
             </TouchableOpacity>
         </View>
     );
 
-    const renderRecordItem = (item, groupDate) => {
+    const renderPrescriptionItem = (item, groupDate) => {
         const isSelected = selectedIds.includes(item.id);
         return (
             <TouchableOpacity
                 key={item.id}
-                style={[styles.recordCard, isSelected && styles.recordCardSelected]}
+                style={[styles.prescriptionCard, isSelected && styles.prescriptionCardSelected]}
                 activeOpacity={0.7}
                 onLongPress={() => handleLongPress(item.id)}
                 onPress={() => handleCardPress(item.id, item, groupDate)}
@@ -124,70 +144,107 @@ const MedicationPrescription = () => {
                 {selectionMode && (
                     <View style={[styles.checkbox, isSelected && styles.checkboxChecked]}>
                         {isSelected && (
-                            <Icon
-                                type={Icons.Feather}
-                                name="check"
-                                color={whiteColor}
-                                size={ms(14)}
-                            />
+                            <Icon type={Icons.Feather} name="check" color={whiteColor} size={ms(14)} />
                         )}
                     </View>
                 )}
-                <View style={styles.docIconWrap}>
-                    <Icon
-                        type={Icons.Ionicons}
-                        name="document-text-outline"
-                        color={blackColor}
-                        size={ms(26)}
-                    />
+                <View style={styles.pillIconWrap}>
+                    <Icon type={Icons.Ionicons} name="medkit-outline" color={primaryColor} size={ms(22)} />
                 </View>
-                <View style={styles.recordInfo}>
-                    <Text style={styles.recordName}>{item.name}</Text>
+                <View style={styles.prescriptionInfo}>
+                    <Text style={styles.medicineName}>{item.medicine} <Text style={styles.dosageText}>{item.dosage}</Text></Text>
+                    <View style={styles.prescriptionMeta}>
+                        <View style={styles.durationBadge}>
+                            <Icon type={Icons.Ionicons} name="calendar-outline" color={primaryColor} size={ms(12)} />
+                            <Text style={styles.durationText}>{item.duration}</Text>
+                        </View>
+                        <View style={styles.timeBadge}>
+                            <Icon type={Icons.Ionicons} name={getTimeIcon(item.time)} color="#6B7280" size={ms(12)} />
+                            <Text style={styles.timeText}>{item.time}</Text>
+                        </View>
+                    </View>
                 </View>
                 {!selectionMode && (
                     <View style={styles.arrowButton}>
-                        <Icon
-                            type={Icons.Feather}
-                            name="chevron-right"
-                            color={blackColor}
-                            size={ms(20)}
-                        />
+                        <Icon type={Icons.Feather} name="chevron-right" color="#9CA3AF" size={ms(20)} />
                     </View>
                 )}
             </TouchableOpacity>
         );
     };
 
-    const renderDataState = () => (
-        <FlatList
-            data={records}
-            keyExtractor={(item, index) => index.toString()}
-            showsVerticalScrollIndicator={false}
-            contentContainerStyle={styles.listContent}
-            ListHeaderComponent={
-                <View style={styles.searchContainer}>
-                    <Icon
-                        type={Icons.Feather}
-                        name="search"
-                        color="#9CA3AF"
-                        size={ms(18)}
-                    />
-                    <TextInput
-                        style={styles.searchInput}
-                        placeholder="Search"
-                        placeholderTextColor="#9CA3AF"
-                        value={searchText}
-                        onChangeText={setSearchText}
-                    />
-                </View>
-            }
-            renderItem={({ item: group }) => (
-                <View style={styles.dateGroup}>
-                    <Text style={styles.dateHeader}>{group.date}</Text>
-                    {group.records.map((record) => renderRecordItem(record, group.date))}
-                </View>
-            )}
-        />
+    const renderPrescriptionTab = () => {
+        if (!hasRecords) return renderEmptyState();
+
+        return (
+            <View style={{ flex: 1 }}>
+                <FlatList
+                    data={records}
+                    keyExtractor={(item, index) => index.toString()}
+                    showsVerticalScrollIndicator={false}
+                    contentContainerStyle={styles.listContent}
+                    ListHeaderComponent={
+                        <View style={styles.searchContainer}>
+                            <Icon type={Icons.Feather} name="search" color="#9CA3AF" size={ms(18)} />
+                            <TextInput
+                                style={styles.searchInput}
+                                placeholder="Search"
+                                placeholderTextColor="#9CA3AF"
+                                value={searchText}
+                                onChangeText={setSearchText}
+                            />
+                        </View>
+                    }
+                    renderItem={({ item: group }) => (
+                        <View style={styles.dateGroup}>
+                            <Text style={styles.dateHeader}>{group.date}</Text>
+                            {group.records.map((record) => renderPrescriptionItem(record, group.date))}
+                        </View>
+                    )}
+                />
+                {/* Floating Add Button */}
+                <TouchableOpacity
+                    style={styles.fab}
+                    activeOpacity={0.85}
+                    onPress={() => navigation.navigate('AddPrescription')}
+                >
+                    <Icon type={Icons.Feather} name="plus" size={ms(26)} color={whiteColor} />
+                </TouchableOpacity>
+            </View>
+        );
+    };
+
+    const renderBioMarkersTab = () => (
+        <View style={styles.bioContainer}>
+            {/* Table Header */}
+            <View style={styles.bioHeaderRow}>
+                <Text style={[styles.bioHeaderText, { flex: 0.8 }]}>Code</Text>
+                <Text style={[styles.bioHeaderText, { flex: 1.2, textAlign: 'center' }]}>Bio-Markers</Text>
+                <Text style={[styles.bioHeaderText, { flex: 0.5, textAlign: 'right', marginRight: ms(20) }]}>Count</Text>
+            </View>
+
+            {/* Table Rows */}
+            <FlatList
+                data={BIO_MARKERS_DATA}
+                keyExtractor={(item, index) => index.toString()}
+                showsVerticalScrollIndicator={false}
+                contentContainerStyle={{ paddingBottom: vs(30), paddingHorizontal: ms(2) }}
+                renderItem={({ item }) => (
+                    <TouchableOpacity
+                        style={styles.bioRow}
+                        activeOpacity={0.7}
+                        onPress={() => navigation.navigate('BioMarkerDetail', { name: item.name, code: item.code })}
+                    >
+                        <Text style={[styles.bioCode, { flex: 0.8 }]}>{item.code}</Text>
+                        <Text style={[styles.bioName, { flex: 1.2, textAlign: 'center' }]}>{item.name}</Text>
+                        <View style={{ flex: 0.5, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end' }}>
+                            <Text style={styles.bioCount}>{item.count}</Text>
+                            <Icon type={Icons.Ionicons} name="chevron-forward" color="#9CA3AF" size={ms(16)} />
+                        </View>
+                    </TouchableOpacity>
+                )}
+            />
+        </View>
     );
 
     return (
@@ -219,29 +276,42 @@ const MedicationPrescription = () => {
                     </Text>
                     {selectionMode && (
                         <TouchableOpacity style={styles.shareButton} activeOpacity={0.7}>
-                            <Icon
-                                type={Icons.Feather}
-                                name="share-2"
-                                color={whiteColor}
-                                size={ms(20)}
-                            />
+                            <Icon type={Icons.Feather} name="share-2" color={whiteColor} size={ms(20)} />
                         </TouchableOpacity>
                     )}
                 </View>
 
+                {/* Tab Switcher */}
+                <View style={styles.tabContainer}>
+                    <TouchableOpacity
+                        style={[styles.tab, activeTab === 'Prescription' && styles.activeTab]}
+                        onPress={() => setActiveTab('Prescription')}
+                    >
+                        <Text style={[styles.tabText, activeTab === 'Prescription' && styles.activeTabText]}>
+                            Prescription
+                        </Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                        style={[styles.tab, activeTab === 'Bio' && styles.activeTab]}
+                        onPress={() => setActiveTab('Bio')}
+                    >
+                        <Text style={[styles.tabText, activeTab === 'Bio' && styles.activeTabText]}>
+                            Bio-markers
+                        </Text>
+                    </TouchableOpacity>
+                </View>
+
                 {/* Content */}
-                {hasRecords ? renderDataState() : renderEmptyState()}
+                {activeTab === 'Prescription' ? renderPrescriptionTab() : renderBioMarkersTab()}
             </SafeAreaView>
         </LinearGradient>
     );
 };
 
 const styles = StyleSheet.create({
-
-    flex1:{
-        flex:1
+    flex1: {
+        flex: 1,
     },
-
     fullGradient: {
         flex: 1,
         paddingHorizontal: ms(20),
@@ -252,7 +322,7 @@ const styles = StyleSheet.create({
     header: {
         flexDirection: 'row',
         alignItems: 'center',
-        paddingBottom: vs(5),
+        paddingBottom: vs(12),
     },
     backButton: {
         width: ms(34),
@@ -283,29 +353,65 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
 
+    // Tabs
+    tabContainer: {
+        flexDirection: 'row',
+        backgroundColor: 'rgba(255,255,255,0.4)',
+        borderRadius: ms(25),
+        padding: ms(4),
+        marginBottom: vs(12),
+    },
+    tab: {
+        flex: 1,
+        paddingVertical: vs(12),
+        alignItems: 'center',
+        borderRadius: ms(22),
+    },
+    activeTab: {
+        backgroundColor: primaryColor,
+        elevation: 2,
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.1,
+    },
+    tabText: {
+        fontSize: ms(14),
+        color: whiteColor,
+        fontWeight: '500',
+    },
+    activeTabText: {
+        color: whiteColor,
+        fontWeight: '700',
+    },
+
     // Search
     searchContainer: {
         flexDirection: 'row',
         alignItems: 'center',
         backgroundColor: whiteColor,
         borderRadius: ms(25),
-        paddingHorizontal: ms(20),
+        paddingHorizontal: ms(15),
         height: vs(45),
         marginBottom: vs(16),
+        elevation: 3,
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.1,
+        shadowRadius: 4,
     },
     searchInput: {
         flex: 1,
         fontFamily: regular,
         fontSize: ms(14),
         color: blackColor,
-        marginLeft: ms(5),
+        marginLeft: ms(8),
         paddingVertical: 0,
     },
 
     // List
     listContent: {
-        paddingTop: vs(16),
-        paddingBottom: vs(30),
+        paddingTop: vs(10),
+        paddingBottom: vs(90),
     },
 
     // Date Group
@@ -319,17 +425,17 @@ const styles = StyleSheet.create({
         marginBottom: vs(8),
     },
 
-    // Record Card
-    recordCard: {
+    // Prescription Card
+    prescriptionCard: {
         flexDirection: 'row',
         alignItems: 'center',
         backgroundColor: '#F8FAFC',
         borderRadius: ms(14),
         paddingHorizontal: ms(14),
-        paddingVertical: vs(12),
+        paddingVertical: vs(14),
         marginBottom: vs(10),
     },
-    recordCardSelected: {
+    prescriptionCardSelected: {
         backgroundColor: '#E8F5F2',
         borderWidth: 1,
         borderColor: primaryColor,
@@ -349,20 +455,57 @@ const styles = StyleSheet.create({
         backgroundColor: primaryColor,
         borderColor: primaryColor,
     },
-    docIconWrap: {
+    pillIconWrap: {
         width: ms(44),
         height: ms(44),
+        borderRadius: ms(22),
+        backgroundColor: '#E8F5F2',
         justifyContent: 'center',
         alignItems: 'center',
     },
-    recordInfo: {
+    prescriptionInfo: {
         flex: 1,
-        marginLeft: ms(10),
+        marginLeft: ms(12),
     },
-    recordName: {
+    medicineName: {
         fontFamily: bold,
         fontSize: ms(14),
         color: blackColor,
+    },
+    dosageText: {
+        fontFamily: regular,
+        fontSize: ms(12),
+        color: '#6B7280',
+    },
+    prescriptionMeta: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginTop: vs(6),
+        gap: ms(10),
+    },
+    durationBadge: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        backgroundColor: '#E8F5F2',
+        paddingHorizontal: ms(8),
+        paddingVertical: vs(3),
+        borderRadius: ms(12),
+        gap: ms(4),
+    },
+    durationText: {
+        fontFamily: bold,
+        fontSize: ms(11),
+        color: primaryColor,
+    },
+    timeBadge: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        gap: ms(4),
+    },
+    timeText: {
+        fontFamily: regular,
+        fontSize: ms(11),
+        color: '#6B7280',
     },
     arrowButton: {
         width: ms(36),
@@ -410,6 +553,66 @@ const styles = StyleSheet.create({
         fontFamily: bold,
         fontSize: ms(14),
         color: whiteColor,
+    },
+
+    // FAB
+    fab: {
+        position: 'absolute',
+        bottom: vs(25),
+        right: ms(0),
+        width: ms(56),
+        height: ms(56),
+        borderRadius: ms(28),
+        backgroundColor: primaryColor,
+        justifyContent: 'center',
+        alignItems: 'center',
+        elevation: 6,
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 3 },
+        shadowOpacity: 0.25,
+        shadowRadius: 6,
+    },
+
+    // Bio-markers
+    bioContainer: {
+        flex: 1,
+        paddingTop: vs(15),
+    },
+    bioHeaderRow: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        paddingHorizontal: ms(15),
+        marginBottom: vs(10),
+    },
+    bioHeaderText: {
+        fontSize: ms(14),
+        fontFamily: bold,
+        color: '#6B7280',
+    },
+    bioRow: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        paddingVertical: vs(18),
+        paddingHorizontal: ms(15),
+        backgroundColor: '#F1F5F9',
+        borderRadius: ms(12),
+        marginBottom: vs(8),
+    },
+    bioCode: {
+        fontSize: ms(13),
+        fontFamily: bold,
+        color: '#374151',
+    },
+    bioName: {
+        fontSize: ms(14),
+        fontFamily: bold,
+        color: '#1F2937',
+    },
+    bioCount: {
+        fontSize: ms(14),
+        fontFamily: bold,
+        color: '#374151',
+        marginRight: ms(4),
     },
 });
 

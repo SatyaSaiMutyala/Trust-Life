@@ -151,7 +151,7 @@ const PatientNote = () => {
                 {/* Header */}
                 <View style={styles.header}>
                     <TouchableOpacity
-                        onPress={() => navigation.navigate('Reports')}
+                        onPress={() => navigation.goBack()}
                         style={styles.backButton}
                     >
                         <Icon

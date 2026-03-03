@@ -301,10 +301,10 @@ const Splash = (props) => {
       <View style={styles.bottomSection}>
         <Text style={styles.poweredText}>Powered by</Text>
         <View style={styles.bottomLogos}>
-          <Image
+          {/* <Image
             source={require('../assets/img/app3dlogo.png')}
             style={styles.bottomLogo}
-          />
+          /> */}
           <Image
             source={require('../assets/img/trustmdlogo.png')}
             style={styles.bottomLogo}
