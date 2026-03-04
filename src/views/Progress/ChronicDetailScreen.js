@@ -201,15 +201,15 @@ const BioChart = ({ points, id }) => (
 
             {/* Red critical line (top) */}
             <Line x1="0" y1={CHART_H * 0.10} x2={CHART_W} y2={CHART_H * 0.10}
-                stroke="#EF4444" strokeWidth="1.5" />
-            {/* Yellow normal range lines */}
-            <Line x1="0" y1={CHART_H * 0.38} x2={CHART_W} y2={CHART_H * 0.38}
-                stroke="#F59E0B" strokeWidth="2" strokeLinecap="round" />
-            <Line x1="0" y1={CHART_H * 0.52} x2={CHART_W} y2={CHART_H * 0.52}
-                stroke="#F59E0B" strokeWidth="2" strokeLinecap="round" />
+                stroke="#EF4444" strokeWidth="0.5" />
+            {/* Orange normal range lines */}
+            <Line x1="0" y1={CHART_H * 0.37} x2={CHART_W} y2={CHART_H * 0.37}
+                stroke="#F59E0B" strokeWidth="0.5" strokeLinecap="round" />
+            <Line x1="0" y1={CHART_H * 0.64} x2={CHART_W} y2={CHART_H * 0.64}
+                stroke="#F59E0B" strokeWidth="0.5" strokeLinecap="round" />
             {/* Bottom baseline */}
             <Line x1="0" y1={CHART_H * 0.92} x2={CHART_W} y2={CHART_H * 0.92}
-                stroke="#EF4444" strokeWidth="1.5" />
+                stroke="#EF4444" strokeWidth="0.5" />
 
             {/* Area fill */}
             <Path d={createAreaPath(points)} fill={`url(#${id})`} />
@@ -456,7 +456,7 @@ const ChronicDetailScreen = () => {
                         <Text style={styles.bioSectionTitle}>Bio - Markers Movement</Text>
                         <Text style={styles.bioSectionTitle}>( Lab reports )</Text>
                     </View>
-                    <TouchableOpacity style={styles.viewAllBtn}>
+                    <TouchableOpacity style={styles.viewAllBtn} onPress={() => navigation.navigate('BioMarkersTrendScreen')}>
                         <Text style={styles.viewAllText}>View all trend</Text>
                     </TouchableOpacity>
                 </View>
@@ -613,7 +613,7 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         paddingHorizontal: ms(20), marginBottom: vs(12),
     },
-    bioSectionTitle: { fontFamily: bold, fontSize: ms(15), color: blackColor, lineHeight: ms(22) },
+    bioSectionTitle: { fontFamily: bold, fontSize: ms(18), color: blackColor, lineHeight: ms(22) },
     viewAllBtn: {
         borderWidth: 1.5, borderColor: '#3B82F6',
         borderRadius: ms(20), paddingHorizontal: ms(14),
@@ -627,13 +627,14 @@ const styles = StyleSheet.create({
     bioCard: {
         backgroundColor: whiteColor, borderRadius: ms(16),
         padding: ms(16),
+        marginBottom:ms(10)
     },
     bioCardTop: {
         flexDirection: 'row', alignItems: 'flex-start',
         justifyContent: 'space-between', marginBottom: vs(14),
     },
     bioNameWrap: { flex: 1 },
-    bioName: { fontFamily: bold, fontSize: ms(14), color: blackColor },
+    bioName: { fontFamily: bold, fontSize: ms(12), color: whiteColor, backgroundColor:'green', paddingVertical:ms(6), paddingHorizontal:ms(10),flexDirection:'row', borderRadius:ms(5),alignSelf: 'flex-start', },
     bioSubtitle: { fontSize: ms(11), color: '#9CA3AF', marginTop: vs(2) },
     bioTopRight: { alignItems: 'flex-end' },
     bioCodeBadge: {
@@ -772,7 +773,6 @@ const styles = StyleSheet.create({
     symptomRecentLabel: { fontFamily: bold, fontSize: ms(13), color: blackColor, marginBottom: vs(10) },
     symptomRow: {
         paddingVertical: vs(8),
-        borderBottomWidth: 1, borderBottomColor: '#F3F4F6',
     },
     symptomText: { fontSize: ms(13), color: '#374151' },
     symptomSeverity: { fontSize: ms(13), fontFamily: bold, color: blackColor },

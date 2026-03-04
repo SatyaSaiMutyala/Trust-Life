@@ -22,6 +22,7 @@ import LoginHome from './src/views/LoginHome';
 import Faq from './src/views/Faq';
 import FaqCategories from './src/views/FaqCategories';
 import FaqDetails from './src/views/FaqDetails';
+import SupportScreen from './src/views/More/SupportScreen';
 import PrivacyPolicies from './src/views/PrivacyPolicies';
 import TermsOfServiceScreen from './src/views/TermsOfServiceScreen';
 import UserConsentAgreementScreen from './src/views/UserConsentAgreementScreen';
@@ -180,6 +181,7 @@ import MedicalRecords from './src/views/PatientHealthRecord/MedicalRecords';
 import UploadMedicalRecord from './src/views/PatientHealthRecord/UploadMedicalRecord';
 import MedicalBills from './src/views/PatientHealthRecord/MedicalBills';
 import UploadMedicalBill from './src/views/PatientHealthRecord/UploadMedicalBill';
+import ContinuityTracking from './src/views/ContinuityTracking';
 import HeartRateLog from './src/views/HeartRate/HeartRateLog';
 import HeartRateDashboard from './src/views/HeartRate/HeartRateDashboard';
 import AddHeartRateReading from './src/views/HeartRate/AddHeartRateReading';
@@ -271,6 +273,7 @@ import AccessDetailScreen from './src/views/More/AccessDetailScreen';
 import AcuteConditionsScreen from './src/views/Progress/AcuteConditionsScreen';
 import ChronicConditionsScreen from './src/views/Progress/ChronicConditionsScreen';
 import ChronicDetailScreen from './src/views/Progress/ChronicDetailScreen';
+import BioMarkersTrendScreen from './src/views/Progress/BioMarkersTrendScreen';
 import ChronicProgressiveScreen from './src/views/Progress/ChronicProgressiveScreen';
 import ChronicProgressiveDetailScreen from './src/views/Progress/ChronicProgressiveDetailScreen';
 import ConditionDetailScreen from './src/views/Progress/ConditionDetailScreen';
@@ -548,6 +551,7 @@ function App() {
               <Stack.Screen name="PharmProducts" component={PharmProducts} options={({ route }) => ({ title: route.params.sub_category_name })} />
               <Stack.Screen name="PharmProductDetails" component={PharmProductDetails} options={{ headerShown: false }} />
               <Stack.Screen name="FaqCategories" component={FaqCategories} options={{ title: 'Faq Categories' }} />
+              <Stack.Screen name="SupportScreen" component={SupportScreen} options={{ headerShown: false }} />
               <Stack.Screen name="Faq" component={Faq} options={{ title: 'Faq' }} />
               <Stack.Screen name="MyAppointments" component={MyAppointments} options={{ title: 'My Appointments' }} />
               <Stack.Screen name="Home" component={TabNavigator} options={{ headerShown: false }} />
@@ -664,6 +668,7 @@ function App() {
               <Stack.Screen name='UploadMedicalRecord' component={UploadMedicalRecord} options={{headerShown:false}}/>
               <Stack.Screen name='MedicalBills' component={MedicalBills} options={{headerShown:false}}/>
               <Stack.Screen name='UploadMedicalBill' component={UploadMedicalBill} options={{headerShown:false}}/>
+              <Stack.Screen name='ContinuityTracking' component={ContinuityTracking} options={{headerShown:false}}/>
               <Stack.Screen name='HeartRateLog' component={HeartRateLog} options={{headerShown:false}}/>
               <Stack.Screen name='HeartRateDashboard' component={HeartRateDashboard} options={{headerShown:false}}/>
               <Stack.Screen name='AddHeartRateReading' component={AddHeartRateReading} options={{headerShown:false}}/>
@@ -754,6 +759,7 @@ function App() {
               <Stack.Screen name='AcuteConditionsScreen' component={AcuteConditionsScreen} options={{headerShown:false}}/>
               <Stack.Screen name='ChronicConditionsScreen' component={ChronicConditionsScreen} options={{headerShown:false}}/>
               <Stack.Screen name='ChronicDetailScreen' component={ChronicDetailScreen} options={{headerShown:false}}/>
+              <Stack.Screen name='BioMarkersTrendScreen' component={BioMarkersTrendScreen} options={{headerShown:false}}/>
               <Stack.Screen name='ChronicProgressiveScreen' component={ChronicProgressiveScreen} options={{headerShown:false}}/>
               <Stack.Screen name='ChronicProgressiveDetailScreen' component={ChronicProgressiveDetailScreen} options={{headerShown:false}}/>
               <Stack.Screen name='ConditionDetailScreen' component={ConditionDetailScreen} options={{headerShown:false}}/>

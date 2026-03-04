@@ -12,10 +12,10 @@ import { blackColor, whiteColor, primaryColor } from '../utils/globalColors';
 // ── Data ──────────────────────────────────────────────────────────────────────
 const STORY_DATA = [
     { score: 614, date: '24 Feb, 2019', condition: 'Hypothyroidism Diagnosed', doctor: 'Dr. Sarah Smith', visit: 'Routine Check', points: '-13 Pts', isPositive: false, showArrow: true  },
-    { score: 627, date: '24 Feb, 2019', condition: 'Hypothyroidism Diagnosed', doctor: 'Dr. Sarah Smith', visit: 'Routine Check', points: '-7 Pts',  isPositive: false, showArrow: false },
+    { score: 627, date: '24 Feb, 2019', condition: 'Hypothyroidism Diagnosed', doctor: 'Dr. Sarah Smith', visit: 'Routine Check', points: '-7 Pts',  isPositive: false, showArrow: true },
     { score: 634, date: '24 Feb, 2019', condition: 'Hypothyroidism Diagnosed', doctor: 'Dr. Sarah Smith', visit: 'Routine Check', points: '+13 Pts', isPositive: true,  showArrow: true  },
-    { score: 640, date: '24 Feb, 2019', condition: 'Hypothyroidism Diagnosed', doctor: 'Dr. Sarah Smith', visit: 'Routine Check', points: '-12 Pts', isPositive: false, showArrow: false },
-    { score: 652, date: '24 Feb, 2019', condition: 'Hypothyroidism Diagnosed', doctor: 'Dr. Sarah Smith', visit: 'Routine Check', points: '-18 Pts', isPositive: false, showArrow: false },
+    { score: 640, date: '24 Feb, 2019', condition: 'Hypothyroidism Diagnosed', doctor: 'Dr. Sarah Smith', visit: 'Routine Check', points: '-12 Pts', isPositive: false, showArrow: true },
+    { score: 652, date: '24 Feb, 2019', condition: 'Hypothyroidism Diagnosed', doctor: 'Dr. Sarah Smith', visit: 'Routine Check', points: '-18 Pts', isPositive: false, showArrow: true },
     { score: 670, date: '24 Feb, 2019', condition: 'Hypothyroidism Diagnosed', doctor: 'Dr. Sarah Smith', visit: 'Routine Check', points: '+13 Pts', isPositive: true,  showArrow: true  },
 ];
 

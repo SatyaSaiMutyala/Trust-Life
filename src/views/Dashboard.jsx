@@ -53,41 +53,95 @@ const dashPolar = (cx, cy, r, deg) => ({
 const DASH_RING_CIRC = 2 * Math.PI * DASH_RING_R;
 const DASH_RING_ARC_LEN = (DASH_RING_ARC_DEG / 360) * DASH_RING_CIRC;
 
-const DashScoreRing = () => (
+// Score value config
+const DASH_SCORE_MIN = 300;
+const DASH_SCORE_MAX = 900;
+const DASH_SCORE_MID = 500; // Orange-to-green threshold
+const DASH_SCORE_VALUE = 320;
+const DASH_SCORE_FRACTION = (DASH_SCORE_VALUE - DASH_SCORE_MIN) / (DASH_SCORE_MAX - DASH_SCORE_MIN);
+const DASH_RING_FILL_LEN = DASH_RING_ARC_LEN * DASH_SCORE_FRACTION;
+// Orange zone covers 300-500 range
+const DASH_ORANGE_FRACTION = (DASH_SCORE_MID - DASH_SCORE_MIN) / (DASH_SCORE_MAX - DASH_SCORE_MIN);
+const DASH_ORANGE_ARC_LEN = DASH_RING_ARC_LEN * DASH_ORANGE_FRACTION;
+// Fill color: orange if score <= 500, green if > 500
+const DASH_FILL_COLOR = DASH_SCORE_VALUE <= DASH_SCORE_MID ? '#E8940A' : null;
+
+const DashScoreRing = () => {
+    const isOrangeZone = DASH_SCORE_VALUE <= DASH_SCORE_MID;
+    // If in green zone, split into orange portion + green portion
+    const greenFraction = isOrangeZone ? 0 : ((DASH_SCORE_VALUE - DASH_SCORE_MID) / (DASH_SCORE_MAX - DASH_SCORE_MIN));
+    const greenArcLen = DASH_RING_ARC_LEN * greenFraction;
+    const greenRotation = DASH_RING_START_DEG + (DASH_ORANGE_FRACTION * DASH_RING_ARC_DEG);
+
+    return (
     <View style={{ width: DASH_RING_SIZE, height: DASH_RING_SIZE }}>
         <Svg width={DASH_RING_SIZE} height={DASH_RING_SIZE}>
             <Defs>
-                <SvgLinearGradient id="dRing3d" x1="0" y1="0" x2="1" y2="1">
+                <SvgLinearGradient id="dRingGreen" x1="0" y1="0" x2="1" y2="1">
                     <Stop offset="0%"   stopColor="#094A3D" />
                     <Stop offset="30%"  stopColor="#1A8A68" />
                     <Stop offset="50%"  stopColor="#2CB888" />
                     <Stop offset="70%"  stopColor="#1A8A68" />
                     <Stop offset="100%" stopColor="#094A3D" />
                 </SvgLinearGradient>
-                <RadialGradient id="dRingInner" cx="50%" cy="46%" r="50%">
-                    <Stop offset="0%"   stopColor="#FFFFFF" />
-                    <Stop offset="78%"  stopColor="#F8F8F8" />
-                    <Stop offset="92%"  stopColor="#EBEBEB" />
-                    <Stop offset="100%" stopColor="#D0D0D0" />
-                </RadialGradient>
+                <SvgLinearGradient id="dRingOrange" x1="0" y1="0" x2="1" y2="1">
+                    <Stop offset="0%"   stopColor="#C47A08" />
+                    <Stop offset="50%"  stopColor="#E8940A" />
+                    <Stop offset="100%" stopColor="#C47A08" />
+                </SvgLinearGradient>
                 <RadialGradient id="dRingGlow" cx="50%" cy="50%" r="50%">
                     <Stop offset="68%"  stopColor="#1A7E70" stopOpacity="0.18" />
                     <Stop offset="100%" stopColor="#1A7E70" stopOpacity="0" />
                 </RadialGradient>
             </Defs>
             <Circle cx={DASH_RING_CX} cy={DASH_RING_CY} r={DASH_RING_R + ms(8)} fill="url(#dRingGlow)" />
+            {/* Gray background track */}
             <Circle
-                cx={DASH_RING_CX} cy={DASH_RING_CY} r={DASH_RING_R}
-                fill="none" stroke="url(#dRing3d)"
+                cx={DASH_RING_CX} cy={DASH_RING_CY}
+                r={DASH_RING_R}
+                fill="none" stroke="#E8E8E8"
                 strokeWidth={DASH_RING_STROKE}
                 strokeDasharray={`${DASH_RING_ARC_LEN} ${DASH_RING_CIRC}`}
                 strokeLinecap="round"
                 transform={`rotate(${DASH_RING_START_DEG}, ${DASH_RING_CX}, ${DASH_RING_CY})`}
             />
+            {isOrangeZone ? (
+                /* Orange fill arc - score is <= 500 */
+                <Circle
+                    cx={DASH_RING_CX} cy={DASH_RING_CY} r={DASH_RING_R}
+                    fill="none" stroke="url(#dRingOrange)"
+                    strokeWidth={DASH_RING_STROKE}
+                    strokeDasharray={`${DASH_RING_FILL_LEN} ${DASH_RING_CIRC}`}
+                    strokeLinecap="round"
+                    transform={`rotate(${DASH_RING_START_DEG}, ${DASH_RING_CX}, ${DASH_RING_CY})`}
+                />
+            ) : (
+                <>
+                    {/* Orange arc - covers 300 to 500 */}
+                    <Circle
+                        cx={DASH_RING_CX} cy={DASH_RING_CY} r={DASH_RING_R}
+                        fill="none" stroke="url(#dRingOrange)"
+                        strokeWidth={DASH_RING_STROKE}
+                        strokeDasharray={`${DASH_ORANGE_ARC_LEN} ${DASH_RING_CIRC}`}
+                        strokeLinecap="round"
+                        transform={`rotate(${DASH_RING_START_DEG}, ${DASH_RING_CX}, ${DASH_RING_CY})`}
+                    />
+                    {/* Green arc - covers 500 to score value */}
+                    <Circle
+                        cx={DASH_RING_CX} cy={DASH_RING_CY} r={DASH_RING_R}
+                        fill="none" stroke="url(#dRingGreen)"
+                        strokeWidth={DASH_RING_STROKE}
+                        strokeDasharray={`${greenArcLen} ${DASH_RING_CIRC}`}
+                        strokeLinecap="round"
+                        transform={`rotate(${greenRotation}, ${DASH_RING_CX}, ${DASH_RING_CY})`}
+                    />
+                </>
+            )}
+            {/* White inner circle */}
             <Circle
                 cx={DASH_RING_CX} cy={DASH_RING_CY}
                 r={DASH_RING_R - DASH_RING_STROKE / 2 - ms(2)}
-                fill="url(#dRingInner)"
+                fill="#FFFFFF"
             />
         </Svg>
         <View style={{ position: 'absolute', width: DASH_RING_SIZE, height: DASH_RING_SIZE, justifyContent: 'center', alignItems: 'center' }}>
@@ -105,7 +159,8 @@ const DashScoreRing = () => (
             top:  dashPolar(DASH_RING_CX, DASH_RING_CY, DASH_RING_R + DASH_RING_STROKE / 2 + ms(4), DASH_RING_START_DEG + DASH_RING_ARC_DEG).y - ms(2),
         }}>900</Text>
     </View>
-);
+    );
+};
 
 const Dashboard = (props) => {
     const navigation = useNavigation();
@@ -957,7 +1012,12 @@ const Dashboard = (props) => {
                         <View style={styles2.continuityTrackerSection}>
                             <View style={styles2.continuityCard}>
 
-                                <Text style={styles2.continuityCardTitle}>Continuity Tracker</Text>
+                                <View style={styles2.continuityCardHeader}>
+                                    <Text style={styles2.continuityCardTitle}>Continuity Tracker</Text>
+                                    <TouchableOpacity onPress={() => navigation.navigate('ContinuityTracking')}>
+                                        <Text style={styles2.continuityViewAll}>View all</Text>
+                                    </TouchableOpacity>
+                                </View>
 
                                 <View style={styles2.medicationRow}>
                                     <Text style={styles2.medicationLabel}>Medication</Text>
@@ -1123,32 +1183,45 @@ const Dashboard = (props) => {
 
                         {/* ── VITAL ORGAN SNAPSHOT ── */}
                         <View style={styles2.vosSection}>
-                            <Text style={styles2.vosSectionTitle}>Vital Organ Snapshot</Text>
+                            <View style={styles2.sectionHeader}>
+                                <Text style={styles2.vosSectionTitle}>Vital Organ Snapshot</Text>
+                                <TouchableOpacity onPress={() => navigation.navigate('AnalysisCheck')}>
+                                    <Text style={styles2.viewAllText}>View all</Text>
+                                </TouchableOpacity>
+                            </View>
                             <View style={styles2.vosGrid}>
                                 {[
-                                    { emoji: '🫀', organ: 'Heart',     status: 'Optimal'   },
-                                    { emoji: '🫁', organ: 'Liver',     status: 'Stable'    },
-                                    { emoji: '🫘', organ: 'Kidney',    status: 'Normal'    },
-                                    { emoji: '🫁', organ: 'Lungs',     status: 'Efficient' },
-                                    { emoji: '🧬', organ: 'Metabolic', status: 'Active'    },
-                                    { emoji: '🛡️', organ: 'Immune',    status: 'Strong'    },
+                                    { image: require('../assets/img/vo-heart.png'),     organ: 'Heart',     status: 'Optimal'   },
+                                    { image: require('../assets/img/vo-liver.png'),     organ: 'Liver',     status: 'Stable'    },
+                                    { image: require('../assets/img/vo-kidney.png'),    organ: 'Kidney',    status: 'Normal'    },
+                                    { image: require('../assets/img/vo-lungs.png'),     organ: 'Lungs',     status: 'Efficient' },
+                                    { image: require('../assets/img/vo-metabolic.png'), organ: 'Metabolic', status: 'Active'    },
+                                    { image: require('../assets/img/vo-immunity.png'),  organ: 'Immune',    status: 'Strong'    },
                                 ].map((item, index) => (
-                                    <View key={index} style={styles2.vosCard}>
-                                        <Text style={styles2.vosEmoji}>{item.emoji}</Text>
+                                    <TouchableOpacity key={index} style={styles2.vosCard} activeOpacity={0.7} onPress={() => navigation.navigate('AnalysisCheck')}>
+                                        <View style={styles2.vosCardTop}>
+                                            <Image source={item.image} style={styles2.vosImage} />
+                                            <Icon type={Icons.Ionicons} name="chevron-forward-circle-outline" size={ms(24)} color="#555" />
+                                        </View>
                                         <Text style={styles2.vosOrganName}>{item.organ}</Text>
                                         <Text style={styles2.vosStatus}>{item.status}</Text>
-                                    </View>
+                                    </TouchableOpacity>
                                 ))}
                             </View>
                         </View>
 
                         {/* ── LIFESTYLE IMPACT SUMMARY ── */}
                         <View style={styles2.lisCard}>
-                            <Text style={styles2.lisSectionTitle}>Lifestyle Impact Summary</Text>
+                            <View style={styles2.sectionHeader}>
+                                <Text style={styles2.lisSectionTitle}>Lifestyle Impact Summary</Text>
+                                <TouchableOpacity onPress={() => navigation.navigate('LifestyleImpactSummary')}>
+                                    <Text style={styles2.viewAllText}>View all</Text>
+                                </TouchableOpacity>
+                            </View>
                             {[
-                                { iconType: Icons.Ionicons,              iconName: 'moon',            iconColor: '#7B61FF', label: 'Sleep Quality',    status: 'Strong',   statusType: 'strong'   },
-                                { iconType: Icons.MaterialCommunityIcons, iconName: 'lightning-bolt', iconColor: '#FF6B35', label: 'Daily Activity',   status: 'Moderate', statusType: 'moderate' },
-                                { iconType: Icons.Ionicons,              iconName: 'restaurant',      iconColor: '#2E7D32', label: 'Nutrition Intake', status: 'Strong',   statusType: 'strong'   },
+                                { iconType: Icons.Ionicons,              iconName: 'moon',            iconColor: '#7B61FF', label: 'Sleep Quality',    status: 'Good',     statusType: 'strong'   },
+                                { iconType: Icons.MaterialCommunityIcons, iconName: 'lightning-bolt', iconColor: '#FF6B35', label: 'Daily Activity',   status: 'Active',   statusType: 'strong'   },
+                                { iconType: Icons.Ionicons,              iconName: 'restaurant',      iconColor: '#2E7D32', label: 'Nutrition Intake', status: 'Balanced', statusType: 'strong'   },
                                 { iconType: Icons.MaterialCommunityIcons, iconName: 'head-cog',       iconColor: '#1565C0', label: 'Stress Levels',   status: 'Moderate', statusType: 'moderate' },
                             ].map((item, index, arr) => (
                                 <View key={index}>
@@ -1165,7 +1238,12 @@ const Dashboard = (props) => {
 
                         {/* ── NOTIFICATIONS ── */}
                         <View style={styles2.notifCard}>
-                            <Text style={styles2.notifTitle}>Notifications</Text>
+                            <View style={styles2.sectionHeader}>
+                                <Text style={styles2.notifTitle}>Notifications</Text>
+                                <TouchableOpacity onPress={() => navigation.navigate('Notifications')}>
+                                    <Text style={styles2.viewAllText}>View all</Text>
+                                </TouchableOpacity>
+                            </View>
                             {[
                                 { iconType: Icons.MaterialIcons, iconName: 'biotech',    iconBg: '#E8F5E9', iconColor: '#2E7D32', title: 'HbA1c Screening',     subtitle: 'Due based on your metabolic trends.' },
                                 { iconType: Icons.Ionicons,      iconName: 'water',      iconBg: '#E3F2FD', iconColor: '#1565C0', title: 'Tablets refill',       subtitle: 'Add New set of tablets Here'          },
@@ -1354,14 +1432,64 @@ const Dashboard = (props) => {
                                     { image: require('../assets/img/top-lab.png'), onPress: () => navigateToTests('Home Lab') },
                                     { image: require('../assets/img/top-doctor.png'), onPress: () => navigation.navigate('DoctorConsultation') },
                                     { image: require('../assets/img/top-medicienes.png'), onPress: () => navigation.navigate('CompanyMedicines') },
-                                    { image: require('../assets/img/ambulance.png'), onPress: () => Linking.openURL('tel:108') },
                                 ].map((item, index) => (
                                     <TouchableOpacity key={index} onPress={item.onPress}>
                                         <Image source={item.image} style={styles.topServiceImage} />
                                     </TouchableOpacity>
                                 ))}
+                                <TouchableOpacity
+                                    style={styles.teleCard}
+                                    activeOpacity={0.7}
+                                    onPress={() => navigation.navigate('TeleMedicineScreen')}
+                                >
+                                    <View style={styles.teleIconWrap}>
+                                        <Icon type={Icons.Ionicons} name="videocam-outline" size={ms(20)} color={primaryColor} />
+                                    </View>
+                                    <Text style={styles.wellnessLabel} numberOfLines={2}>Tele Medicine</Text>
+                                </TouchableOpacity>
+                            </View>
+                            <View style={styles.wellnessGrid}>
+                                {[
+                                    { icon: 'fitness-outline', iconType: Icons.Ionicons, label: 'Coach', route: 'CoachScreen' },
+                                    { icon: 'chatbubbles-outline', iconType: Icons.Ionicons, label: 'Counselling', route: 'CounsellingScreen' },
+                                    { icon: 'medkit-outline', iconType: Icons.Ionicons, label: 'Nurse', route: 'NurseScreen' },
+                                    { icon: 'body-outline', iconType: Icons.Ionicons, label: 'Physiotherapy', route: 'PhysiotherapyScreen' },
+                                ].map((item, index) => (
+                                    <TouchableOpacity
+                                        key={index}
+                                        style={styles.wellnessCard}
+                                        activeOpacity={0.7}
+                                        onPress={() => navigation.navigate(item.route)}
+                                    >
+                                        <View style={styles.wellnessIconWrap}>
+                                            <Icon type={item.iconType} name={item.icon} size={ms(22)} color={primaryColor} />
+                                        </View>
+                                        <Text style={styles.wellnessLabel} numberOfLines={2}>{item.label}</Text>
+                                    </TouchableOpacity>
+                                ))}
+                            </View>
+                            <View style={styles.wellnessGrid}>
+                                {[
+                                    { icon: 'business-outline', iconType: Icons.Ionicons, label: 'Hospital', route: 'HospitalScreen' },
+                                    { icon: 'leaf-outline', iconType: Icons.Ionicons, label: 'Wellness Center', route: 'WellnessCenterScreen' },
+                                    { icon: 'shield-checkmark-outline', iconType: Icons.Ionicons, label: 'Health Insurance', route: 'HealthInsuranceScreen' },
+                                    { icon: 'car-outline', iconType: Icons.Ionicons, label: 'Ambulance', route: 'AmbulanceScreen' },
+                                ].map((item, index) => (
+                                    <TouchableOpacity
+                                        key={index}
+                                        style={styles.wellnessCard}
+                                        activeOpacity={0.7}
+                                        onPress={() => navigation.navigate(item.route)}
+                                    >
+                                        <View style={styles.wellnessIconWrap}>
+                                            <Icon type={item.iconType} name={item.icon} size={ms(22)} color={primaryColor} />
+                                        </View>
+                                        <Text style={styles.wellnessLabel} numberOfLines={2}>{item.label}</Text>
+                                    </TouchableOpacity>
+                                ))}
                             </View>
                         </View>
+
                         {/* What members say */}
                         <View style={styles.membersSaySection}>
                             <Text style={styles.membersSayHeading}>What Members Say</Text>
@@ -1523,9 +1651,10 @@ const styles = StyleSheet.create({
     },
     healthServiceGrid: {
         flexDirection: 'row',
-        justifyContent: 'center',
+        justifyContent: 'space-between',
         alignItems: 'center',
         paddingVertical: ms(5),
+        paddingHorizontal: ms(10),
     },
     topServiceCard: {
         // backgroundColor: whiteColor,
@@ -1551,6 +1680,60 @@ const styles = StyleSheet.create({
         fontSize: ms(11),
         fontWeight: '600',
         color: '#000',
+        textAlign: 'center',
+    },
+
+    // Wellness Services
+    wellnessGrid: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        paddingHorizontal: ms(10),
+        marginTop: vs(10),
+    },
+    wellnessCard: {
+        backgroundColor: whiteColor,
+        borderRadius: ms(14),
+        alignItems: 'center',
+        justifyContent: 'center',
+        paddingVertical: ms(10),
+        paddingHorizontal: ms(4),
+        width: (width - ms(70)) / 4,
+        height: ms(80),
+    },
+
+    teleCard: {
+        backgroundColor: whiteColor,
+        borderRadius: ms(14),
+        alignItems: 'center',
+        justifyContent: 'center',
+        paddingVertical: ms(10),
+        paddingHorizontal: ms(4),
+        width: (width - ms(70)) / 4,
+        height: ms(80),
+    },
+    teleIconWrap: {
+        width: ms(35),
+        height: ms(35),
+        borderRadius: ms(12),
+        backgroundColor: '#E8F5F2',
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginBottom: vs(6),
+    },
+    wellnessIconWrap: {
+        width: ms(40),
+        height: ms(40),
+        borderRadius: ms(12),
+        backgroundColor: '#E8F5F2',
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginBottom: vs(6),
+    },
+    wellnessLabel: {
+        fontSize: ms(12),
+        fontFamily: bold,
+        color: blackColor,
         textAlign: 'center',
     },
 
@@ -2100,7 +2283,7 @@ const styles = StyleSheet.create({
     },
     memberCard: {
         width: ms(180),
-        backgroundColor: '#F1F5F9',
+        backgroundColor: whiteColor,
         borderRadius: ms(12),
         padding: ms(12),
         marginRight: ms(10),
@@ -2344,6 +2527,12 @@ const styles2 = StyleSheet.create({
         fontWeight: 'bold',
         fontSize: ms(13),
         marginBottom: ms(4),
+        backgroundColor: 'rgba(255,255,255,0.20)',
+        alignSelf: 'flex-end',
+        paddingHorizontal: ms(12),
+        paddingVertical: vs(3),
+        borderRadius: ms(12),
+        overflow: 'hidden',
     },
     hsChartRow: {
         flexDirection: 'row',
@@ -2370,7 +2559,7 @@ const styles2 = StyleSheet.create({
         marginTop: ms(3),
     },
     hsXLabel: {
-        color: 'rgba(255,255,255,0.78)',
+        color: blackColor,
         fontSize: ms(7),
     },
     hsRingCol: {
@@ -2452,11 +2641,21 @@ const styles2 = StyleSheet.create({
         paddingHorizontal: ms(14),
         paddingVertical: ms(14),
     },
+    continuityCardHeader: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        marginBottom: ms(10),
+    },
     continuityCardTitle: {
         fontSize: ms(15),
         fontWeight: 'bold',
         color: '#000',
-        marginBottom: ms(10),
+    },
+    continuityViewAll: {
+        fontSize: ms(12),
+        fontFamily: bold,
+        color: primaryColor,
     },
     medicationRow: {
         flexDirection: 'row',
@@ -2604,7 +2803,7 @@ const styles2 = StyleSheet.create({
     },
     hsXLabel: {
         fontSize: ms(9),
-        color: '#AAAAAA',
+        color: whiteColor,
         textAlign: 'center',
     },
     hsSectionHeader: {
@@ -2759,7 +2958,6 @@ const styles2 = StyleSheet.create({
         fontSize: ms(17),
         fontWeight: 'bold',
         color: '#111111',
-        marginBottom: ms(12),
     },
     lisRow: {
         flexDirection: 'row',
@@ -2813,7 +3011,6 @@ const styles2 = StyleSheet.create({
         fontSize: ms(17),
         fontWeight: 'bold',
         color: '#111111',
-        marginBottom: ms(12),
     },
     notifRow: {
         flexDirection: 'row',
@@ -2859,11 +3056,21 @@ const styles2 = StyleSheet.create({
         borderRadius: ms(16),
         padding: ms(16),
     },
+    sectionHeader: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        marginBottom: ms(12),
+    },
+    viewAllText: {
+        fontSize: ms(12),
+        fontFamily: bold,
+        color: primaryColor,
+    },
     vosSectionTitle: {
         fontSize: ms(17),
         fontWeight: 'bold',
         color: '#111111',
-        marginBottom: ms(14),
     },
     vosGrid: {
         flexDirection: 'row',
@@ -2877,9 +3084,16 @@ const styles2 = StyleSheet.create({
         paddingHorizontal: ms(14),
         paddingVertical: ms(16),
     },
-    vosEmoji: {
-        fontSize: ms(38),
+    vosCardTop: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'flex-start',
         marginBottom: ms(10),
+    },
+    vosImage: {
+        width: ms(50),
+        height: ms(50),
+        resizeMode: 'contain',
     },
     vosOrganName: {
         fontSize: ms(12),

@@ -11,9 +11,10 @@ import Svg, {
     LinearGradient as SvgLinearGradient,
     RadialGradient, Stop,
 } from 'react-native-svg';
-import { StatusBar3 } from '../components/StatusBar';
+import LinearGradient from 'react-native-linear-gradient';
+import { StatusBar2 } from '../components/StatusBar';
 import Icon, { Icons } from '../components/Icons';
-import { blackColor, whiteColor, primaryColor } from '../utils/globalColors';
+import { blackColor, whiteColor, primaryColor, grayColor } from '../utils/globalColors';
 import { bold, regular } from '../config/Constants';
 
 // ── Score Gauge (same as HealthScoreDetails) ─────────────────────────────────
@@ -212,7 +213,7 @@ const ScoreDetailsSheet = ({ visible, onClose }) => {
 // ── Health Progression Story ──────────────────────────────────────────────────
 const PROGRESSION_DATA = [
     { score: 614, date: '24 Feb, 2019', condition: 'Hypothyroidism Diagnosed', doctor: 'Dr. Sarah Smith', visit: 'Routine Check', points: '-13 Pts', isPositive: false, showArrow: true },
-    { score: 627, date: '24 Feb, 2019', condition: 'Hypothyroidism Diagnosed', doctor: 'Dr. Sarah Smith', visit: 'Routine Check', points: '-7 Pts',  isPositive: false, showArrow: false },
+    { score: 627, date: '24 Feb, 2019', condition: 'Hypothyroidism Diagnosed', doctor: 'Dr. Sarah Smith', visit: 'Routine Check', points: '-7 Pts',  isPositive: false, showArrow: true },
 ];
 
 // ── Timeline Score Badge (oval + right-pointing arrow) ───────────────────────
@@ -288,13 +289,16 @@ const LifestyleItem = ({ label, count, image, onPress }) => (
 );
 
 // ── Organ Row ─────────────────────────────────────────────────────────────────
-const OrganRow = ({ label, count, showBorder }) => (
-    <View style={[styles.dataRow, showBorder && styles.rowBorderTop]}>
-        <Text style={styles.dataRowLabel}>{label}</Text>
-        <Text style={styles.dataRowCount}>{count}</Text>
-        <Icon type={Icons.Ionicons} name="chevron-forward-circle-outline" size={ms(18)} color="#C0C0C0" />
-    </View>
-);
+const OrganRow = ({ label, count, showBorder }) => {
+    const navigation = useNavigation();
+    return (
+        <TouchableOpacity onPress={() => navigation.navigate('AnalysisCheck')} style={[styles.dataRow]}>
+            <Text style={styles.dataRowLabel}>{label}</Text>
+            <Text style={styles.dataRowCount}>{count}</Text>
+            <Icon type={Icons.Ionicons} name="chevron-forward-circle-outline" size={ms(18)} color="#C0C0C0" />
+        </TouchableOpacity>
+    );
+};
 
 // ── Main Screen ───────────────────────────────────────────────────────────────
 const CheckHealthStatus = () => {
@@ -305,16 +309,22 @@ const CheckHealthStatus = () => {
 
     return (
         <SafeAreaView style={styles.container}>
-            <StatusBar3 />
-
+            <StatusBar2 />
+            <LinearGradient
+                colors={[primaryColor, grayColor]}
+                start={{ x: 0, y: 0 }}
+                end={{ x: 0, y: 3 }}
+                locations={[0, 0.08]}
+                style={styles.gradient}
+            >
             {/* Header */}
             <View style={styles.header}>
                 {fromDashboard && (
                     <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backBtn}>
-                        <Icon type={Icons.Ionicons} name="arrow-back" size={ms(22)} color={blackColor} />
+                        <Icon type={Icons.Ionicons} name="arrow-back" size={ms(22)} color={whiteColor} />
                     </TouchableOpacity>
                 )}
-                <Text style={styles.headerTitle}>Check Health Status</Text>
+                <Text style={styles.headerTitle}>Health Progression</Text>
             </View>
 
             <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.scroll}>
@@ -322,7 +332,9 @@ const CheckHealthStatus = () => {
                 {/* ── My Health Continuity Score ── */}
                 <View style={styles.card}>
                     <ScoreGauge />
-                    <Text style={styles.scoreStable}>Stable</Text>
+                    <View style={styles.stableBadge}>
+                        <Text style={styles.scoreStable}>Stable</Text>
+                    </View>
                     <Text style={styles.scoreDesc}>
                         Your engagement with health has been{'\n'}consistent over the last 3 months
                     </Text>
@@ -341,8 +353,16 @@ const CheckHealthStatus = () => {
 
                     {/* Black pill header */}
                     <View style={styles.progressionPill}>
-                        <Text style={styles.progressionPillText}>Score</Text>
-                        <Text style={[styles.progressionPillText, { marginLeft: ms(30) }]}>Health Variation</Text>
+                        <Text style={[styles.progressionPillText, { width: ms(76) }]}>Score</Text>
+                        <Text style={[styles.progressionPillText, { flex: 1 }]}>Health Update</Text>
+                        <View style={styles.pillArrows}>
+                            <View style={[styles.pillArrowBg, { backgroundColor: 'rgba(16,185,129,0.2)' }]}>
+                                <Icon type={Icons.Ionicons} name="arrow-up" size={ms(11)} color="#10B981" />
+                            </View>
+                            <View style={[styles.pillArrowBg, { backgroundColor: 'rgba(239,68,68,0.2)' }]}>
+                                <Icon type={Icons.Ionicons} name="arrow-down" size={ms(11)} color="#EF4444" />
+                            </View>
+                        </View>
                     </View>
 
                     {/* Timeline rows */}
@@ -400,6 +420,7 @@ const CheckHealthStatus = () => {
 
             {/* ── Score Details Bottom Sheet ── */}
             <ScoreDetailsSheet visible={sheetVisible} onClose={() => setSheetVisible(false)} />
+            </LinearGradient>
         </SafeAreaView>
     );
 };
@@ -407,18 +428,26 @@ const CheckHealthStatus = () => {
 export default CheckHealthStatus;
 
 const styles = StyleSheet.create({
-    container: { flex: 1, backgroundColor: '#F2F5F8' },
+    container: { flex: 1, backgroundColor: grayColor },
+    gradient: { flex: 1, paddingHorizontal: ms(14), paddingTop: ms(50) },
 
     // ── Header ──────────────────────────────────────────────────────────────────
     header: {
         flexDirection: 'row', alignItems: 'center',
-        paddingHorizontal: ms(15), paddingTop: ms(50), paddingBottom: ms(12),
-        backgroundColor: whiteColor,
+        paddingBottom: ms(12),
     },
-    backBtn: { marginRight: ms(12), width: ms(32), alignItems: 'flex-start' },
-    headerTitle: { fontSize: ms(16), fontWeight: 'bold', color: blackColor },
+    backBtn: {
+        marginRight: ms(12),
+        width: ms(35),
+        height: ms(35),
+        borderRadius: ms(17.5),
+        backgroundColor: 'rgba(255, 255, 255, 0.3)',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    headerTitle: { fontSize: ms(22), fontFamily: bold, color: whiteColor },
 
-    scroll: { paddingHorizontal: ms(14), paddingTop: vs(14), paddingBottom: vs(20), gap: vs(12) },
+    scroll: { paddingTop: vs(14), paddingBottom: vs(20), gap: vs(12) },
 
     // ── White Card ───────────────────────────────────────────────────────────────
     card: {
@@ -440,7 +469,13 @@ const styles = StyleSheet.create({
     gaugeOutOf:  { fontSize: ms(11), color: '#777', marginTop: vs(-2) },
     gaugeMinMax: { fontSize: ms(13), color: '#666', fontWeight: '600' },
 
-    scoreStable: { fontSize: ms(18), fontWeight: 'bold', color: blackColor, marginTop: vs(8) },
+    stableBadge: {
+        backgroundColor: 'rgba(26,126,112,0.1)',
+        borderRadius: ms(20),
+        paddingHorizontal: ms(20), paddingVertical: vs(6),
+        marginTop: vs(8),
+    },
+    scoreStable: { fontSize: ms(18), fontWeight: 'bold', color: blackColor },
     scoreDesc: {
         fontSize: ms(12), color: '#888', textAlign: 'center',
         lineHeight: ms(20), marginTop: vs(4),
@@ -454,12 +489,19 @@ const styles = StyleSheet.create({
 
     // ── Health Progression Story ──────────────────────────────────────────────────
     progressionPill: {
-        flexDirection: 'row', alignSelf: 'stretch',
+        flexDirection: 'row', alignSelf: 'stretch', alignItems: 'center',
         backgroundColor: blackColor, borderRadius: ms(30),
-        paddingVertical: vs(10), paddingHorizontal: ms(20),
+        paddingVertical: vs(10), paddingLeft: ms(20), paddingRight: ms(10),
         marginBottom: vs(4),
     },
     progressionPillText: { color: whiteColor, fontSize: ms(13), fontWeight: '700' },
+    pillArrows: {
+        flexDirection: 'row', alignItems: 'center', gap: ms(4),
+    },
+    pillArrowBg: {
+        width: ms(22), height: ms(22), borderRadius: ms(11),
+        justifyContent: 'center', alignItems: 'center',
+    },
 
     // ── Timeline ──────────────────────────────────────────────────────────────
     tlRow: { flexDirection: 'row', alignItems: 'flex-start' },
@@ -515,7 +557,7 @@ const styles = StyleSheet.create({
     lifestyleImage: { width: ms(55), height: ms(55) },
 
     // ── Data Row ─────────────────────────────────────────────────────────────────
-    dataRow: { flexDirection: 'row', alignItems: 'center', paddingVertical: vs(10), alignSelf: 'stretch' },
+    dataRow: { flexDirection: 'row', alignItems: 'center', paddingVertical: vs(10), alignSelf: 'stretch', borderTopLeftRadius: ms(10), borderTopRightRadius: ms(10) },
     rowBorderTop: { borderTopWidth: 1, borderTopColor: '#F0F0F0' },
     dataRowLabel: { flex: 1, fontSize: ms(13), color: '#333' },
     dataRowCount: { fontSize: ms(13), fontWeight: '600', color: blackColor, marginRight: ms(8) },
@@ -526,7 +568,6 @@ const styles = StyleSheet.create({
     },
     sheet: {
         backgroundColor: whiteColor,
-        borderTopLeftRadius: ms(20), borderTopRightRadius: ms(20),
         paddingHorizontal: ms(20), paddingTop: ms(12),
         maxHeight: '80%',
     },

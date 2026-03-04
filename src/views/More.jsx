@@ -22,7 +22,7 @@ import { blackColor, primaryColor, whiteColor } from '../utils/globalColors';
 const { width } = Dimensions.get('window');
 
 // --- Section Row Item ---
-const SectionRow = ({ icon, iconType, title, onPress, isLast }) => (
+const SectionRow = ({ icon, iconType, title, onPress, isLast, rightText }) => (
     <TouchableOpacity
         onPress={onPress}
         style={[styles.sectionRow, !isLast && styles.sectionRowBorder]}
@@ -32,7 +32,11 @@ const SectionRow = ({ icon, iconType, title, onPress, isLast }) => (
             <Icon type={iconType} name={icon} color={blackColor} size={ms(20)} />
         </View>
         <Text style={styles.sectionRowTitle}>{title}</Text>
-        <Icon type={Icons.Ionicons} name="chevron-forward" color="#9CA3AF" size={ms(18)} />
+        {rightText ? (
+            <Text style={styles.sectionRowRightText}>{rightText}</Text>
+        ) : (
+            <Icon type={Icons.Ionicons} name="chevron-forward" color="#9CA3AF" size={ms(18)} />
+        )}
     </TouchableOpacity>
 );
 
@@ -177,7 +181,7 @@ const More = (props) => {
                                 icon="headset-outline"
                                 iconType={Icons.Ionicons}
                                 label="Support"
-                                onPress={() => navigation.navigate('FaqCategories')}
+                                onPress={() => navigation.navigate('SupportScreen')}
                             />
                         </View>
 
@@ -197,10 +201,23 @@ const More = (props) => {
                                 onPress={() => navigation.navigate('Profile')}
                             />
                             <SectionRow
+                                icon="person-add-outline"
+                                iconType={Icons.Ionicons}
+                                title="Add Members"
+                                onPress={() => navigation.navigate('AddFamilyScreen', { isEdit: true })}
+                            />
+                            <SectionRow
                                 icon="add-circle-outline"
                                 iconType={Icons.Ionicons}
                                 title="Address Book"
                                 onPress={() => navigation.navigate('Address')}
+                                isLast
+                            />
+                            <SectionRow
+                                icon="language-outline"
+                                iconType={Icons.Ionicons}
+                                title="Language"
+                                onPress={() => navigation.navigate('LanguageScreen')}
                                 isLast
                             />
                         </View>
@@ -208,6 +225,12 @@ const More = (props) => {
                         {/* DATA & TRANSPARENCY Section */}
                         <Text style={styles.sectionHeader}>DATA & TRANSPARENCY</Text>
                         <View style={styles.sectionCard}>
+                            <SectionRow
+                                icon="hand-left-outline"
+                                iconType={Icons.Ionicons}
+                                title="Consent Manager"
+                                onPress={() => navigation.navigate('ConsentManagerScreen')}
+                            />
                             <SectionRow
                                 icon="shield-checkmark-outline"
                                 iconType={Icons.Ionicons}
@@ -227,12 +250,6 @@ const More = (props) => {
                         <Text style={styles.sectionHeader}>TRUST</Text>
                         <View style={styles.sectionCard}>
                             <SectionRow
-                                icon="hand-left-outline"
-                                iconType={Icons.Ionicons}
-                                title="Consent Manager"
-                                onPress={() => navigation.navigate('ConsentManagerScreen')}
-                            />
-                            <SectionRow
                                 icon="document-text-outline"
                                 iconType={Icons.Ionicons}
                                 title="Annual Trust Report"
@@ -247,21 +264,35 @@ const More = (props) => {
                             <SectionRow
                                 icon="gift-outline"
                                 iconType={Icons.Ionicons}
-                                title="Incentives / Discounts"
+                                title="Referral Incentives"
                                 onPress={() => navigation.navigate('ReferralEarnings')}
+                            />
+                            <SectionRow
+                                icon="trophy-outline"
+                                iconType={Icons.Ionicons}
+                                title="Rewards"
+                                onPress={() => navigation.navigate('')}
                             />
                             <SectionRow
                                 icon="options-outline"
                                 iconType={Icons.Ionicons}
-                                title="Subscription"
+                                title="Subscription History"
                                 onPress={() => navigation.navigate('SubscriptionPlans', { hasPlan: true })}
                                 isLast
                             />
                         </View>
 
                         {/* SECURITY DETAILS Section */}
-                        <Text style={styles.sectionHeader}>SECURITY DETAILS</Text>
+                        <Text style={styles.sectionHeader}>ABOUT</Text>
                         <View style={styles.sectionCard}>
+
+                            <SectionRow
+                                icon="information-circle-outline"
+                                iconType={Icons.Ionicons}
+                                title="App Version"
+                                rightText="1.0.0"
+                                onPress={() => { }}
+                            />
                             <SectionRow
                                 icon="lock-closed-outline"
                                 iconType={Icons.Ionicons}
@@ -285,7 +316,13 @@ const More = (props) => {
                                 iconType={Icons.Ionicons}
                                 title="User Consent Agreement"
                                 onPress={() => navigation.navigate('UserConsentAgreementScreen')}
-                                isLast
+                            />
+
+                            <SectionRow
+                                icon="star-outline"
+                                iconType={Icons.Ionicons}
+                                title="Rate Us in Store"
+                                onPress={() => { }}
                             />
                         </View>
 
@@ -522,8 +559,8 @@ const styles = StyleSheet.create({
     // Section Headers & Cards
     sectionHeader: {
         fontFamily: bold,
-        fontSize: ms(11),
-        color: '#9CA3AF',
+        fontSize: ms(14),
+        color: blackColor,
         letterSpacing: 0.5,
         marginBottom: vs(8),
         marginTop: vs(5),
@@ -553,6 +590,11 @@ const styles = StyleSheet.create({
         fontFamily: regular,
         fontSize: ms(14),
         color: blackColor,
+    },
+    sectionRowRightText: {
+        fontFamily: regular,
+        fontSize: ms(13),
+        color: '#9CA3AF',
     },
 
     // Logout

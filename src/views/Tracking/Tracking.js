@@ -14,7 +14,7 @@ import { useNavigation } from '@react-navigation/native';
 import { ms, vs } from 'react-native-size-matters';
 import { StatusBar2 } from '../../components/StatusBar';
 import { bold, regular } from '../../config/Constants';
-import { blackColor, globalGradient, whiteColor } from '../../utils/globalColors';
+import { blackColor, globalGradient, globalGradient2, whiteColor } from '../../utils/globalColors';
 
 const { width } = Dimensions.get('window');
 
@@ -69,7 +69,7 @@ const Tracking = () => {
         <SafeAreaView style={styles.container}>
             <StatusBar2 />
             <LinearGradient
-                colors={globalGradient}
+                colors={globalGradient2}
                 start={{ x: 0, y: 0 }}
                 end={{ x: 0, y: 3 }}
                 locations={[0, 0.08]}
@@ -105,9 +105,10 @@ const Tracking = () => {
                                         </View>
                                         <View style={styles.continuumTextWrap}>
                                             <Text style={styles.continuumTitle}>{item.title}</Text>
-                                            <Text style={styles.continuumSub}>{item.subtitle}</Text>
+                                            {/* <Text style={styles.continuumSub}>{item.subtitle}</Text> */}
                                         </View>
                                     </LinearGradient>
+
                                 </TouchableOpacity>
                             ))}
                         </View>
@@ -192,7 +193,7 @@ const styles = StyleSheet.create({
     continuumGradient: {
         flex: 1,
         paddingHorizontal: ms(15),
-        paddingVertical: ms(10),
+        paddingTop: ms(10),
     },
     continuumImageWrap: {
         height: ms(130),
@@ -228,14 +229,16 @@ const styles = StyleSheet.create({
 
     // My Health Monitoring
     monitoringSection: {
+        backgroundColor: whiteColor,
         borderRadius: ms(15),
         paddingVertical: ms(15),
+        paddingHorizontal: ms(10),
         marginBottom: vs(10),
     },
     monitoringGrid: {
         flexDirection: 'row',
         flexWrap: 'wrap',
-        justifyContent: 'center',
+        justifyContent: 'flex-start',
         gap: ms(10),
     },
     monitoringCard: {
@@ -262,7 +265,7 @@ const styles = StyleSheet.create({
     monitoringText: {
         fontSize: ms(11),
         fontFamily: bold,
-        color: whiteColor,
+        color: blackColor,
         textAlign: 'center',
     },
 });
