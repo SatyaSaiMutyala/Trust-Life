@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import {
   View,
   Text,
@@ -7,6 +7,7 @@ import {
   StyleSheet,
   Platform,
   Image,
+  Animated,
 } from 'react-native';
 import { ms } from 'react-native-size-matters';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -43,6 +44,59 @@ const TAB_CONFIG = {
   },
 };
 
+const AnimatedTab = ({ focused, iconSource, iconStyle, label, onPress }) => {
+  const scaleAnim = useRef(new Animated.Value(focused ? 1 : 0)).current;
+
+  useEffect(() => {
+    Animated.spring(scaleAnim, {
+      toValue: focused ? 1 : 0,
+      friction: 5,
+      tension: 80,
+      useNativeDriver: true,
+    }).start();
+  }, [focused]);
+
+  const iconScale = scaleAnim.interpolate({
+    inputRange: [0, 1],
+    outputRange: [1, 1.15],
+  });
+
+  const dotScale = scaleAnim.interpolate({
+    inputRange: [0, 1],
+    outputRange: [0, 1],
+  });
+
+  const translateY = scaleAnim.interpolate({
+    inputRange: [0, 1],
+    outputRange: [0, -2],
+  });
+
+  return (
+    <TouchableOpacity
+      onPress={onPress}
+      activeOpacity={0.7}
+      style={styles.tab}
+    >
+      <Animated.View style={{ transform: [{ scale: iconScale }, { translateY }] }}>
+        <Image
+          source={iconSource}
+          style={iconStyle}
+          resizeMode="contain"
+        />
+      </Animated.View>
+      <Text style={[styles.label, focused && styles.labelActive]}>
+        {label}
+      </Text>
+      <Animated.View
+        style={[
+          styles.activeDot,
+          { transform: [{ scale: dotScale }], opacity: scaleAnim },
+        ]}
+      />
+    </TouchableOpacity>
+  );
+};
+
 const CustomBottomTabBar = ({ state, navigation }) => {
   const insets = useSafeAreaInsets();
   const safeBottom = insets.bottom > 0 ? insets.bottom : 0;
@@ -75,21 +129,14 @@ const CustomBottomTabBar = ({ state, navigation }) => {
           }
 
           return (
-            <TouchableOpacity
+            <AnimatedTab
               key={route.key}
+              focused={focused}
+              iconSource={iconSource}
+              iconStyle={iconStyle}
+              label={cfg.label}
               onPress={() => onPress(route)}
-              activeOpacity={0.7}
-              style={styles.tab}
-            >
-              <Image
-                source={iconSource}
-                style={iconStyle}
-                resizeMode="contain"
-              />
-              <Text style={[styles.label, focused && styles.labelActive]}>
-                {cfg.label}
-              </Text>
-            </TouchableOpacity>
+            />
           );
         })}
       </View>
@@ -144,6 +191,13 @@ const styles = StyleSheet.create({
   labelActive: {
     color: primaryColor,
     fontWeight: '700',
+  },
+  activeDot: {
+    width: ms(5),
+    height: ms(5),
+    borderRadius: ms(2.5),
+    backgroundColor: primaryColor,
+    marginTop: ms(3),
   },
 });
 

@@ -74,91 +74,91 @@ const DashScoreRing = () => {
     const greenRotation = DASH_RING_START_DEG + (DASH_ORANGE_FRACTION * DASH_RING_ARC_DEG);
 
     return (
-    <View style={{ width: DASH_RING_SIZE, height: DASH_RING_SIZE }}>
-        <Svg width={DASH_RING_SIZE} height={DASH_RING_SIZE}>
-            <Defs>
-                <SvgLinearGradient id="dRingGreen" x1="0" y1="0" x2="1" y2="1">
-                    <Stop offset="0%"   stopColor="#094A3D" />
-                    <Stop offset="30%"  stopColor="#1A8A68" />
-                    <Stop offset="50%"  stopColor="#2CB888" />
-                    <Stop offset="70%"  stopColor="#1A8A68" />
-                    <Stop offset="100%" stopColor="#094A3D" />
-                </SvgLinearGradient>
-                <SvgLinearGradient id="dRingOrange" x1="0" y1="0" x2="1" y2="1">
-                    <Stop offset="0%"   stopColor="#C47A08" />
-                    <Stop offset="50%"  stopColor="#E8940A" />
-                    <Stop offset="100%" stopColor="#C47A08" />
-                </SvgLinearGradient>
-                <RadialGradient id="dRingGlow" cx="50%" cy="50%" r="50%">
-                    <Stop offset="68%"  stopColor="#1A7E70" stopOpacity="0.18" />
-                    <Stop offset="100%" stopColor="#1A7E70" stopOpacity="0" />
-                </RadialGradient>
-            </Defs>
-            <Circle cx={DASH_RING_CX} cy={DASH_RING_CY} r={DASH_RING_R + ms(8)} fill="url(#dRingGlow)" />
-            {/* Gray background track */}
-            <Circle
-                cx={DASH_RING_CX} cy={DASH_RING_CY}
-                r={DASH_RING_R}
-                fill="none" stroke="#E8E8E8"
-                strokeWidth={DASH_RING_STROKE}
-                strokeDasharray={`${DASH_RING_ARC_LEN} ${DASH_RING_CIRC}`}
-                strokeLinecap="round"
-                transform={`rotate(${DASH_RING_START_DEG}, ${DASH_RING_CX}, ${DASH_RING_CY})`}
-            />
-            {isOrangeZone ? (
-                /* Orange fill arc - score is <= 500 */
+        <View style={{ width: DASH_RING_SIZE, height: DASH_RING_SIZE }}>
+            <Svg width={DASH_RING_SIZE} height={DASH_RING_SIZE}>
+                <Defs>
+                    <SvgLinearGradient id="dRingGreen" x1="0" y1="0" x2="1" y2="1">
+                        <Stop offset="0%" stopColor="#094A3D" />
+                        <Stop offset="30%" stopColor="#1A8A68" />
+                        <Stop offset="50%" stopColor="#2CB888" />
+                        <Stop offset="70%" stopColor="#1A8A68" />
+                        <Stop offset="100%" stopColor="#094A3D" />
+                    </SvgLinearGradient>
+                    <SvgLinearGradient id="dRingOrange" x1="0" y1="0" x2="1" y2="1">
+                        <Stop offset="0%" stopColor="#C47A08" />
+                        <Stop offset="50%" stopColor="#E8940A" />
+                        <Stop offset="100%" stopColor="#C47A08" />
+                    </SvgLinearGradient>
+                    <RadialGradient id="dRingGlow" cx="50%" cy="50%" r="50%">
+                        <Stop offset="68%" stopColor="#1A7E70" stopOpacity="0.18" />
+                        <Stop offset="100%" stopColor="#1A7E70" stopOpacity="0" />
+                    </RadialGradient>
+                </Defs>
+                <Circle cx={DASH_RING_CX} cy={DASH_RING_CY} r={DASH_RING_R + ms(8)} fill="url(#dRingGlow)" />
+                {/* Gray background track */}
                 <Circle
-                    cx={DASH_RING_CX} cy={DASH_RING_CY} r={DASH_RING_R}
-                    fill="none" stroke="url(#dRingOrange)"
+                    cx={DASH_RING_CX} cy={DASH_RING_CY}
+                    r={DASH_RING_R}
+                    fill="none" stroke="#E8E8E8"
                     strokeWidth={DASH_RING_STROKE}
-                    strokeDasharray={`${DASH_RING_FILL_LEN} ${DASH_RING_CIRC}`}
+                    strokeDasharray={`${DASH_RING_ARC_LEN} ${DASH_RING_CIRC}`}
                     strokeLinecap="round"
                     transform={`rotate(${DASH_RING_START_DEG}, ${DASH_RING_CX}, ${DASH_RING_CY})`}
                 />
-            ) : (
-                <>
-                    {/* Orange arc - covers 300 to 500 */}
+                {isOrangeZone ? (
+                    /* Orange fill arc - score is <= 500 */
                     <Circle
                         cx={DASH_RING_CX} cy={DASH_RING_CY} r={DASH_RING_R}
                         fill="none" stroke="url(#dRingOrange)"
                         strokeWidth={DASH_RING_STROKE}
-                        strokeDasharray={`${DASH_ORANGE_ARC_LEN} ${DASH_RING_CIRC}`}
+                        strokeDasharray={`${DASH_RING_FILL_LEN} ${DASH_RING_CIRC}`}
                         strokeLinecap="round"
                         transform={`rotate(${DASH_RING_START_DEG}, ${DASH_RING_CX}, ${DASH_RING_CY})`}
                     />
-                    {/* Green arc - covers 500 to score value */}
-                    <Circle
-                        cx={DASH_RING_CX} cy={DASH_RING_CY} r={DASH_RING_R}
-                        fill="none" stroke="url(#dRingGreen)"
-                        strokeWidth={DASH_RING_STROKE}
-                        strokeDasharray={`${greenArcLen} ${DASH_RING_CIRC}`}
-                        strokeLinecap="round"
-                        transform={`rotate(${greenRotation}, ${DASH_RING_CX}, ${DASH_RING_CY})`}
-                    />
-                </>
-            )}
-            {/* White inner circle */}
-            <Circle
-                cx={DASH_RING_CX} cy={DASH_RING_CY}
-                r={DASH_RING_R - DASH_RING_STROKE / 2 - ms(2)}
-                fill="#FFFFFF"
-            />
-        </Svg>
-        <View style={{ position: 'absolute', width: DASH_RING_SIZE, height: DASH_RING_SIZE, justifyContent: 'center', alignItems: 'center' }}>
-            <Text style={{ fontSize: ms(17), fontWeight: 'bold', color: '#1A4E44', lineHeight: ms(20) }}>320</Text>
-            <Text style={{ fontSize: ms(8), color: '#555', textAlign: 'center' }}>Out of 900</Text>
+                ) : (
+                    <>
+                        {/* Orange arc - covers 300 to 500 */}
+                        <Circle
+                            cx={DASH_RING_CX} cy={DASH_RING_CY} r={DASH_RING_R}
+                            fill="none" stroke="url(#dRingOrange)"
+                            strokeWidth={DASH_RING_STROKE}
+                            strokeDasharray={`${DASH_ORANGE_ARC_LEN} ${DASH_RING_CIRC}`}
+                            strokeLinecap="round"
+                            transform={`rotate(${DASH_RING_START_DEG}, ${DASH_RING_CX}, ${DASH_RING_CY})`}
+                        />
+                        {/* Green arc - covers 500 to score value */}
+                        <Circle
+                            cx={DASH_RING_CX} cy={DASH_RING_CY} r={DASH_RING_R}
+                            fill="none" stroke="url(#dRingGreen)"
+                            strokeWidth={DASH_RING_STROKE}
+                            strokeDasharray={`${greenArcLen} ${DASH_RING_CIRC}`}
+                            strokeLinecap="round"
+                            transform={`rotate(${greenRotation}, ${DASH_RING_CX}, ${DASH_RING_CY})`}
+                        />
+                    </>
+                )}
+                {/* White inner circle */}
+                <Circle
+                    cx={DASH_RING_CX} cy={DASH_RING_CY}
+                    r={DASH_RING_R - DASH_RING_STROKE / 2 - ms(2)}
+                    fill="#FFFFFF"
+                />
+            </Svg>
+            <View style={{ position: 'absolute', width: DASH_RING_SIZE, height: DASH_RING_SIZE, justifyContent: 'center', alignItems: 'center' }}>
+                <Text style={{ fontSize: ms(17), fontWeight: 'bold', color: '#1A4E44', lineHeight: ms(20) }}>320</Text>
+                <Text style={{ fontSize: ms(8), color: '#555', textAlign: 'center' }}>Out of 900</Text>
+            </View>
+            <Text style={{
+                position: 'absolute', color: '#fff', fontSize: ms(9), fontWeight: '600',
+                left: dashPolar(DASH_RING_CX, DASH_RING_CY, DASH_RING_R + DASH_RING_STROKE / 2 + ms(4), DASH_RING_START_DEG).x - ms(11),
+                top: dashPolar(DASH_RING_CX, DASH_RING_CY, DASH_RING_R + DASH_RING_STROKE / 2 + ms(4), DASH_RING_START_DEG).y - ms(2),
+            }}>300</Text>
+            <Text style={{
+                position: 'absolute', color: '#fff', fontSize: ms(9), fontWeight: '600',
+                left: dashPolar(DASH_RING_CX, DASH_RING_CY, DASH_RING_R + DASH_RING_STROKE / 2 + ms(4), DASH_RING_START_DEG + DASH_RING_ARC_DEG).x - ms(2),
+                top: dashPolar(DASH_RING_CX, DASH_RING_CY, DASH_RING_R + DASH_RING_STROKE / 2 + ms(4), DASH_RING_START_DEG + DASH_RING_ARC_DEG).y - ms(2),
+            }}>900</Text>
         </View>
-        <Text style={{
-            position: 'absolute', color: '#fff', fontSize: ms(9), fontWeight: '600',
-            left: dashPolar(DASH_RING_CX, DASH_RING_CY, DASH_RING_R + DASH_RING_STROKE / 2 + ms(4), DASH_RING_START_DEG).x - ms(11),
-            top:  dashPolar(DASH_RING_CX, DASH_RING_CY, DASH_RING_R + DASH_RING_STROKE / 2 + ms(4), DASH_RING_START_DEG).y - ms(2),
-        }}>300</Text>
-        <Text style={{
-            position: 'absolute', color: '#fff', fontSize: ms(9), fontWeight: '600',
-            left: dashPolar(DASH_RING_CX, DASH_RING_CY, DASH_RING_R + DASH_RING_STROKE / 2 + ms(4), DASH_RING_START_DEG + DASH_RING_ARC_DEG).x - ms(2),
-            top:  dashPolar(DASH_RING_CX, DASH_RING_CY, DASH_RING_R + DASH_RING_STROKE / 2 + ms(4), DASH_RING_START_DEG + DASH_RING_ARC_DEG).y - ms(2),
-        }}>900</Text>
-    </View>
     );
 };
 
@@ -586,129 +586,129 @@ const Dashboard = (props) => {
                     style={{ flex: 1 }}
                 >
                     <View style={{
-                            paddingTop: ms(50),
-                            paddingBottom: ms(10),
-                        }}>
-                            <View
-                                style={{
-                                    flexDirection: 'row',
-                                    alignItems: 'center',
-                                    marginBottom: 30,
-                                    paddingHorizontal: ms(10),
-                                }}
+                        paddingTop: ms(50),
+                        paddingBottom: ms(10),
+                    }}>
+                        <View
+                            style={{
+                                flexDirection: 'row',
+                                alignItems: 'center',
+                                marginBottom: 30,
+                                paddingHorizontal: ms(10),
+                            }}
+                        >
+                            {/* LEFT SECTION */}
+                            <TouchableOpacity
+                                onPress={() => setLocationModal(true)}
+                                style={styles.locationHeaderButton}
                             >
-                                {/* LEFT SECTION */}
-                                <TouchableOpacity
-                                    onPress={() => setLocationModal(true)}
-                                    style={styles.locationHeaderButton}
-                                >
-                                    <Icon
-                                        type={Icons.MaterialIcons}
-                                        name={savedLocation ? 'location-on' : 'location-off'}
-                                        size={ms(18)}
-                                        color={primaryColor}
-                                    />
-                                </TouchableOpacity>
+                                <Icon
+                                    type={Icons.MaterialIcons}
+                                    name={savedLocation ? 'location-on' : 'location-off'}
+                                    size={ms(18)}
+                                    color={primaryColor}
+                                />
+                            </TouchableOpacity>
 
-                                <View style={{ flex: 1, marginRight: ms(8) }}>
-                                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                                        <Text style={{ color: '#fff', fontSize: ms(15), fontWeight: 'bold' }}>
-                                            Hello,
-                                        </Text>
-                                        <Text
-                                            numberOfLines={1}
-                                            ellipsizeMode="tail"
-                                            style={{
-                                                color: '#fff',
-                                                fontSize: ms(15),
-                                                fontWeight: 'bold',
-                                                marginLeft: 4,
-                                                flexShrink: 1,
-                                            }}
-                                        >
-                                            {global.customer_name}
-                                        </Text>
-                                    </View>
-
+                            <View style={{ flex: 1, marginRight: ms(8) }}>
+                                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                                    <Text style={{ color: '#fff', fontSize: ms(15), fontWeight: 'bold' }}>
+                                        Hello,
+                                    </Text>
                                     <Text
                                         numberOfLines={1}
                                         ellipsizeMode="tail"
                                         style={{
                                             color: '#fff',
-                                            fontSize: ms(10),
+                                            fontSize: ms(15),
+                                            fontWeight: 'bold',
+                                            marginLeft: 4,
+                                            flexShrink: 1,
                                         }}
                                     >
-                                        {savedLocation?.address || 'Set your location'}
+                                        {global.customer_name}
                                     </Text>
                                 </View>
 
-                                {/* RIGHT SECTION */}
-                                <View
+                                <Text
+                                    numberOfLines={1}
+                                    ellipsizeMode="tail"
                                     style={{
-                                        flexDirection: 'row',
-                                        alignItems: 'center',
-                                        gap: ms(6),
+                                        color: '#fff',
+                                        fontSize: ms(10),
                                     }}
                                 >
-                                    <TouchableOpacity
-                                        onPress={() => navigation.navigate('Notifications')}
-                                        style={styles.headerButton}
-                                    >
-                                        <Icon
-                                            type={Icons.Ionicons}
-                                            name="notifications-outline"
-                                            size={ms(18)}
-                                            color={blackColor}
-                                        />
-                                    </TouchableOpacity>
-
-                                    <TouchableOpacity
-                                        onPress={() => navigation.navigate('LabCart')}
-                                        style={styles.headerButton}
-                                    >
-                                        <Icon
-                                            type={Icons.Ionicons}
-                                            name="cart-outline"
-                                            size={ms(18)}
-                                            color={blackColor}
-                                        />
-                                    </TouchableOpacity>
-
-                                    <TouchableOpacity onPress={() => navigation.navigate('Profile')}>
-                                        {profilePic ? (
-                                            <Image
-                                                source={{ uri: profilePic }}
-                                                style={styles.profileImage}
-                                            />
-                                        ) : (
-                                            <View style={[styles.profileImage, styles.defaultProfileIcon]}>
-                                                <Icon type={Icons.MaterialIcons} name="person" size={ms(18)} color={blackColor} />
-                                            </View>
-                                        )}
-                                    </TouchableOpacity>
-                                </View>
+                                    {savedLocation?.address || 'Set your location'}
+                                </Text>
                             </View>
 
-
-                            {/* Search Input Area */}
-
-
-                            <TouchableOpacity
-                                style={styles.searchContainer}
-                                onPress={() => navigation.navigate('SearchItems')}
-                                activeOpacity={1}
+                            {/* RIGHT SECTION */}
+                            <View
+                                style={{
+                                    flexDirection: 'row',
+                                    alignItems: 'center',
+                                    gap: ms(6),
+                                }}
                             >
-                                <Icon type={Icons.Feather} name="search" color="#999" size={ms(20)} style={{ marginRight: s(4) }} />
-                                <TextInput
-                                    style={styles.searchInput}
-                                    placeholder="Search"
-                                    // value={search}
-                                    // onChangeText={setSearch}
-                                    placeholderTextColor="#999"
-                                    editable={false}
-                                    pointerEvents="none"
-                                />
-                            </TouchableOpacity>
+                                <TouchableOpacity
+                                    onPress={() => navigation.navigate('Notifications')}
+                                    style={styles.headerButton}
+                                >
+                                    <Icon
+                                        type={Icons.Ionicons}
+                                        name="notifications-outline"
+                                        size={ms(18)}
+                                        color={blackColor}
+                                    />
+                                </TouchableOpacity>
+
+                                <TouchableOpacity
+                                    onPress={() => navigation.navigate('LabCart')}
+                                    style={styles.headerButton}
+                                >
+                                    <Icon
+                                        type={Icons.Ionicons}
+                                        name="cart-outline"
+                                        size={ms(18)}
+                                        color={blackColor}
+                                    />
+                                </TouchableOpacity>
+
+                                <TouchableOpacity onPress={() => navigation.navigate('Profile')}>
+                                    {profilePic ? (
+                                        <Image
+                                            source={{ uri: profilePic }}
+                                            style={styles.profileImage}
+                                        />
+                                    ) : (
+                                        <View style={[styles.profileImage, styles.defaultProfileIcon]}>
+                                            <Icon type={Icons.MaterialIcons} name="person" size={ms(18)} color={blackColor} />
+                                        </View>
+                                    )}
+                                </TouchableOpacity>
+                            </View>
+                        </View>
+
+
+                        {/* Search Input Area */}
+
+
+                        <TouchableOpacity
+                            style={styles.searchContainer}
+                            onPress={() => navigation.navigate('SearchItems')}
+                            activeOpacity={1}
+                        >
+                            <Icon type={Icons.Feather} name="search" color="#999" size={ms(20)} style={{ marginRight: s(4) }} />
+                            <TextInput
+                                style={styles.searchInput}
+                                placeholder="Search"
+                                // value={search}
+                                // onChangeText={setSearch}
+                                placeholderTextColor="#999"
+                                editable={false}
+                                pointerEvents="none"
+                            />
+                        </TouchableOpacity>
 
                     </View>
 
@@ -931,7 +931,7 @@ const Dashboard = (props) => {
 
                         {/* ── MY HEALTH SUMMARY — shown for ALL users ── */}
                         <View style={styles2.healthSummarySection}>
-                            <Text style={styles2.hsSectionTitle}>My Health Summary</Text>
+                            <Text style={styles2.hsSectionTitle}> Health Summary</Text>
 
                             <LinearGradient
                                 colors={['#4DBBA3', '#339985']}
@@ -1008,263 +1008,284 @@ const Dashboard = (props) => {
                         {/* ── SECOND USER COMPONENTS ── */}
                         {isSecondUser && <>
 
-                        {/* ── CONTINUITY TRACKER ── */}
-                        <View style={styles2.continuityTrackerSection}>
-                            <View style={styles2.continuityCard}>
+                            {/* ── CONTINUITY TRACKER ── */}
+                            <View style={styles2.continuityTrackerSection}>
+                                <View style={styles2.continuityCard}>
 
-                                <View style={styles2.continuityCardHeader}>
-                                    <Text style={styles2.continuityCardTitle}>Continuity Tracker</Text>
-                                    <TouchableOpacity onPress={() => navigation.navigate('ContinuityTracking')}>
-                                        <Text style={styles2.continuityViewAll}>View all</Text>
-                                    </TouchableOpacity>
-                                </View>
-
-                                <View style={styles2.medicationRow}>
-                                    <Text style={styles2.medicationLabel}>Medication</Text>
-                                    <Text style={styles2.medicationDate}>Last updated  Thu, Mar 02,2026</Text>
-                                </View>
-
-                                <View style={styles2.streakSection}>
-                                    <View style={styles2.streakLeft}>
-                                        <Text style={styles2.streakTitle}>Active Days Streak</Text>
-                                        <Text style={styles2.streakMaintain}>3 more days to maintain your streak</Text>
-                                    </View>
-                                    <View style={styles2.streakRight}>
-                                        <Text style={styles2.streakDaysNumber}>4/7</Text>
-                                        <Text style={styles2.streakDaysLabel}> days</Text>
-                                    </View>
-                                </View>
-
-                                <View style={styles2.progressBarTrack}>
-                                    <View style={[styles2.progressBarFill, { width: `${(4 / 7) * 100}%` }]} />
-                                </View>
-
-                                <View style={styles2.daysRow}>
-                                    {['M', 'T', 'W', 'T', 'F', 'S', 'S'].map((day, index) => (
-                                        <View
-                                            key={index}
-                                            style={[
-                                                styles2.dayCircle,
-                                                index < 4 ? styles2.dayCircleActive : styles2.dayCircleInactive,
-                                            ]}
-                                        >
-                                            <Text style={[
-                                                styles2.dayLabel,
-                                                index < 4 ? styles2.dayLabelActive : styles2.dayLabelInactive,
-                                            ]}>
-                                                {day}
-                                            </Text>
-                                        </View>
-                                    ))}
-                                </View>
-
-                            </View>
-                        </View>
-
-                        {/* ── TODAY'S HEALTH SIGNAL ── */}
-                        <View style={styles2.healthSignalSection}>
-                            <View style={styles2.healthSignalCard}>
-
-                                {/* Badge */}
-                                <View style={styles2.hsBadge}>
-                                    <Text style={styles2.hsBadgeText}>Today's Health Signal</Text>
-                                </View>
-
-                                {/* Title */}
-                                <Text style={styles2.hsTitle}>Blood Pressure – Persistently Elevated</Text>
-
-                                {/* Chart */}
-                                <View style={styles2.hsChartWrapper}>
-                                    <Svg width="100%" height={ms(110)} viewBox="0 0 300 100" preserveAspectRatio="none">
-                                        <Defs>
-                                            <SvgLinearGradient id="hsChartGrad" x1="0" y1="0" x2="0" y2="1">
-                                                <Stop offset="0" stopColor="#FF6B35" stopOpacity="0.45" />
-                                                <Stop offset="1" stopColor="#FF6B35" stopOpacity="0.02" />
-                                            </SvgLinearGradient>
-                                        </Defs>
-                                        {/* Area fill */}
-                                        <Polygon
-                                            points="0,100 0,76 60,60 120,46 180,33 240,20 300,8 300,100"
-                                            fill="url(#hsChartGrad)"
-                                        />
-                                        {/* Line */}
-                                        <Polyline
-                                            points="0,76 60,60 120,46 180,33 240,20 300,8"
-                                            fill="none"
-                                            stroke="#FF6B35"
-                                            strokeWidth="2.5"
-                                            strokeLinejoin="round"
-                                            strokeLinecap="round"
-                                        />
-                                        {/* Vertical dashed marker at last point */}
-                                        <Line x1="300" y1="2" x2="300" y2="100" stroke="#FF6B35" strokeWidth="1.5" strokeDasharray="4,3" />
-                                        {/* Data point dots */}
-                                        {[[0,76],[60,60],[120,46],[180,33],[240,20],[300,8]].map(([cx, cy], i) => (
-                                            <Circle key={i} cx={cx} cy={cy} r="4" fill="#FF6B35" />
-                                        ))}
-                                    </Svg>
-                                    {/* 180/20 callout — top-right above vertical line */}
-                                    <View style={styles2.hsValueCallout}>
-                                        <Text style={styles2.hsValueText}>180/20</Text>
-                                    </View>
-                                </View>
-
-                                {/* X-axis labels */}
-                                <View style={styles2.hsXAxis}>
-                                    {['12 Feb','13 Mar','25 Apr','21 May','12 June','12 July'].map((lbl, i) => (
-                                        <Text key={i} style={styles2.hsXLabel}>{lbl}</Text>
-                                    ))}
-                                </View>
-
-                                {/* Pattern Explanation */}
-                                <Text style={styles2.hsSectionHeader}>Pattern Explanation</Text>
-                                <Text style={styles2.hsSectionBody}>
-                                    Your blood pressure readings have been consistently above the healthy range for the past 5 months, indicating a persistent elevation trend that requires attention.
-                                </Text>
-
-                                {/* Health Impact */}
-                                <Text style={styles2.hsSectionHeader}>Health Impact</Text>
-                                <View style={styles2.hsBulletRow}>
-                                    <View style={styles2.hsBulletDot} />
-                                    <Text style={styles2.hsBulletText}>Increased risk of heart disease and stroke</Text>
-                                </View>
-                                <View style={styles2.hsBulletRow}>
-                                    <View style={styles2.hsBulletDot} />
-                                    <Text style={styles2.hsBulletText}>Potential kidney damage over time if left unmanaged</Text>
-                                </View>
-
-                                {/* Peer Comparison */}
-                                <View style={styles2.hsPeerRow}>
-                                    <Icon type={Icons.MaterialIcons} name="people" size={ms(18)} color="#FF6B35" />
-                                    <Text style={styles2.hsPeerText}>Blood Pressure: Higher Than Most Peers</Text>
-                                </View>
-                                <Text style={styles2.hsPeerDesc}>
-                                    Your readings are higher than 78% of people in your age and health group.
-                                </Text>
-
-                                {/* Suggestion box */}
-                                <View style={styles2.hsSuggestionBox}>
-                                    <Text style={styles2.hsSuggestionTitle}>Suggestion</Text>
-                                    <Text style={styles2.hsSuggestionBody}>
-                                        Consider reducing sodium intake, increasing physical activity, and consulting your doctor about medication options to bring your blood pressure to a healthier range.
-                                    </Text>
-                                </View>
-
-                            </View>
-                        </View>
-
-                        {/* ── MY ACTIVE CONDITION ── */}
-                        <View style={styles2.macSection}>
-                            <View style={styles2.macCard}>
-
-                                {/* Badge */}
-                                <View style={styles2.macBadge}>
-                                    <View style={styles2.macBadgeDot} />
-                                    <Text style={styles2.macBadgeText}>My Active Condition</Text>
-                                </View>
-
-                                {/* Condition rows */}
-                                <View style={styles2.macRow}>
-                                    <Text style={styles2.macConditionName}>Diabetes</Text>
-                                    <View style={styles2.macStatusBadgeStable}>
-                                        <Text style={styles2.macStatusTextStable}>Stable</Text>
-                                    </View>
-                                </View>
-
-                                <View style={styles2.macRow}>
-                                    <Text style={styles2.macConditionName}>Hypertension</Text>
-                                    <View style={styles2.macStatusBadgeMonitor}>
-                                        <Text style={styles2.macStatusTextMonitor}>Needs Monitoring</Text>
-                                    </View>
-                                </View>
-
-                            </View>
-                        </View>
-
-                        {/* ── VITAL ORGAN SNAPSHOT ── */}
-                        <View style={styles2.vosSection}>
-                            <View style={styles2.sectionHeader}>
-                                <Text style={styles2.vosSectionTitle}>Vital Organ Snapshot</Text>
-                                <TouchableOpacity onPress={() => navigation.navigate('AnalysisCheck')}>
-                                    <Text style={styles2.viewAllText}>View all</Text>
-                                </TouchableOpacity>
-                            </View>
-                            <View style={styles2.vosGrid}>
-                                {[
-                                    { image: require('../assets/img/vo-heart.png'),     organ: 'Heart',     status: 'Optimal'   },
-                                    { image: require('../assets/img/vo-liver.png'),     organ: 'Liver',     status: 'Stable'    },
-                                    { image: require('../assets/img/vo-kidney.png'),    organ: 'Kidney',    status: 'Normal'    },
-                                    { image: require('../assets/img/vo-lungs.png'),     organ: 'Lungs',     status: 'Efficient' },
-                                    { image: require('../assets/img/vo-metabolic.png'), organ: 'Metabolic', status: 'Active'    },
-                                    { image: require('../assets/img/vo-immunity.png'),  organ: 'Immune',    status: 'Strong'    },
-                                ].map((item, index) => (
-                                    <TouchableOpacity key={index} style={styles2.vosCard} activeOpacity={0.7} onPress={() => navigation.navigate('AnalysisCheck')}>
-                                        <View style={styles2.vosCardTop}>
-                                            <Image source={item.image} style={styles2.vosImage} />
-                                            <Icon type={Icons.Ionicons} name="chevron-forward-circle-outline" size={ms(24)} color="#555" />
-                                        </View>
-                                        <Text style={styles2.vosOrganName}>{item.organ}</Text>
-                                        <Text style={styles2.vosStatus}>{item.status}</Text>
-                                    </TouchableOpacity>
-                                ))}
-                            </View>
-                        </View>
-
-                        {/* ── LIFESTYLE IMPACT SUMMARY ── */}
-                        <View style={styles2.lisCard}>
-                            <View style={styles2.sectionHeader}>
-                                <Text style={styles2.lisSectionTitle}>Lifestyle Impact Summary</Text>
-                                <TouchableOpacity onPress={() => navigation.navigate('LifestyleImpactSummary')}>
-                                    <Text style={styles2.viewAllText}>View all</Text>
-                                </TouchableOpacity>
-                            </View>
-                            {[
-                                { iconType: Icons.Ionicons,              iconName: 'moon',            iconColor: '#7B61FF', label: 'Sleep Quality',    status: 'Good',     statusType: 'strong'   },
-                                { iconType: Icons.MaterialCommunityIcons, iconName: 'lightning-bolt', iconColor: '#FF6B35', label: 'Daily Activity',   status: 'Active',   statusType: 'strong'   },
-                                { iconType: Icons.Ionicons,              iconName: 'restaurant',      iconColor: '#2E7D32', label: 'Nutrition Intake', status: 'Balanced', statusType: 'strong'   },
-                                { iconType: Icons.MaterialCommunityIcons, iconName: 'head-cog',       iconColor: '#1565C0', label: 'Stress Levels',   status: 'Moderate', statusType: 'moderate' },
-                            ].map((item, index, arr) => (
-                                <View key={index}>
-                                    <View style={styles2.lisRow}>
-                                        <Icon type={item.iconType} name={item.iconName} size={ms(22)} color={item.iconColor} />
-                                        <Text style={styles2.lisLabel}>{item.label}</Text>
-                                        <View style={item.statusType === 'strong' ? styles2.lisBadgeStrong : styles2.lisBadgeModerate}>
-                                            <Text style={item.statusType === 'strong' ? styles2.lisBadgeTextStrong : styles2.lisBadgeTextModerate}>{item.status}</Text>
-                                        </View>
-                                    </View>
-                                </View>
-                            ))}
-                        </View>
-
-                        {/* ── NOTIFICATIONS ── */}
-                        <View style={styles2.notifCard}>
-                            <View style={styles2.sectionHeader}>
-                                <Text style={styles2.notifTitle}>Notifications</Text>
-                                <TouchableOpacity onPress={() => navigation.navigate('Notifications')}>
-                                    <Text style={styles2.viewAllText}>View all</Text>
-                                </TouchableOpacity>
-                            </View>
-                            {[
-                                { iconType: Icons.MaterialIcons, iconName: 'biotech',    iconBg: '#E8F5E9', iconColor: '#2E7D32', title: 'HbA1c Screening',     subtitle: 'Due based on your metabolic trends.' },
-                                { iconType: Icons.Ionicons,      iconName: 'water',      iconBg: '#E3F2FD', iconColor: '#1565C0', title: 'Tablets refill',       subtitle: 'Add New set of tablets Here'          },
-                                { iconType: Icons.Ionicons,      iconName: 'water',      iconBg: '#E3F2FD', iconColor: '#1565C0', title: 'Increase Hydration',   subtitle: 'Aim for 8 glasses to support liver function.' },
-                            ].map((item, index, arr) => (
-                                <View key={index}>
-                                    <View style={styles2.notifRow}>
-                                        <View style={[styles2.notifIconWrap, { backgroundColor: item.iconBg }]}>
-                                            <Icon type={item.iconType} name={item.iconName} size={ms(20)} color={item.iconColor} />
-                                        </View>
-                                        <View style={styles2.notifTextWrap}>
-                                            <Text style={styles2.notifItemTitle}>{item.title}</Text>
-                                            <Text style={styles2.notifItemSub}>{item.subtitle}</Text>
-                                        </View>
-                                        <TouchableOpacity style={styles2.notifClose}>
-                                            <Icon type={Icons.Ionicons} name="close" size={ms(14)} color="#999999" />
+                                    <View style={styles2.continuityCardHeader}>
+                                        <Text style={styles2.continuityCardTitle}>Continuity Tracker</Text>
+                                        <TouchableOpacity onPress={() => navigation.navigate('ContinuityTracking')}>
+                                            <Text style={styles2.continuityViewAll}>View all</Text>
                                         </TouchableOpacity>
                                     </View>
+
+                                    <View style={styles2.medicationRow}>
+                                        <Text style={styles2.medicationLabel}>Medication</Text>
+                                        <Text style={styles2.medicationDate}>Last updated  Thu, Mar 02,2026</Text>
+                                    </View>
+
+                                    <View style={styles2.streakSection}>
+                                        <View style={styles2.streakLeft}>
+                                            <Text style={styles2.streakTitle}>Active Days Streak</Text>
+                                            <Text style={styles2.streakMaintain}>3 more days to maintain your streak</Text>
+                                        </View>
+                                        <View style={styles2.streakRight}>
+                                            <Text style={styles2.streakDaysNumber}>4/7</Text>
+                                            <Text style={styles2.streakDaysLabel}> days</Text>
+                                        </View>
+                                    </View>
+
+                                    <View style={styles2.progressBarTrack}>
+                                        <View style={[styles2.progressBarFill, { width: `${(4 / 7) * 100}%` }]} />
+                                    </View>
+
+                                    <View style={styles2.daysRow}>
+                                        {['M', 'T', 'W', 'T', 'F', 'S', 'S'].map((day, index) => (
+                                            <View
+                                                key={index}
+                                                style={[
+                                                    styles2.dayCircle,
+                                                    index < 4 ? styles2.dayCircleActive : styles2.dayCircleInactive,
+                                                ]}
+                                            >
+                                                <Text style={[
+                                                    styles2.dayLabel,
+                                                    index < 4 ? styles2.dayLabelActive : styles2.dayLabelInactive,
+                                                ]}>
+                                                    {day}
+                                                </Text>
+                                            </View>
+                                        ))}
+                                    </View>
+
                                 </View>
-                            ))}
-                        </View>
+                            </View>
+
+                            {/* ── TODAY'S HEALTH SIGNAL ── */}
+                            <View style={styles2.healthSignalSection}>
+                                <View style={styles2.healthSignalCard}>
+
+                                    {/* Badge */}
+                                    <View style={styles2.hsBadge}>
+                                        <Text style={styles2.hsBadgeText}>Today's Health Signal</Text>
+                                    </View>
+
+                                    {/* Title */}
+                                    <Text style={styles2.hsTitle}>Blood Pressure – Persistently Elevated</Text>
+
+                                    {/* Chart */}
+                                    <View style={styles2.hsChartWrapper}>
+                                        <Svg width="100%" height={ms(110)} viewBox="0 0 300 100" preserveAspectRatio="none">
+                                            <Defs>
+                                                <SvgLinearGradient id="hsChartGrad" x1="0" y1="0" x2="0" y2="1">
+                                                    <Stop offset="0" stopColor="#FF6B35" stopOpacity="0.45" />
+                                                    <Stop offset="1" stopColor="#FF6B35" stopOpacity="0.02" />
+                                                </SvgLinearGradient>
+                                            </Defs>
+                                            {/* Area fill */}
+                                            <Polygon
+                                                points="0,100 0,76 60,60 120,46 180,33 240,20 300,8 300,100"
+                                                fill="url(#hsChartGrad)"
+                                            />
+                                            {/* Line */}
+                                            <Polyline
+                                                points="0,76 60,60 120,46 180,33 240,20 300,8"
+                                                fill="none"
+                                                stroke="#FF6B35"
+                                                strokeWidth="2.5"
+                                                strokeLinejoin="round"
+                                                strokeLinecap="round"
+                                            />
+                                            {/* Vertical dashed marker at last point */}
+                                            <Line x1="300" y1="2" x2="300" y2="100" stroke="#FF6B35" strokeWidth="1.5" strokeDasharray="4,3" />
+                                            {/* Data point dots */}
+                                            {[[0, 76], [60, 60], [120, 46], [180, 33], [240, 20], [300, 8]].map(([cx, cy], i) => (
+                                                <Circle key={i} cx={cx} cy={cy} r="4" fill="#FF6B35" />
+                                            ))}
+                                        </Svg>
+                                        {/* 180/20 callout — top-right above vertical line */}
+                                        <View style={styles2.hsValueCallout}>
+                                            <Text style={styles2.hsValueText}>180/20</Text>
+                                        </View>
+                                    </View>
+
+                                    {/* X-axis labels */}
+                                    <View style={styles2.hsXAxis}>
+                                        {['12 Feb', '13 Mar', '25 Apr', '21 May', '12 June', '12 July'].map((lbl, i) => (
+                                            <Text key={i} style={styles2.hsXLabel}>{lbl}</Text>
+                                        ))}
+                                    </View>
+
+                                    {/* Pattern Explanation */}
+                                    <Text style={styles2.hsSectionHeader}>Pattern Explanation</Text>
+                                    <Text style={styles2.hsSectionBody}>
+                                        Your blood pressure readings have been consistently above the healthy range for the past 5 months, indicating a persistent elevation trend that requires attention.
+                                    </Text>
+
+                                    {/* Health Impact */}
+                                    <Text style={styles2.hsSectionHeader}>Health Impact</Text>
+                                    <View style={styles2.hsBulletRow}>
+                                        <View style={styles2.hsBulletDot} />
+                                        <Text style={styles2.hsBulletText}>Increased risk of heart disease and stroke</Text>
+                                    </View>
+                                    <View style={styles2.hsBulletRow}>
+                                        <View style={styles2.hsBulletDot} />
+                                        <Text style={styles2.hsBulletText}>Potential kidney damage over time if left unmanaged</Text>
+                                    </View>
+
+                                    {/* Peer Comparison */}
+                                    <View style={styles2.hsPeerRow}>
+                                        <Icon type={Icons.MaterialIcons} name="people" size={ms(18)} color="#FF6B35" />
+                                        <Text style={styles2.hsPeerText}>Blood Pressure: Higher Than Most Peers</Text>
+                                    </View>
+                                    <Text style={styles2.hsPeerDesc}>
+                                        Your readings are higher than 78% of people in your age and health group.
+                                    </Text>
+
+                                    {/* Suggestion box */}
+                                    <View style={styles2.hsSuggestionBox}>
+                                        <Text style={styles2.hsSuggestionTitle}>Suggestion</Text>
+                                        <Text style={styles2.hsSuggestionBody}>
+                                            Consider reducing sodium intake, increasing physical activity, and consulting your doctor about medication options to bring your blood pressure to a healthier range.
+                                        </Text>
+                                    </View>
+
+                                </View>
+                            </View>
+
+                            {/* ── MY ACTIVE CONDITION ── */}
+                            <View style={styles2.macSection}>
+                                <View style={styles2.macCard}>
+
+                                    {/* Badge */}
+                                    <View style={styles2.macBadgeRow}>
+                                        <View style={styles2.macBadge}>
+                                            <View style={styles2.macBadgeDot} />
+                                            <Text style={styles2.macBadgeText}> Active Health Condition</Text>
+                                        </View>
+                                        <TouchableOpacity onPress={() => navigation.navigate('ActiveConditionsScreen')}>
+                                            <Text style={styles2.viewAllText}>View all</Text>
+                                        </TouchableOpacity>
+                                    </View>
+
+                                    {/* Condition Cards - Horizontal Scroll */}
+                                    <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles2.macScrollRow}>
+                                        {[
+                                            { label: 'Acute',           count: '4', icon: 'flash',            iconColor: '#EF4444', route: 'AcuteConditionsScreen' },
+                                            { label: 'Chronic',        count: '4', icon: 'time',             iconColor: '#3B82F6', route: 'ChronicConditionsScreen' },
+                                            { label: 'Chronic Infec.', count: '4', icon: 'bug',              iconColor: '#8B5CF6', route: 'ChronicProgressiveScreen' },
+                                            { label: 'Genetic',        count: '4', icon: 'git-branch',       iconColor: '#10B981' },
+                                            { label: 'Life Threats',   count: '4', icon: 'alert-circle',     iconColor: '#F59E0B', route: 'LifeThreatsScreen' },
+                                            { label: 'Preventive',     count: '4', icon: 'shield-checkmark', iconColor: '#0EA5E9' },
+                                        ].map((item, index) => (
+                                            <TouchableOpacity key={index} style={styles2.macGridCell} activeOpacity={0.7}
+                                                onPress={() => item.route && navigation.navigate(item.route)}>
+                                                <View style={styles2.macGridCellTop}>
+                                                    <Text style={styles2.macGridCellLabel} numberOfLines={1}>{item.label}</Text>
+                                                    <Icon type={Icons.Ionicons} name="chevron-forward" size={ms(13)} color={blackColor} />
+                                                </View>
+                                                <View style={styles2.macGridCellBottom}>
+                                                    <View style={[styles2.macGridIconWrap, { backgroundColor: item.iconColor + '15' }]}>
+                                                        <Icon type={Icons.Ionicons} name={item.icon} size={ms(18)} color={item.iconColor} />
+                                                    </View>
+                                                    <View style={styles2.macGridBadge}>
+                                                        <Text style={styles2.macGridBadgeText}>{item.count}</Text>
+                                                    </View>
+                                                </View>
+                                            </TouchableOpacity>
+                                        ))}
+                                    </ScrollView>
+
+                                </View>
+                            </View>
+
+                            {/* ── VITAL ORGAN SNAPSHOT ── */}
+                            <View style={styles2.vosSection}>
+                                <View style={styles2.sectionHeader}>
+                                    <Text style={styles2.vosSectionTitle}>Vital Organ Snapshot</Text>
+                                    <TouchableOpacity onPress={() => navigation.navigate('OrgansHealthScreen')}>
+                                        <Text style={styles2.viewAllText}>View all</Text>
+                                    </TouchableOpacity>
+                                </View>
+                                <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+                                    <View>
+                                        <View style={styles2.vosRow}>
+                                            {[
+                                                { icon: 'eye-outline', organ: 'Eye', status: 'Normal', color: '#6366F1' },
+                                                { icon: 'brain', organ: 'Brain', status: 'Active', color: '#EC4899', iconType: Icons.MaterialCommunityIcons },
+                                                { icon: 'body-outline', organ: 'Skin', status: 'Healthy', color: '#F59E0B' },
+                                                { icon: 'human-male-female', organ: 'Reproductive', status: 'Normal', color: '#8B5CF6', iconType: Icons.MaterialCommunityIcons },
+                                                { icon: 'fitness-outline', organ: 'Pancreas', status: 'Stable', color: '#10B981' },
+                                                { icon: 'nutrition-outline', organ: 'Gut', status: 'Balanced', color: '#F97316' },
+                                                { icon: 'water-outline', organ: 'Vascular System', status: 'Normal', color: '#DC2626' },
+                                            ].map((item, index) => (
+                                                <TouchableOpacity key={index} style={styles2.vosCard} activeOpacity={0.7} onPress={() => navigation.navigate('AnalysisCheck')}>
+                                                    <View style={[styles2.vosIconWrap, { backgroundColor: item.color + '15' }]}>
+                                                        <Icon type={item.iconType || Icons.Ionicons} name={item.icon} size={ms(26)} color={item.color} />
+                                                    </View>
+                                                    <Text style={styles2.vosOrganName}>{item.organ}</Text>
+                                                    <Text style={styles2.vosStatus}>{item.status}</Text>
+                                                </TouchableOpacity>
+                                            ))}
+                                        </View>
+                                        <View style={styles2.vosRow}>
+                                            {[
+                                                { image: require('../assets/img/vo-heart.png'), organ: 'Heart', status: 'Optimal', color: '#EF4444' },
+                                                { image: require('../assets/img/vo-liver.png'), organ: 'Liver', status: 'Stable', color: '#78350F' },
+                                                { image: require('../assets/img/vo-kidney.png'), organ: 'Kidney', status: 'Normal', color: '#DC2626' },
+                                                { image: require('../assets/img/vo-lungs.png'), organ: 'Lungs', status: 'Efficient', color: '#0EA5E9' },
+                                                { icon: 'barbell-outline', organ: 'Muscle', status: 'Strong', color: '#D946EF' },
+                                                { icon: 'brain', organ: 'Brain', status: 'Sharp', color: '#EC4899', iconType: Icons.MaterialCommunityIcons },
+                                                { icon: 'bone', organ: 'Musculo Skeletal', status: 'Stable', color: '#A16207', iconType: Icons.MaterialCommunityIcons },
+                                            ].map((item, index) => (
+                                                <TouchableOpacity key={index} style={styles2.vosCard} activeOpacity={0.7} onPress={() => navigation.navigate('AnalysisCheck')}>
+                                                    {item.image ? (
+                                                        <View style={styles2.vosIconWrap}>
+                                                            <Image source={item.image} style={styles2.vosImage} />
+                                                        </View>
+                                                    ) : (
+                                                        <View style={[styles2.vosIconWrap, { backgroundColor: item.color + '15' }]}>
+                                                            <Icon type={item.iconType || Icons.Ionicons} name={item.icon} size={ms(26)} color={item.color} />
+                                                        </View>
+                                                    )}
+                                                    <Text style={styles2.vosOrganName}>{item.organ}</Text>
+                                                    <Text style={styles2.vosStatus}>{item.status}</Text>
+                                                </TouchableOpacity>
+                                            ))}
+                                        </View>
+                                    </View>
+                                </ScrollView>
+                            </View>
+
+                            {/* ── NOTIFICATIONS ── */}
+                            <View style={styles2.notifCard}>
+                                <View style={styles2.sectionHeader}>
+                                    <Text style={styles2.notifTitle}>Notifications</Text>
+                                    <TouchableOpacity onPress={() => navigation.navigate('Notifications')}>
+                                        <Text style={styles2.viewAllText}>View all</Text>
+                                    </TouchableOpacity>
+                                </View>
+                                {[
+                                    { iconType: Icons.MaterialIcons, iconName: 'biotech', iconBg: '#E8F5E9', iconColor: '#2E7D32', title: 'HbA1c Screening', subtitle: 'Due based on your metabolic trends.' },
+                                    { iconType: Icons.Ionicons, iconName: 'water', iconBg: '#E3F2FD', iconColor: '#1565C0', title: 'Tablets refill', subtitle: 'Add New set of tablets Here' },
+                                    { iconType: Icons.Ionicons, iconName: 'water', iconBg: '#E3F2FD', iconColor: '#1565C0', title: 'Increase Hydration', subtitle: 'Aim for 8 glasses to support liver function.' },
+                                ].map((item, index, arr) => (
+                                    <View key={index}>
+                                        <View style={styles2.notifRow}>
+                                            <View style={[styles2.notifIconWrap, { backgroundColor: item.iconBg }]}>
+                                                <Icon type={item.iconType} name={item.iconName} size={ms(20)} color={item.iconColor} />
+                                            </View>
+                                            <View style={styles2.notifTextWrap}>
+                                                <Text style={styles2.notifItemTitle}>{item.title}</Text>
+                                                <Text style={styles2.notifItemSub}>{item.subtitle}</Text>
+                                            </View>
+                                            <TouchableOpacity style={styles2.notifClose}>
+                                                <Icon type={Icons.Ionicons} name="close" size={ms(14)} color="#999999" />
+                                            </TouchableOpacity>
+                                        </View>
+                                    </View>
+                                ))}
+                            </View>
 
                         </>}
                         {/* ── END SECOND USER COMPONENTS ── */}
@@ -1272,161 +1293,161 @@ const Dashboard = (props) => {
                         {/* ── FIRST USER COMPONENTS ── */}
                         {!isSecondUser && <>
 
-                        {/* Track your Health journey */}
-                        <View style={styles.healthJourneySection}>
-                            <Text style={styles.healthJourneyHeading}>My Health Continuum</Text>
-                            <View style={styles.healthJourneyGrid}>
-                                <TouchableOpacity
-                                    style={styles.healthJourneyCard}
-                                    onPress={() => navigation.navigate('SleepTrackingDashboard')}
-                                >
-                                    <LinearGradient
-                                        colors={['#E2FFFB7D', '#208A7B']}
-                                        start={{ x: 0, y: 0 }}
-                                        end={{ x: 0, y: 1 }}
-                                        locations={[0, 18]}
-                                        style={styles.healthJourneyGradient}
-                                    >
-                                        <View style={styles.healthJourneyImageWrap}>
-                                            <Image source={require('../assets/img/sleep-track.png')} style={styles.healthJourneyImage} />
-                                        </View>
-                                        <View style={styles.healthJourneyTextWrap}>
-                                            <Text style={styles.healthJourneyTitle}>Sleep Tracking</Text>
-                                            <Text style={styles.healthJourneySub}>Manage your Sleep through your app</Text>
-                                        </View>
-                                    </LinearGradient>
-                                </TouchableOpacity>
-
-                                <TouchableOpacity
-                                    style={styles.healthJourneyCard}
-                                    onPress={() => navigation.navigate('ExerciseTrackingDashboard')}
-                                >
-                                    <LinearGradient
-                                        colors={['#E2FFFB7D', '#208A7B']}
-                                        start={{ x: 0, y: 0 }}
-                                        end={{ x: 0, y: 1 }}
-                                        locations={[0, 18]}
-                                        style={styles.healthJourneyGradient}
-                                    >
-                                        <View style={styles.healthJourneyImageWrap}>
-                                            <Image source={require('../assets/img/exercise-track.png')} style={styles.healthJourneyImage} />
-                                        </View>
-                                        <View style={styles.healthJourneyTextWrap}>
-                                            <Text style={styles.healthJourneyTitle}>Exercise Tracking</Text>
-                                            <Text style={styles.healthJourneySub}>Manage your Sleep through your app</Text>
-                                        </View>
-                                    </LinearGradient>
-                                </TouchableOpacity>
-
-                                <TouchableOpacity
-                                    style={styles.healthJourneyCard}
-                                    onPress={() => navigation.navigate('FoodTrackingDashboard')}
-                                >
-                                    <LinearGradient
-                                        colors={['#E2FFFB7D', '#208A7B']}
-                                        start={{ x: 0, y: 0 }}
-                                        end={{ x: 0, y: 1 }}
-                                        locations={[0, 18]}
-                                        style={styles.healthJourneyGradient}
-                                    >
-                                        <View style={styles.healthJourneyImageWrap}>
-                                            <Image source={require('../assets/img/food-track.png')} style={styles.healthJourneyImage} />
-                                        </View>
-                                        <View style={styles.healthJourneyTextWrap}>
-                                            <Text style={styles.healthJourneyTitle}>Food Tracking</Text>
-                                            <Text style={styles.healthJourneySub}>Manage your Sleep through your app</Text>
-                                        </View>
-                                    </LinearGradient>
-                                </TouchableOpacity>
-
-                                <TouchableOpacity
-                                    style={styles.healthJourneyCard}
-                                    onPress={() => navigation.navigate('MedicationTracking')}
-                                >
-                                    <LinearGradient
-                                        colors={['#E2FFFB7D', '#208A7B']}
-                                        start={{ x: 0, y: 0 }}
-                                        end={{ x: 0, y: 1 }}
-                                        locations={[0, 18]}
-                                        style={styles.healthJourneyGradient}
-                                    >
-                                        <View style={styles.healthJourneyImageWrap}>
-                                            <Image source={require('../assets/img/medical-track.png')} style={styles.healthJourneyImage} />
-                                        </View>
-                                        <View style={styles.healthJourneyTextWrap}>
-                                            <Text style={styles.healthJourneyTitle}>Medication Tracking</Text>
-                                            <Text style={styles.healthJourneySub}>Manage your Sleep through your app</Text>
-                                        </View>
-                                    </LinearGradient>
-                                </TouchableOpacity>
-                            </View>
-                        </View>
-
-                        {/* Medical Log Book */}
-                        <View style={styles.medicalLogSection}>
-                            <Text style={styles.medicalLogHeading}>My Health Monitoring</Text>
-                            <View style={styles.medicalLogGrid}>
-                                {[
-                                    { name: 'Heart Rate', image: require('../assets/img/heartRate.png'), route: 'HeartRateLog' },
-                                    { name: 'Blood Pressure', image: require('../assets/img/blood_pressure.png'), route: 'BloodPressureLog' },
-                                    { name: 'Glucose', image: require('../assets/img/glucose.png'), route: 'GlucoseLog' },
-                                    { name: 'Temperature', image: require('../assets/img/temprature.png'), route: 'TemperatureLog' },
-                                    { name: 'Menstrual Cycle', image: require('../assets/img/menstrualcycle.png'), route: 'MenstrualCycleLog' },
-                                    { name: 'Weight Management', image: require('../assets/img/weightmanagement.png'), route: 'WeightLog' },
-                                    { name: 'Vaccination', image: require('../assets/img/Vaccination.png'), route: 'VaccinationLog' },
-                                    { name: 'Migraine', image: require('../assets/img/migraine.png'), route: 'MigraineLog' },
-                                    { name: 'Asthma', image: require('../assets/img/astama.png'), route: 'AsthmaIntroScreen' },
-                                    { name: 'Musculo Skeletal', image: require('../assets/img/skeletal.png'), route: 'MusculoskeletalIntroScreen' },
-                                ].map((item, index) => (
+                            {/* Track your Health journey */}
+                            <View style={styles.healthJourneySection}>
+                                <Text style={styles.healthJourneyHeading}> Health Continuum</Text>
+                                <View style={styles.healthJourneyGrid}>
                                     <TouchableOpacity
-                                        key={index}
-                                        style={styles.medicalLogCard}
-                                        onPress={() => {
-                                            if (item.route === 'HeartRateLog') {
-                                                navigation.navigate('HeartRateLog');
-                                            } else if (item.route === 'BloodPressureLog') {
-                                                navigation.navigate('BloodPressureLog');
-                                            } else if (item.route === 'GlucoseLog') {
-                                                navigation.navigate('GlucoseLog');
-                                            } else if (item.route === 'TemperatureLog') {
-                                                navigation.navigate('TemperatureLog');
-                                            } else if (item.route === 'MenstrualCycleLog') {
-                                                navigation.navigate('MenstrualCycleLog');
-                                            } else if (item.route === 'WeightLog') {
-                                                navigation.navigate('WeightManagementLog');
-                                            } else if (item.route === 'VaccinationLog') {
-                                                navigation.navigate('VaccinationLog');
-                                            } else if (item.route === 'MigraineLog') {
-                                                navigation.navigate('MigraineLog');
-                                            } else if (item.route === 'AsthmaIntroScreen') {
-                                                navigation.navigate('AsthmaIntroScreen');
-                                            } else if (item.route === 'MusculoskeletalIntroScreen') {
-                                                navigation.navigate('MusculoskeletalIntroScreen');
-                                            } else {
-                                                showSnack('warning', `${item.name} log coming soon!`);
-                                            }
-                                        }}
-                                        activeOpacity={0.7}
+                                        style={styles.healthJourneyCard}
+                                        onPress={() => navigation.navigate('SleepTrackingDashboard')}
                                     >
-                                        <View style={styles.medicalLogImageWrap}>
-                                            {item.image ? (
-                                                <Image source={item.image} style={styles.medicalLogImage} />
-                                            ) : (
-                                                <Icon type={Icons.MaterialCommunityIcons} name="needle" size={ms(40)} color={primaryColor} />
-                                            )}
-                                        </View>
-                                        <Text style={styles.medicalLogText} numberOfLines={2}>{item.name}</Text>
+                                        <LinearGradient
+                                            colors={['#E2FFFB7D', '#208A7B']}
+                                            start={{ x: 0, y: 0 }}
+                                            end={{ x: 0, y: 1 }}
+                                            locations={[0, 18]}
+                                            style={styles.healthJourneyGradient}
+                                        >
+                                            <View style={styles.healthJourneyImageWrap}>
+                                                <Image source={require('../assets/img/sleep-track.png')} style={styles.healthJourneyImage} />
+                                            </View>
+                                            <View style={styles.healthJourneyTextWrap}>
+                                                <Text style={styles.healthJourneyTitle}>Sleep Tracking</Text>
+                                                <Text style={styles.healthJourneySub}>Manage your Sleep through your app</Text>
+                                            </View>
+                                        </LinearGradient>
                                     </TouchableOpacity>
-                                ))}
+
+                                    <TouchableOpacity
+                                        style={styles.healthJourneyCard}
+                                        onPress={() => navigation.navigate('ExerciseTrackingDashboard')}
+                                    >
+                                        <LinearGradient
+                                            colors={['#E2FFFB7D', '#208A7B']}
+                                            start={{ x: 0, y: 0 }}
+                                            end={{ x: 0, y: 1 }}
+                                            locations={[0, 18]}
+                                            style={styles.healthJourneyGradient}
+                                        >
+                                            <View style={styles.healthJourneyImageWrap}>
+                                                <Image source={require('../assets/img/exercise-track.png')} style={styles.healthJourneyImage} />
+                                            </View>
+                                            <View style={styles.healthJourneyTextWrap}>
+                                                <Text style={styles.healthJourneyTitle}>Exercise Tracking</Text>
+                                                <Text style={styles.healthJourneySub}>Manage your Sleep through your app</Text>
+                                            </View>
+                                        </LinearGradient>
+                                    </TouchableOpacity>
+
+                                    <TouchableOpacity
+                                        style={styles.healthJourneyCard}
+                                        onPress={() => navigation.navigate('FoodTrackingDashboard')}
+                                    >
+                                        <LinearGradient
+                                            colors={['#E2FFFB7D', '#208A7B']}
+                                            start={{ x: 0, y: 0 }}
+                                            end={{ x: 0, y: 1 }}
+                                            locations={[0, 18]}
+                                            style={styles.healthJourneyGradient}
+                                        >
+                                            <View style={styles.healthJourneyImageWrap}>
+                                                <Image source={require('../assets/img/food-track.png')} style={styles.healthJourneyImage} />
+                                            </View>
+                                            <View style={styles.healthJourneyTextWrap}>
+                                                <Text style={styles.healthJourneyTitle}>Food Tracking</Text>
+                                                <Text style={styles.healthJourneySub}>Manage your Sleep through your app</Text>
+                                            </View>
+                                        </LinearGradient>
+                                    </TouchableOpacity>
+
+                                    <TouchableOpacity
+                                        style={styles.healthJourneyCard}
+                                        onPress={() => navigation.navigate('MedicationTracking')}
+                                    >
+                                        <LinearGradient
+                                            colors={['#E2FFFB7D', '#208A7B']}
+                                            start={{ x: 0, y: 0 }}
+                                            end={{ x: 0, y: 1 }}
+                                            locations={[0, 18]}
+                                            style={styles.healthJourneyGradient}
+                                        >
+                                            <View style={styles.healthJourneyImageWrap}>
+                                                <Image source={require('../assets/img/medical-track.png')} style={styles.healthJourneyImage} />
+                                            </View>
+                                            <View style={styles.healthJourneyTextWrap}>
+                                                <Text style={styles.healthJourneyTitle}>Medication Tracking</Text>
+                                                <Text style={styles.healthJourneySub}>Manage your Sleep through your app</Text>
+                                            </View>
+                                        </LinearGradient>
+                                    </TouchableOpacity>
+                                </View>
                             </View>
-                        </View>
+
+                            {/* Medical Log Book */}
+                            <View style={styles.medicalLogSection}>
+                                <Text style={styles.medicalLogHeading}> Health Monitoring</Text>
+                                <View style={styles.medicalLogGrid}>
+                                    {[
+                                        { name: 'Heart Rate', image: require('../assets/img/heartRate.png'), route: 'HeartRateLog' },
+                                        { name: 'Blood Pressure', image: require('../assets/img/blood_pressure.png'), route: 'BloodPressureLog' },
+                                        { name: 'Glucose', image: require('../assets/img/glucose.png'), route: 'GlucoseLog' },
+                                        { name: 'Temperature', image: require('../assets/img/temprature.png'), route: 'TemperatureLog' },
+                                        { name: 'Menstrual Cycle', image: require('../assets/img/menstrualcycle.png'), route: 'MenstrualCycleLog' },
+                                        { name: 'Weight Management', image: require('../assets/img/weightmanagement.png'), route: 'WeightLog' },
+                                        { name: 'Vaccination', image: require('../assets/img/Vaccination.png'), route: 'VaccinationLog' },
+                                        { name: 'Migraine', image: require('../assets/img/migraine.png'), route: 'MigraineLog' },
+                                        { name: 'Asthma', image: require('../assets/img/astama.png'), route: 'AsthmaIntroScreen' },
+                                        { name: 'Musculo Skeletal', image: require('../assets/img/skeletal.png'), route: 'MusculoskeletalIntroScreen' },
+                                    ].map((item, index) => (
+                                        <TouchableOpacity
+                                            key={index}
+                                            style={styles.medicalLogCard}
+                                            onPress={() => {
+                                                if (item.route === 'HeartRateLog') {
+                                                    navigation.navigate('HeartRateLog');
+                                                } else if (item.route === 'BloodPressureLog') {
+                                                    navigation.navigate('BloodPressureLog');
+                                                } else if (item.route === 'GlucoseLog') {
+                                                    navigation.navigate('GlucoseLog');
+                                                } else if (item.route === 'TemperatureLog') {
+                                                    navigation.navigate('TemperatureLog');
+                                                } else if (item.route === 'MenstrualCycleLog') {
+                                                    navigation.navigate('MenstrualCycleLog');
+                                                } else if (item.route === 'WeightLog') {
+                                                    navigation.navigate('WeightManagementLog');
+                                                } else if (item.route === 'VaccinationLog') {
+                                                    navigation.navigate('VaccinationLog');
+                                                } else if (item.route === 'MigraineLog') {
+                                                    navigation.navigate('MigraineLog');
+                                                } else if (item.route === 'AsthmaIntroScreen') {
+                                                    navigation.navigate('AsthmaIntroScreen');
+                                                } else if (item.route === 'MusculoskeletalIntroScreen') {
+                                                    navigation.navigate('MusculoskeletalIntroScreen');
+                                                } else {
+                                                    showSnack('warning', `${item.name} log coming soon!`);
+                                                }
+                                            }}
+                                            activeOpacity={0.7}
+                                        >
+                                            <View style={styles.medicalLogImageWrap}>
+                                                {item.image ? (
+                                                    <Image source={item.image} style={styles.medicalLogImage} />
+                                                ) : (
+                                                    <Icon type={Icons.MaterialCommunityIcons} name="needle" size={ms(40)} color={primaryColor} />
+                                                )}
+                                            </View>
+                                            <Text style={styles.medicalLogText} numberOfLines={2}>{item.name}</Text>
+                                        </TouchableOpacity>
+                                    ))}
+                                </View>
+                            </View>
 
                         </>}
                         {/* ── END FIRST USER COMPONENTS ── */}
 
                         {/* Top Service Cards */}
                         <View style={styles.healthServiceSection}>
-                            <Text style={styles.healthServiceHeading}>My Health Service</Text>
+                            <Text style={styles.healthServiceHeading}> Health Service</Text>
                             <View style={styles.healthServiceGrid}>
                                 {[
                                     { image: require('../assets/img/top-lab.png'), onPress: () => navigateToTests('Home Lab') },
@@ -2232,7 +2253,7 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         color: '#000',
         marginBottom: ms(15),
-        textAlign:'center'
+        textAlign: 'center'
     },
     medicalLogGrid: {
         flexDirection: 'row',
@@ -2885,6 +2906,11 @@ const styles2 = StyleSheet.create({
         paddingHorizontal: ms(14),
         paddingVertical: ms(12),
     },
+    macBadgeRow: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+    },
     macBadge: {
         alignSelf: 'flex-start',
         flexDirection: 'row',
@@ -2893,7 +2919,7 @@ const styles2 = StyleSheet.create({
         borderRadius: ms(20),
         paddingHorizontal: ms(14),
         paddingVertical: ms(7),
-        marginBottom: ms(16),
+        // marginBottom: ms(16),
         gap: ms(3),
     },
     macBadgeDot: {
@@ -2907,42 +2933,54 @@ const styles2 = StyleSheet.create({
         fontWeight: '600',
         color: '#FFFFFF',
     },
-    macRow: {
+    macScrollRow: {
+        marginTop: vs(12),
+    },
+    macGridCell: {
+        width: ms(130),
+        backgroundColor: '#F3F4F6',
+        borderRadius: ms(12),
+        padding: ms(12),
+        marginRight: ms(10),
+        minHeight: vs(90),
+        justifyContent: 'space-between',
+    },
+    macGridCellTop: {
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
-        paddingVertical: ms(12),
     },
-    macDivider: {
-        height: 1,
-        backgroundColor: '#F0F0F0',
+    macGridCellLabel: {
+        fontSize: ms(12),
+        fontWeight: '600',
+        color: blackColor,
+        flex: 1,
     },
-    macConditionName: {
+    macGridCellBottom: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        marginTop: vs(10),
+    },
+    macGridIconWrap: {
+        width: ms(32),
+        height: ms(32),
+        borderRadius: ms(10),
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    macGridBadge: {
+        width: ms(32),
+        height: ms(32),
+        borderRadius: ms(16),
+        backgroundColor: blackColor,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    macGridBadgeText: {
+        color: whiteColor,
         fontSize: ms(14),
-        fontWeight: '500',
-        color: '#111111',
-    },
-    macStatusBadgeStable: {
-        backgroundColor: '#E8F7EE',
-        borderRadius: ms(20),
-        paddingHorizontal: ms(14),
-        paddingVertical: ms(5),
-    },
-    macStatusTextStable: {
-        fontSize: ms(13),
-        fontWeight: '600',
-        color: '#1A6B42',
-    },
-    macStatusBadgeMonitor: {
-        backgroundColor: '#FFF4E5',
-        borderRadius: ms(20),
-        paddingHorizontal: ms(14),
-        paddingVertical: ms(5),
-    },
-    macStatusTextMonitor: {
-        fontSize: ms(13),
-        fontWeight: '600',
-        color: '#E07B00',
+        fontWeight: 'bold',
     },
 
     /* ── Lifestyle Impact Summary ── */
@@ -3072,39 +3110,45 @@ const styles2 = StyleSheet.create({
         fontWeight: 'bold',
         color: '#111111',
     },
-    vosGrid: {
+    vosRow: {
         flexDirection: 'row',
-        flexWrap: 'wrap',
-        gap: ms(12),
-    },
-    vosCard: {
-        width: '47%',
-        backgroundColor: '#F1F5F9',
-        borderRadius: ms(16),
-        paddingHorizontal: ms(14),
-        paddingVertical: ms(16),
-    },
-    vosCardTop: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'flex-start',
+        gap: ms(10),
         marginBottom: ms(10),
     },
+    vosCard: {
+        width: ms(120),
+        backgroundColor: '#F1F5F9',
+        borderRadius: ms(14),
+        paddingHorizontal: ms(12),
+        paddingVertical: ms(12),
+        alignItems: 'center',
+    },
+    vosIconWrap: {
+        width: ms(48),
+        height: ms(48),
+        borderRadius: ms(14),
+        backgroundColor: '#F1F5F9',
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginBottom: ms(8),
+    },
     vosImage: {
-        width: ms(50),
-        height: ms(50),
+        width: ms(36),
+        height: ms(36),
         resizeMode: 'contain',
     },
     vosOrganName: {
-        fontSize: ms(12),
+        fontSize: ms(11),
         fontWeight: '400',
         color: '#888888',
-        marginBottom: ms(4),
+        marginBottom: ms(2),
+        textAlign: 'center',
     },
     vosStatus: {
-        fontSize: ms(16),
+        fontSize: ms(13),
         fontWeight: 'bold',
         color: '#111111',
+        textAlign: 'center',
     },
 });
 

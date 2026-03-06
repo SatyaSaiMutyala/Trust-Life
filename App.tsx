@@ -274,6 +274,13 @@ import AcuteConditionsScreen from './src/views/Progress/AcuteConditionsScreen';
 import ChronicConditionsScreen from './src/views/Progress/ChronicConditionsScreen';
 import ChronicDetailScreen from './src/views/Progress/ChronicDetailScreen';
 import BioMarkersTrendScreen from './src/views/Progress/BioMarkersTrendScreen';
+import ActiveConditionsScreen from './src/views/Progress/ActiveConditionsScreen';
+import OrgansHealthScreen from './src/views/Progress/OrgansHealthScreen';
+import SymptomsScreen from './src/views/Progress/SymptomsScreen';
+import MedicalEngagementScreen from './src/views/Progress/MedicalEngagementScreen';
+import MonitoringContinuityScreen from './src/views/Progress/MonitoringContinuityScreen';
+import LifestyleImpactSummary from './src/views/Progress/LifestyleImpactSummary';
+import LifestyleDetailScreen from './src/views/Progress/LifestyleDetailScreen';
 import ChronicProgressiveScreen from './src/views/Progress/ChronicProgressiveScreen';
 import ChronicProgressiveDetailScreen from './src/views/Progress/ChronicProgressiveDetailScreen';
 import ConditionDetailScreen from './src/views/Progress/ConditionDetailScreen';
@@ -760,6 +767,13 @@ function App() {
               <Stack.Screen name='ChronicConditionsScreen' component={ChronicConditionsScreen} options={{headerShown:false}}/>
               <Stack.Screen name='ChronicDetailScreen' component={ChronicDetailScreen} options={{headerShown:false}}/>
               <Stack.Screen name='BioMarkersTrendScreen' component={BioMarkersTrendScreen} options={{headerShown:false}}/>
+              <Stack.Screen name='LifestyleImpactSummary' component={LifestyleImpactSummary} options={{headerShown:false}}/>
+              <Stack.Screen name='ActiveConditionsScreen' component={ActiveConditionsScreen} options={{headerShown:false}}/>
+              <Stack.Screen name='OrgansHealthScreen' component={OrgansHealthScreen} options={{headerShown:false}}/>
+              <Stack.Screen name='SymptomsScreen' component={SymptomsScreen} options={{headerShown:false}}/>
+              <Stack.Screen name='MedicalEngagementScreen' component={MedicalEngagementScreen} options={{headerShown:false}}/>
+              <Stack.Screen name='MonitoringContinuityScreen' component={MonitoringContinuityScreen} options={{headerShown:false}}/>
+              <Stack.Screen name='LifestyleDetailScreen' component={LifestyleDetailScreen} options={{headerShown:false}}/>
               <Stack.Screen name='ChronicProgressiveScreen' component={ChronicProgressiveScreen} options={{headerShown:false}}/>
               <Stack.Screen name='ChronicProgressiveDetailScreen' component={ChronicProgressiveDetailScreen} options={{headerShown:false}}/>
               <Stack.Screen name='ConditionDetailScreen' component={ConditionDetailScreen} options={{headerShown:false}}/>

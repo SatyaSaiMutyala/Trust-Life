@@ -7,7 +7,14 @@ import {
     ScrollView,
     TouchableOpacity,
     Dimensions,
+    LayoutAnimation,
+    UIManager,
+    Platform,
 } from 'react-native';
+
+if (Platform.OS === 'android') {
+    UIManager.setLayoutAnimationEnabledExperimental?.(true);
+}
 import { useNavigation } from '@react-navigation/native';
 import LinearGradient from 'react-native-linear-gradient';
 import { ms, vs } from 'react-native-size-matters';
@@ -233,6 +240,11 @@ const BioMarkersTrendScreen = () => {
     const navigation = useNavigation();
     const [activeTab, setActiveTab] = useState('All');
 
+    const handleTabPress = (tab) => {
+        LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
+        setActiveTab(tab);
+    };
+
     const filteredMarkers = BIO_MARKERS.filter((item) => {
         if (activeTab === 'All') return true;
         if (activeTab === 'Normal') return item.type === 'normal';
@@ -264,7 +276,7 @@ const BioMarkersTrendScreen = () => {
                         <TouchableOpacity
                             key={tab}
                             style={[styles.tab, activeTab === tab && styles.tabActive]}
-                            onPress={() => setActiveTab(tab)}
+                            onPress={() => handleTabPress(tab)}
                             activeOpacity={0.7}
                         >
                             <Text style={[styles.tabText, activeTab === tab && styles.tabTextActive]}>
@@ -340,14 +352,21 @@ const styles = StyleSheet.create({
     },
     tabActive: {
         backgroundColor: primaryColor,
+        shadowColor: primaryColor,
+        shadowOffset: { width: 0, height: 4 },
+        shadowOpacity: 0.35,
+        shadowRadius: 6,
+        elevation: 6,
+        transform: [{ scale: 1.05 }],
     },
     tabText: {
         fontSize: ms(13),
         fontFamily: bold,
-        color: blackColor,
+        color: '#9CA3AF',
     },
     tabTextActive: {
         color: whiteColor,
+        letterSpacing: 0.5,
     },
 
     scrollContent: {

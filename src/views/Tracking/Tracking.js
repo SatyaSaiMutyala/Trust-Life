@@ -84,7 +84,7 @@ const Tracking = () => {
                 >
                     {/* My Health Continuum */}
                     <View style={styles.continuumSection}>
-                        <Text style={styles.sectionHeading}>My Health Continuum</Text>
+                        <Text style={styles.sectionHeading}>  Lifestyle Factors</Text>
                         <View style={styles.continuumGrid}>
                             {CONTINUUM_DATA.map((item) => (
                                 <TouchableOpacity
@@ -108,7 +108,6 @@ const Tracking = () => {
                                             {/* <Text style={styles.continuumSub}>{item.subtitle}</Text> */}
                                         </View>
                                     </LinearGradient>
-
                                 </TouchableOpacity>
                             ))}
                         </View>
@@ -116,7 +115,7 @@ const Tracking = () => {
 
                     {/* My Health Monitoring */}
                     <View style={styles.monitoringSection}>
-                        <Text style={styles.sectionHeading}>My Health Monitoring</Text>
+                        <Text style={styles.sectionHeading}> Health Symptoms</Text>
                         <View style={styles.monitoringGrid}>
                             {MONITORING_DATA.map((item, index) => (
                                 <TouchableOpacity
@@ -161,7 +160,7 @@ const styles = StyleSheet.create({
 
     // Section Heading
     sectionHeading: {
-        fontSize: ms(16),
+        fontSize: ms(18),
         fontFamily: bold,
         color: blackColor,
         textAlign: 'center',

@@ -44,9 +44,9 @@ const ScoreGauge = () => (
         <Svg width={GAUGE_SIZE} height={GAUGE_SIZE}>
             <Defs>
                 <SvgLinearGradient id="ckArcGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                    <Stop offset="0%"   stopColor="#0C5E50" />
-                    <Stop offset="40%"  stopColor="#1A7E70" />
-                    <Stop offset="100%" stopColor="#3BB89A" />
+                    <Stop offset="0%"   stopColor="#059669" />
+                    <Stop offset="40%"  stopColor="#10B981" />
+                    <Stop offset="100%" stopColor="#34D399" />
                 </SvgLinearGradient>
                 <RadialGradient id="ckGlow" cx="50%" cy="50%" r="55%">
                     <Stop offset="55%"  stopColor="#1A7E70" stopOpacity="0.15" />
@@ -259,19 +259,6 @@ const TimelineRow = ({ item, isLast }) => (
     </View>
 );
 
-// ── Active Health Condition Grid Cell ────────────────────────────────────────
-const ConditionItem = ({ label, count, onPress }) => (
-    <TouchableOpacity style={styles.gridCell} onPress={onPress} activeOpacity={0.7}>
-        <View style={styles.gridCellTop}>
-            <Text style={styles.gridCellLabel} numberOfLines={1}>{label}</Text>
-            <Icon type={Icons.Ionicons} name="chevron-forward" size={ms(13)} color={blackColor} />
-        </View>
-        <View style={[styles.gridBadge, { marginTop: vs(8) }]}>
-            <Text style={styles.gridBadgeText}>{count}</Text>
-        </View>
-    </TouchableOpacity>
-);
-
 // ── Lifestyle Grid Cell ───────────────────────────────────────────────────────
 const LifestyleItem = ({ label, count, image, onPress }) => (
     <TouchableOpacity style={styles.gridCell} onPress={onPress} activeOpacity={0.7}>
@@ -383,37 +370,206 @@ const CheckHealthStatus = () => {
 
                 {/* ── My Active Health Conditions ── */}
                 <View style={styles.card}>
-                    <Text style={styles.cardTitle}>My Active Health Conditions</Text>
-                    <View style={styles.grid}>
-                        <ConditionItem label="Acute" count="4" onPress={() => navigation.navigate('AcuteConditionsScreen')} />
-                        <ConditionItem label="Chronic" count="4" onPress={() => navigation.navigate('ChronicConditionsScreen')} />
-                        <ConditionItem label="Chronic infec..." count="4" onPress={() => navigation.navigate('ChronicProgressiveScreen')} />
-                        <ConditionItem label="Genetic" count="4" />
-                        <ConditionItem label="Life threats" count="4" onPress={() => navigation.navigate('LifeThreatsScreen')} />
-                        <ConditionItem label="Preventive" count="4" />
+                    <View style={styles.lisHeader}>
+                        <Text style={styles.cardTitle}>Active Health Conditions</Text>
+                        <TouchableOpacity onPress={() => navigation.navigate('ActiveConditionsScreen')}>
+                            <Text style={styles.lisViewAll}>View all</Text>
+                        </TouchableOpacity>
                     </View>
+                    {[
+                        { label: 'Diabetes', type: 'Chronic', typeColor: '#3B82F6', status: 'Moderate control', statusType: 'moderate' },
+                        { label: 'Hypertension', type: 'Chronic', typeColor: '#3B82F6', status: 'Poor control', statusType: 'poor' },
+                        { label: 'Fever', type: 'Acute', typeColor: '#EF4444', status: 'Need to monitor', statusType: 'moderate' },
+                    ].map((item, index) => (
+                        <TouchableOpacity key={index} style={styles.condRow} activeOpacity={0.7}>
+                            <View style={{ flex: 1 }}>
+                                <Text style={styles.condName}>{item.label}</Text>
+                                <View style={[styles.condTypeBadge, { backgroundColor: item.typeColor + '15', marginTop: vs(3) }]}>
+                                    <Text style={[styles.condTypeText, { color: item.typeColor }]}>{item.type}</Text>
+                                </View>
+                            </View>
+                            <View style={
+                                item.statusType === 'strong' ? styles.lisBadgeStrong :
+                                item.statusType === 'poor' ? styles.lisBadgePoor :
+                                styles.lisBadgeModerate
+                            }>
+                                <Text style={
+                                    item.statusType === 'strong' ? styles.lisBadgeTextStrong :
+                                    item.statusType === 'poor' ? styles.lisBadgeTextPoor :
+                                    styles.lisBadgeTextModerate
+                                }>{item.status}</Text>
+                            </View>
+                        </TouchableOpacity>
+                    ))}
                 </View>
 
                 {/* ── Organs Health Status ── */}
                 <View style={styles.card}>
-                    <Text style={styles.cardTitle}>Organs Health Status :</Text>
-                    <OrganRow label="Total organs monitor" count="10" />
-                    <OrganRow label="Stable" count="6" showBorder />
-                    <OrganRow label="Needs Attention" count="4" showBorder />
+                    <View style={styles.lisHeader}>
+                        <Text style={styles.cardTitle}>Organ Health</Text>
+                        <TouchableOpacity onPress={() => navigation.navigate('OrgansHealthScreen')}>
+                            <Text style={styles.lisViewAll}>View all</Text>
+                        </TouchableOpacity>
+                    </View>
+                    {[
+                        { iconType: Icons.Ionicons,              iconName: 'heart',    iconColor: '#EF4444', label: 'Heart',    status: 'Watch',  statusType: 'moderate' },
+                        { iconType: Icons.Ionicons,              iconName: 'water',    iconColor: '#DC2626', label: 'Kidney',   status: 'Stable', statusType: 'strong'   },
+                        { iconType: Icons.Ionicons,              iconName: 'flask',    iconColor: '#78350F', label: 'Liver',    status: 'Stable', statusType: 'strong'   },
+                        { iconType: Icons.MaterialCommunityIcons, iconName: 'stomach', iconColor: '#10B981', label: 'Pancreas', status: 'Watch',  statusType: 'moderate' },
+                    ].map((item, index) => (
+                        <View key={index} style={styles.lisRow}>
+                            <Icon type={item.iconType} name={item.iconName} size={ms(22)} color={item.iconColor} />
+                            <Text style={styles.lisLabel}>{item.label}</Text>
+                            <View style={item.statusType === 'strong' ? styles.lisBadgeStrong : styles.lisBadgeModerate}>
+                                <Text style={item.statusType === 'strong' ? styles.lisBadgeTextStrong : styles.lisBadgeTextModerate}>{item.status}</Text>
+                            </View>
+                        </View>
+                    ))}
                 </View>
 
-                {/* ── Lifestyle Influence ── */}
+                {/* ── Bio Markers Stability ── */}
                 <View style={styles.card}>
-                    <Text style={styles.cardTitle}>Lifestyle Influence :</Text>
-                    <View style={styles.grid}>
-                        <LifestyleItem label="Diet"      count="4" image={require('../assets/img/lsdite.png')} />
-                        <LifestyleItem label="Sleep"     count="4" image={require('../assets/img/lssleep.png')} />
-                        <LifestyleItem label="Fitness"   count="4" image={require('../assets/img/lsfitness.png')} />
-                        <LifestyleItem label="Medicat..."count="4" image={require('../assets/img/lsmedication.png')} />
-                        <LifestyleItem label="Alcohol"   count="4" image={require('../assets/img/lsalchol.png')} />
-                        <LifestyleItem label="Smoking"   count="4" image={require('../assets/img/lssmoking.png')} />
+                    <View style={styles.lisHeader}>
+                        <Text style={styles.cardTitle}>Bio Markers Stability</Text>
+                        <TouchableOpacity onPress={() => navigation.navigate('BioMarkersTrendScreen')}>
+                            <Text style={styles.lisViewAll}>View all</Text>
+                        </TouchableOpacity>
                     </View>
+                    {[
+                        { iconType: Icons.Ionicons,              iconName: 'water',          iconColor: '#EF4444', label: 'Blood Sugar',      status: 'Stable',   statusType: 'strong'   },
+                        { iconType: Icons.Ionicons,              iconName: 'heart',          iconColor: '#EC4899', label: 'Blood Pressure',   status: 'Normal',   statusType: 'strong'   },
+                        { iconType: Icons.MaterialCommunityIcons, iconName: 'test-tube',    iconColor: '#8B5CF6', label: 'Cholesterol',      status: 'Borderline', statusType: 'moderate' },
+                        { iconType: Icons.Ionicons,              iconName: 'pulse',          iconColor: '#0EA5E9', label: 'Heart Rate',       status: 'Normal',   statusType: 'strong'   },
+                    ].map((item, index) => (
+                        <View key={index} style={styles.lisRow}>
+                            <Icon type={item.iconType} name={item.iconName} size={ms(22)} color={item.iconColor} />
+                            <Text style={styles.lisLabel}>{item.label}</Text>
+                            <View style={item.statusType === 'strong' ? styles.lisBadgeStrong : styles.lisBadgeModerate}>
+                                <Text style={item.statusType === 'strong' ? styles.lisBadgeTextStrong : styles.lisBadgeTextModerate}>{item.status}</Text>
+                            </View>
+                        </View>
+                    ))}
                 </View>
+
+                {/* ── Symptoms ── */}
+                <View style={styles.card}>
+                    <View style={styles.lisHeader}>
+                        <Text style={styles.cardTitle}>Symptom Monitoring</Text>
+                        <TouchableOpacity onPress={() => navigation.navigate('SymptomsScreen')}>
+                            <Text style={styles.lisViewAll}>View all</Text>
+                        </TouchableOpacity>
+                    </View>
+                    {[
+                        { iconType: Icons.Ionicons,              iconName: 'flash',           iconColor: '#F59E0B', label: 'Headache',    status: 'Frequent', statusType: 'moderate' },
+                        { iconType: Icons.Ionicons,              iconName: 'bed',             iconColor: '#7B61FF', label: 'Fatigue',     status: 'Mild',     statusType: 'strong'   },
+                        { iconType: Icons.MaterialCommunityIcons, iconName: 'stomach',        iconColor: '#EF4444', label: 'Nausea',      status: 'Rare',     statusType: 'strong'   },
+                        { iconType: Icons.Ionicons,              iconName: 'fitness',         iconColor: '#0EA5E9', label: 'Joint Pain',  status: 'Moderate', statusType: 'moderate' },
+                    ].map((item, index) => (
+                        <View key={index} style={styles.lisRow}>
+                            <Icon type={item.iconType} name={item.iconName} size={ms(22)} color={item.iconColor} />
+                            <Text style={styles.lisLabel}>{item.label}</Text>
+                            <View style={item.statusType === 'strong' ? styles.lisBadgeStrong : styles.lisBadgeModerate}>
+                                <Text style={item.statusType === 'strong' ? styles.lisBadgeTextStrong : styles.lisBadgeTextModerate}>{item.status}</Text>
+                            </View>
+                        </View>
+                    ))}
+                </View>
+
+                {/* ── Lifestyle Impact Summary ── */}
+                <View style={styles.card}>
+                    <View style={styles.lisHeader}>
+                        <Text style={styles.cardTitle}>Lifestyle Influences</Text>
+                        <TouchableOpacity onPress={() => navigation.navigate('LifestyleImpactSummary')}>
+                            <Text style={styles.lisViewAll}>View all</Text>
+                        </TouchableOpacity>
+                    </View>
+                    {[
+                        { iconType: Icons.Ionicons,              iconName: 'moon',            iconColor: '#7B61FF', label: 'Sleep',    status: 'Good',     statusType: 'strong'   },
+                        { iconType: Icons.MaterialCommunityIcons, iconName: 'lightning-bolt', iconColor: '#FF6B35', label: 'Fitness',   status: 'Active',   statusType: 'strong'   },
+                        { iconType: Icons.Ionicons,              iconName: 'restaurant',      iconColor: '#2E7D32', label: 'Nutrition', status: 'Balanced', statusType: 'strong'   },
+                        { iconType: Icons.MaterialCommunityIcons, iconName: 'head-cog',       iconColor: '#1565C0', label: 'Stress',   status: 'Moderate', statusType: 'moderate' },
+                    ].map((item, index) => (
+                        <View key={index} style={styles.lisRow}>
+                            <Icon type={item.iconType} name={item.iconName} size={ms(22)} color={item.iconColor} />
+                            <Text style={styles.lisLabel}>{item.label}</Text>
+                            <View style={item.statusType === 'strong' ? styles.lisBadgeStrong : styles.lisBadgeModerate}>
+                                <Text style={item.statusType === 'strong' ? styles.lisBadgeTextStrong : styles.lisBadgeTextModerate}>{item.status}</Text>
+                            </View>
+                        </View>
+                    ))}
+                </View>
+
+                {/* ── Medical Engagement ── */}
+                <View style={styles.card}>
+                    <View style={styles.lisHeader}>
+                        <Text style={styles.cardTitle}>Medical Engagement</Text>
+                        <TouchableOpacity onPress={() => navigation.navigate('MedicalEngagementScreen')}>
+                            <Text style={styles.lisViewAll}>View all</Text>
+                        </TouchableOpacity>
+                    </View>
+                    {[
+                        { iconType: Icons.Ionicons,              iconName: 'calendar',        iconColor: '#2E7D32', label: 'Doctor Visits',     status: 'Regular',  statusType: 'strong'   },
+                        { iconType: Icons.Ionicons,              iconName: 'medkit',          iconColor: '#1565C0', label: 'Prescriptions',     status: 'Active',   statusType: 'strong'   },
+                        { iconType: Icons.MaterialCommunityIcons, iconName: 'clipboard-check', iconColor: '#7B61FF', label: 'Lab Tests',       status: 'Up to date', statusType: 'strong' },
+                        { iconType: Icons.Ionicons,              iconName: 'chatbubbles',     iconColor: '#F59E0B', label: 'Follow-ups',       status: 'Pending',  statusType: 'moderate' },
+                    ].map((item, index) => (
+                        <View key={index} style={styles.lisRow}>
+                            <Icon type={item.iconType} name={item.iconName} size={ms(22)} color={item.iconColor} />
+                            <Text style={styles.lisLabel}>{item.label}</Text>
+                            <View style={item.statusType === 'strong' ? styles.lisBadgeStrong : styles.lisBadgeModerate}>
+                                <Text style={item.statusType === 'strong' ? styles.lisBadgeTextStrong : styles.lisBadgeTextModerate}>{item.status}</Text>
+                            </View>
+                        </View>
+                    ))}
+                </View>
+
+                {/* ── Monitoring Continuity ── */}
+                <View style={styles.card}>
+                    <View style={styles.lisHeader}>
+                        <Text style={styles.cardTitle}>Monitoring Continuity</Text>
+                        <TouchableOpacity onPress={() => navigation.navigate('MonitoringContinuityScreen')}>
+                            <Text style={styles.lisViewAll}>View all</Text>
+                        </TouchableOpacity>
+                    </View>
+                    {[
+                        { iconType: Icons.Ionicons,              iconName: 'analytics',       iconColor: '#0EA5E9', label: 'Vital Tracking',    status: 'Consistent', statusType: 'strong' },
+                        { iconType: Icons.MaterialCommunityIcons, iconName: 'heart-pulse',    iconColor: '#EF4444', label: 'Health Check-ins',  status: 'On track',   statusType: 'strong' },
+                        { iconType: Icons.Ionicons,              iconName: 'time',            iconColor: '#F97316', label: 'Screening Schedule', status: 'Due soon',  statusType: 'moderate' },
+                        { iconType: Icons.MaterialCommunityIcons, iconName: 'chart-timeline-variant', iconColor: '#8B5CF6', label: 'Trend Analysis', status: 'Active', statusType: 'strong' },
+                    ].map((item, index) => (
+                        <View key={index} style={styles.lisRow}>
+                            <Icon type={item.iconType} name={item.iconName} size={ms(22)} color={item.iconColor} />
+                            <Text style={styles.lisLabel}>{item.label}</Text>
+                            <View style={item.statusType === 'strong' ? styles.lisBadgeStrong : styles.lisBadgeModerate}>
+                                <Text style={item.statusType === 'strong' ? styles.lisBadgeTextStrong : styles.lisBadgeTextModerate}>{item.status}</Text>
+                            </View>
+                        </View>
+                    ))}
+                </View>
+
+                {/* ── Recommendation ── */}
+                {/* <View style={styles.card}>
+                    <View style={styles.lisHeader}>
+                        <Text style={styles.cardTitle}>Recommendation</Text>
+                        <TouchableOpacity>
+                            <Text style={styles.lisViewAll}>View all</Text>
+                        </TouchableOpacity>
+                    </View>
+                    {[
+                        { iconType: Icons.Ionicons,              iconName: 'fitness',         iconColor: '#10B981', label: 'Exercise Plan',     status: 'Active',    statusType: 'strong'   },
+                        { iconType: Icons.Ionicons,              iconName: 'nutrition',       iconColor: '#F59E0B', label: 'Diet Adjustment',   status: 'Suggested', statusType: 'moderate' },
+                        { iconType: Icons.MaterialCommunityIcons, iconName: 'pill',           iconColor: '#6366F1', label: 'Supplement Intake', status: 'On track',  statusType: 'strong'   },
+                        { iconType: Icons.Ionicons,              iconName: 'bed',             iconColor: '#7B61FF', label: 'Sleep Routine',     status: 'Improve',   statusType: 'moderate' },
+                    ].map((item, index) => (
+                        <View key={index} style={styles.lisRow}>
+                            <Icon type={item.iconType} name={item.iconName} size={ms(22)} color={item.iconColor} />
+                            <Text style={styles.lisLabel}>{item.label}</Text>
+                            <View style={item.statusType === 'strong' ? styles.lisBadgeStrong : styles.lisBadgeModerate}>
+                                <Text style={item.statusType === 'strong' ? styles.lisBadgeTextStrong : styles.lisBadgeTextModerate}>{item.status}</Text>
+                            </View>
+                        </View>
+                    ))}
+                </View> */}
 
                 <View style={{ height: vs(80) }} />
             </ScrollView>
@@ -455,8 +611,8 @@ const styles = StyleSheet.create({
         padding: ms(16), alignItems: 'center',
     },
     cardTitle: {
-        fontSize: ms(14), fontWeight: '700', color: blackColor,
-        marginBottom: vs(12), alignSelf: 'flex-start',
+        fontSize: ms(16), fontWeight: '700', color: blackColor,
+         alignSelf: 'flex-start',
     },
 
     // ── Score Gauge ───────────────────────────────────────────────────────────────
@@ -492,7 +648,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row', alignSelf: 'stretch', alignItems: 'center',
         backgroundColor: blackColor, borderRadius: ms(30),
         paddingVertical: vs(10), paddingLeft: ms(20), paddingRight: ms(10),
-        marginBottom: vs(4),
+        marginBottom: vs(4), marginTop:ms(10)
     },
     progressionPillText: { color: whiteColor, fontSize: ms(13), fontWeight: '700' },
     pillArrows: {
@@ -537,7 +693,7 @@ const styles = StyleSheet.create({
     viewProgressText: { fontSize: ms(12), color: primaryColor, fontWeight: '700', marginRight: ms(4) },
 
     // ── Grid ─────────────────────────────────────────────────────────────────────
-    grid: { flexDirection: 'row', flexWrap: 'wrap', gap: ms(10), alignSelf: 'stretch' },
+    grid: { flexDirection: 'row', flexWrap: 'wrap', gap: ms(10), alignSelf: 'stretch' , marginTop:ms(10)},
     gridCell: {
         width: '47.5%', backgroundColor: '#F3F4F6',
         borderRadius: ms(10), padding: ms(12), minHeight: vs(80),
@@ -611,4 +767,94 @@ const styles = StyleSheet.create({
     },
     tooltipTitle: { fontSize: ms(12), fontWeight: '700', color: blackColor },
     tooltipDesc: { fontSize: ms(11), color: '#888', marginTop: vs(2) },
+
+    // ── Lifestyle Impact Summary ──
+    lisHeader: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        alignSelf: 'stretch',
+        marginBottom: vs(4),
+    },
+    lisViewAll: {
+        fontSize: ms(12),
+        fontWeight: '700',
+        color: primaryColor,
+    },
+    lisRow: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        alignSelf: 'stretch',
+        paddingVertical: ms(12),
+        gap: ms(12),
+    },
+    lisLabel: {
+        flex: 1,
+        fontSize: ms(14),
+        color: '#111111',
+        fontWeight: '400',
+    },
+    lisBadgeStrong: {
+        backgroundColor: '#E8F5E9',
+        borderRadius: ms(20),
+        paddingHorizontal: ms(14),
+        paddingVertical: ms(5),
+    },
+    lisBadgeTextStrong: {
+        fontSize: ms(13),
+        fontWeight: '600',
+        color: '#2E7D32',
+    },
+    lisBadgeModerate: {
+        backgroundColor: '#FFF4E5',
+        borderRadius: ms(20),
+        paddingHorizontal: ms(14),
+        paddingVertical: ms(5),
+    },
+    lisBadgeTextModerate: {
+        fontSize: ms(13),
+        fontWeight: '600',
+        color: '#E07B00',
+    },
+    lisBadgePoor: {
+        backgroundColor: '#FEE2E2',
+        borderRadius: ms(20),
+        paddingHorizontal: ms(14),
+        paddingVertical: ms(5),
+    },
+    lisBadgeTextPoor: {
+        fontSize: ms(13),
+        fontWeight: '600',
+        color: '#DC2626',
+    },
+
+    // ── Active Condition Disease Row ──
+    condRow: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        alignSelf: 'stretch',
+        backgroundColor: '#F3F4F6',
+        borderRadius: ms(12),
+        padding: ms(14),
+        marginTop: vs(8),
+    },
+    condName: {
+        fontSize: ms(14),
+        fontWeight: '700',
+        color: blackColor,
+    },
+    condTypeBadge: {
+        borderRadius: ms(6),
+        paddingHorizontal: ms(8),
+        paddingVertical: ms(2),
+        alignSelf: 'flex-start',
+    },
+    condTypeText: {
+        fontSize: ms(10),
+        fontWeight: '600',
+    },
+    condStatus: {
+        fontSize: ms(11),
+        color: '#6B7280',
+    },
 });
