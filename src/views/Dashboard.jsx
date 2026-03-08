@@ -1171,15 +1171,15 @@ const Dashboard = (props) => {
                                     {/* Condition Cards - Horizontal Scroll */}
                                     <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles2.macScrollRow}>
                                         {[
-                                            { label: 'Acute',           count: '4', icon: 'flash',            iconColor: '#EF4444', route: 'AcuteConditionsScreen' },
-                                            { label: 'Chronic',        count: '4', icon: 'time',             iconColor: '#3B82F6', route: 'ChronicConditionsScreen' },
-                                            { label: 'Chronic Infec.', count: '4', icon: 'bug',              iconColor: '#8B5CF6', route: 'ChronicProgressiveScreen' },
-                                            { label: 'Genetic',        count: '4', icon: 'git-branch',       iconColor: '#10B981' },
-                                            { label: 'Life Threats',   count: '4', icon: 'alert-circle',     iconColor: '#F59E0B', route: 'LifeThreatsScreen' },
-                                            { label: 'Preventive',     count: '4', icon: 'shield-checkmark', iconColor: '#0EA5E9' },
+                                            { label: 'Acute',           count: '4', icon: 'flash',            iconColor: '#EF4444', category: 'Acute' },
+                                            { label: 'Chronic',        count: '4', icon: 'time',             iconColor: '#3B82F6', category: 'Chronic' },
+                                            { label: 'Chronic Infec.', count: '4', icon: 'bug',              iconColor: '#8B5CF6', category: 'Chronic Infectious' },
+                                            { label: 'Genetic',        count: '4', icon: 'git-branch',       iconColor: '#10B981', category: 'Genetic' },
+                                            { label: 'Life Threats',   count: '4', icon: 'alert-circle',     iconColor: '#F59E0B', category: 'Life Threats' },
+                                            { label: 'Preventive',     count: '4', icon: 'shield-checkmark', iconColor: '#0EA5E9', category: 'Preventive' },
                                         ].map((item, index) => (
                                             <TouchableOpacity key={index} style={styles2.macGridCell} activeOpacity={0.7}
-                                                onPress={() => item.route && navigation.navigate(item.route)}>
+                                                onPress={() => navigation.navigate('CategoryDiseasesScreen', { category: item.category })}>
                                                 <View style={styles2.macGridCellTop}>
                                                     <Text style={styles2.macGridCellLabel} numberOfLines={1}>{item.label}</Text>
                                                     <Icon type={Icons.Ionicons} name="chevron-forward" size={ms(13)} color={blackColor} />

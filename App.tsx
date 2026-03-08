@@ -126,7 +126,7 @@ import FullBodyCheckUpScreen from './src/views/FullBodyCheckUpScreen';
 import VitaminScreen from './src/views/VitaminScreen';
 import SearchItems from './src/views/SearchItems';
 import MedicalRecordsVault from './src/views/MedicalRecordsVault';
-import BioMarkerDetailScreen from './src/views/BioMarkerDetailScreen';
+import BioMarkerDetailScreen from './src/views/Progress/BioMarkerDetailScreen';
 import UploadHealthReport from './src/views/UploadHealthReport';
 import MedicationTracking from './src/views/MedicationTracking';
 import AddMedicines from './src/views/AddMedicines';
@@ -270,22 +270,19 @@ import MusculoskeletalReadings from './src/views/Musculoskeletal/Musculoskeletal
 import ProfileScreen from './src/views/More/ProfileScreen';
 import AccessLogScreen from './src/views/More/AccessLogScreen';
 import AccessDetailScreen from './src/views/More/AccessDetailScreen';
-import AcuteConditionsScreen from './src/views/Progress/AcuteConditionsScreen';
-import ChronicConditionsScreen from './src/views/Progress/ChronicConditionsScreen';
-import ChronicDetailScreen from './src/views/Progress/ChronicDetailScreen';
 import BioMarkersTrendScreen from './src/views/Progress/BioMarkersTrendScreen';
 import ActiveConditionsScreen from './src/views/Progress/ActiveConditionsScreen';
+import CategoryDiseasesScreen from './src/views/Progress/CategoryDiseasesScreen';
+import CategoryDiseaseDetailScreen from './src/views/Progress/CategoryDiseaseDetailScreen';
+import BioMarkersScreen from './src/views/Progress/BioMarkersScreen';
 import OrgansHealthScreen from './src/views/Progress/OrgansHealthScreen';
+import OrganDetailScreen from './src/views/Progress/OrganDetailScreen';
 import SymptomsScreen from './src/views/Progress/SymptomsScreen';
+import SymptomDetailScreen from './src/views/Progress/SymptomDetailScreen';
 import MedicalEngagementScreen from './src/views/Progress/MedicalEngagementScreen';
 import MonitoringContinuityScreen from './src/views/Progress/MonitoringContinuityScreen';
 import LifestyleImpactSummary from './src/views/Progress/LifestyleImpactSummary';
 import LifestyleDetailScreen from './src/views/Progress/LifestyleDetailScreen';
-import ChronicProgressiveScreen from './src/views/Progress/ChronicProgressiveScreen';
-import ChronicProgressiveDetailScreen from './src/views/Progress/ChronicProgressiveDetailScreen';
-import ConditionDetailScreen from './src/views/Progress/ConditionDetailScreen';
-import LifeThreatsScreen from './src/views/Progress/LifeThreatsScreen';
-import LifeThreatsDetailScreen from './src/views/Progress/LifeThreatsDetailScreen';
 import ConcernsScreen from './src/views/Progress/ConcernsScreen';
 import ConcernsDetailScreen from './src/views/Progress/ConcernsDetailScreen';
 import NeedAttentionScreen from './src/views/Progress/NeedAttentionScreen';
@@ -625,7 +622,7 @@ function App() {
               <Stack.Screen name='VitaminScreen' component={VitaminScreen} options={{headerShown:false}} />
               <Stack.Screen name='SearchItems' component={SearchItems} options={{headerShown:false}}/>
               <Stack.Screen name='MedicalRecordsVault' component={MedicalRecordsVault} options={{headerShown:false}}/>
-              <Stack.Screen name='BioMarkerDetail' component={BioMarkerDetailScreen} options={{headerShown:false}}/>
+
               <Stack.Screen name='UploadHealthReport' component={UploadHealthReport} options={{headerShown:false}}/>
               <Stack.Screen name='MedicationTracking' component={MedicationTracking} options={{headerShown:false}}/>
               <Stack.Screen name='AddMedicines' component={AddMedicines} options={{headerShown:false}}/>
@@ -763,22 +760,20 @@ function App() {
               <Stack.Screen name='ProfileScreen' component={ProfileScreen} options={{headerShown:false}}/>
               <Stack.Screen name='AccessLogScreen' component={AccessLogScreen} options={{headerShown:false}}/>
               <Stack.Screen name='AccessDetailScreen' component={AccessDetailScreen} options={{headerShown:false}}/>
-              <Stack.Screen name='AcuteConditionsScreen' component={AcuteConditionsScreen} options={{headerShown:false}}/>
-              <Stack.Screen name='ChronicConditionsScreen' component={ChronicConditionsScreen} options={{headerShown:false}}/>
-              <Stack.Screen name='ChronicDetailScreen' component={ChronicDetailScreen} options={{headerShown:false}}/>
               <Stack.Screen name='BioMarkersTrendScreen' component={BioMarkersTrendScreen} options={{headerShown:false}}/>
               <Stack.Screen name='LifestyleImpactSummary' component={LifestyleImpactSummary} options={{headerShown:false}}/>
               <Stack.Screen name='ActiveConditionsScreen' component={ActiveConditionsScreen} options={{headerShown:false}}/>
+              <Stack.Screen name='CategoryDiseasesScreen' component={CategoryDiseasesScreen} options={{headerShown:false}}/>
+              <Stack.Screen name='CategoryDiseaseDetailScreen' component={CategoryDiseaseDetailScreen} options={{headerShown:false}}/>
+              <Stack.Screen name='BioMarkersScreen' component={BioMarkersScreen} options={{headerShown:false}}/>
+              <Stack.Screen name='BioMarkerDetailScreen' component={BioMarkerDetailScreen} options={{headerShown:false}}/>
               <Stack.Screen name='OrgansHealthScreen' component={OrgansHealthScreen} options={{headerShown:false}}/>
+              <Stack.Screen name='OrganDetailScreen' component={OrganDetailScreen} options={{headerShown:false}}/>
               <Stack.Screen name='SymptomsScreen' component={SymptomsScreen} options={{headerShown:false}}/>
+              <Stack.Screen name='SymptomDetailScreen' component={SymptomDetailScreen} options={{headerShown:false}}/>
               <Stack.Screen name='MedicalEngagementScreen' component={MedicalEngagementScreen} options={{headerShown:false}}/>
               <Stack.Screen name='MonitoringContinuityScreen' component={MonitoringContinuityScreen} options={{headerShown:false}}/>
               <Stack.Screen name='LifestyleDetailScreen' component={LifestyleDetailScreen} options={{headerShown:false}}/>
-              <Stack.Screen name='ChronicProgressiveScreen' component={ChronicProgressiveScreen} options={{headerShown:false}}/>
-              <Stack.Screen name='ChronicProgressiveDetailScreen' component={ChronicProgressiveDetailScreen} options={{headerShown:false}}/>
-              <Stack.Screen name='ConditionDetailScreen' component={ConditionDetailScreen} options={{headerShown:false}}/>
-              <Stack.Screen name='LifeThreatsScreen' component={LifeThreatsScreen} options={{headerShown:false}}/>
-              <Stack.Screen name='LifeThreatsDetailScreen' component={LifeThreatsDetailScreen} options={{headerShown:false}}/>
               <Stack.Screen name='ConcernsScreen' component={ConcernsScreen} options={{headerShown:false}}/>
               <Stack.Screen name='ConcernsDetailScreen' component={ConcernsDetailScreen} options={{headerShown:false}}/>
               <Stack.Screen name='NeedAttentionScreen' component={NeedAttentionScreen} options={{headerShown:false}}/>

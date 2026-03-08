@@ -275,18 +275,6 @@ const LifestyleItem = ({ label, count, image, onPress }) => (
     </TouchableOpacity>
 );
 
-// ── Organ Row ─────────────────────────────────────────────────────────────────
-const OrganRow = ({ label, count, showBorder }) => {
-    const navigation = useNavigation();
-    return (
-        <TouchableOpacity onPress={() => navigation.navigate('AnalysisCheck')} style={[styles.dataRow]}>
-            <Text style={styles.dataRowLabel}>{label}</Text>
-            <Text style={styles.dataRowCount}>{count}</Text>
-            <Icon type={Icons.Ionicons} name="chevron-forward-circle-outline" size={ms(18)} color="#C0C0C0" />
-        </TouchableOpacity>
-    );
-};
-
 // ── Main Screen ───────────────────────────────────────────────────────────────
 const CheckHealthStatus = () => {
     const navigation = useNavigation();
@@ -407,7 +395,7 @@ const CheckHealthStatus = () => {
                 <View style={styles.card}>
                     <View style={styles.lisHeader}>
                         <Text style={styles.cardTitle}>Organ Health</Text>
-                        <TouchableOpacity onPress={() => navigation.navigate('OrgansHealthScreen')}>
+                        <TouchableOpacity onPress={() => navigation.navigate('AnalysisCheck')}>
                             <Text style={styles.lisViewAll}>View all</Text>
                         </TouchableOpacity>
                     </View>
@@ -431,7 +419,7 @@ const CheckHealthStatus = () => {
                 <View style={styles.card}>
                     <View style={styles.lisHeader}>
                         <Text style={styles.cardTitle}>Bio Markers Stability</Text>
-                        <TouchableOpacity onPress={() => navigation.navigate('BioMarkersTrendScreen')}>
+                        <TouchableOpacity onPress={() => navigation.navigate('BioMarkersScreen')}>
                             <Text style={styles.lisViewAll}>View all</Text>
                         </TouchableOpacity>
                     </View>

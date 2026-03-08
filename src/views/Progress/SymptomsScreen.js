@@ -54,9 +54,9 @@ const SYMPTOMS = [
     },
 ];
 
+
 const SymptomsScreen = () => {
     const navigation = useNavigation();
-
     return (
         <SafeAreaView style={styles.container}>
             <StatusBar2 />
@@ -79,7 +79,7 @@ const SymptomsScreen = () => {
 
                 <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.scrollContent}>
                     {SYMPTOMS.map((item, index) => (
-                        <TouchableOpacity key={index} style={styles.card} activeOpacity={0.7}>
+                        <TouchableOpacity key={index} style={styles.card} activeOpacity={0.7} onPress={() => navigation.navigate('SymptomDetailScreen', { symptom: item.label })}>
                             <View style={styles.cardRow}>
                                 <View style={[styles.iconWrap, { backgroundColor: item.bgColor }]}>
                                     <Icon type={item.iconType} name={item.icon} size={ms(22)} color={item.iconColor} />
@@ -103,6 +103,7 @@ const SymptomsScreen = () => {
         </SafeAreaView>
     );
 };
+
 
 const styles = StyleSheet.create({
     container: { flex: 1, backgroundColor: whiteColor },
@@ -128,5 +129,6 @@ const styles = StyleSheet.create({
     badgeModerate: { backgroundColor: '#FFF4E5', borderRadius: ms(20), paddingHorizontal: ms(12), paddingVertical: vs(4), marginRight: ms(6) },
     badgeTextModerate: { fontFamily: bold, fontSize: ms(11), color: '#E07B00' },
 });
+
 
 export default SymptomsScreen;

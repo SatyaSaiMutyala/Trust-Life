@@ -11,46 +11,58 @@ import Icon, { Icons } from '../../components/Icons';
 import { blackColor, whiteColor, primaryColor, globalGradient2 } from '../../utils/globalColors';
 import { bold, regular } from '../../config/Constants';
 
-const CONDITIONS = [
+const BIO_MARKERS = [
     {
-        label: 'Acute', count: '4', icon: 'flash',
+        label: 'Blood Sugar', count: '3', icon: 'water',
+        iconType: Icons.Ionicons,
         iconColor: '#EF4444', bgColor: '#FEE2E2',
-        category: 'Acute',
-        description: 'Short-term conditions that need immediate attention',
+        description: 'Glucose, HbA1c, and fasting sugar levels',
     },
     {
-        label: 'Chronic', count: '4', icon: 'time',
-        iconColor: '#3B82F6', bgColor: '#DBEAFE',
-        category: 'Chronic',
-        description: 'Long-term conditions requiring ongoing management',
+        label: 'Blood Pressure', count: '2', icon: 'heart',
+        iconType: Icons.Ionicons,
+        iconColor: '#EC4899', bgColor: '#FCE7F3',
+        description: 'Systolic and diastolic blood pressure readings',
     },
     {
-        label: 'Chronic Infectious', count: '4', icon: 'bug',
+        label: 'Cholesterol', count: '4', icon: 'test-tube',
+        iconType: Icons.MaterialCommunityIcons,
         iconColor: '#8B5CF6', bgColor: '#EDE9FE',
-        category: 'Chronic Infectious',
-        description: 'Progressive infections needing continuous monitoring',
+        description: 'Total cholesterol, LDL, HDL, and triglycerides',
     },
     {
-        label: 'Genetic', count: '4', icon: 'git-branch',
-        iconColor: '#10B981', bgColor: '#DCFCE7',
-        category: 'Genetic',
-        description: 'Hereditary conditions linked to your genetic profile',
-    },
-    {
-        label: 'Life Threats', count: '4', icon: 'alert-circle',
-        iconColor: '#F59E0B', bgColor: '#FEF3C7',
-        category: 'Life Threats',
-        description: 'Critical conditions that require close monitoring',
-    },
-    {
-        label: 'Preventive', count: '4', icon: 'shield-checkmark',
+        label: 'Heart Rate', count: '2', icon: 'pulse',
+        iconType: Icons.Ionicons,
         iconColor: '#0EA5E9', bgColor: '#E0F2FE',
-        category: 'Preventive',
-        description: 'Preventive measures and health screenings',
+        description: 'Resting and active heart rate monitoring',
+    },
+    {
+        label: 'Kidney Function', count: '3', icon: 'flask',
+        iconType: Icons.Ionicons,
+        iconColor: '#F59E0B', bgColor: '#FEF3C7',
+        description: 'eGFR, creatinine, and BUN levels',
+    },
+    {
+        label: 'Liver Function', count: '3', icon: 'beaker',
+        iconType: Icons.MaterialCommunityIcons,
+        iconColor: '#78350F', bgColor: '#FEF3C7',
+        description: 'ALT, AST, and bilirubin levels',
+    },
+    {
+        label: 'Thyroid', count: '3', icon: 'shield-checkmark',
+        iconType: Icons.Ionicons,
+        iconColor: '#10B981', bgColor: '#DCFCE7',
+        description: 'TSH, T3, and T4 hormone levels',
+    },
+    {
+        label: 'Blood Count', count: '4', icon: 'water-outline',
+        iconType: Icons.Ionicons,
+        iconColor: '#DC2626', bgColor: '#FEE2E2',
+        description: 'RBC, WBC, hemoglobin, and platelet counts',
     },
 ];
 
-const ActiveConditionsScreen = () => {
+const BioMarkersScreen = () => {
     const navigation = useNavigation();
 
     return (
@@ -69,8 +81,8 @@ const ActiveConditionsScreen = () => {
                         <Icon type={Icons.Ionicons} name="arrow-back" size={ms(20)} color={whiteColor} />
                     </TouchableOpacity>
                     <View style={styles.headerTextWrap}>
-                        <Text style={styles.headerTitle}>Active Conditions</Text>
-                        <Text style={styles.headerSubtitle}>My Active Health Conditions</Text>
+                        <Text style={styles.headerTitle}>Bio Markers</Text>
+                        <Text style={styles.headerSubtitle}>Track all your bio marker readings</Text>
                     </View>
                 </View>
 
@@ -78,16 +90,16 @@ const ActiveConditionsScreen = () => {
                     showsVerticalScrollIndicator={false}
                     contentContainerStyle={styles.scrollContent}
                 >
-                    {CONDITIONS.map((item, index) => (
+                    {BIO_MARKERS.map((item, index) => (
                         <TouchableOpacity
                             key={index}
                             style={styles.card}
                             activeOpacity={0.7}
-                            onPress={() => navigation.navigate('CategoryDiseasesScreen', { category: item.category })}
+                            onPress={() => navigation.navigate('BioMarkerDetailScreen', { marker: item.label })}
                         >
                             <View style={styles.cardRow}>
                                 <View style={[styles.iconWrap, { backgroundColor: item.bgColor }]}>
-                                    <Icon type={Icons.Ionicons} name={item.icon} size={ms(22)} color={item.iconColor} />
+                                    <Icon type={item.iconType} name={item.icon} size={ms(22)} color={item.iconColor} />
                                 </View>
                                 <View style={styles.cardTextWrap}>
                                     <Text style={styles.cardLabel}>{item.label}</Text>
@@ -148,4 +160,4 @@ const styles = StyleSheet.create({
     countText: { fontFamily: bold, fontSize: ms(13), color: whiteColor },
 });
 
-export default ActiveConditionsScreen;
+export default BioMarkersScreen;

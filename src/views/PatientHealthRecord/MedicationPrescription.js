@@ -233,7 +233,7 @@ const MedicationPrescription = () => {
                     <TouchableOpacity
                         style={styles.bioRow}
                         activeOpacity={0.7}
-                        onPress={() => navigation.navigate('BioMarkerDetail', { name: item.name, code: item.code })}
+                        onPress={() => navigation.navigate('BioMarkerDetailScreen', { name: item.name, code: item.code })}
                     >
                         <Text style={[styles.bioCode, { flex: 0.8 }]}>{item.code}</Text>
                         <Text style={[styles.bioName, { flex: 1.2, textAlign: 'center' }]}>{item.name}</Text>
