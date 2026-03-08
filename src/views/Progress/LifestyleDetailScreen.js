@@ -9,9 +9,10 @@ import Svg, {
     Path, Circle, Line, Defs,
     LinearGradient as SvgLinearGradient, Stop,
 } from 'react-native-svg';
-import { StatusBar4 } from '../../components/StatusBar';
+import LinearGradient from 'react-native-linear-gradient';
+import { StatusBar2 } from '../../components/StatusBar';
 import Icon, { Icons } from '../../components/Icons';
-import { blackColor, whiteColor, primaryColor } from '../../utils/globalColors';
+import { blackColor, whiteColor, primaryColor, globalGradient2 } from '../../utils/globalColors';
 import { bold, regular } from '../../config/Constants';
 
 const { width } = Dimensions.get('window');
@@ -237,14 +238,21 @@ const LifestyleDetailScreen = () => {
 
     return (
         <SafeAreaView style={styles.container}>
-            <StatusBar4 />
+            <StatusBar2 />
+            <LinearGradient
+                colors={globalGradient2}
+                start={{ x: 0, y: 0 }}
+                end={{ x: 0, y: 3 }}
+                locations={[0, 0.08]}
+                style={styles.fullGradient}
+            >
             <ScrollView showsVerticalScrollIndicator={false}
                 contentContainerStyle={styles.scrollContent}>
 
                 {/* Header */}
                 <View style={styles.header}>
                     <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
-                        <Icon type={Icons.Ionicons} name="arrow-back" size={ms(20)} color={blackColor} />
+                        <Icon type={Icons.Ionicons} name="arrow-back" size={ms(20)} color={whiteColor} />
                     </TouchableOpacity>
                     <View style={styles.headerTextWrap}>
                         <Text style={styles.headerTitle}>{lifestyle.title || 'Activity'}</Text>
@@ -305,32 +313,33 @@ const LifestyleDetailScreen = () => {
 
                 <View style={{ height: vs(40) }} />
             </ScrollView>
+            </LinearGradient>
         </SafeAreaView>
     );
 };
 
 const styles = StyleSheet.create({
-    container: { flex: 1, backgroundColor: '#F1F5F9' },
+    container: { flex: 1, backgroundColor: whiteColor },
+    fullGradient: { flex: 1 },
     scrollContent: { paddingHorizontal: ms(20), paddingTop: ms(50), paddingBottom: vs(40) },
 
     // Header
     header: { flexDirection: 'row', alignItems: 'center', paddingBottom: vs(12) },
     backButton: {
-        width: ms(34), height: ms(34), borderRadius: ms(17),
-        backgroundColor: whiteColor, justifyContent: 'center', alignItems: 'center',
-        elevation: 2, shadowColor: blackColor,
-        shadowOffset: { width: 0, height: 1 }, shadowOpacity: 0.1, shadowRadius: 2,
+        width: ms(35), height: ms(35), borderRadius: ms(17.5),
+        backgroundColor: 'rgba(255, 255, 255, 0.3)',
+        justifyContent: 'center', alignItems: 'center',
     },
     headerTextWrap: { flex: 1, marginLeft: ms(12) },
-    headerTitle: { fontFamily: bold, fontSize: ms(16), color: blackColor },
-    headerSubtitle: { fontFamily: regular, fontSize: ms(11), color: '#6B7280', marginTop: vs(2) },
+    headerTitle: { fontFamily: bold, fontSize: ms(16), color: whiteColor },
+    headerSubtitle: { fontFamily: regular, fontSize: ms(11), color: 'rgba(255,255,255,0.8)', marginTop: vs(2) },
     impactBadge: {
         paddingHorizontal: ms(14), paddingVertical: vs(5), borderRadius: ms(14),
     },
     impactText: { fontFamily: bold, fontSize: ms(12) },
 
     description: {
-        fontFamily: regular, fontSize: ms(13), color: '#6B7280',
+        fontFamily: regular, fontSize: ms(13), color: blackColor,
         lineHeight: ms(20), marginBottom: vs(16),
     },
 

@@ -16,10 +16,10 @@ import { blackColor, globalGradient, globalGradient2, primaryColor, whiteColor }
 import { ms, vs } from 'react-native-size-matters';
 
 const BANNER_IMAGES = [
-    require('../../assets/img/pr-medical.png'),
+    require('../../assets/img/pr-medicalbills.png'),
     require('../../assets/img/pr-diagnostic.png'),
-    require('../../assets/img/pr-lifestyle.png'),
-    require('../../assets/img/pr-patientnote.png'),
+    require('../../assets/img/pr-medication.png'),
+    require('../../assets/img/pr-medical.png'),
     require('../../assets/img/pr-medicalbills.png'),
 ];
 
@@ -48,22 +48,22 @@ const CARD_DATA = [
         badgeLabel: 'Total Prescriptions',
         badgeCount: '120',
     },
-    {
-        id: 'lifestyle_record',
-        title: 'Lifestyle Record',
-        image: require('../../assets/img/pr-lifestyle.png'),
-        route: 'MedicalRecordsVault',
-        badgeLabel: 'Total Prescriptions',
-        badgeCount: '120',
-    },
-    {
-        id: 'patient_note',
-        title: 'Patient Note',
-        image: require('../../assets/img/pr-patientnote.png'),
-        route: 'PatientNote',
-        badgeLabel: 'Total Notes',
-        badgeCount: '120',
-    },
+    // {
+    //     id: 'lifestyle_record',
+    //     title: 'Lifestyle Record',
+    //     image: require('../../assets/img/pr-lifestyle.png'),
+    //     route: 'MedicalRecordsVault',
+    //     badgeLabel: 'Total Prescriptions',
+    //     badgeCount: '120',
+    // },
+    // {
+    //     id: 'patient_note',
+    //     title: 'Patient Note',
+    //     image: require('../../assets/img/pr-patientnote.png'),
+    //     route: 'PatientNote',
+    //     badgeLabel: 'Total Notes',
+    //     badgeCount: '120',
+    // },
     {
         id: 'medical_bills',
         title: 'Medical Bills',

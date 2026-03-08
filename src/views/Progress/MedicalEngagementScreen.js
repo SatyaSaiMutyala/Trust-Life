@@ -79,7 +79,11 @@ const MedicalEngagementScreen = () => {
 
                 <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.scrollContent}>
                     {ENGAGEMENTS.map((item, index) => (
-                        <TouchableOpacity key={index} style={styles.card} activeOpacity={0.7}>
+                        <TouchableOpacity key={index} style={styles.card} activeOpacity={0.7} onPress={() => {
+                            if (item.label === 'Doctor Visits') navigation.navigate('DoctorsVisitScreen');
+                            if (item.label === 'Prescriptions') navigation.navigate('PrescriptionScreen');
+                            if (item.label === 'Lab Tests') navigation.navigate('LabTestsScreen');
+                        }}>
                             <View style={styles.cardRow}>
                                 <View style={[styles.iconWrap, { backgroundColor: item.bgColor }]}>
                                     <Icon type={item.iconType} name={item.icon} size={ms(22)} color={item.iconColor} />

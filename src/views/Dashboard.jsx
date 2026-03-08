@@ -962,16 +962,18 @@ const Dashboard = (props) => {
                                                         <Text key={v} style={styles2.hsYLabel}>{v}</Text>
                                                     ))}
                                                 </View>
-                                                <Svg width={ms(128)} height={ms(70)} viewBox="0 0 128 60">
-                                                    <Polyline
-                                                        points="0,48 26,34 52,44 78,28 104,42 128,30"
-                                                        fill="none"
-                                                        stroke="rgba(255,255,255,0.92)"
-                                                        strokeWidth="2.5"
-                                                        strokeLinecap="round"
-                                                        strokeLinejoin="round"
-                                                    />
-                                                </Svg>
+                                                <View style={{ flex: 1 }}>
+                                                    <Svg width="100%" height={ms(70)} viewBox="0 0 128 60" preserveAspectRatio="none">
+                                                        <Polyline
+                                                            points="0,48 26,34 52,44 78,28 104,42 128,30"
+                                                            fill="none"
+                                                            stroke="rgba(255,255,255,0.92)"
+                                                            strokeWidth="2.5"
+                                                            strokeLinecap="round"
+                                                            strokeLinejoin="round"
+                                                        />
+                                                    </Svg>
+                                                </View>
                                             </View>
                                             <View style={styles2.hsXLine} />
                                             <View style={styles2.hsXLabels}>
@@ -1057,7 +1059,6 @@ const Dashboard = (props) => {
                                             </View>
                                         ))}
                                     </View>
-
                                 </View>
                             </View>
 
@@ -1448,53 +1449,30 @@ const Dashboard = (props) => {
                         {/* Top Service Cards */}
                         <View style={styles.healthServiceSection}>
                             <Text style={styles.healthServiceHeading}> Health Service</Text>
-                            <View style={styles.healthServiceGrid}>
-                                {[
-                                    { image: require('../assets/img/top-lab.png'), onPress: () => navigateToTests('Home Lab') },
-                                    { image: require('../assets/img/top-doctor.png'), onPress: () => navigation.navigate('DoctorConsultation') },
-                                    { image: require('../assets/img/top-medicienes.png'), onPress: () => navigation.navigate('CompanyMedicines') },
-                                ].map((item, index) => (
-                                    <TouchableOpacity key={index} onPress={item.onPress}>
-                                        <Image source={item.image} style={styles.topServiceImage} />
-                                    </TouchableOpacity>
-                                ))}
-                                <TouchableOpacity
-                                    style={styles.teleCard}
-                                    activeOpacity={0.7}
-                                    onPress={() => navigation.navigate('TeleMedicineScreen')}
-                                >
-                                    <View style={styles.teleIconWrap}>
-                                        <Icon type={Icons.Ionicons} name="videocam-outline" size={ms(20)} color={primaryColor} />
-                                    </View>
-                                    <Text style={styles.wellnessLabel} numberOfLines={2}>Tele Medicine</Text>
-                                </TouchableOpacity>
-                            </View>
                             <View style={styles.wellnessGrid}>
                                 {[
-                                    { icon: 'fitness-outline', iconType: Icons.Ionicons, label: 'Coach', route: 'CoachScreen' },
-                                    { icon: 'chatbubbles-outline', iconType: Icons.Ionicons, label: 'Counselling', route: 'CounsellingScreen' },
-                                    { icon: 'medkit-outline', iconType: Icons.Ionicons, label: 'Nurse', route: 'NurseScreen' },
-                                    { icon: 'body-outline', iconType: Icons.Ionicons, label: 'Physiotherapy', route: 'PhysiotherapyScreen' },
+                                    { image: require('../assets/img/c-lab.png'), label: 'Home Lab', onPress: () => navigateToTests('Home Lab') },
+                                    { image: require('../assets/img/c-doctor.png'), label: 'Doctor', onPress: () => navigation.navigate('DoctorConsultation') },
+                                    { image: require('../assets/img/c-medicines.png'), label: 'Medicines', onPress: () => navigation.navigate('CompanyMedicines') },
+                                    { image: require('../assets/img/c-tele.png'), label: 'Tele Medicine', onPress: () => navigation.navigate('TeleMedicineScreen') },
                                 ].map((item, index) => (
                                     <TouchableOpacity
                                         key={index}
                                         style={styles.wellnessCard}
                                         activeOpacity={0.7}
-                                        onPress={() => navigation.navigate(item.route)}
+                                        onPress={item.onPress}
                                     >
-                                        <View style={styles.wellnessIconWrap}>
-                                            <Icon type={item.iconType} name={item.icon} size={ms(22)} color={primaryColor} />
-                                        </View>
+                                        <Image source={item.image} style={styles.wellnessImage} />
                                         <Text style={styles.wellnessLabel} numberOfLines={2}>{item.label}</Text>
                                     </TouchableOpacity>
                                 ))}
                             </View>
                             <View style={styles.wellnessGrid}>
                                 {[
-                                    { icon: 'business-outline', iconType: Icons.Ionicons, label: 'Hospital', route: 'HospitalScreen' },
-                                    { icon: 'leaf-outline', iconType: Icons.Ionicons, label: 'Wellness Center', route: 'WellnessCenterScreen' },
-                                    { icon: 'shield-checkmark-outline', iconType: Icons.Ionicons, label: 'Health Insurance', route: 'HealthInsuranceScreen' },
-                                    { icon: 'car-outline', iconType: Icons.Ionicons, label: 'Ambulance', route: 'AmbulanceScreen' },
+                                    { image: require('../assets/img/c-coach.png'), label: 'Coach', route: 'CoachScreen' },
+                                    { image: require('../assets/img/c-counselling.png'), label: 'Counselling', route: 'CounsellingScreen' },
+                                    { image: require('../assets/img/c-nurse.png'), label: 'Nurse', route: 'NurseScreen' },
+                                    { image: require('../assets/img/c-physiotherapy.png'), label: 'Physiotherapy', route: 'PhysiotherapyScreen' },
                                 ].map((item, index) => (
                                     <TouchableOpacity
                                         key={index}
@@ -1502,9 +1480,25 @@ const Dashboard = (props) => {
                                         activeOpacity={0.7}
                                         onPress={() => navigation.navigate(item.route)}
                                     >
-                                        <View style={styles.wellnessIconWrap}>
-                                            <Icon type={item.iconType} name={item.icon} size={ms(22)} color={primaryColor} />
-                                        </View>
+                                        <Image source={item.image} style={styles.wellnessImage} />
+                                        <Text style={styles.wellnessLabel} numberOfLines={2}>{item.label}</Text>
+                                    </TouchableOpacity>
+                                ))}
+                            </View>
+                            <View style={styles.wellnessGrid}>
+                                {[
+                                    { image: require('../assets/img/c-hospital.png'), label: 'Hospital', route: 'HospitalScreen' },
+                                    { image: require('../assets/img/c-wellness.png'), label: 'Wellness Center', route: 'WellnessCenterScreen' },
+                                    { image: require('../assets/img/c-healthinsurance.png'), label: 'Health Insurance', route: 'HealthInsuranceScreen' },
+                                    { image: require('../assets/img/c-ambulance.png'), label: 'Ambulance', route: 'AmbulanceScreen' },
+                                ].map((item, index) => (
+                                    <TouchableOpacity
+                                        key={index}
+                                        style={styles.wellnessCard}
+                                        activeOpacity={0.7}
+                                        onPress={() => navigation.navigate(item.route)}
+                                    >
+                                        <Image source={item.image} style={styles.wellnessImage} />
                                         <Text style={styles.wellnessLabel} numberOfLines={2}>{item.label}</Text>
                                     </TouchableOpacity>
                                 ))}
@@ -1649,7 +1643,6 @@ const styles = StyleSheet.create({
         marginHorizontal: ms(15),
         // marginTop: vs(10),
         marginBottom: vs(10),
-
     },
     searchInput: {
         flex: 1,
@@ -1749,6 +1742,12 @@ const styles = StyleSheet.create({
         backgroundColor: '#E8F5F2',
         justifyContent: 'center',
         alignItems: 'center',
+        marginBottom: vs(6),
+    },
+    wellnessImage: {
+        width: ms(40),
+        height: ms(40),
+        resizeMode: 'contain',
         marginBottom: vs(6),
     },
     wellnessLabel: {
@@ -2558,6 +2557,7 @@ const styles2 = StyleSheet.create({
     hsChartRow: {
         flexDirection: 'row',
         alignItems: 'flex-start',
+        flex: 1,
     },
     hsYAxis: {
         height: ms(70),

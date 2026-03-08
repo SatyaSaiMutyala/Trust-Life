@@ -280,6 +280,9 @@ import OrganDetailScreen from './src/views/Progress/OrganDetailScreen';
 import SymptomsScreen from './src/views/Progress/SymptomsScreen';
 import SymptomDetailScreen from './src/views/Progress/SymptomDetailScreen';
 import MedicalEngagementScreen from './src/views/Progress/MedicalEngagementScreen';
+import DoctorsVisitScreen from './src/views/Progress/DoctorsVisitScreen';
+import PrescriptionScreen from './src/views/Progress/PrescriptionScreen';
+import LabTestsScreen from './src/views/Progress/LabTestsScreen';
 import MonitoringContinuityScreen from './src/views/Progress/MonitoringContinuityScreen';
 import LifestyleImpactSummary from './src/views/Progress/LifestyleImpactSummary';
 import LifestyleDetailScreen from './src/views/Progress/LifestyleDetailScreen';
@@ -772,6 +775,9 @@ function App() {
               <Stack.Screen name='SymptomsScreen' component={SymptomsScreen} options={{headerShown:false}}/>
               <Stack.Screen name='SymptomDetailScreen' component={SymptomDetailScreen} options={{headerShown:false}}/>
               <Stack.Screen name='MedicalEngagementScreen' component={MedicalEngagementScreen} options={{headerShown:false}}/>
+              <Stack.Screen name='DoctorsVisitScreen' component={DoctorsVisitScreen} options={{headerShown:false}}/>
+              <Stack.Screen name='PrescriptionScreen' component={PrescriptionScreen} options={{headerShown:false}}/>
+              <Stack.Screen name='LabTestsScreen' component={LabTestsScreen} options={{headerShown:false}}/>
               <Stack.Screen name='MonitoringContinuityScreen' component={MonitoringContinuityScreen} options={{headerShown:false}}/>
               <Stack.Screen name='LifestyleDetailScreen' component={LifestyleDetailScreen} options={{headerShown:false}}/>
               <Stack.Screen name='ConcernsScreen' component={ConcernsScreen} options={{headerShown:false}}/>

@@ -281,6 +281,13 @@ const CheckHealthStatus = () => {
     const route = useRoute();
     const fromDashboard = route.params?.fromDashboard;
     const [sheetVisible, setSheetVisible] = useState(false);
+    const [showCondInfo, setShowCondInfo] = useState(false);
+    const [showOrganInfo, setShowOrganInfo] = useState(false);
+    const [showBioInfo, setShowBioInfo] = useState(false);
+    const [showSymptomInfo, setShowSymptomInfo] = useState(false);
+    const [showLifestyleInfo, setShowLifestyleInfo] = useState(false);
+    const [showMedicalInfo, setShowMedicalInfo] = useState(false);
+    const [showMonitorInfo, setShowMonitorInfo] = useState(false);
 
     return (
         <SafeAreaView style={styles.container}>
@@ -313,13 +320,13 @@ const CheckHealthStatus = () => {
                     <Text style={styles.scoreDesc}>
                         Your engagement with health has been{'\n'}consistent over the last 3 months
                     </Text>
-                    <TouchableOpacity
+                    {/* <TouchableOpacity
                         style={styles.checkScoreBtn}
                         activeOpacity={0.85}
                         onPress={() => setSheetVisible(true)}
                     >
                         <Text style={styles.checkScoreBtnText}>Check Score Details</Text>
-                    </TouchableOpacity>
+                    </TouchableOpacity> */}
                 </View>
 
                 {/* ── Health Progression Story ── */}
@@ -359,17 +366,24 @@ const CheckHealthStatus = () => {
                 {/* ── My Active Health Conditions ── */}
                 <View style={styles.card}>
                     <View style={styles.lisHeader}>
-                        <Text style={styles.cardTitle}>Active Health Conditions</Text>
-                        <TouchableOpacity onPress={() => navigation.navigate('ActiveConditionsScreen')}>
-                            <Text style={styles.lisViewAll}>View all</Text>
+                        <Text style={[styles.cardTitle, { flex: 1 }]}>Active Health Conditions</Text>
+                        <Text style={styles.condScore}>18/25</Text>
+                        <TouchableOpacity onPress={() => setShowCondInfo(!showCondInfo)} style={{ padding: ms(4) }}>
+                            <Icon type={Icons.Ionicons} name="information-circle-outline" size={ms(20)} color="#9CA3AF" />
                         </TouchableOpacity>
                     </View>
+                    {showCondInfo && (
+                        <View style={styles.condTooltip}>
+                            <Text style={styles.condTooltipTitle}>Increased by 2 points + 18/25</Text>
+                            <Text style={styles.condTooltipDesc}>You've taken health action regularly with no long gaps</Text>
+                        </View>
+                    )}
                     {[
-                        { label: 'Diabetes', type: 'Chronic', typeColor: '#3B82F6', status: 'Moderate control', statusType: 'moderate' },
-                        { label: 'Hypertension', type: 'Chronic', typeColor: '#3B82F6', status: 'Poor control', statusType: 'poor' },
-                        { label: 'Fever', type: 'Acute', typeColor: '#EF4444', status: 'Need to monitor', statusType: 'moderate' },
+                        { label: 'Diabetes', type: 'Chronic', typeColor: '#3B82F6', status: 'Moderate control', statusType: 'moderate', condition: { id: '1', name: 'Diabetes', category: 'Chronic', status: 'Active', stability: 'Stable', stabilityColor: primaryColor, stabilityBgColor: '#DCFCE7', date: '12 Jan, 2026  •  12:30 PM', description: 'Tracks your blood sugar levels to help you manage and stay within a healthy range.' } },
+                        { label: 'Hypertension', type: 'Chronic', typeColor: '#3B82F6', status: 'Poor control', statusType: 'poor', condition: { id: '2', name: 'Hypertension', category: 'Chronic', status: 'Active', stability: 'Unstable', stabilityColor: '#1F2937', stabilityBgColor: '#F3F4F6', date: '12 Jan 2026  •  12:30 PM', description: 'Monitors your blood pressure to maintain healthy heart and circulation.' } },
+                        { label: 'Fever', type: 'Acute', typeColor: '#EF4444', status: 'Need to monitor', statusType: 'moderate', condition: { id: '1', name: 'Fever', category: 'Acute', status: 'Active', stability: 'Stable', stabilityColor: primaryColor, stabilityBgColor: '#DCFCE7', date: '12 Jan, 2026  •  12:30 PM', description: 'Body temperature above normal, usually due to infection or inflammation' } },
                     ].map((item, index) => (
-                        <TouchableOpacity key={index} style={styles.condRow} activeOpacity={0.7}>
+                        <TouchableOpacity key={index} style={styles.condRow} activeOpacity={0.7} onPress={() => navigation.navigate('CategoryDiseaseDetailScreen', { condition: item.condition, category: item.type })}>
                             <View style={{ flex: 1 }}>
                                 <Text style={styles.condName}>{item.label}</Text>
                                 <View style={[styles.condTypeBadge, { backgroundColor: item.typeColor + '15', marginTop: vs(3) }]}>
@@ -389,150 +403,264 @@ const CheckHealthStatus = () => {
                             </View>
                         </TouchableOpacity>
                     ))}
+                    <TouchableOpacity style={styles.condViewAll} onPress={() => navigation.navigate('ActiveConditionsScreen')}>
+                        <Text style={styles.condViewAllText}>View all</Text>
+                        <Icon type={Icons.Ionicons} name="chevron-forward" size={ms(14)} color={primaryColor} />
+                    </TouchableOpacity>
                 </View>
 
-                {/* ── Organs Health Status ── */}
+                {/* ── Organ Insights ── */}
                 <View style={styles.card}>
                     <View style={styles.lisHeader}>
-                        <Text style={styles.cardTitle}>Organ Health</Text>
-                        <TouchableOpacity onPress={() => navigation.navigate('AnalysisCheck')}>
-                            <Text style={styles.lisViewAll}>View all</Text>
+                        <Text style={[styles.cardTitle, { flex: 1 }]}>Organ Insights</Text>
+                        <Text style={styles.condScore}>18/25</Text>
+                        <TouchableOpacity onPress={() => setShowOrganInfo(!showOrganInfo)} style={{ padding: ms(4) }}>
+                            <Icon type={Icons.Ionicons} name="information-circle-outline" size={ms(20)} color="#9CA3AF" />
                         </TouchableOpacity>
                     </View>
-                    {[
-                        { iconType: Icons.Ionicons,              iconName: 'heart',    iconColor: '#EF4444', label: 'Heart',    status: 'Watch',  statusType: 'moderate' },
-                        { iconType: Icons.Ionicons,              iconName: 'water',    iconColor: '#DC2626', label: 'Kidney',   status: 'Stable', statusType: 'strong'   },
-                        { iconType: Icons.Ionicons,              iconName: 'flask',    iconColor: '#78350F', label: 'Liver',    status: 'Stable', statusType: 'strong'   },
-                        { iconType: Icons.MaterialCommunityIcons, iconName: 'stomach', iconColor: '#10B981', label: 'Pancreas', status: 'Watch',  statusType: 'moderate' },
-                    ].map((item, index) => (
-                        <View key={index} style={styles.lisRow}>
-                            <Icon type={item.iconType} name={item.iconName} size={ms(22)} color={item.iconColor} />
-                            <Text style={styles.lisLabel}>{item.label}</Text>
-                            <View style={item.statusType === 'strong' ? styles.lisBadgeStrong : styles.lisBadgeModerate}>
-                                <Text style={item.statusType === 'strong' ? styles.lisBadgeTextStrong : styles.lisBadgeTextModerate}>{item.status}</Text>
-                            </View>
+                    {showOrganInfo && (
+                        <View style={styles.condTooltip}>
+                            <Text style={styles.condTooltipTitle}>Organ Health Score 18/25</Text>
+                            <Text style={styles.condTooltipDesc}>Based on your latest biomarkers and health check data</Text>
                         </View>
-                    ))}
+                    )}
+                    <View style={styles.organGrid}>
+                        {[
+                            { img: require('../assets/img/vo-heart.png'),  label: 'Heart',    status: 'Stable', statusType: 'strong' },
+                            { img: require('../assets/img/vo-kidney.png'), label: 'Kidney',   status: 'Stable', statusType: 'strong' },
+                            { img: require('../assets/img/vo-liver.png'),  label: 'Liver',    status: 'Stable', statusType: 'strong' },
+                            { img: require('../assets/img/vo-metabolic.png'), label: 'Pancreas', status: 'Watch', statusType: 'moderate' },
+                        ].map((item, index) => (
+                            <View key={index} style={styles.organGridCard}>
+                                <Image source={item.img} style={styles.organGridImage} />
+                                <Text style={styles.organGridLabel}>{item.label}</Text>
+                                <View style={[styles.organStatusBadge, item.statusType === 'strong' ? styles.organStatusStrong : styles.organStatusModerate]}>
+                                    <Text style={[styles.organStatusText, item.statusType === 'strong' ? styles.organStatusTextStrong : styles.organStatusTextModerate]}>
+                                        Status: {item.status}
+                                    </Text>
+                                </View>
+                            </View>
+                        ))}
+                    </View>
+                    <TouchableOpacity style={styles.condViewAll} onPress={() => navigation.navigate('AnalysisCheck')}>
+                        <Text style={styles.condViewAllText}>View all</Text>
+                        <Icon type={Icons.Ionicons} name="chevron-forward" size={ms(14)} color={primaryColor} />
+                    </TouchableOpacity>
                 </View>
 
                 {/* ── Bio Markers Stability ── */}
                 <View style={styles.card}>
                     <View style={styles.lisHeader}>
-                        <Text style={styles.cardTitle}>Bio Markers Stability</Text>
-                        <TouchableOpacity onPress={() => navigation.navigate('BioMarkersScreen')}>
-                            <Text style={styles.lisViewAll}>View all</Text>
+                        <Text style={[styles.cardTitle, { flex: 1 }]}>Bio- Markers Stability</Text>
+                        <Text style={styles.condScore}>21/25</Text>
+                        <TouchableOpacity onPress={() => setShowBioInfo(!showBioInfo)} style={{ padding: ms(4) }}>
+                            <Icon type={Icons.Ionicons} name="information-circle-outline" size={ms(20)} color="#9CA3AF" />
                         </TouchableOpacity>
                     </View>
+                    {showBioInfo && (
+                        <View style={styles.condTooltip}>
+                            <Text style={styles.condTooltipTitle}>Bio Markers Score 21/25</Text>
+                            <Text style={styles.condTooltipDesc}>Your key biomarkers are mostly within healthy ranges</Text>
+                        </View>
+                    )}
                     {[
-                        { iconType: Icons.Ionicons,              iconName: 'water',          iconColor: '#EF4444', label: 'Blood Sugar',      status: 'Stable',   statusType: 'strong'   },
-                        { iconType: Icons.Ionicons,              iconName: 'heart',          iconColor: '#EC4899', label: 'Blood Pressure',   status: 'Normal',   statusType: 'strong'   },
-                        { iconType: Icons.MaterialCommunityIcons, iconName: 'test-tube',    iconColor: '#8B5CF6', label: 'Cholesterol',      status: 'Borderline', statusType: 'moderate' },
-                        { iconType: Icons.Ionicons,              iconName: 'pulse',          iconColor: '#0EA5E9', label: 'Heart Rate',       status: 'Normal',   statusType: 'strong'   },
+                        { label: 'Blood Sugar',    status: 'Moderate',    statusType: 'moderate' },
+                        { label: 'Blood Pressure',  status: 'Borderline', statusType: 'poor' },
+                        { label: 'Heart rate',      status: 'Stable',     statusType: 'strong' },
                     ].map((item, index) => (
-                        <View key={index} style={styles.lisRow}>
-                            <Icon type={item.iconType} name={item.iconName} size={ms(22)} color={item.iconColor} />
-                            <Text style={styles.lisLabel}>{item.label}</Text>
-                            <View style={item.statusType === 'strong' ? styles.lisBadgeStrong : styles.lisBadgeModerate}>
-                                <Text style={item.statusType === 'strong' ? styles.lisBadgeTextStrong : styles.lisBadgeTextModerate}>{item.status}</Text>
+                        <View key={index} style={styles.bioRow}>
+                            <Text style={styles.bioRowLabel}>{item.label}</Text>
+                            <View style={[
+                                styles.bioRowBadge,
+                                item.statusType === 'strong' ? styles.bioRowBadgeStrong :
+                                item.statusType === 'poor' ? styles.bioRowBadgePoor :
+                                styles.bioRowBadgeModerate,
+                            ]}>
+                                <Text style={[
+                                    styles.bioRowBadgeText,
+                                    item.statusType === 'strong' ? styles.bioRowBadgeTextStrong :
+                                    item.statusType === 'poor' ? styles.bioRowBadgeTextPoor :
+                                    styles.bioRowBadgeTextModerate,
+                                ]}>{item.status}</Text>
                             </View>
                         </View>
                     ))}
+                    <TouchableOpacity style={styles.condViewAll} onPress={() => navigation.navigate('BioMarkersScreen')}>
+                        <Text style={styles.condViewAllText}>View all</Text>
+                        <Icon type={Icons.Ionicons} name="chevron-forward" size={ms(14)} color={primaryColor} />
+                    </TouchableOpacity>
                 </View>
 
                 {/* ── Symptoms ── */}
                 <View style={styles.card}>
                     <View style={styles.lisHeader}>
-                        <Text style={styles.cardTitle}>Symptom Monitoring</Text>
-                        <TouchableOpacity onPress={() => navigation.navigate('SymptomsScreen')}>
-                            <Text style={styles.lisViewAll}>View all</Text>
+                        <Text style={[styles.cardTitle, { flex: 1 }]}>Symptom Monitoring</Text>
+                        <Text style={styles.condScore}>16/25</Text>
+                        <TouchableOpacity onPress={() => setShowSymptomInfo(!showSymptomInfo)} style={{ padding: ms(4) }}>
+                            <Icon type={Icons.Ionicons} name="information-circle-outline" size={ms(20)} color="#9CA3AF" />
                         </TouchableOpacity>
                     </View>
+                    {showSymptomInfo && (
+                        <View style={styles.condTooltip}>
+                            <Text style={styles.condTooltipTitle}>Symptom Score 16/25</Text>
+                            <Text style={styles.condTooltipDesc}>Tracking your symptom patterns helps identify health trends</Text>
+                        </View>
+                    )}
                     {[
-                        { iconType: Icons.Ionicons,              iconName: 'flash',           iconColor: '#F59E0B', label: 'Headache',    status: 'Frequent', statusType: 'moderate' },
-                        { iconType: Icons.Ionicons,              iconName: 'bed',             iconColor: '#7B61FF', label: 'Fatigue',     status: 'Mild',     statusType: 'strong'   },
-                        { iconType: Icons.MaterialCommunityIcons, iconName: 'stomach',        iconColor: '#EF4444', label: 'Nausea',      status: 'Rare',     statusType: 'strong'   },
-                        { iconType: Icons.Ionicons,              iconName: 'fitness',         iconColor: '#0EA5E9', label: 'Joint Pain',  status: 'Moderate', statusType: 'moderate' },
+                        { label: 'Headache',   status: 'Frequent', statusType: 'moderate' },
+                        { label: 'Fatigue',    status: 'Mild',     statusType: 'strong' },
+                        { label: 'Joint Pain', status: 'Moderate', statusType: 'moderate' },
                     ].map((item, index) => (
-                        <View key={index} style={styles.lisRow}>
-                            <Icon type={item.iconType} name={item.iconName} size={ms(22)} color={item.iconColor} />
-                            <Text style={styles.lisLabel}>{item.label}</Text>
-                            <View style={item.statusType === 'strong' ? styles.lisBadgeStrong : styles.lisBadgeModerate}>
-                                <Text style={item.statusType === 'strong' ? styles.lisBadgeTextStrong : styles.lisBadgeTextModerate}>{item.status}</Text>
+                        <View key={index} style={styles.bioRow}>
+                            <Text style={styles.bioRowLabel}>{item.label}</Text>
+                            <View style={[
+                                styles.bioRowBadge,
+                                item.statusType === 'strong' ? styles.bioRowBadgeStrong :
+                                item.statusType === 'poor' ? styles.bioRowBadgePoor :
+                                styles.bioRowBadgeModerate,
+                            ]}>
+                                <Text style={[
+                                    styles.bioRowBadgeText,
+                                    item.statusType === 'strong' ? styles.bioRowBadgeTextStrong :
+                                    item.statusType === 'poor' ? styles.bioRowBadgeTextPoor :
+                                    styles.bioRowBadgeTextModerate,
+                                ]}>{item.status}</Text>
                             </View>
                         </View>
                     ))}
+                    <TouchableOpacity style={styles.condViewAll} onPress={() => navigation.navigate('SymptomsScreen')}>
+                        <Text style={styles.condViewAllText}>View all</Text>
+                        <Icon type={Icons.Ionicons} name="chevron-forward" size={ms(14)} color={primaryColor} />
+                    </TouchableOpacity>
                 </View>
 
                 {/* ── Lifestyle Impact Summary ── */}
                 <View style={styles.card}>
                     <View style={styles.lisHeader}>
-                        <Text style={styles.cardTitle}>Lifestyle Influences</Text>
-                        <TouchableOpacity onPress={() => navigation.navigate('LifestyleImpactSummary')}>
-                            <Text style={styles.lisViewAll}>View all</Text>
+                        <Text style={[styles.cardTitle, { flex: 1 }]}>Lifestyle Influences</Text>
+                        <Text style={styles.condScore}>20/25</Text>
+                        <TouchableOpacity onPress={() => setShowLifestyleInfo(!showLifestyleInfo)} style={{ padding: ms(4) }}>
+                            <Icon type={Icons.Ionicons} name="information-circle-outline" size={ms(20)} color="#9CA3AF" />
                         </TouchableOpacity>
                     </View>
+                    {showLifestyleInfo && (
+                        <View style={styles.condTooltip}>
+                            <Text style={styles.condTooltipTitle}>Lifestyle Score 20/25</Text>
+                            <Text style={styles.condTooltipDesc}>Your daily habits positively support your overall health</Text>
+                        </View>
+                    )}
                     {[
-                        { iconType: Icons.Ionicons,              iconName: 'moon',            iconColor: '#7B61FF', label: 'Sleep',    status: 'Good',     statusType: 'strong'   },
-                        { iconType: Icons.MaterialCommunityIcons, iconName: 'lightning-bolt', iconColor: '#FF6B35', label: 'Fitness',   status: 'Active',   statusType: 'strong'   },
-                        { iconType: Icons.Ionicons,              iconName: 'restaurant',      iconColor: '#2E7D32', label: 'Nutrition', status: 'Balanced', statusType: 'strong'   },
-                        { iconType: Icons.MaterialCommunityIcons, iconName: 'head-cog',       iconColor: '#1565C0', label: 'Stress',   status: 'Moderate', statusType: 'moderate' },
+                        { label: 'Sleep',     status: 'Good',     statusType: 'strong' },
+                        { label: 'Fitness',   status: 'Active',   statusType: 'strong' },
+                        { label: 'Stress',    status: 'Moderate', statusType: 'moderate' },
                     ].map((item, index) => (
-                        <View key={index} style={styles.lisRow}>
-                            <Icon type={item.iconType} name={item.iconName} size={ms(22)} color={item.iconColor} />
-                            <Text style={styles.lisLabel}>{item.label}</Text>
-                            <View style={item.statusType === 'strong' ? styles.lisBadgeStrong : styles.lisBadgeModerate}>
-                                <Text style={item.statusType === 'strong' ? styles.lisBadgeTextStrong : styles.lisBadgeTextModerate}>{item.status}</Text>
+                        <View key={index} style={styles.bioRow}>
+                            <Text style={styles.bioRowLabel}>{item.label}</Text>
+                            <View style={[
+                                styles.bioRowBadge,
+                                item.statusType === 'strong' ? styles.bioRowBadgeStrong :
+                                item.statusType === 'poor' ? styles.bioRowBadgePoor :
+                                styles.bioRowBadgeModerate,
+                            ]}>
+                                <Text style={[
+                                    styles.bioRowBadgeText,
+                                    item.statusType === 'strong' ? styles.bioRowBadgeTextStrong :
+                                    item.statusType === 'poor' ? styles.bioRowBadgeTextPoor :
+                                    styles.bioRowBadgeTextModerate,
+                                ]}>{item.status}</Text>
                             </View>
                         </View>
                     ))}
+                    <TouchableOpacity style={styles.condViewAll} onPress={() => navigation.navigate('LifestyleImpactSummary')}>
+                        <Text style={styles.condViewAllText}>View all</Text>
+                        <Icon type={Icons.Ionicons} name="chevron-forward" size={ms(14)} color={primaryColor} />
+                    </TouchableOpacity>
                 </View>
 
                 {/* ── Medical Engagement ── */}
                 <View style={styles.card}>
                     <View style={styles.lisHeader}>
-                        <Text style={styles.cardTitle}>Medical Engagement</Text>
-                        <TouchableOpacity onPress={() => navigation.navigate('MedicalEngagementScreen')}>
-                            <Text style={styles.lisViewAll}>View all</Text>
+                        <Text style={[styles.cardTitle, { flex: 1 }]}>Medical Engagement</Text>
+                        <Text style={styles.condScore}>22/25</Text>
+                        <TouchableOpacity onPress={() => setShowMedicalInfo(!showMedicalInfo)} style={{ padding: ms(4) }}>
+                            <Icon type={Icons.Ionicons} name="information-circle-outline" size={ms(20)} color="#9CA3AF" />
                         </TouchableOpacity>
                     </View>
+                    {showMedicalInfo && (
+                        <View style={styles.condTooltip}>
+                            <Text style={styles.condTooltipTitle}>Medical Engagement Score 22/25</Text>
+                            <Text style={styles.condTooltipDesc}>You're actively engaged with your healthcare providers</Text>
+                        </View>
+                    )}
                     {[
-                        { iconType: Icons.Ionicons,              iconName: 'calendar',        iconColor: '#2E7D32', label: 'Doctor Visits',     status: 'Regular',  statusType: 'strong'   },
-                        { iconType: Icons.Ionicons,              iconName: 'medkit',          iconColor: '#1565C0', label: 'Prescriptions',     status: 'Active',   statusType: 'strong'   },
-                        { iconType: Icons.MaterialCommunityIcons, iconName: 'clipboard-check', iconColor: '#7B61FF', label: 'Lab Tests',       status: 'Up to date', statusType: 'strong' },
-                        { iconType: Icons.Ionicons,              iconName: 'chatbubbles',     iconColor: '#F59E0B', label: 'Follow-ups',       status: 'Pending',  statusType: 'moderate' },
+                        { label: 'Doctor Visits', status: 'Regular',    statusType: 'strong' },
+                        { label: 'Prescriptions', status: 'Active',     statusType: 'strong' },
+                        { label: 'Follow-ups',    status: 'Pending',    statusType: 'moderate' },
                     ].map((item, index) => (
-                        <View key={index} style={styles.lisRow}>
-                            <Icon type={item.iconType} name={item.iconName} size={ms(22)} color={item.iconColor} />
-                            <Text style={styles.lisLabel}>{item.label}</Text>
-                            <View style={item.statusType === 'strong' ? styles.lisBadgeStrong : styles.lisBadgeModerate}>
-                                <Text style={item.statusType === 'strong' ? styles.lisBadgeTextStrong : styles.lisBadgeTextModerate}>{item.status}</Text>
+                        <View key={index} style={styles.bioRow}>
+                            <Text style={styles.bioRowLabel}>{item.label}</Text>
+                            <View style={[
+                                styles.bioRowBadge,
+                                item.statusType === 'strong' ? styles.bioRowBadgeStrong :
+                                item.statusType === 'poor' ? styles.bioRowBadgePoor :
+                                styles.bioRowBadgeModerate,
+                            ]}>
+                                <Text style={[
+                                    styles.bioRowBadgeText,
+                                    item.statusType === 'strong' ? styles.bioRowBadgeTextStrong :
+                                    item.statusType === 'poor' ? styles.bioRowBadgeTextPoor :
+                                    styles.bioRowBadgeTextModerate,
+                                ]}>{item.status}</Text>
                             </View>
                         </View>
                     ))}
+                    <TouchableOpacity style={styles.condViewAll} onPress={() => navigation.navigate('MedicalEngagementScreen')}>
+                        <Text style={styles.condViewAllText}>View all</Text>
+                        <Icon type={Icons.Ionicons} name="chevron-forward" size={ms(14)} color={primaryColor} />
+                    </TouchableOpacity>
                 </View>
 
                 {/* ── Monitoring Continuity ── */}
                 <View style={styles.card}>
                     <View style={styles.lisHeader}>
-                        <Text style={styles.cardTitle}>Monitoring Continuity</Text>
-                        <TouchableOpacity onPress={() => navigation.navigate('MonitoringContinuityScreen')}>
-                            <Text style={styles.lisViewAll}>View all</Text>
+                        <Text style={[styles.cardTitle, { flex: 1 }]}>Monitoring Continuity</Text>
+                        <Text style={styles.condScore}>19/25</Text>
+                        <TouchableOpacity onPress={() => setShowMonitorInfo(!showMonitorInfo)} style={{ padding: ms(4) }}>
+                            <Icon type={Icons.Ionicons} name="information-circle-outline" size={ms(20)} color="#9CA3AF" />
                         </TouchableOpacity>
                     </View>
+                    {showMonitorInfo && (
+                        <View style={styles.condTooltip}>
+                            <Text style={styles.condTooltipTitle}>Monitoring Score 19/25</Text>
+                            <Text style={styles.condTooltipDesc}>Your health tracking consistency is helping build better insights</Text>
+                        </View>
+                    )}
                     {[
-                        { iconType: Icons.Ionicons,              iconName: 'analytics',       iconColor: '#0EA5E9', label: 'Vital Tracking',    status: 'Consistent', statusType: 'strong' },
-                        { iconType: Icons.MaterialCommunityIcons, iconName: 'heart-pulse',    iconColor: '#EF4444', label: 'Health Check-ins',  status: 'On track',   statusType: 'strong' },
-                        { iconType: Icons.Ionicons,              iconName: 'time',            iconColor: '#F97316', label: 'Screening Schedule', status: 'Due soon',  statusType: 'moderate' },
-                        { iconType: Icons.MaterialCommunityIcons, iconName: 'chart-timeline-variant', iconColor: '#8B5CF6', label: 'Trend Analysis', status: 'Active', statusType: 'strong' },
+                        { label: 'Vital Tracking',     status: 'Consistent', statusType: 'strong' },
+                        { label: 'Health Check-ins',   status: 'On track',   statusType: 'strong' },
+                        { label: 'Screening Schedule', status: 'Due soon',   statusType: 'moderate' },
                     ].map((item, index) => (
-                        <View key={index} style={styles.lisRow}>
-                            <Icon type={item.iconType} name={item.iconName} size={ms(22)} color={item.iconColor} />
-                            <Text style={styles.lisLabel}>{item.label}</Text>
-                            <View style={item.statusType === 'strong' ? styles.lisBadgeStrong : styles.lisBadgeModerate}>
-                                <Text style={item.statusType === 'strong' ? styles.lisBadgeTextStrong : styles.lisBadgeTextModerate}>{item.status}</Text>
+                        <View key={index} style={styles.bioRow}>
+                            <Text style={styles.bioRowLabel}>{item.label}</Text>
+                            <View style={[
+                                styles.bioRowBadge,
+                                item.statusType === 'strong' ? styles.bioRowBadgeStrong :
+                                item.statusType === 'poor' ? styles.bioRowBadgePoor :
+                                styles.bioRowBadgeModerate,
+                            ]}>
+                                <Text style={[
+                                    styles.bioRowBadgeText,
+                                    item.statusType === 'strong' ? styles.bioRowBadgeTextStrong :
+                                    item.statusType === 'poor' ? styles.bioRowBadgeTextPoor :
+                                    styles.bioRowBadgeTextModerate,
+                                ]}>{item.status}</Text>
                             </View>
                         </View>
                     ))}
+                    <TouchableOpacity style={styles.condViewAll} onPress={() => navigation.navigate('MonitoringContinuityScreen')}>
+                        <Text style={styles.condViewAllText}>View all</Text>
+                        <Icon type={Icons.Ionicons} name="chevron-forward" size={ms(14)} color={primaryColor} />
+                    </TouchableOpacity>
                 </View>
 
                 {/* ── Recommendation ── */}
@@ -817,6 +945,20 @@ const styles = StyleSheet.create({
     },
 
     // ── Active Condition Disease Row ──
+    condHeader: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginBottom: vs(4),
+    },
+    condScore: {
+        fontSize: ms(16),
+        fontWeight: '800',
+        color: blackColor,
+        marginRight: ms(4),
+    },
+    condInfoBtn: {
+        padding: ms(4),
+    },
     condRow: {
         flexDirection: 'row',
         alignItems: 'center',
@@ -837,12 +979,135 @@ const styles = StyleSheet.create({
         paddingVertical: ms(2),
         alignSelf: 'flex-start',
     },
+    condScore: {
+        fontSize: ms(16),
+        fontWeight: '800',
+        color: blackColor,
+        marginRight: ms(4),
+    },
+    condTooltip: {
+        backgroundColor: '#F9FAFB',
+        borderRadius: ms(10),
+        padding: ms(12),
+        marginBottom: vs(4),
+        borderWidth: 1,
+        borderColor: '#E5E7EB',
+    },
+    condTooltipTitle: {
+        fontSize: ms(12),
+        fontWeight: '600',
+        color: blackColor,
+        marginBottom: vs(2),
+    },
+    condTooltipDesc: {
+        fontSize: ms(11),
+        fontWeight: '400',
+        color: '#6B7280',
+    },
     condTypeText: {
         fontSize: ms(10),
         fontWeight: '600',
     },
-    condStatus: {
+    condViewAll: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        alignSelf: 'flex-start',
+        marginTop: vs(12),
+        gap: ms(4),
+    },
+    condViewAllText: {
+        fontSize: ms(14),
+        fontWeight: '700',
+        color: primaryColor,
+    },
+    bioRow: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        backgroundColor: '#F1F5F9',
+        borderRadius: ms(25),
+        paddingHorizontal: ms(16),
+        paddingVertical: vs(12),
+        marginTop: vs(10),
+    },
+    bioRowLabel: {
+        flex: 1,
+        fontFamily: regular,
+        fontSize: ms(14),
+        color: blackColor,
+    },
+    bioRowBadge: {
+        borderRadius: ms(20),
+        paddingHorizontal: ms(14),
+        paddingVertical: vs(6),
+    },
+    bioRowBadgeStrong: {
+        backgroundColor: '#DCFCE7',
+    },
+    bioRowBadgeModerate: {
+        backgroundColor: '#FEF3C7',
+    },
+    bioRowBadgePoor: {
+        backgroundColor: '#FCE4EC',
+    },
+    bioRowBadgeText: {
+        fontFamily: bold,
+        fontSize: ms(12),
+    },
+    bioRowBadgeTextStrong: {
+        color: '#16A34A',
+    },
+    bioRowBadgeTextModerate: {
+        color: '#D97706',
+    },
+    bioRowBadgeTextPoor: {
+        color: '#E11D48',
+    },
+    organGrid: {
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+        justifyContent: 'space-between',
+        marginTop: vs(12),
+    },
+    organGridCard: {
+        width: '48%',
+        backgroundColor: grayColor,
+        borderRadius: ms(14),
+        alignItems: 'center',
+        paddingVertical: vs(14),
+        paddingHorizontal: ms(10),
+        marginBottom: vs(10),
+    },
+    organGridImage: {
+        width: ms(60),
+        height: ms(60),
+        resizeMode: 'contain',
+        marginBottom: vs(8),
+    },
+    organGridLabel: {
+        fontFamily: bold,
+        fontSize: ms(14),
+        color: blackColor,
+        marginBottom: vs(6),
+    },
+    organStatusBadge: {
+        borderRadius: ms(12),
+        paddingHorizontal: ms(10),
+        paddingVertical: vs(4),
+    },
+    organStatusStrong: {
+        backgroundColor: '#DCFCE7',
+    },
+    organStatusModerate: {
+        backgroundColor: '#FEF3C7',
+    },
+    organStatusText: {
+        fontFamily: regular,
         fontSize: ms(11),
-        color: '#6B7280',
+    },
+    organStatusTextStrong: {
+        color: '#16A34A',
+    },
+    organStatusTextModerate: {
+        color: '#D97706',
     },
 });
