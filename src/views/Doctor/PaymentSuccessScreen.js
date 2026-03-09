@@ -9,7 +9,7 @@ const PaymentSuccessScreen = () => {
     const navigation = useNavigation();
     const route = useRoute();
 
-    const { doctor, selectedSlot, selectedDate, patient } = route.params || {};
+    const { doctor, selectedSlot, selectedDate, patient, flow } = route.params || {};
 
     useEffect(() => {
         const timer = setTimeout(() => {
@@ -18,6 +18,7 @@ const PaymentSuccessScreen = () => {
                 selectedSlot,
                 selectedDate,
                 patient,
+                flow,
             });
         }, 2000);
         return () => clearTimeout(timer);

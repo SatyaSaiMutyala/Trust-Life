@@ -1150,7 +1150,6 @@ const Dashboard = (props) => {
                                             Consider reducing sodium intake, increasing physical activity, and consulting your doctor about medication options to bring your blood pressure to a healthier range.
                                         </Text>
                                     </View>
-
                                 </View>
                             </View>
 
@@ -1196,7 +1195,6 @@ const Dashboard = (props) => {
                                             </TouchableOpacity>
                                         ))}
                                     </ScrollView>
-
                                 </View>
                             </View>
 
@@ -1204,7 +1202,7 @@ const Dashboard = (props) => {
                             <View style={styles2.vosSection}>
                                 <View style={styles2.sectionHeader}>
                                     <Text style={styles2.vosSectionTitle}>Vital Organ Snapshot</Text>
-                                    <TouchableOpacity onPress={() => navigation.navigate('OrgansHealthScreen')}>
+                                    <TouchableOpacity onPress={() => navigation.navigate('AnalysisCheck')}>
                                         <Text style={styles2.viewAllText}>View all</Text>
                                     </TouchableOpacity>
                                 </View>
@@ -1212,17 +1210,17 @@ const Dashboard = (props) => {
                                     <View>
                                         <View style={styles2.vosRow}>
                                             {[
-                                                { icon: 'eye-outline', organ: 'Eye', status: 'Normal', color: '#6366F1' },
-                                                { icon: 'brain', organ: 'Brain', status: 'Active', color: '#EC4899', iconType: Icons.MaterialCommunityIcons },
-                                                { icon: 'body-outline', organ: 'Skin', status: 'Healthy', color: '#F59E0B' },
-                                                { icon: 'human-male-female', organ: 'Reproductive', status: 'Normal', color: '#8B5CF6', iconType: Icons.MaterialCommunityIcons },
-                                                { icon: 'fitness-outline', organ: 'Pancreas', status: 'Stable', color: '#10B981' },
-                                                { icon: 'nutrition-outline', organ: 'Gut', status: 'Balanced', color: '#F97316' },
-                                                { icon: 'water-outline', organ: 'Vascular System', status: 'Normal', color: '#DC2626' },
+                                                { image: require('../assets/img/human-eye.png'), organ: 'Eye', status: 'Normal' },
+                                                { image: require('../assets/img/human-brain.png'), organ: 'Brain', status: 'Active' },
+                                                { image: require('../assets/img/human-skin.png'), organ: 'Skin', status: 'Healthy' },
+                                                { image: require('../assets/img/human-reproductive.png'), organ: 'Reproductive', status: 'Normal' },
+                                                { image: require('../assets/img/human-pancreas.png'), organ: 'Pancreas', status: 'Stable' },
+                                                { image: require('../assets/img/human-gut.png'), organ: 'Gut', status: 'Balanced' },
+                                                { image: require('../assets/img/human-vascular.png'), organ: 'Vascular System', status: 'Normal' },
                                             ].map((item, index) => (
                                                 <TouchableOpacity key={index} style={styles2.vosCard} activeOpacity={0.7} onPress={() => navigation.navigate('AnalysisCheck')}>
-                                                    <View style={[styles2.vosIconWrap, { backgroundColor: item.color + '15' }]}>
-                                                        <Icon type={item.iconType || Icons.Ionicons} name={item.icon} size={ms(26)} color={item.color} />
+                                                    <View style={styles2.vosIconWrap}>
+                                                        <Image source={item.image} style={styles2.vosImage} />
                                                     </View>
                                                     <Text style={styles2.vosOrganName}>{item.organ}</Text>
                                                     <Text style={styles2.vosStatus}>{item.status}</Text>
@@ -1231,24 +1229,18 @@ const Dashboard = (props) => {
                                         </View>
                                         <View style={styles2.vosRow}>
                                             {[
-                                                { image: require('../assets/img/vo-heart.png'), organ: 'Heart', status: 'Optimal', color: '#EF4444' },
-                                                { image: require('../assets/img/vo-liver.png'), organ: 'Liver', status: 'Stable', color: '#78350F' },
-                                                { image: require('../assets/img/vo-kidney.png'), organ: 'Kidney', status: 'Normal', color: '#DC2626' },
-                                                { image: require('../assets/img/vo-lungs.png'), organ: 'Lungs', status: 'Efficient', color: '#0EA5E9' },
-                                                { icon: 'barbell-outline', organ: 'Muscle', status: 'Strong', color: '#D946EF' },
-                                                { icon: 'brain', organ: 'Brain', status: 'Sharp', color: '#EC4899', iconType: Icons.MaterialCommunityIcons },
-                                                { icon: 'bone', organ: 'Musculo Skeletal', status: 'Stable', color: '#A16207', iconType: Icons.MaterialCommunityIcons },
+                                                { image: require('../assets/img/human-heart.png'), organ: 'Heart', status: 'Optimal' },
+                                                { image: require('../assets/img/human-liver.png'), organ: 'Liver', status: 'Stable' },
+                                                { image: require('../assets/img/human-kidneys.png'), organ: 'Kidney', status: 'Normal' },
+                                                { image: require('../assets/img/human-lungs.png'), organ: 'Lungs', status: 'Efficient' },
+                                                { image: require('../assets/img/human-muscle.png'), organ: 'Muscle', status: 'Strong' },
+                                                { image: require('../assets/img/human-thyroid.png'), organ: 'Thyroid', status: 'Normal' },
+                                                { image: require('../assets/img/human-thymus.png'), organ: 'Thymus', status: 'Active' },
                                             ].map((item, index) => (
                                                 <TouchableOpacity key={index} style={styles2.vosCard} activeOpacity={0.7} onPress={() => navigation.navigate('AnalysisCheck')}>
-                                                    {item.image ? (
-                                                        <View style={styles2.vosIconWrap}>
-                                                            <Image source={item.image} style={styles2.vosImage} />
-                                                        </View>
-                                                    ) : (
-                                                        <View style={[styles2.vosIconWrap, { backgroundColor: item.color + '15' }]}>
-                                                            <Icon type={item.iconType || Icons.Ionicons} name={item.icon} size={ms(26)} color={item.color} />
-                                                        </View>
-                                                    )}
+                                                    <View style={styles2.vosIconWrap}>
+                                                        <Image source={item.image} style={styles2.vosImage} />
+                                                    </View>
                                                     <Text style={styles2.vosOrganName}>{item.organ}</Text>
                                                     <Text style={styles2.vosStatus}>{item.status}</Text>
                                                 </TouchableOpacity>
@@ -1454,7 +1446,7 @@ const Dashboard = (props) => {
                                     { image: require('../assets/img/c-lab.png'), label: 'Home Lab', onPress: () => navigateToTests('Home Lab') },
                                     { image: require('../assets/img/c-doctor.png'), label: 'Doctor', onPress: () => navigation.navigate('DoctorConsultation') },
                                     { image: require('../assets/img/c-medicines.png'), label: 'Medicines', onPress: () => navigation.navigate('CompanyMedicines') },
-                                    { image: require('../assets/img/c-tele.png'), label: 'Tele Medicine', onPress: () => navigation.navigate('TeleMedicineScreen') },
+                                    { image: require('../assets/img/c-tele.png'), label: 'Tele Medicine', onPress: () => navigation.navigate('DoctorConsultation', { flow: 'tele' }) },
                                 ].map((item, index) => (
                                     <TouchableOpacity
                                         key={index}
@@ -3124,8 +3116,8 @@ const styles2 = StyleSheet.create({
         alignItems: 'center',
     },
     vosIconWrap: {
-        width: ms(48),
-        height: ms(48),
+        // width: ms(48),
+        // height: ms(48),
         borderRadius: ms(14),
         backgroundColor: '#F1F5F9',
         justifyContent: 'center',
@@ -3133,14 +3125,14 @@ const styles2 = StyleSheet.create({
         marginBottom: ms(8),
     },
     vosImage: {
-        width: ms(36),
-        height: ms(36),
+        width: ms(46),
+        height: ms(46),
         resizeMode: 'contain',
     },
     vosOrganName: {
-        fontSize: ms(11),
-        fontWeight: '400',
-        color: '#888888',
+        fontSize: ms(12),
+        fontWeight: '600',
+        color: blackColor,
         marginBottom: ms(2),
         textAlign: 'center',
     },

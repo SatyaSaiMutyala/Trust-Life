@@ -240,20 +240,20 @@ import { useSnack } from '../context/GlobalSnackBarContext';
 const { width, height } = Dimensions.get('window');
 
 const ORGANS = [
-  { label: 'Heart', icon: 'heart', iconType: Icons.Ionicons, iconColor: '#EF4444', bgColor: '#FEE2E2', status: 'Watch', statusType: 'moderate', description: 'Pumps blood throughout the body' },
-  { label: 'Kidney', icon: 'water', iconType: Icons.Ionicons, iconColor: '#DC2626', bgColor: '#FEE2E2', status: 'Stable', statusType: 'strong', description: 'Filters waste and regulates fluid balance' },
-  { label: 'Liver', icon: 'flask', iconType: Icons.Ionicons, iconColor: '#78350F', bgColor: '#FEF3C7', status: 'Stable', statusType: 'strong', description: 'Processes nutrients and detoxifies blood' },
-  { label: 'Pancreas', icon: 'stomach', iconType: Icons.MaterialCommunityIcons, iconColor: '#10B981', bgColor: '#DCFCE7', status: 'Watch', statusType: 'moderate', description: 'Produces insulin and digestive enzymes' },
-  { label: 'Lungs', icon: 'lungs', iconType: Icons.MaterialCommunityIcons, iconColor: '#0EA5E9', bgColor: '#E0F2FE', status: 'Efficient', statusType: 'strong', description: 'Handles breathing and oxygen exchange' },
-  { label: 'Brain', icon: 'brain', iconType: Icons.MaterialCommunityIcons, iconColor: '#EC4899', bgColor: '#FCE7F3', status: 'Active', statusType: 'strong', description: 'Controls body functions and cognition' },
-  { label: 'Eye', icon: 'eye-outline', iconType: Icons.Ionicons, iconColor: '#6366F1', bgColor: '#EDE9FE', status: 'Normal', statusType: 'strong', description: 'Provides vision and light perception' },
-  { label: 'Thymus', icon: 'shield-checkmark-outline', iconType: Icons.Ionicons, iconColor: '#14B8A6', bgColor: '#CCFBF1', status: 'Active', statusType: 'strong', description: 'Supports immune system development' },
-  { label: 'Skin', icon: 'body-outline', iconType: Icons.Ionicons, iconColor: '#F59E0B', bgColor: '#FEF3C7', status: 'Healthy', statusType: 'strong', description: 'Protects body and regulates temperature' },
-  { label: 'Gut', icon: 'nutrition-outline', iconType: Icons.Ionicons, iconColor: '#F97316', bgColor: '#FFEDD5', status: 'Balanced', statusType: 'strong', description: 'Digests food and absorbs nutrients' },
-  { label: 'Muscle', icon: 'barbell-outline', iconType: Icons.Ionicons, iconColor: '#D946EF', bgColor: '#FAE8FF', status: 'Strong', statusType: 'strong', description: 'Supports movement and posture' },
-  { label: 'Thyroid', icon: 'shield-outline', iconType: Icons.Ionicons, iconColor: '#0891B2', bgColor: '#CFFAFE', status: 'Normal', statusType: 'strong', description: 'Regulates metabolism and energy balance' },
-  { label: 'Vascular System', icon: 'water-outline', iconType: Icons.Ionicons, iconColor: '#DC2626', bgColor: '#FEE2E2', status: 'Normal', statusType: 'strong', description: 'Blood vessels circulating blood throughout body' },
-  { label: 'Reproductive', icon: 'human-male-female', iconType: Icons.MaterialCommunityIcons, iconColor: '#8B5CF6', bgColor: '#EDE9FE', status: 'Normal', statusType: 'strong', description: 'Reproductive organs and hormonal health' },
+  { label: 'Heart', img: require('../assets/img/vo-heart.png'), bgColor: '#FEE2E2', status: 'Watch', statusType: 'moderate', description: 'Pumps blood throughout the body' },
+  { label: 'Kidney', img: require('../assets/img/human-kidneys.png'), bgColor: '#FEE2E2', status: 'Stable', statusType: 'strong', description: 'Filters waste and regulates fluid balance' },
+  { label: 'Liver', img: require('../assets/img/human-liver.png'), bgColor: '#FEF3C7', status: 'Stable', statusType: 'strong', description: 'Processes nutrients and detoxifies blood' },
+  { label: 'Pancreas', img: require('../assets/img/human-pancreas.png'), bgColor: '#DCFCE7', status: 'Watch', statusType: 'moderate', description: 'Produces insulin and digestive enzymes' },
+  { label: 'Lungs', img: require('../assets/img/human-lungs.png'), bgColor: '#E0F2FE', status: 'Efficient', statusType: 'strong', description: 'Handles breathing and oxygen exchange' },
+  { label: 'Brain', img: require('../assets/img/human-brain.png'), bgColor: '#FCE7F3', status: 'Active', statusType: 'strong', description: 'Controls body functions and cognition' },
+  { label: 'Eye', img: require('../assets/img/human-eye.png'), bgColor: '#EDE9FE', status: 'Normal', statusType: 'strong', description: 'Provides vision and light perception' },
+  { label: 'Thymus', img: require('../assets/img/human-thymus.png'), bgColor: '#CCFBF1', status: 'Active', statusType: 'strong', description: 'Supports immune system development' },
+  { label: 'Skin', img: require('../assets/img/human-skin.png'), bgColor: '#FEF3C7', status: 'Healthy', statusType: 'strong', description: 'Protects body and regulates temperature' },
+  { label: 'Gut', img: require('../assets/img/human-gut.png'), bgColor: '#FFEDD5', status: 'Balanced', statusType: 'strong', description: 'Digests food and absorbs nutrients' },
+  { label: 'Muscle', img: require('../assets/img/human-muscle.png'), bgColor: '#FAE8FF', status: 'Strong', statusType: 'strong', description: 'Supports movement and posture' },
+  { label: 'Thyroid', img: require('../assets/img/human-thyroid.png'), bgColor: '#CFFAFE', status: 'Normal', statusType: 'strong', description: 'Regulates metabolism and energy balance' },
+  { label: 'Vascular System', img: require('../assets/img/human-vascular.png'), bgColor: '#FEE2E2', status: 'Normal', statusType: 'strong', description: 'Blood vessels circulating blood throughout body' },
+  { label: 'Reproductive', img: require('../assets/img/human-reproductive.png'), bgColor: '#EDE9FE', status: 'Normal', statusType: 'strong', description: 'Reproductive organs and hormonal health' },
 ];
 
 const RingComponent = ({ size, outerRadius, percentage }) => {
@@ -358,10 +358,8 @@ const Analysis = () => {
                 onPress={() => navigation.navigate('OrganDetailScreen', { organ: item.label })}
               >
                 <View style={styles.organCardTopRow}>
-                  <View style={[styles.organIconWrap, { backgroundColor: item.bgColor }]}>
-                    <Icon type={item.iconType} name={item.icon} size={ms(22)} color={item.iconColor} />
-                  </View>
-                  <Text style={styles.organCardLabel}>{item.label}</Text>
+                  <Image source={item.img} style={styles.organCardImg} />
+                  <Text style={styles.organCardLabel} numberOfLines={1}>{item.label}</Text>
                 </View>
                 <View style={styles.organStatusRow}>
                   <Text style={styles.organStatusLabel}>Status :</Text>
@@ -523,6 +521,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginRight: ms(10),
   },
+  organCardImg: { width: ms(40), height: ms(40), resizeMode: 'contain', marginRight: ms(10) },
   organCardLabel: { fontFamily: bold, fontSize: ms(14), color: blackColor, flex: 1 },
   organStatusRow: {
     flexDirection: 'row',

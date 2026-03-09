@@ -183,20 +183,51 @@
 
 
 
-import React, { useState, useEffect, useCallback } from 'react';
-import { StyleSheet, View, Text, SafeAreaView, TouchableOpacity, FlatList, Image, ActivityIndicator } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { StyleSheet, View, Text, SafeAreaView, TouchableOpacity, FlatList, Image, ActivityIndicator, Modal, ScrollView } from 'react-native';
 import * as colors from '../assets/css/Colors';
-import { bold, regular, img_url, empty_list, theme_color } from '../config/Constants';
+import { bold, regular, img_url, empty_list } from '../config/Constants';
 import { useNavigation } from '@react-navigation/native';
 import DropShadow from "react-native-drop-shadow";
 import { useDispatch } from 'react-redux';
 import { LoadLabPendingOrdersAction } from '../redux/actions/LabPendingOrdersActions';
 import LabOrdersShimmer from '../components/LabOrdersShimmer';
-import { StatusBar, StatusBar2 } from '../components/StatusBar';
+import { StatusBar2 } from '../components/StatusBar';
 import { ms, vs } from 'react-native-size-matters';
 import LinearGradient from 'react-native-linear-gradient';
-import { blackColor, globalGradient, primaryColor, whiteColor } from '../utils/globalColors';
+import { blackColor, globalGradient2, primaryColor, whiteColor } from '../utils/globalColors';
 import Icon, { Icons } from '../components/Icons';
+
+const CATEGORIES = [
+  'Tele Medical', 'Lab', 'Doctor', 'Medicines',
+  'Coach', 'Counselling', 'Nurse', 'Physiotherapy',
+  'Hospital', 'Wellness Center', 'Health Insurance', 'Ambulance',
+];
+
+const TABS = [
+  { key: 'all', label: 'All' },
+  { key: 'current', label: 'Current' },
+  { key: 'complete', label: 'Completed' },
+  { key: 'cancelled', label: 'Cancelled' },
+];
+
+const MOCK_BOOKINGS = [
+  {
+    id: '1', status: 'Confirmed', date: '17 Feb 2026,12:30',
+    doctor: 'Dr. Anil Sharma', specialty: 'General Physician', rating: 4.5,
+    appointmentDate: '11:30, Mon,17 Feb,2026', actionType: 'video',
+  },
+  {
+    id: '2', status: 'Completed', date: '17 Feb 2026,12:30',
+    doctor: 'Dr. Anil Sharma', specialty: 'General Physician', rating: 4.5,
+    appointmentDate: '11:30, Mon,17 Feb,2026', actionType: 'reschedule',
+  },
+  {
+    id: '3', status: 'Cancelled', date: '17 Feb 2026,12:30',
+    doctor: 'Dr. Anil Sharma', specialty: 'General Physician', rating: 4.5,
+    appointmentDate: '11:30, Mon,17 Feb,2026', actionType: 'retry',
+  },
+];
 
 const LabOrders = () => {
   const navigation = useNavigation();
@@ -209,6 +240,8 @@ const LabOrders = () => {
   const [lastPage, setLastPage] = useState(1);
   const [loadingMore, setLoadingMore] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
+  const [selectedCategory, setSelectedCategory] = useState('Tele Medical');
+  const [dropdownVisible, setDropdownVisible] = useState(false);
 
   const order_details = (order_id) => {
     navigation.navigate("LabOrderDetails", { order_id: order_id })
@@ -217,6 +250,12 @@ const LabOrders = () => {
   useEffect(() => {
     get_pending_list(activeTab, 1, true);
   }, []);
+
+  useEffect(() => {
+    if (selectedCategory === 'Lab') {
+      get_pending_list(activeTab, 1, true);
+    }
+  }, [selectedCategory]);
 
   const get_pending_list = async (filter = 'all', page = 1, isInitial = false) => {
     if (isInitial) {
@@ -378,309 +417,300 @@ const LabOrders = () => {
     );
   };
 
+  const getBookingStatusConfig = (status) => {
+    switch (status) {
+      case 'Confirmed': return { color: '#065F46', bg: '#DCFCE7' };
+      case 'Completed': return { color: '#92400E', bg: '#FEF3C7' };
+      case 'Cancelled': return { color: '#991B1B', bg: '#FEE2E2' };
+      default: return { color: '#374151', bg: '#F3F4F6' };
+    }
+  };
+
+  const renderBookingCard = ({ item }) => {
+    const sc = getBookingStatusConfig(item.status);
+    return (
+      <View style={styles.bookingCard}>
+        <View style={styles.bookingTopRow}>
+          <View style={[styles.bookingBadge, { backgroundColor: sc.bg }]}>
+            <Text style={[styles.bookingBadgeText, { color: sc.color }]}>{item.status}</Text>
+          </View>
+          <Text style={styles.bookingDate}>{item.date}</Text>
+        </View>
+        <View style={styles.doctorRow}>
+          <Text style={styles.doctorName}>{item.doctor}</Text>
+          <View style={styles.ratingRow}>
+            <Icon type={Icons.Ionicons} name="star" size={ms(14)} color="#FBBF24" />
+            <Text style={styles.ratingText}>{item.rating}</Text>
+          </View>
+        </View>
+        <Text style={styles.specialtyText}>{item.specialty}</Text>
+        <View style={styles.appointmentRow}>
+          <Text style={styles.appointmentLabel}>Appointment Date & Time</Text>
+          <Text style={styles.appointmentValue}>{item.appointmentDate}</Text>
+        </View>
+        {item.actionType === 'video' && (
+          <>
+            <TouchableOpacity style={styles.videoBtn} onPress={() => navigation.navigate('BookingDetailScreen', { booking: item })}>
+              <Icon type={Icons.Ionicons} name="videocam-outline" size={ms(18)} color={whiteColor} />
+              <Text style={styles.videoBtnText}>Start a Video call</Text>
+            </TouchableOpacity>
+            <Text style={styles.noteText}>Note : Please check your internet connection before joining the video call with the doctor</Text>
+          </>
+        )}
+        {item.actionType === 'reschedule' && (
+          <TouchableOpacity style={styles.rescheduleBtn} onPress={() => navigation.navigate('BookingDetailScreen', { booking: item })}>
+            <Text style={styles.rescheduleBtnText}>Reschedule</Text>
+          </TouchableOpacity>
+        )}
+        {item.actionType === 'retry' && (
+          <TouchableOpacity style={styles.retryBtn} onPress={() => navigation.navigate('BookingDetailScreen', { booking: item })}>
+            <Text style={styles.retryBtnText}>Try again</Text>
+          </TouchableOpacity>
+        )}
+      </View>
+    );
+  };
+
+  const isHomeLab = selectedCategory === 'Lab';
+  const isTeleMedical = selectedCategory === 'Tele Medical';
+
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar2 />
 
       <LinearGradient
-        colors={globalGradient}
+        colors={globalGradient2}
         start={{ x: 0, y: 0 }}
         end={{ x: 0, y: 3 }}
-        locations={[0, 0.06]}
+        locations={[0, 0.08]}
         style={styles.fullGradient}
       >
-        {/* Header - Back Button */}
+        {/* Header */}
         <View style={styles.headerContainer}>
-          <TouchableOpacity
-            style={styles.headerButton}
-            onPress={() => navigation.goBack()}
-          >
-            <Icon type={Icons.Ionicons} name="arrow-back" color={blackColor} size={ms(20)} />
+          <View style={styles.headerLeft}>
+            <TouchableOpacity style={styles.backBtn} onPress={() => navigation.goBack()}>
+              <Icon type={Icons.Ionicons} name="arrow-back" size={ms(20)} color={whiteColor} />
+            </TouchableOpacity>
+            <Text style={styles.headerTitle}>My Bookings</Text>
+          </View>
+          <TouchableOpacity style={styles.dropdown} onPress={() => setDropdownVisible(true)}>
+            <Text style={styles.dropdownText} numberOfLines={1}>{selectedCategory}</Text>
+            <Icon type={Icons.Ionicons} name="chevron-down" size={ms(14)} color={blackColor} />
           </TouchableOpacity>
-          <Text style={styles.headerTitle}>My Test Bookings</Text>
         </View>
 
+
+        {/* Tabs */}
+        <View style={styles.tabRow}>
+          {TABS.map((tab) => (
+            <TouchableOpacity
+              key={tab.key}
+              style={styles.tab}
+              onPress={() => handleTabChange(tab.key)}
+            >
+              <Text style={[styles.tabText, activeTab === tab.key && styles.tabTextActive]}>{tab.label}</Text>
+            </TouchableOpacity>
+          ))}
+        </View>
+        <View style={styles.tabIndicatorRow}>
+          {TABS.map((tab) => (
+            <View key={tab.key} style={[styles.tabIndicator, activeTab === tab.key && styles.tabIndicatorActive]} />
+          ))}
+        </View>
+
+        {/* Content */}
         {loading && isInitialLoad ? (
           <LabOrdersShimmer />
         ) : (
-          <>
-            {/* Filter buttons */}
-            <View style={styles.filterContainer}>
-              <TouchableOpacity
-                style={[
-                  styles.filterButton,
-                  activeTab === 'all' && styles.filterButtonActive,
-                ]}
-                onPress={() => handleTabChange('all')}
-              >
-                <Text
-                  style={[
-                    styles.filterText,
-                    activeTab === 'all' && styles.filterTextActive,
-                  ]}
-                >
-                  All
-                </Text>
-              </TouchableOpacity>
-
-              <TouchableOpacity
-                style={[
-                  styles.filterButton,
-                  activeTab === 'inprogress' && styles.filterButtonActive,
-                ]}
-                onPress={() => handleTabChange('inprogress')}
-              >
-                <Text
-                  style={[
-                    styles.filterText,
-                    activeTab === 'inprogress' && styles.filterTextActive,
-                  ]}
-                >
-                  In Progress
-                </Text>
-              </TouchableOpacity>
-
-              <TouchableOpacity
-                style={[
-                  styles.filterButton,
-                  activeTab === 'complete' && styles.filterButtonActive,
-                ]}
-                onPress={() => handleTabChange('complete')}
-              >
-                <Text
-                  style={[
-                    styles.filterText,
-                    activeTab === 'complete' && styles.filterTextActive,
-                  ]}
-                >
-                  Completed
-                </Text>
-              </TouchableOpacity>
-            </View>
-
-            {pending_list.length == 0 ?
+          <FlatList
+            contentContainerStyle={styles.flatListContent}
+            data={isHomeLab ? pending_list : isTeleMedical ? MOCK_BOOKINGS : []}
+            renderItem={isHomeLab ? renderItem : renderBookingCard}
+            keyExtractor={(item) => item.id?.toString()}
+            showsVerticalScrollIndicator={false}
+            onEndReached={isHomeLab ? loadMoreData : undefined}
+            onEndReachedThreshold={0.5}
+            ListFooterComponent={isHomeLab ? renderFooter : null}
+            refreshing={refreshing}
+            onRefresh={handleRefresh}
+            ListEmptyComponent={
               <View style={styles.emptyContainer}>
-                <View style={styles.emptyImageWrapper} >
+                <View style={styles.emptyImageWrapper}>
                   <Image style={styles.emptyImage} source={empty_list} />
                 </View>
-                <Text style={styles.emptyText}>No orders found...</Text>
+                <Text style={styles.emptyText}>No bookings found...</Text>
               </View>
-              :
-              <FlatList
-                contentContainerStyle={styles.flatListContent}
-                data={pending_list}
-                renderItem={renderItem}
-                keyExtractor={item => item.id.toString()}
-                showsVerticalScrollIndicator={false}
-                onEndReached={loadMoreData}
-                onEndReachedThreshold={0.5}
-                ListFooterComponent={renderFooter}
-                refreshing={refreshing}
-                onRefresh={handleRefresh}
-              />
             }
-            <View style={{ margin: vs(10) }} />
-          </>
+          />
         )}
+
+        {/* Category Dropdown Modal */}
+        <Modal visible={dropdownVisible} transparent animationType="fade" onRequestClose={() => setDropdownVisible(false)}>
+          <TouchableOpacity style={styles.modalOverlay} activeOpacity={1} onPress={() => setDropdownVisible(false)}>
+            <View style={styles.modalContent}>
+              <Text style={styles.modalTitle}>Select Category</Text>
+              <ScrollView showsVerticalScrollIndicator={false}>
+                {CATEGORIES.map((cat) => (
+                  <TouchableOpacity
+                    key={cat}
+                    style={[styles.modalItem, selectedCategory === cat && styles.modalItemActive]}
+                    onPress={() => { setSelectedCategory(cat); setDropdownVisible(false); }}
+                  >
+                    <Text style={[styles.modalItemText, selectedCategory === cat && styles.modalItemTextActive]}>{cat}</Text>
+                    {selectedCategory === cat && <Icon type={Icons.Ionicons} name="checkmark" size={ms(18)} color={primaryColor} />}
+                  </TouchableOpacity>
+                ))}
+              </ScrollView>
+            </View>
+          </TouchableOpacity>
+        </Modal>
       </LinearGradient>
     </SafeAreaView>
   )
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: colors.theme_fg_three,
-  },
-  flatListContent: {
-    paddingHorizontal: ms(15),
-    paddingVertical: vs(10),
-  },
-  fullGradient: {
-    flex: 1,
-    // paddingHorizontal: ms(20),
-    paddingTop: ms(50),
-  },
-  headerButton: {
-    width: ms(38),
-    height: ms(38),
-    borderRadius: ms(19),
-    backgroundColor: whiteColor,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
+  container: { flex: 1, backgroundColor: '#F5F7FA' },
+  fullGradient: { flex: 1, paddingTop: ms(50) },
+  flatListContent: { paddingHorizontal: ms(16), paddingTop: vs(8), paddingBottom: vs(20) },
+
+  // Header
   headerContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: ms(20),
-    marginHorizontal: ms(15)
+    flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between',
+    paddingHorizontal: ms(20), marginBottom: vs(20),
   },
-  headerTitle: {
-    fontFamily: bold,
-    fontSize: ms(18),
-    color: colors.theme_fg_three,
-    marginLeft: ms(10),
-  },
-
-  // --- Filter Styles (Matching Image 160) ---
-  filterContainer: {
-    flexDirection: 'row',
-    paddingHorizontal: ms(15),
-    marginBottom: vs(10),
-  },
-  filterButton: {
-    paddingVertical: vs(8),
-    paddingHorizontal: ms(15),
-    borderRadius: ms(20),
-    marginRight: ms(10),
-    backgroundColor: colors.theme_fg_three,
-  },
-  filterButtonActive: {
-    paddingVertical: vs(8),
-    paddingHorizontal: ms(15),
-    borderRadius: ms(20),
-    backgroundColor: primaryColor,
+  headerLeft: { flexDirection: 'row', alignItems: 'center' },
+  backBtn: {
+    width: ms(38), height: ms(38), borderRadius: ms(19),
+    backgroundColor: 'rgba(255,255,255,0.25)', justifyContent: 'center', alignItems: 'center',
     marginRight: ms(10),
   },
-  filterText: {
-    fontFamily: regular,
-    fontSize: ms(12),
-    color: colors.theme_fg_two,
+  headerTitle: { fontFamily: bold, fontSize: ms(22), color: whiteColor },
+  dropdown: {
+    flexDirection: 'row', alignItems: 'center',
+    backgroundColor: whiteColor, borderRadius: ms(20),
+    paddingHorizontal: ms(14), paddingVertical: vs(8), gap: ms(6),
   },
-  filterTextActive: {
-    fontFamily: regular,
-    fontSize: ms(12),
-    color: colors.theme_fg_three, // White text
-  },
+  dropdownText: { fontFamily: regular, fontSize: ms(12), color: blackColor, maxWidth: ms(100) },
 
-  // --- Card Styles (Matching Image 160) ---
+  // Tabs
+  tabRow: { flexDirection: 'row', paddingHorizontal: ms(20), marginBottom: vs(2) },
+  tab: { flex: 1, alignItems: 'center', paddingVertical: vs(10) },
+  tabText: { fontFamily: regular, fontSize: ms(13), color: blackColor },
+  tabTextActive: { fontFamily: bold, fontSize: ms(13), color: whiteColor },
+  tabIndicatorRow: { flexDirection: 'row', paddingHorizontal: ms(20), marginBottom: vs(12) },
+  tabIndicator: { flex: 1, height: ms(3), backgroundColor: '#E5E7EB', borderRadius: ms(2) },
+  tabIndicatorActive: { backgroundColor: primaryColor },
+
+  // Home Lab Card (existing API cards)
   shadowContainer: {
     shadowColor: "#000",
     shadowOffset: { width: 0, height: ms(2) },
-    shadowOpacity: 0.1,
-    shadowRadius: ms(4),
-    elevation: ms(5),
-    marginBottom: vs(20),
+    shadowOpacity: 0.1, shadowRadius: ms(4),
+    elevation: ms(5), marginBottom: vs(20),
   },
   card: {
-    backgroundColor: '#F9FAFB',
-    borderRadius: ms(16),
-    padding: ms(15),
-    overflow: 'hidden',
+    backgroundColor: '#F9FAFB', borderRadius: ms(16),
+    padding: ms(15), overflow: 'hidden',
   },
   cardHeader: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: vs(10),
+    flexDirection: 'row', justifyContent: 'space-between',
+    alignItems: 'center', marginBottom: vs(10),
   },
-  testTypeBadge: {
-    paddingVertical: vs(4),
-    paddingHorizontal: ms(10),
-    borderRadius: ms(5),
-    // Color handled dynamically in renderItem
-  },
-  testTypeLabel: {
-    fontFamily: regular,
-    fontSize: ms(10),
-    // Color handled dynamically in renderItem
-  },
-  statusText: {
-    fontFamily: bold,
-    fontSize: ms(12),
-    // Color handled dynamically in renderItem
-  },
-  detailRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginBottom: vs(5),
-  },
-  idText: {
-    fontFamily: regular,
-    fontSize: ms(12),
-    color: colors.grey,
-  },
-  dateText: {
-    fontFamily: regular,
-    fontSize: ms(12),
-    color: colors.grey,
-  },
-  testNameText: {
-    fontFamily: bold,
-    fontSize: ms(14),
-    color: colors.theme_fg_two,
-    marginBottom: vs(10),
-  },
+  testTypeBadge: { paddingVertical: vs(4), paddingHorizontal: ms(10), borderRadius: ms(5) },
+  testTypeLabel: { fontFamily: regular, fontSize: ms(10) },
+  statusText: { fontFamily: bold, fontSize: ms(12) },
+  detailRow: { flexDirection: 'row', justifyContent: 'space-between', marginBottom: vs(5) },
+  idText: { fontFamily: regular, fontSize: ms(12), color: colors.grey },
+  dateText: { fontFamily: regular, fontSize: ms(12), color: colors.grey },
+  testNameText: { fontFamily: bold, fontSize: ms(14), color: colors.theme_fg_two, marginBottom: vs(10) },
   amountRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    marginBottom: vs(10),
+    flexDirection: 'row', alignItems: 'center',
+    justifyContent: 'space-between', marginBottom: vs(10),
   },
-  checkIcon: {
-    width: ms(16),
-    height: ms(16),
-    marginRight: ms(5),
-    // tintColor: colors.green,
-  },
-  amountLabel: {
-    fontFamily: regular,
-    fontSize: ms(12),
-    color: colors.theme_fg_two,
-    marginRight: ms(5),
-  },
-  amountValue: {
-    fontFamily: bold,
-    fontSize: ms(16),
-    color: colors.theme_fg_two,
-  },
-  divider: {
-    borderBottomWidth: 1,
-    borderBottomColor: colors.light_grey,
-    marginBottom: vs(10),
-  },
+  checkIcon: { width: ms(16), height: ms(16), marginRight: ms(5) },
+  amountLabel: { fontFamily: regular, fontSize: ms(12), color: colors.theme_fg_two, marginRight: ms(5) },
+  amountValue: { fontFamily: bold, fontSize: ms(16), color: colors.theme_fg_two },
   viewDetailsButton: {
-    // borderWidth:1,
-    // borderColor:'#D1D5DB',
-    paddingVertical: ms(12),
-    marginHorizontal: ms(10),
-    borderRadius: ms(40),
-    backgroundColor: '#F3F4F6'
+    paddingVertical: ms(12), marginHorizontal: ms(10),
+    borderRadius: ms(40), backgroundColor: '#F3F4F6',
   },
-  viewDetailsText: {
-    fontFamily: bold,
-    fontSize: ms(14),
-    color: blackColor,
-    textAlign: 'center'
-  },
+  viewDetailsText: { fontFamily: bold, fontSize: ms(14), color: blackColor, textAlign: 'center' },
 
-  // --- Empty State Styles ---
+  // Tele Medical Booking Card
+  bookingCard: {
+    backgroundColor: whiteColor, borderRadius: ms(16),
+    padding: ms(16), marginBottom: vs(14),
+  },
+  bookingTopRow: {
+    flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between',
+    marginBottom: vs(14),
+  },
+  bookingBadge: { borderRadius: ms(20), paddingHorizontal: ms(14), paddingVertical: vs(5) },
+  bookingBadgeText: { fontFamily: bold, fontSize: ms(12) },
+  bookingDate: { fontFamily: regular, fontSize: ms(12), color: '#6B7280' },
+  doctorRow: {
+    flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between',
+    marginBottom: vs(2),
+  },
+  doctorName: { fontFamily: bold, fontSize: ms(14), color: blackColor },
+  ratingRow: { flexDirection: 'row', alignItems: 'center', gap: ms(4) },
+  ratingText: { fontFamily: bold, fontSize: ms(13), color: blackColor },
+  specialtyText: { fontFamily: regular, fontSize: ms(12), color: '#6B7280', marginBottom: vs(14) },
+  appointmentRow: {
+    flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between',
+    marginBottom: vs(14),
+  },
+  appointmentLabel: { fontFamily: bold, fontSize: ms(12), color: blackColor },
+  appointmentValue: { fontFamily: regular, fontSize: ms(12), color: '#374151' },
+  videoBtn: {
+    flexDirection: 'row', alignItems: 'center', justifyContent: 'center',
+    backgroundColor: primaryColor, borderRadius: ms(25),
+    paddingVertical: vs(12), gap: ms(8), marginBottom: vs(8),
+  },
+  videoBtnText: { fontFamily: bold, fontSize: ms(13), color: whiteColor },
+  noteText: { fontFamily: regular, fontSize: ms(11), color: '#6B7280', lineHeight: ms(16) },
+  rescheduleBtn: {
+    alignItems: 'center', justifyContent: 'center',
+    backgroundColor: '#FEF3C7', borderRadius: ms(25), paddingVertical: vs(12),
+  },
+  rescheduleBtnText: { fontFamily: bold, fontSize: ms(13), color: '#92400E' },
+  retryBtn: {
+    alignItems: 'center', justifyContent: 'center',
+    backgroundColor: primaryColor, borderRadius: ms(25), paddingVertical: vs(12),
+  },
+  retryBtnText: { fontFamily: bold, fontSize: ms(13), color: whiteColor },
+
+  // Dropdown Modal
+  modalOverlay: {
+    flex: 1, backgroundColor: 'rgba(0,0,0,0.4)',
+    justifyContent: 'center', alignItems: 'center',
+  },
+  modalContent: {
+    backgroundColor: whiteColor, borderRadius: ms(16),
+    width: '80%', maxHeight: '60%', padding: ms(20),
+  },
+  modalTitle: { fontFamily: bold, fontSize: ms(16), color: blackColor, marginBottom: vs(14) },
+  modalItem: {
+    flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between',
+    paddingVertical: vs(12), borderBottomWidth: 1, borderBottomColor: '#F3F4F6',
+  },
+  modalItemActive: {
+    backgroundColor: '#F0FDF4', marginHorizontal: ms(-8),
+    paddingHorizontal: ms(8), borderRadius: ms(8),
+  },
+  modalItemText: { fontFamily: regular, fontSize: ms(14), color: '#374151' },
+  modalItemTextActive: { fontFamily: bold, color: primaryColor },
+
+  // Empty & Footer
   emptyContainer: {
-    alignSelf: 'center',
-    justifyContent: 'center',
-    backgroundColor: colors.theme_fg_three,
-    paddingHorizontal: ms(20),
-    paddingVertical: vs(50),
+    alignSelf: 'center', justifyContent: 'center',
+    paddingHorizontal: ms(20), paddingVertical: vs(50),
   },
-  emptyImageWrapper: {
-    height: vs(250),
-    width: ms(300),
-    alignSelf: 'center',
-  },
-  emptyImage: {
-    height: '100%',
-    width: '100%',
-  },
-  emptyText: {
-    fontFamily: bold,
-    fontSize: ms(14),
-    textAlign: 'center',
-    marginTop: vs(20)
-  },
-  footerLoader: {
-    paddingVertical: vs(20),
-    alignItems: 'center',
-  },
+  emptyImageWrapper: { height: vs(250), width: ms(300), alignSelf: 'center' },
+  emptyImage: { height: '100%', width: '100%' },
+  emptyText: { fontFamily: bold, fontSize: ms(14), textAlign: 'center', marginTop: vs(20) },
+  footerLoader: { paddingVertical: vs(20), alignItems: 'center' },
 });
 
 

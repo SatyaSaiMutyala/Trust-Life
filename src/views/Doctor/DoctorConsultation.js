@@ -9,7 +9,7 @@ import {
     Image,
     Dimensions,
 } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { img_url } from '../../config/Constants';
 import LinearGradient from 'react-native-linear-gradient';
@@ -87,6 +87,8 @@ const todayDate = new Date().toLocaleDateString('en-GB', {
 
 const DoctorConsultation = () => {
     const navigation = useNavigation();
+    const route = useRoute();
+    const flow = route.params?.flow;
     const [search] = useState('');
     const [profilePic, setProfilePic] = useState(null);
     const [bottomTab, setBottomTab] = useState('doctors');
@@ -110,7 +112,7 @@ const DoctorConsultation = () => {
                 index % 2 === 0 ? { marginRight: CARD_GAP / 2 } : { marginLeft: CARD_GAP / 2 },
             ]}
             activeOpacity={0.85}
-            onPress={() => navigation.navigate('DoctorSpecialistList', { specialtyName: item.name })}
+            onPress={() => navigation.navigate('DoctorSpecialistList', { specialtyName: item.name, flow })}
         >
             <Image source={item.image} style={styles.cardImage} resizeMode="cover" />
             <View style={styles.cardFooter}>
@@ -204,7 +206,7 @@ const DoctorConsultation = () => {
                 <DoctorAppointmentsContent />
             )}
 
-            <StandaloneBottomBar activeTab={bottomTab} onTabChange={setBottomTab} />
+            {!flow && <StandaloneBottomBar activeTab={bottomTab} onTabChange={setBottomTab} />}
         </SafeAreaView>
     );
 };

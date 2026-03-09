@@ -27,6 +27,7 @@ const RescheduleAppointmentDetails = () => {
     const route = useRoute();
 
     const appointment = route.params?.appointment || {};
+    const flow = route.params?.flow;
     const [patient, setPatient] = useState(null);
     const [slotUnavailable, setSlotUnavailable] = useState(false);
 
@@ -167,6 +168,7 @@ const RescheduleAppointmentDetails = () => {
                         selectedSlot: '11:30',
                         selectedDate: 'Mon, 17 Feb, 2026',
                         patient,
+                        flow,
                     })}
                     style={{ marginTop: 0 }}
                 />

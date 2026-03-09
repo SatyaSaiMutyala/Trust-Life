@@ -294,6 +294,7 @@ import ConsentManagerScreen from './src/views/More/ConsentManagerScreen';
 import AddConsentManagerScreen from './src/views/More/AddConsentManagerScreen';
 import AnnualTrustReportScreen from './src/views/More/AnnualTrustReportScreen';
 import DataTransparencyCenterScreen from './src/views/More/DataTransparencyCenterScreen';
+import BookingDetailScreen from './src/views/More/Booking/BookingDetailScreen';
 import MedicineCartScreen from './src/views/MedicalPharma/MedicineCartScreen';
 import MedicinePaymentSuccessScreen from './src/views/MedicalPharma/PaymentSuccessScreen';
 import MedicineOrderPlacedScreen from './src/views/MedicalPharma/OrderPlacedScreen';
@@ -590,6 +591,7 @@ function App() {
               <Stack.Screen name="AddAddress" component={AddAddress} options={{ title: 'Add Address' }} />
               <Stack.Screen name="Profile" component={Profile} options={{ headerShown:false }} />
               <Stack.Screen name="LabOrders" component={LabOrders} options={{ headerShown : false}} />
+              <Stack.Screen name="BookingDetailScreen" component={BookingDetailScreen} options={{ headerShown : false}} />
               <Stack.Screen name="MyOnlineConsultations" component={MyOnlineConsultations} options={{ title: 'My Consultations' }} />
               <Stack.Screen name="MyOrderHistories" component={MyOrderHistories} options={{ title: 'My Orders' }} />
               <Stack.Screen name="PromoCode" component={PromoCode} options={{ title: 'Apply Promo Code' }} />

@@ -14,7 +14,8 @@ import { useNavigation, useRoute } from '@react-navigation/native';
 import { ms, vs } from 'react-native-size-matters';
 import { StatusBar2 } from '../../components/StatusBar';
 import Icon, { Icons } from '../../components/Icons';
-import { blackColor, whiteColor, primaryColor } from '../../utils/globalColors';
+import LinearGradient from 'react-native-linear-gradient';
+import { blackColor, whiteColor, primaryColor, globalGradient2 } from '../../utils/globalColors';
 
 const { width } = Dimensions.get('window');
 const CARD_GAP = ms(12);
@@ -70,6 +71,7 @@ const DoctorSpecialistList = () => {
     const navigation = useNavigation();
     const route = useRoute();
     const specialtyName = route.params?.specialtyName || 'Doctors';
+    const flow = route.params?.flow;
 
     const [search, setSearch] = useState('');
 
@@ -83,11 +85,18 @@ const DoctorSpecialistList = () => {
     return (
         <SafeAreaView style={styles.container}>
             <StatusBar2 />
+            <LinearGradient
+                colors={globalGradient2}
+                start={{ x: 0, y: 0 }}
+                end={{ x: 0, y: 3 }}
+                locations={[0, 0.08]}
+                style={styles.gradient}
+            >
 
             {/* Header */}
             <View style={styles.header}>
                 <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backBtn}>
-                    <Icon type={Icons.Ionicons} name="arrow-back" color={blackColor} size={ms(22)} />
+                    <Icon type={Icons.Ionicons} name="arrow-back" color={whiteColor} size={ms(20)} />
                 </TouchableOpacity>
                 <Text style={styles.headerTitle} numberOfLines={1}>{specialtyName}</Text>
             </View>
@@ -140,7 +149,7 @@ const DoctorSpecialistList = () => {
                     <DoctorCard
                         item={item}
                         index={index}
-                        onPress={() => navigation.navigate('DoctorProfileScreen', { doctor: item })}
+                        onPress={() => navigation.navigate('DoctorProfileScreen', { doctor: item, flow })}
                     />
                 )}
                 keyExtractor={(item) => item.id}
@@ -156,6 +165,7 @@ const DoctorSpecialistList = () => {
                 }
             />
 
+        </LinearGradient>
         </SafeAreaView>
     );
 };
@@ -167,6 +177,9 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: '#F1F5F9',
     },
+    gradient: {
+        flex: 1,
+    },
 
     // Header
     header: {
@@ -177,15 +190,18 @@ const styles = StyleSheet.create({
         paddingBottom: ms(10),
     },
     backBtn: {
-        width: ms(36),
-        height: ms(36),
+        width: ms(35),
+        height: ms(35),
+        borderRadius: ms(17.5),
+        backgroundColor: 'rgba(255, 255, 255, 0.3)',
         justifyContent: 'center',
-        alignItems: 'flex-start',
+        alignItems: 'center',
+        marginRight: ms(12),
     },
     headerTitle: {
         fontSize: ms(16),
         fontWeight: 'bold',
-        color: blackColor,
+        color: whiteColor,
         flex: 1,
     },
 

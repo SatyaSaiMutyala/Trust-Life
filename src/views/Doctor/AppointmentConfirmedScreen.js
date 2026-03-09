@@ -33,7 +33,7 @@ const AppointmentConfirmedScreen = () => {
     const navigation = useNavigation();
     const route = useRoute();
 
-    const { selectedSlot, selectedDate } = route.params || {};
+    const { selectedSlot, selectedDate, flow } = route.params || {};
     const appointmentDateTime = `${selectedSlot || '11:30'}, ${selectedDate || 'Mon, 17 Feb, 2026'}`;
 
     return (
@@ -104,13 +104,15 @@ const AppointmentConfirmedScreen = () => {
                 <PrimaryButton
                     title="Back to home"
                     onPress={() =>
-                        navigation.reset({
-                            index: 1,
-                            routes: [
-                                { name: 'Home' },
-                                { name: 'DoctorConsultation' },
-                            ],
-                        })
+                        flow === 'tele'
+                            ? navigation.reset({ index: 0, routes: [{ name: 'Home' }] })
+                            : navigation.reset({
+                                index: 1,
+                                routes: [
+                                    { name: 'Home' },
+                                    { name: 'DoctorConsultation' },
+                                ],
+                            })
                     }
                     style={{ marginTop: 0 }}
                 />

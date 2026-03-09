@@ -76,6 +76,7 @@ const DoctorProfileScreen = () => {
     const navigation = useNavigation();
     const route = useRoute();
     const doctor = route.params?.doctor || {};
+    const flow = route.params?.flow;
 
     const [selectedDay, setSelectedDay] = useState(17);
     const [selectedSlot, setSelectedSlot] = useState('7');
@@ -296,11 +297,24 @@ const DoctorProfileScreen = () => {
                     onPress={() => {
                         const slotObj = TIME_SLOTS.find(s => s.id === selectedSlot);
                         const dayObj = DAYS.find(d => d.date === selectedDay);
-                        navigation.navigate('ReviewAppointmentScreen', {
-                            doctor,
-                            selectedSlot: slotObj?.time || '11:30',
-                            selectedDate: `${dayObj?.day || 'Thu'}, ${selectedDay} Feb, 2026`,
-                        });
+                        if (flow === 'tele') {
+                            navigation.navigate('RescheduleAppointmentDetails', {
+                                appointment: {
+                                    doctorName: doctor.name,
+                                    specialty: doctor.specialty || 'General Physician',
+                                    rating: doctor.rating || '4.5',
+                                    appointmentId: '584684745',
+                                    appointmentDateTime: `${dayObj?.day || 'Thu'}, ${selectedDay} Feb, 2026, ${slotObj?.time || '11:30'}`,
+                                },
+                                flow,
+                            });
+                        } else {
+                            navigation.navigate('ReviewAppointmentScreen', {
+                                doctor,
+                                selectedSlot: slotObj?.time || '11:30',
+                                selectedDate: `${dayObj?.day || 'Thu'}, ${selectedDay} Feb, 2026`,
+                            });
+                        }
                     }}
                     style={{ marginTop: 0 }}
                 />

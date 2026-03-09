@@ -11,7 +11,8 @@ import { useNavigation, useRoute } from '@react-navigation/native';
 import { ms, vs } from 'react-native-size-matters';
 import { StatusBar2 } from '../../components/StatusBar';
 import Icon, { Icons } from '../../components/Icons';
-import { blackColor, whiteColor, primaryColor } from '../../utils/globalColors';
+import LinearGradient from 'react-native-linear-gradient';
+import { blackColor, whiteColor, primaryColor, globalGradient2 } from '../../utils/globalColors';
 import PrimaryButton from '../../utils/primaryButton';
 
 const DashedDivider = () => (
@@ -28,7 +29,6 @@ const ReviewAppointmentScreen = () => {
     const selectedSlotTime = route.params?.selectedSlot || '11:30';
     const selectedDate = route.params?.selectedDate || 'Mon, 17 Feb, 2026';
 
-    const [consultationType, setConsultationType] = useState('offline');
     const [patient, setPatient] = useState(null);
 
     useEffect(() => {
@@ -40,11 +40,17 @@ const ReviewAppointmentScreen = () => {
     return (
         <SafeAreaView style={styles.container}>
             <StatusBar2 />
-
+            <LinearGradient
+                colors={globalGradient2}
+                start={{ x: 0, y: 0 }}
+                end={{ x: 0, y: 3 }}
+                locations={[0, 0.08]}
+                style={styles.gradient}
+            >
             {/* Header */}
             <View style={styles.header}>
                 <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backBtn}>
-                    <Icon type={Icons.Ionicons} name="arrow-back" color={blackColor} size={ms(20)} />
+                    <Icon type={Icons.Ionicons} name="arrow-back" color={whiteColor} size={ms(20)} />
                 </TouchableOpacity>
                 <Text style={styles.headerTitle}>Review Appointment Details</Text>
             </View>
@@ -86,29 +92,13 @@ const ReviewAppointmentScreen = () => {
                 {/* Consultation Type */}
                 <View style={styles.card}>
                     <Text style={styles.sectionTitle}>Consultation Type</Text>
-                    <View style={styles.consultRow}>
-                        <TouchableOpacity
-                            style={styles.radioOption}
-                            onPress={() => setConsultationType('offline')}
-                            activeOpacity={0.7}
-                        >
-                            <View style={[styles.radioOuter, consultationType === 'offline' && styles.radioOuterActive]}>
-                                {consultationType === 'offline' && <View style={styles.radioDot} />}
-                            </View>
-                            <Text style={styles.radioLabel}>Offline</Text>
-                        </TouchableOpacity>
-
-                        <TouchableOpacity
-                            style={styles.radioOption}
-                            onPress={() => setConsultationType('online')}
-                            activeOpacity={0.7}
-                        >
-                            <View style={[styles.radioOuter, consultationType === 'online' && styles.radioOuterActive]}>
-                                {consultationType === 'online' && <View style={styles.radioDot} />}
-                            </View>
-                            <Text style={styles.radioLabel}>Online</Text>
-                        </TouchableOpacity>
+                    <View style={styles.consultTypeRow}>
+                        <Icon type={Icons.Ionicons} name="videocam-outline" size={ms(22)} color={blackColor} />
+                        <Text style={styles.consultTypeLabel}>Video call</Text>
                     </View>
+                    <Text style={styles.consultTypeDesc}>
+                        Your video call with the doctor will start at your booked appointment time
+                    </Text>
                 </View>
 
                 {/* Patient Details */}
@@ -198,6 +188,7 @@ const ReviewAppointmentScreen = () => {
                 />
                 <Text style={styles.secureText}>Your booking is secure and confidential</Text>
             </View>
+            </LinearGradient>
         </SafeAreaView>
     );
 };
@@ -209,6 +200,9 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: '#F5F7FA',
     },
+    gradient: {
+        flex: 1,
+    },
 
     // Header
     header: {
@@ -217,15 +211,20 @@ const styles = StyleSheet.create({
         paddingHorizontal: ms(16),
         paddingTop: ms(48),
         paddingBottom: ms(12),
-        // backgroundColor: '#F5F7FA',
     },
     backBtn: {
         marginRight: ms(12),
+        width: ms(35),
+        height: ms(35),
+        borderRadius: ms(17.5),
+        backgroundColor: 'rgba(255, 255, 255, 0.3)',
+        justifyContent: 'center',
+        alignItems: 'center',
     },
     headerTitle: {
         fontSize: ms(15),
         fontWeight: '700',
-        color: blackColor,
+        color: whiteColor,
     },
 
     scroll: {
@@ -315,8 +314,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: ms(12),
         paddingVertical: vs(5),
         borderRadius: ms(20),
-        borderWidth: 1,
-        borderColor: primaryColor,
+        backgroundColor:'#E2FFFB',
     },
     changeDateText: {
         fontSize: ms(11),
@@ -325,39 +323,22 @@ const styles = StyleSheet.create({
     },
 
     // Consultation type
-    consultRow: {
-        flexDirection: 'row',
-        gap: ms(24),
-    },
-    radioOption: {
+    consultTypeRow: {
         flexDirection: 'row',
         alignItems: 'center',
         gap: ms(8),
+        marginTop: vs(10),
     },
-    radioOuter: {
-        width: ms(20),
-        height: ms(20),
-        borderRadius: ms(10),
-        borderWidth: 2,
-        borderColor: '#CCC',
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: '#F5F5F5',
+    consultTypeLabel: {
+        fontSize: ms(14),
+        fontWeight: '700',
+        color: blackColor,
     },
-    radioOuterActive: {
-        borderColor: primaryColor,
-        backgroundColor: primaryColor,
-    },
-    radioDot: {
-        width: ms(8),
-        height: ms(8),
-        borderRadius: ms(4),
-        backgroundColor: whiteColor,
-    },
-    radioLabel: {
-        fontSize: ms(13),
-        color: '#444',
-        fontWeight: '500',
+    consultTypeDesc: {
+        fontSize: ms(12),
+        color: '#6B7280',
+        lineHeight: ms(18),
+        marginTop: vs(6),
     },
 
     // Patient

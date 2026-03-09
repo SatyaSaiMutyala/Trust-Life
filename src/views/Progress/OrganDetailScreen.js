@@ -6,6 +6,7 @@ import {
     Text,
     ScrollView,
     TouchableOpacity,
+    Image,
     Dimensions,
 } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
@@ -32,7 +33,7 @@ const X_LABELS = ['12 Feb', '13 Mar', '25 Apr', '21 May', '12 June', '12 July'];
 // ── Organ configs ────────────────────────────────────────────────────────────
 const ORGAN_CONFIGS = {
     Heart: {
-        emoji: '\u{1FAC0}',
+        img: require('../../assets/img/vo-heart.png'),
         condition: 'Hypertension',
         stabilityLabel: 'Stability: Mild Escalation',
         statusLabel: 'Status: Under Monitoring',
@@ -76,7 +77,7 @@ const ORGAN_CONFIGS = {
         monitoring: ['HbA1c trend', 'RBC trend graph'],
     },
     Kidney: {
-        emoji: '\u{1FAD8}',
+        img: require('../../assets/img/human-kidneys.png'),
         condition: 'Chronic Kidney Disease',
         stabilityLabel: 'Stability: Stable',
         statusLabel: 'Status: Under Monitoring',
@@ -109,7 +110,7 @@ const ORGAN_CONFIGS = {
         monitoring: ['eGFR trend', 'Creatinine trend'],
     },
     Liver: {
-        emoji: '\u{1FAC1}',
+        img: require('../../assets/img/human-liver.png'),
         condition: 'Fatty Liver',
         stabilityLabel: 'Stability: Stable',
         statusLabel: 'Status: Under Monitoring',
@@ -135,7 +136,7 @@ const ORGAN_CONFIGS = {
         monitoring: ['ALT trend', 'AST trend'],
     },
     Pancreas: {
-        emoji: '\u{1F95E}',
+        img: require('../../assets/img/human-pancreas.png'),
         condition: 'Type 2 Diabetes',
         stabilityLabel: 'Stability: Mild Escalation',
         statusLabel: 'Status: Under Monitoring',
@@ -168,7 +169,7 @@ const ORGAN_CONFIGS = {
         monitoring: ['HbA1c trend', 'Glucose trend'],
     },
     Lungs: {
-        emoji: '\u{1FAC1}',
+        img: require('../../assets/img/human-lungs.png'),
         condition: 'Mild Asthma',
         stabilityLabel: 'Stability: Stable',
         statusLabel: 'Status: Efficient',
@@ -194,7 +195,7 @@ const ORGAN_CONFIGS = {
         monitoring: ['SpO2 trend', 'Peak flow trend'],
     },
     Brain: {
-        emoji: '\u{1F9E0}',
+        img: require('../../assets/img/human-brain.png'),
         condition: 'Cognitive Health',
         stabilityLabel: 'Stability: Stable',
         statusLabel: 'Status: Active',
@@ -213,7 +214,7 @@ const ORGAN_CONFIGS = {
         monitoring: ['Cognitive score trend'],
     },
     Eye: {
-        emoji: '\u{1F441}\u{FE0F}',
+        img: require('../../assets/img/human-eye.png'),
         condition: 'Eye Health',
         stabilityLabel: 'Stability: Stable',
         statusLabel: 'Status: Normal',
@@ -227,7 +228,7 @@ const ORGAN_CONFIGS = {
         monitoring: ['Vision check trend'],
     },
     Skin: {
-        emoji: '\u{1F9D1}',
+        img: require('../../assets/img/human-skin.png'),
         condition: 'Skin Health',
         stabilityLabel: 'Stability: Stable',
         statusLabel: 'Status: Healthy',
@@ -244,7 +245,7 @@ const ORGAN_CONFIGS = {
         monitoring: ['Skin health trend'],
     },
     Gut: {
-        emoji: '\u{1F34E}',
+        img: require('../../assets/img/human-gut.png'),
         condition: 'Digestive Health',
         stabilityLabel: 'Stability: Stable',
         statusLabel: 'Status: Balanced',
@@ -263,7 +264,7 @@ const ORGAN_CONFIGS = {
         monitoring: ['Gut health trend'],
     },
     Muscle: {
-        emoji: '\u{1F4AA}',
+        img: require('../../assets/img/human-muscle.png'),
         condition: 'Muscle Health',
         stabilityLabel: 'Stability: Stable',
         statusLabel: 'Status: Strong',
@@ -280,7 +281,7 @@ const ORGAN_CONFIGS = {
         monitoring: ['Muscle strength trend'],
     },
     'Musculo Skeletal': {
-        emoji: '\u{1F9B4}',
+        img: require('../../assets/img/human-muscle.png'),
         condition: 'Bone Health',
         stabilityLabel: 'Stability: Stable',
         statusLabel: 'Status: Stable',
@@ -306,7 +307,7 @@ const ORGAN_CONFIGS = {
         monitoring: ['Vitamin D trend', 'Calcium trend'],
     },
     'Vascular System': {
-        emoji: '\u{1FA78}',
+        img: require('../../assets/img/human-vascular.png'),
         condition: 'Vascular Health',
         stabilityLabel: 'Stability: Stable',
         statusLabel: 'Status: Normal',
@@ -329,8 +330,64 @@ const ORGAN_CONFIGS = {
         ],
         monitoring: ['Cholesterol trend', 'Triglyceride trend'],
     },
+    Thyroid: {
+        img: require('../../assets/img/human-thyroid.png'),
+        condition: 'Thyroid Health',
+        stabilityLabel: 'Stability: Stable',
+        statusLabel: 'Status: Normal',
+        lastUpdate: '12 Jan, 12:30 PM',
+        bioMarkers: [
+            {
+                name: 'TSH', subtitle: 'Thyroid Stimulating Hormone',
+                statusCode: 'N', statusLabel: 'Normal', statusColor: '#10B981',
+                normal: '0.4-4.0', abnormal: '-', unit: 'mIU/L', ref: '0.4 - 4.0',
+                points: [{ x: 0, y: 0.45 }, { x: 0.18, y: 0.38 }, { x: 0.33, y: 0.32 }, { x: 0.50, y: 0.35 }, { x: 0.66, y: 0.30 }, { x: 1, y: 0.33 }],
+            },
+            {
+                name: 'Free T4', subtitle: 'Thyroxine',
+                statusCode: 'N', statusLabel: 'Normal', statusColor: '#10B981',
+                normal: '0.8-1.8', abnormal: '-', unit: 'ng/dL', ref: '0.8 - 1.8',
+                points: [{ x: 0, y: 0.40 }, { x: 0.18, y: 0.35 }, { x: 0.33, y: 0.30 }, { x: 0.50, y: 0.32 }, { x: 0.66, y: 0.28 }, { x: 1, y: 0.30 }],
+            },
+        ],
+        symptoms: [
+            { date: '20 Feb', symptom: 'Mild fatigue', severity: '2/5' },
+        ],
+        lifestyle: [
+            { label: 'Iodine Intake', value: 'Adequate', bg: '#DCFCE7' },
+            { label: 'Stress Indicator:', value: 'Low', bg: '#DCFCE7' },
+        ],
+        medicalEngagement: [
+            { label: 'Last endocrinologist visit: 3 months ago' },
+        ],
+        monitoring: ['TSH trend', 'Free T4 trend'],
+    },
+    Thymus: {
+        img: require('../../assets/img/human-thymus.png'),
+        condition: 'Immune Health',
+        stabilityLabel: 'Stability: Stable',
+        statusLabel: 'Status: Active',
+        lastUpdate: '12 Jan, 12:30 PM',
+        bioMarkers: [
+            {
+                name: 'WBC Count', subtitle: 'White Blood Cells',
+                statusCode: 'N', statusLabel: 'Normal', statusColor: '#10B981',
+                normal: '4.5-11.0', abnormal: '-', unit: 'K/uL', ref: '4.5 - 11.0',
+                points: [{ x: 0, y: 0.42 }, { x: 0.18, y: 0.36 }, { x: 0.33, y: 0.30 }, { x: 0.50, y: 0.33 }, { x: 0.66, y: 0.28 }, { x: 1, y: 0.31 }],
+            },
+        ],
+        symptoms: null,
+        lifestyle: [
+            { label: 'Sleep consistency', value: '75 %', bg: '#E8E8F8' },
+            { label: 'Physical Activity:', value: '70 %', bg: '#DCFCE7' },
+        ],
+        medicalEngagement: [
+            { label: 'Last immunologist visit: 6 months ago' },
+        ],
+        monitoring: ['WBC trend', 'Lymphocyte trend'],
+    },
     Reproductive: {
-        emoji: '\u{1F9EC}',
+        img: require('../../assets/img/human-reproductive.png'),
         condition: 'Reproductive Health',
         stabilityLabel: 'Stability: Stable',
         statusLabel: 'Status: Normal',
@@ -458,7 +515,7 @@ const OrganDetailScreen = () => {
                 <View style={styles.condCard}>
                     <View style={styles.organHeaderRow}>
                         <View style={styles.organIconCircle}>
-                            <Text style={styles.organEmoji}>{config.emoji}</Text>
+                            <Image source={config.img} style={styles.organImg} />
                         </View>
                         <View style={styles.organHeaderTextWrap}>
                             <Text style={styles.organHeaderName}>{organName}</Text>
@@ -605,7 +662,7 @@ const styles = StyleSheet.create({
         width: ms(44), height: ms(44), borderRadius: ms(22),
         backgroundColor: '#F1F5F9', justifyContent: 'center', alignItems: 'center',
     },
-    organEmoji: { fontSize: ms(24) },
+    organImg: { width: ms(30), height: ms(30), resizeMode: 'contain' },
     organHeaderTextWrap: { flex: 1, marginLeft: ms(10) },
     organHeaderName: { fontFamily: bold, fontSize: ms(16), color: blackColor },
     condLabel: { fontFamily: regular, fontSize: ms(11), color: '#9CA3AF', marginBottom: vs(4) },
