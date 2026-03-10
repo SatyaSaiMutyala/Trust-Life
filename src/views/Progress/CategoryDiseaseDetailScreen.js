@@ -7,6 +7,7 @@ import {
     ScrollView,
     TouchableOpacity,
     Dimensions,
+    Image,
 } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { ms, vs } from 'react-native-size-matters';
@@ -29,12 +30,41 @@ const CHART_W = width - ms(64);
 const CHART_H = vs(110);
 const X_LABELS = ['12 Feb', '13 Mar', '25 Apr', '21 May', '12 June', '12 July'];
 
+const ORGAN_IMAGES = {
+    Pancreas: require('../../assets/img/human-pancreas.png'),
+    Heart: require('../../assets/img/human-heart.png'),
+    Kidneys: require('../../assets/img/human-kidneys.png'),
+    Eyes: require('../../assets/img/human-eye.png'),
+    Lungs: require('../../assets/img/human-lungs.png'),
+    Brain: require('../../assets/img/human-brain.png'),
+    Liver: require('../../assets/img/human-liver.png'),
+    Skin: require('../../assets/img/human-skin.png'),
+    Gut: require('../../assets/img/human-gut.png'),
+    Thyroid: require('../../assets/img/human-thyroid.png'),
+    Vascular: require('../../assets/img/human-vascular.png'),
+    Muscle: require('../../assets/img/human-muscle.png'),
+};
+
 // ── All condition configs ─────────────────────────────────────────────────────
 const CONDITION_CONFIGS = {
     Diabetes: {
         subType: 'Type 2 Diabetes',
-        stabilityLabel: 'Stability: Mild Escalation',
-        statusLabel: 'Status: Under Monitoring',
+        stabilityLabel: 'Mild Escalation',
+        statusLabel: 'Under Monitoring',
+        description: 'Chronic metabolic disorder affecting how your body processes blood sugar (glucose)',
+        diseaseImpact: 'High blood sugar damages blood vessel linings over time, making your heart work harder and arteries stiffer. Your cholesterol and inflammation levels are adding extra stress to multiple organs.',
+        stageLabel: 'Moderate Dysfunction',
+        stageNum: 2,
+        maxStage: 4,
+        stageNames: ['Normal', 'Reduced Reserve', 'Moderate Dysfunction', 'Severe Depletion', 'Failure'],
+        projectedStage: 'Severe Depletion',
+        projectedTime: '3-5 years',
+        interventions: [
+            { text: 'HbA1c reduction target — consider GLP-1 agonist', priority: 'urgent' },
+            { text: 'Nephrology referral — eGFR declining', priority: 'urgent' },
+            { text: 'Dilated eye exam — retinopathy screening', priority: 'high' },
+            { text: 'Dietary carb reduction + activity increase', priority: 'medium' },
+        ],
         bioMarkers: [
             {
                 name: 'Total RBC Count', subtitle: 'Electrical Impedance',
@@ -56,36 +86,49 @@ const CONDITION_CONFIGS = {
             },
         ],
         organs: [
-            { name: 'Pancreas', emoji: '🥞', statusLabel: 'Under stress', statusBg: '#FEF9C3', statusColor: '#92400E', contributors: [{ name: 'Triglycerides', showArrow: true }, { name: 'Glucose Swings', showArrow: false }] },
-            { name: 'Heart', emoji: '🫀', statusLabel: 'Under stress', statusBg: '#FEF9C3', statusColor: '#92400E', contributors: [{ name: 'Triglycerides', showArrow: true }, { name: 'Glucose Swings', showArrow: false }] },
-            { name: 'Kidneys', emoji: '🫘', statusLabel: 'Under stress', statusBg: '#FEF9C3', statusColor: '#92400E', contributors: [{ name: 'Microalbbumin', showArrow: true }, { name: 'HbA1c', showArrow: false }] },
-            { name: 'Eyes', emoji: '👁️', statusLabel: 'Stable', statusBg: '#DCFCE7', statusColor: '#065F46', contributors: [{ name: 'Triglycerides', showArrow: true }, { name: 'Glucose Swings', showArrow: false }] },
+            { name: 'Pancreas', statusLabel: 'Under stress', statusBg: '#FEF9C3', statusColor: '#92400E', deterioration: 55, contributors: [{ name: 'Triglycerides', showArrow: true }, { name: 'Glucose Swings', showArrow: false }] },
+            { name: 'Heart', statusLabel: 'Under stress', statusBg: '#FEF9C3', statusColor: '#92400E', deterioration: 41, contributors: [{ name: 'Triglycerides', showArrow: true }, { name: 'Glucose Swings', showArrow: false }] },
+            { name: 'Kidneys', statusLabel: 'Under stress', statusBg: '#FEF9C3', statusColor: '#92400E', deterioration: 38, contributors: [{ name: 'Microalbbumin', showArrow: true }, { name: 'HbA1c', showArrow: false }] },
+            { name: 'Eyes', statusLabel: 'Stable', statusBg: '#DCFCE7', statusColor: '#065F46', deterioration: 12, contributors: [{ name: 'Triglycerides', showArrow: true }, { name: 'Glucose Swings', showArrow: false }] },
         ],
         lifestyle: [
-            { label: 'Sleep consistency', value: '64 %', bg: '#E8E8F8' },
-            { label: 'Physical Activity:', value: '64 %', bg: '#FEFCE8' },
-            { label: 'Diet Pattern', value: 'High refined carbs', bg: '#DCFCE7' },
-            { label: 'Alcohol', value: 'Occasional', bg: '#FEE2E2' },
-            { label: 'Stress Indicator:', value: 'Elevated', bg: '#F3F4F6' },
+            { label: 'Sleep consistency', value: '64 %', bg: '#E8E8F8', icon: 'moon' },
+            { label: 'Physical Activity', value: '64 %', bg: '#FEFCE8', icon: 'walk' },
+            { label: 'Diet Pattern', value: 'High refined carbs', bg: '#DCFCE7', icon: 'restaurant' },
+            { label: 'Alcohol', value: 'Occasional', bg: '#FEE2E2', icon: 'wine' },
+            { label: 'Stress Indicator', value: 'Elevated', bg: '#F3F4F6', icon: 'pulse' },
         ],
         symptoms: [
-            { date: '12 Feb', symptom: 'Excessive Thirst', severity: '3/5' },
-            { date: '18 Feb', symptom: 'Fatigue', severity: '3/5' },
-            { date: '26 Feb', symptom: 'Blurred Vision', severity: '2/5' },
+            { date: '12 Feb', symptom: 'Excessive Thirst', severity: 3, maxSeverity: 5 },
+            { date: '18 Feb', symptom: 'Fatigue', severity: 3, maxSeverity: 5 },
+            { date: '26 Feb', symptom: 'Blurred Vision', severity: 2, maxSeverity: 5 },
         ],
         medicalEngagement: [
-            { title: 'Past Doctor Visit', rows: [{ label: 'Cardiologist Consultation', value: '15 Feb 2026' }, { label: 'BP: 148/92 mmHg', value: '' }] },
-            { title: 'Past Doctor Prescription', rows: [{ label: 'Medication: Amlodipine', value: 'Duration: 3 months' }, { label: 'Dosage: 5 mg', value: '' }] },
-            { title: 'Past surgeries', rows: [{ label: 'Appendectomy', value: '12 Aug 2021' }] },
-            { title: 'Past Physiotherapy', rows: [{ label: 'Lower Back Physiotherapy', value: 'Jan 2025 – Feb 2025' }] },
-            { title: 'Past Physiotherapy', rows: [{ label: 'Lipid Profile', value: '10 Feb 2026' }, { label: 'Total Cholesterol: 210 mg/dL', value: '' }] },
+            { title: 'Past Doctor Visit', icon: 'person', rows: [{ label: 'Cardiologist Consultation', value: '15 Feb 2026' }, { label: 'BP: 148/92 mmHg', value: '' }] },
+            { title: 'Past Prescription', icon: 'medical', rows: [{ label: 'Medication: Amlodipine', value: 'Duration: 3 months' }, { label: 'Dosage: 5 mg', value: '' }] },
+            { title: 'Past Surgeries', icon: 'cut', rows: [{ label: 'Appendectomy', value: '12 Aug 2021' }] },
+            { title: 'Past Physiotherapy', icon: 'fitness', rows: [{ label: 'Lower Back Physiotherapy', value: 'Jan 2025 – Feb 2025' }] },
+            { title: 'Lab Reports', icon: 'document-text', rows: [{ label: 'Lipid Profile', value: '10 Feb 2026' }, { label: 'Total Cholesterol: 210 mg/dL', value: '' }] },
         ],
         monitoring: ['HbA1c trend', 'RBC trend graph'],
     },
     Hypertension: {
         subType: 'Essential Hypertension',
-        stabilityLabel: 'Stability: Unstable',
-        statusLabel: 'Status: Under Monitoring',
+        stabilityLabel: 'Unstable',
+        statusLabel: 'Under Monitoring',
+        description: 'Persistent high blood pressure that increases risk of heart disease and stroke',
+        diseaseImpact: 'Elevated blood pressure puts constant strain on your heart and blood vessels, increasing risk of heart disease, stroke, and kidney damage over time.',
+        stageLabel: 'Stage 1 Hypertension',
+        stageNum: 1,
+        maxStage: 3,
+        stageNames: ['Normal', 'Stage 1 Hypertension', 'Stage 2 Hypertension', 'Hypertensive Crisis'],
+        projectedStage: 'Stage 2 Hypertension',
+        projectedTime: '12-18 months',
+        interventions: [
+            { text: 'Blood pressure medication review', priority: 'urgent' },
+            { text: 'Reduce sodium intake to < 2300mg/day', priority: 'high' },
+            { text: 'Regular aerobic exercise — 150 min/week', priority: 'medium' },
+        ],
         bioMarkers: [
             {
                 name: 'Systolic BP', subtitle: 'Blood Pressure',
@@ -95,28 +138,41 @@ const CONDITION_CONFIGS = {
             },
         ],
         organs: [
-            { name: 'Heart', emoji: '🫀', statusLabel: 'Under stress', statusBg: '#FEF9C3', statusColor: '#92400E', contributors: [{ name: 'Blood Pressure', showArrow: true }] },
-            { name: 'Kidneys', emoji: '🫘', statusLabel: 'Watch', statusBg: '#FEF9C3', statusColor: '#92400E', contributors: [{ name: 'Creatinine', showArrow: true }] },
+            { name: 'Heart', statusLabel: 'Under stress', statusBg: '#FEF9C3', statusColor: '#92400E', deterioration: 41, contributors: [{ name: 'Blood Pressure', showArrow: true }] },
+            { name: 'Kidneys', statusLabel: 'Watch', statusBg: '#FEF9C3', statusColor: '#92400E', deterioration: 25, contributors: [{ name: 'Creatinine', showArrow: true }] },
         ],
         lifestyle: [
-            { label: 'Salt Intake', value: 'High', bg: '#FEE2E2' },
-            { label: 'Physical Activity:', value: '45 %', bg: '#FEFCE8' },
-            { label: 'Stress Indicator:', value: 'High', bg: '#FEE2E2' },
+            { label: 'Salt Intake', value: 'High', bg: '#FEE2E2', icon: 'restaurant' },
+            { label: 'Physical Activity', value: '45 %', bg: '#FEFCE8', icon: 'walk' },
+            { label: 'Stress Indicator', value: 'High', bg: '#FEE2E2', icon: 'pulse' },
         ],
         symptoms: [
-            { date: '15 Feb', symptom: 'Headache', severity: '3/5' },
-            { date: '20 Feb', symptom: 'Dizziness', severity: '2/5' },
+            { date: '15 Feb', symptom: 'Headache', severity: 3, maxSeverity: 5 },
+            { date: '20 Feb', symptom: 'Dizziness', severity: 2, maxSeverity: 5 },
         ],
         medicalEngagement: [
-            { title: 'Past Doctor Visit', rows: [{ label: 'General Checkup', value: '10 Feb 2026' }, { label: 'BP: 150/95 mmHg', value: '' }] },
-            { title: 'Past Doctor Prescription', rows: [{ label: 'Medication: Losartan', value: 'Duration: 6 months' }, { label: 'Dosage: 50 mg', value: '' }] },
+            { title: 'Past Doctor Visit', icon: 'person', rows: [{ label: 'General Checkup', value: '10 Feb 2026' }, { label: 'BP: 150/95 mmHg', value: '' }] },
+            { title: 'Past Prescription', icon: 'medical', rows: [{ label: 'Medication: Losartan', value: 'Duration: 6 months' }, { label: 'Dosage: 50 mg', value: '' }] },
         ],
         monitoring: ['BP trend', 'Heart rate graph'],
     },
     Thyroid: {
         subType: 'Hypothyroidism',
-        stabilityLabel: 'Stability: Critical',
-        statusLabel: 'Status: Needs Attention',
+        stabilityLabel: 'Critical',
+        statusLabel: 'Needs Attention',
+        description: 'Underactive thyroid gland producing insufficient thyroid hormones',
+        diseaseImpact: 'Your thyroid isn\'t producing enough hormones, which slows down your metabolism. This affects energy levels, weight, and can impact heart health if untreated.',
+        stageLabel: 'Moderate Hypothyroidism',
+        stageNum: 2,
+        maxStage: 3,
+        stageNames: ['Normal', 'Subclinical', 'Moderate Hypothyroidism', 'Severe Hypothyroidism'],
+        projectedStage: 'Severe Hypothyroidism',
+        projectedTime: '6-12 months',
+        interventions: [
+            { text: 'Levothyroxine dosage adjustment — TSH still elevated', priority: 'urgent' },
+            { text: 'Iodine-rich diet supplementation', priority: 'high' },
+            { text: 'Follow-up thyroid panel in 6 weeks', priority: 'medium' },
+        ],
         bioMarkers: [
             {
                 name: 'TSH', subtitle: 'Thyroid Stimulating Hormone',
@@ -127,39 +183,45 @@ const CONDITION_CONFIGS = {
         ],
         organs: null,
         lifestyle: [
-            { label: 'Sleep consistency', value: '50 %', bg: '#FEFCE8' },
-            { label: 'Diet Pattern', value: 'Iodine deficient', bg: '#FEE2E2' },
+            { label: 'Sleep consistency', value: '50 %', bg: '#FEFCE8', icon: 'moon' },
+            { label: 'Diet Pattern', value: 'Iodine deficient', bg: '#FEE2E2', icon: 'restaurant' },
         ],
         symptoms: [
-            { date: '10 Feb', symptom: 'Fatigue', severity: '4/5' },
-            { date: '22 Feb', symptom: 'Weight Gain', severity: '3/5' },
+            { date: '10 Feb', symptom: 'Fatigue', severity: 4, maxSeverity: 5 },
+            { date: '22 Feb', symptom: 'Weight Gain', severity: 3, maxSeverity: 5 },
         ],
         medicalEngagement: [
-            { title: 'Past Doctor Visit', rows: [{ label: 'Endocrinologist Consultation', value: '8 Feb 2026' }] },
-            { title: 'Past Doctor Prescription', rows: [{ label: 'Medication: Levothyroxine', value: 'Duration: Ongoing' }, { label: 'Dosage: 50 mcg', value: '' }] },
+            { title: 'Past Doctor Visit', icon: 'person', rows: [{ label: 'Endocrinologist Consultation', value: '8 Feb 2026' }] },
+            { title: 'Past Prescription', icon: 'medical', rows: [{ label: 'Medication: Levothyroxine', value: 'Duration: Ongoing' }, { label: 'Dosage: 50 mcg', value: '' }] },
         ],
         monitoring: ['TSH trend', 'T3/T4 trend graph'],
     },
     Fever: {
         subType: 'Acute Fever',
-        stabilityLabel: 'Stability: Stable',
-        statusLabel: 'Status: Monitoring',
-        bioMarkers: null,
-        organs: null,
-        lifestyle: null,
+        stabilityLabel: 'Stable',
+        statusLabel: 'Monitoring',
+        description: 'Body temperature above normal, usually due to infection or inflammation',
+        diseaseImpact: null,
+        stageLabel: null, stageNum: null, maxStage: null, stageNames: null,
+        projectedStage: null, projectedTime: null, interventions: null,
+        bioMarkers: null, organs: null, lifestyle: null,
         symptoms: [
-            { date: '12 Feb', symptom: 'Body Ache', severity: '3/5' },
-            { date: '14 Feb', symptom: 'Chills', severity: '2/5' },
+            { date: '12 Feb', symptom: 'Body Ache', severity: 3, maxSeverity: 5 },
+            { date: '14 Feb', symptom: 'Chills', severity: 2, maxSeverity: 5 },
         ],
         medicalEngagement: [
-            { title: 'Past Doctor Visit', rows: [{ label: 'General Physician', value: '12 Feb 2026' }, { label: 'Temp: 101.2°F', value: '' }] },
+            { title: 'Past Doctor Visit', icon: 'person', rows: [{ label: 'General Physician', value: '12 Feb 2026' }, { label: 'Temp: 101.2°F', value: '' }] },
         ],
         monitoring: ['Temperature trend'],
     },
     Infection: {
         subType: 'Bacterial Infection',
-        stabilityLabel: 'Stability: Unstable',
-        statusLabel: 'Status: Under Treatment',
+        stabilityLabel: 'Unstable',
+        statusLabel: 'Under Treatment',
+        description: 'Active bacterial infection requiring antibiotic treatment',
+        diseaseImpact: 'Your immune system is actively fighting an infection, causing elevated white blood cell counts and inflammation markers.',
+        stageLabel: null, stageNum: null, maxStage: null, stageNames: null,
+        projectedStage: null, projectedTime: null, interventions: null,
         bioMarkers: [
             {
                 name: 'WBC Count', subtitle: 'White Blood Cells',
@@ -168,38 +230,53 @@ const CONDITION_CONFIGS = {
                 points: [{ x: 0, y: 0.75 }, { x: 0.18, y: 0.50 }, { x: 0.33, y: 0.20 }, { x: 0.50, y: 0.35 }, { x: 0.66, y: 0.45 }, { x: 1, y: 0.30 }],
             },
         ],
-        organs: null,
-        lifestyle: null,
+        organs: null, lifestyle: null,
         symptoms: [
-            { date: '10 Feb', symptom: 'Fever', severity: '3/5' },
-            { date: '12 Feb', symptom: 'Swelling', severity: '2/5' },
+            { date: '10 Feb', symptom: 'Fever', severity: 3, maxSeverity: 5 },
+            { date: '12 Feb', symptom: 'Swelling', severity: 2, maxSeverity: 5 },
         ],
         medicalEngagement: [
-            { title: 'Past Doctor Visit', rows: [{ label: 'Infectious Disease Specialist', value: '10 Feb 2026' }] },
-            { title: 'Past Doctor Prescription', rows: [{ label: 'Medication: Amoxicillin', value: 'Duration: 7 days' }, { label: 'Dosage: 500 mg', value: '' }] },
+            { title: 'Past Doctor Visit', icon: 'person', rows: [{ label: 'Infectious Disease Specialist', value: '10 Feb 2026' }] },
+            { title: 'Past Prescription', icon: 'medical', rows: [{ label: 'Medication: Amoxicillin', value: 'Duration: 7 days' }, { label: 'Dosage: 500 mg', value: '' }] },
         ],
         monitoring: ['WBC trend', 'CRP trend'],
     },
     Allergy: {
         subType: 'Seasonal Allergy',
-        stabilityLabel: 'Stability: Stable',
-        statusLabel: 'Status: Monitoring',
-        bioMarkers: null,
-        organs: null,
-        lifestyle: null,
+        stabilityLabel: 'Stable',
+        statusLabel: 'Monitoring',
+        description: 'Immune system overreaction to seasonal allergens',
+        diseaseImpact: null,
+        stageLabel: null, stageNum: null, maxStage: null, stageNames: null,
+        projectedStage: null, projectedTime: null, interventions: null,
+        bioMarkers: null, organs: null, lifestyle: null,
         symptoms: [
-            { date: '15 Feb', symptom: 'Sneezing', severity: '2/5' },
-            { date: '18 Feb', symptom: 'Itchy Eyes', severity: '2/5' },
+            { date: '15 Feb', symptom: 'Sneezing', severity: 2, maxSeverity: 5 },
+            { date: '18 Feb', symptom: 'Itchy Eyes', severity: 2, maxSeverity: 5 },
         ],
         medicalEngagement: [
-            { title: 'Past Doctor Visit', rows: [{ label: 'Allergist Consultation', value: '14 Feb 2026' }] },
+            { title: 'Past Doctor Visit', icon: 'person', rows: [{ label: 'Allergist Consultation', value: '14 Feb 2026' }] },
         ],
         monitoring: ['IgE trend'],
     },
     'Chronic kidney disease': {
         subType: 'CKD Stage 3',
-        stabilityLabel: 'Stability: Stable',
-        statusLabel: 'Status: Under Monitoring',
+        stabilityLabel: 'Stable',
+        statusLabel: 'Under Monitoring',
+        description: 'Gradual loss of kidney function over time',
+        diseaseImpact: 'Your kidneys act as filters for your blood. The filtration rate (eGFR 52) is below healthy range and slowly declining. Early intervention is crucial to slow progression.',
+        stageLabel: 'Stage 2 CKD',
+        stageNum: 2,
+        maxStage: 5,
+        stageNames: ['Normal', 'Mild Reduction', 'Stage 2 CKD', 'Stage 3 CKD', 'Stage 4 CKD', 'Kidney Failure'],
+        projectedStage: 'Stage 3 CKD',
+        projectedTime: '12-18 months',
+        interventions: [
+            { text: 'Nephrology referral — eGFR declining', priority: 'urgent' },
+            { text: 'ACR urine test overdue', priority: 'high' },
+            { text: 'SGLT2 inhibitor review', priority: 'high' },
+            { text: 'Protein intake monitoring', priority: 'medium' },
+        ],
         bioMarkers: [
             {
                 name: 'eGFR', subtitle: 'Estimated Glomerular Filtration',
@@ -209,26 +286,39 @@ const CONDITION_CONFIGS = {
             },
         ],
         organs: [
-            { name: 'Kidneys', emoji: '🫘', statusLabel: 'Under stress', statusBg: '#FEF9C3', statusColor: '#92400E', contributors: [{ name: 'Creatinine', showArrow: true }, { name: 'eGFR', showArrow: false }] },
+            { name: 'Kidneys', statusLabel: 'Under stress', statusBg: '#FEF9C3', statusColor: '#92400E', deterioration: 38, contributors: [{ name: 'Creatinine', showArrow: true }, { name: 'eGFR', showArrow: false }] },
         ],
         lifestyle: [
-            { label: 'Protein Intake', value: 'Moderate', bg: '#FEFCE8' },
-            { label: 'Hydration', value: 'Adequate', bg: '#DCFCE7' },
+            { label: 'Protein Intake', value: 'Moderate', bg: '#FEFCE8', icon: 'restaurant' },
+            { label: 'Hydration', value: 'Adequate', bg: '#DCFCE7', icon: 'water' },
         ],
         symptoms: [
-            { date: '14 Feb', symptom: 'Swelling in legs', severity: '3/5' },
-            { date: '20 Feb', symptom: 'Fatigue', severity: '3/5' },
+            { date: '14 Feb', symptom: 'Swelling in legs', severity: 3, maxSeverity: 5 },
+            { date: '20 Feb', symptom: 'Fatigue', severity: 3, maxSeverity: 5 },
         ],
         medicalEngagement: [
-            { title: 'Past Doctor Visit', rows: [{ label: 'Nephrologist Consultation', value: '12 Feb 2026' }] },
-            { title: 'Past Doctor Prescription', rows: [{ label: 'Medication: Telmisartan', value: 'Duration: Ongoing' }, { label: 'Dosage: 40 mg', value: '' }] },
+            { title: 'Past Doctor Visit', icon: 'person', rows: [{ label: 'Nephrologist Consultation', value: '12 Feb 2026' }] },
+            { title: 'Past Prescription', icon: 'medical', rows: [{ label: 'Medication: Telmisartan', value: 'Duration: Ongoing' }, { label: 'Dosage: 40 mg', value: '' }] },
         ],
         monitoring: ['eGFR trend', 'Creatinine trend'],
     },
     "Alzheimer's disease": {
         subType: 'Early Onset',
-        stabilityLabel: 'Stability: Stable',
-        statusLabel: 'Status: Under Monitoring',
+        stabilityLabel: 'Stable',
+        statusLabel: 'Under Monitoring',
+        description: 'Progressive neurological disorder affecting memory and cognitive function',
+        diseaseImpact: 'Amyloid plaques are building up in the brain, affecting nerve cell communication. Early detection allows for interventions that can slow cognitive decline.',
+        stageLabel: 'Early Changes',
+        stageNum: 1,
+        maxStage: 4,
+        stageNames: ['Normal', 'Early Changes', 'Mild Cognitive Impairment', 'Moderate', 'Severe'],
+        projectedStage: 'Mild Cognitive Impairment',
+        projectedTime: '24-36 months',
+        interventions: [
+            { text: 'Cognitive behavioral therapy sessions', priority: 'high' },
+            { text: 'Social engagement programs', priority: 'high' },
+            { text: 'Sleep hygiene improvement', priority: 'medium' },
+        ],
         bioMarkers: [
             {
                 name: 'Amyloid beta (Aβ42)', subtitle: 'CSF Biomarker',
@@ -239,22 +329,26 @@ const CONDITION_CONFIGS = {
         ],
         organs: null,
         lifestyle: [
-            { label: 'Sleep consistency', value: '55 %', bg: '#FEFCE8' },
-            { label: 'Social Engagement', value: 'Low', bg: '#FEE2E2' },
+            { label: 'Sleep consistency', value: '55 %', bg: '#FEFCE8', icon: 'moon' },
+            { label: 'Social Engagement', value: 'Low', bg: '#FEE2E2', icon: 'people' },
         ],
         symptoms: [
-            { date: '10 Feb', symptom: 'Memory Lapses', severity: '3/5' },
-            { date: '18 Feb', symptom: 'Confusion', severity: '2/5' },
+            { date: '10 Feb', symptom: 'Memory Lapses', severity: 3, maxSeverity: 5 },
+            { date: '18 Feb', symptom: 'Confusion', severity: 2, maxSeverity: 5 },
         ],
         medicalEngagement: [
-            { title: 'Past Doctor Visit', rows: [{ label: 'Neurologist Consultation', value: '8 Feb 2026' }] },
+            { title: 'Past Doctor Visit', icon: 'person', rows: [{ label: 'Neurologist Consultation', value: '8 Feb 2026' }] },
         ],
         monitoring: ['Cognitive score trend'],
     },
     Pneumonia: {
         subType: 'Community-Acquired',
-        stabilityLabel: 'Stability: Stable',
-        statusLabel: 'Status: Under Treatment',
+        stabilityLabel: 'Stable',
+        statusLabel: 'Under Treatment',
+        description: 'Lung infection causing inflammation and difficulty breathing',
+        diseaseImpact: 'Infection is causing inflammation in your lung tissue, reducing oxygen transfer. Your SpO2 at 88% needs close monitoring.',
+        stageLabel: null, stageNum: null, maxStage: null, stageNames: null,
+        projectedStage: null, projectedTime: null, interventions: null,
         bioMarkers: [
             {
                 name: 'Oxygen Saturation', subtitle: 'SpO2',
@@ -264,23 +358,27 @@ const CONDITION_CONFIGS = {
             },
         ],
         organs: [
-            { name: 'Lungs', emoji: '🫁', statusLabel: 'Under stress', statusBg: '#FEF9C3', statusColor: '#92400E', contributors: [{ name: 'SpO2', showArrow: false }, { name: 'CRP', showArrow: true }] },
+            { name: 'Lungs', statusLabel: 'Under stress', statusBg: '#FEF9C3', statusColor: '#92400E', deterioration: 45, contributors: [{ name: 'SpO2', showArrow: false }, { name: 'CRP', showArrow: true }] },
         ],
         lifestyle: null,
         symptoms: [
-            { date: '12 Feb', symptom: 'Cough', severity: '4/5' },
-            { date: '15 Feb', symptom: 'Shortness of Breath', severity: '3/5' },
+            { date: '12 Feb', symptom: 'Cough', severity: 4, maxSeverity: 5 },
+            { date: '15 Feb', symptom: 'Shortness of Breath', severity: 3, maxSeverity: 5 },
         ],
         medicalEngagement: [
-            { title: 'Past Doctor Visit', rows: [{ label: 'Pulmonologist Consultation', value: '12 Feb 2026' }] },
-            { title: 'Past Doctor Prescription', rows: [{ label: 'Medication: Azithromycin', value: 'Duration: 5 days' }, { label: 'Dosage: 500 mg', value: '' }] },
+            { title: 'Past Doctor Visit', icon: 'person', rows: [{ label: 'Pulmonologist Consultation', value: '12 Feb 2026' }] },
+            { title: 'Past Prescription', icon: 'medical', rows: [{ label: 'Medication: Azithromycin', value: 'Duration: 5 days' }, { label: 'Dosage: 500 mg', value: '' }] },
         ],
         monitoring: ['SpO2 trend', 'CRP trend'],
     },
     Sepsis: {
         subType: 'Severe Sepsis',
-        stabilityLabel: 'Stability: Critical',
-        statusLabel: 'Status: Under Treatment',
+        stabilityLabel: 'Critical',
+        statusLabel: 'Under Treatment',
+        description: 'Life-threatening organ dysfunction caused by infection',
+        diseaseImpact: 'Your body\'s response to infection is causing organ dysfunction. Lactate at 4.0 indicates tissue hypoperfusion — critical care is essential.',
+        stageLabel: null, stageNum: null, maxStage: null, stageNames: null,
+        projectedStage: null, projectedTime: null, interventions: null,
         bioMarkers: [
             {
                 name: 'Lactate', subtitle: 'Blood Lactate',
@@ -289,22 +387,25 @@ const CONDITION_CONFIGS = {
                 points: [{ x: 0, y: 0.65 }, { x: 0.18, y: 0.42 }, { x: 0.33, y: 0.18 }, { x: 0.50, y: 0.25 }, { x: 0.66, y: 0.38 }, { x: 1, y: 0.28 }],
             },
         ],
-        organs: null,
-        lifestyle: null,
+        organs: null, lifestyle: null,
         symptoms: [
-            { date: '12 Feb', symptom: 'High Fever', severity: '5/5' },
-            { date: '13 Feb', symptom: 'Confusion', severity: '4/5' },
+            { date: '12 Feb', symptom: 'High Fever', severity: 5, maxSeverity: 5 },
+            { date: '13 Feb', symptom: 'Confusion', severity: 4, maxSeverity: 5 },
         ],
         medicalEngagement: [
-            { title: 'Past Doctor Visit', rows: [{ label: 'ICU Admission', value: '12 Feb 2026' }] },
-            { title: 'Past Doctor Prescription', rows: [{ label: 'Medication: IV Antibiotics', value: 'Duration: Ongoing' }] },
+            { title: 'Past Doctor Visit', icon: 'person', rows: [{ label: 'ICU Admission', value: '12 Feb 2026' }] },
+            { title: 'Past Prescription', icon: 'medical', rows: [{ label: 'Medication: IV Antibiotics', value: 'Duration: Ongoing' }] },
         ],
         monitoring: ['Lactate trend', 'MAP trend'],
     },
     Malnutrition: {
         subType: 'Protein-Energy Malnutrition',
-        stabilityLabel: 'Stability: Stable',
-        statusLabel: 'Status: Under Monitoring',
+        stabilityLabel: 'Stable',
+        statusLabel: 'Under Monitoring',
+        description: 'Nutritional deficiency affecting overall health and immunity',
+        diseaseImpact: 'Insufficient protein and caloric intake is weakening your immune system and slowing tissue repair. Albumin at 2.8 confirms significant protein deficit.',
+        stageLabel: null, stageNum: null, maxStage: null, stageNames: null,
+        projectedStage: null, projectedTime: null, interventions: null,
         bioMarkers: [
             {
                 name: 'Serum Albumin', subtitle: 'Protein Marker',
@@ -315,18 +416,47 @@ const CONDITION_CONFIGS = {
         ],
         organs: null,
         lifestyle: [
-            { label: 'Caloric Intake', value: 'Low', bg: '#FEE2E2' },
-            { label: 'Diet Pattern', value: 'Deficient', bg: '#FEE2E2' },
+            { label: 'Caloric Intake', value: 'Low', bg: '#FEE2E2', icon: 'flame' },
+            { label: 'Diet Pattern', value: 'Deficient', bg: '#FEE2E2', icon: 'restaurant' },
         ],
         symptoms: [
-            { date: '10 Feb', symptom: 'Weight Loss', severity: '4/5' },
-            { date: '18 Feb', symptom: 'Weakness', severity: '3/5' },
+            { date: '10 Feb', symptom: 'Weight Loss', severity: 4, maxSeverity: 5 },
+            { date: '18 Feb', symptom: 'Weakness', severity: 3, maxSeverity: 5 },
         ],
         medicalEngagement: [
-            { title: 'Past Doctor Visit', rows: [{ label: 'Nutritionist Consultation', value: '8 Feb 2026' }] },
+            { title: 'Past Doctor Visit', icon: 'person', rows: [{ label: 'Nutritionist Consultation', value: '8 Feb 2026' }] },
         ],
         monitoring: ['BMI trend', 'Albumin trend'],
     },
+};
+
+// ── Stability color helper ──────────────────────────────────────────────
+const getStabilityStyle = (label) => {
+    if (label === 'Stable') return { bg: '#DCFCE7', color: '#065F46' };
+    if (label === 'Unstable' || label === 'Mild Escalation') return { bg: '#FEF3C7', color: '#92400E' };
+    if (label === 'Critical') return { bg: '#FEE2E2', color: '#991B1B' };
+    return { bg: '#F3F4F6', color: '#374151' };
+};
+
+const getStatusStyle = (label) => {
+    if (label === 'Monitoring') return { bg: '#DBEAFE', color: '#1E40AF' };
+    if (label === 'Under Monitoring') return { bg: '#DBEAFE', color: '#1E40AF' };
+    if (label === 'Under Treatment') return { bg: '#FEF3C7', color: '#92400E' };
+    if (label === 'Needs Attention') return { bg: '#FEE2E2', color: '#991B1B' };
+    return { bg: '#F3F4F6', color: '#374151' };
+};
+
+const getDeteriorationColor = (pct) => {
+    if (pct < 25) return '#16A34A';
+    if (pct < 45) return '#F59E0B';
+    if (pct < 65) return '#EF4444';
+    return '#DC2626';
+};
+
+const getPriorityStyle = (priority) => {
+    if (priority === 'urgent') return { bg: '#FEE2E2', color: '#DC2626', icon: 'alert-circle' };
+    if (priority === 'high') return { bg: '#FEF3C7', color: '#D97706', icon: 'warning' };
+    return { bg: '#DBEAFE', color: '#2563EB', icon: 'information-circle' };
 };
 
 // ── Helpers ──────────────────────────────────────────────────────────────────
@@ -379,18 +509,15 @@ const BioChart = ({ points, id }) => (
 const BioMarkerRow = ({ item, index }) => {
     const [expanded, setExpanded] = useState(false);
     return (
-        <View style={[styles.bioCard, index > 0 && { marginTop: vs(12) }]}>
+        <View style={[styles.bioCard, index > 0 && { marginTop: vs(10) }]}>
             <View style={styles.bioCardTop}>
                 <View style={styles.bioNameWrap}>
                     <Text style={styles.bioName}>{item.name}</Text>
                     <Text style={styles.bioSubtitle}>{item.subtitle}</Text>
                 </View>
                 <View style={styles.bioTopRight}>
-                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                        <View style={styles.bioCodeBadge}>
-                            <Text style={styles.bioCodeText}>{item.statusCode}</Text>
-                        </View>
-                        <Text style={{ fontSize: ms(16), marginLeft: ms(4) }}>🚩</Text>
+                    <View style={[styles.bioCodeBadge, { backgroundColor: item.statusColor + '15' }]}>
+                        <Text style={[styles.bioCodeText, { color: item.statusColor }]}>{item.statusCode}</Text>
                     </View>
                     <Text style={[styles.bioStatusLabel, { color: item.statusColor }]}>{item.statusLabel}</Text>
                 </View>
@@ -402,18 +529,18 @@ const BioMarkerRow = ({ item, index }) => {
                 </View>
                 <View style={[styles.bioGridCell, styles.bioGridCellBorder]}>
                     <Text style={styles.bioGridHeader}>Abnormal</Text>
-                    <Text style={styles.bioGridValue}>{item.abnormal}</Text>
+                    <Text style={[styles.bioGridValue, { color: item.statusColor }]}>{item.abnormal}</Text>
                 </View>
                 <View style={[styles.bioGridCell, styles.bioGridCellBorder]}>
-                    <Text style={styles.bioGridHeader}>Unit of measure</Text>
+                    <Text style={styles.bioGridHeader}>Unit</Text>
                     <Text style={styles.bioGridValue}>{item.unit}</Text>
                 </View>
             </View>
             <View style={styles.bioRefRow}>
-                <Text style={styles.bioRefText}>Bio.Ref.Range  –  {item.ref}</Text>
+                <Text style={styles.bioRefText}>Ref: {item.ref}</Text>
                 <TouchableOpacity style={styles.viewTrendBtn} onPress={() => setExpanded(!expanded)}>
-                    <Text style={styles.viewTrendText}>View trend</Text>
-                    <Icon type={Icons.Ionicons} name={expanded ? 'chevron-up' : 'chevron-down'} size={ms(14)} color="#3B82F6" style={{ marginLeft: ms(4) }} />
+                    <Text style={styles.viewTrendText}>{expanded ? 'Hide' : 'View'} trend</Text>
+                    <Icon type={Icons.Ionicons} name={expanded ? 'chevron-up' : 'chevron-down'} size={ms(14)} color={primaryColor} style={{ marginLeft: ms(4) }} />
                 </TouchableOpacity>
             </View>
             {expanded && <BioChart points={item.points} id={`bio_${index}`} />}
@@ -421,42 +548,57 @@ const BioMarkerRow = ({ item, index }) => {
     );
 };
 
-// ── Organ Card (full width) ──────────────────────────────────────────────────
-const OrganCard = ({ item }) => (
-    <View style={styles.organCard}>
-        <View style={styles.organTopRow}>
-            <View style={styles.organIconCircle}>
-                <Text style={styles.organEmoji}>{item.emoji}</Text>
-            </View>
-            <Text style={styles.organName}>{item.name}</Text>
-        </View>
-        <View style={styles.organStatusRow}>
-            <Text style={styles.organStatusLabel}>Status :   </Text>
-            <View style={[styles.organStatusBadge, { backgroundColor: item.statusBg }]}>
-                <Text style={[styles.organStatusText, { color: item.statusColor }]}>{item.statusLabel}</Text>
-            </View>
-        </View>
-        <Text style={styles.organContribTitle}>Contributors</Text>
-        <View style={styles.organContribWrap}>
-            {item.contributors.map((c, i) => (
-                <View key={i} style={styles.organContribChip}>
-                    <Text style={styles.organContribName}>{c.name}</Text>
-                    {c.showArrow && <Icon type={Icons.Ionicons} name="arrow-up" size={ms(12)} color="#374151" style={{ marginLeft: ms(4) }} />}
+// ── Organ Card ──────────────────────────────────────────────────────────────
+const OrganCard = ({ item, onPress }) => {
+    const detColor = getDeteriorationColor(item.deterioration || 0);
+    const pct = item.deterioration || 0;
+    return (
+        <TouchableOpacity style={styles.organCard} activeOpacity={0.7} onPress={onPress}>
+            <View style={styles.organTopRow}>
+                <View style={styles.organIconCircle}>
+                    {ORGAN_IMAGES[item.name] ? (
+                        <Image source={ORGAN_IMAGES[item.name]} style={styles.organImg} resizeMode="contain" />
+                    ) : (
+                        <Icon type={Icons.Ionicons} name="body" size={ms(24)} color={primaryColor} />
+                    )}
                 </View>
-            ))}
-        </View>
-    </View>
-);
+                <View style={{ flex: 1 }}>
+                    <Text style={styles.organName}>{item.name}</Text>
+                    <View style={[styles.organStatusBadge, { backgroundColor: item.statusBg }]}>
+                        <Text style={[styles.organStatusText, { color: item.statusColor }]}>{item.statusLabel}</Text>
+                    </View>
+                </View>
+                {pct > 0 && (
+                    <View style={styles.organStressWrap}>
+                        <Text style={[styles.organStressValue, { color: detColor }]}>{pct}</Text>
+                        <Text style={styles.organStressLabel}>stress</Text>
+                        <View style={styles.organStressBar}>
+                            <View style={[styles.organStressFill, { width: `${pct}%`, backgroundColor: detColor }]} />
+                        </View>
+                    </View>
+                )}
+            </View>
+            <View style={styles.organContribWrap}>
+                {item.contributors.map((c, i) => (
+                    <View key={i} style={styles.organContribChip}>
+                        <Text style={styles.organContribName}>{c.name}</Text>
+                        {c.showArrow && <Icon type={Icons.Ionicons} name="arrow-up" size={ms(12)} color="#EF4444" style={{ marginLeft: ms(4) }} />}
+                    </View>
+                ))}
+            </View>
+        </TouchableOpacity>
+    );
+};
 
 // ── Main Screen ──────────────────────────────────────────────────────────────
 const CategoryDiseaseDetailScreen = () => {
     const navigation = useNavigation();
     const route = useRoute();
     const condition = route.params?.condition || {};
-    const category = route.params?.category || 'Chronic';
-
     const conditionName = condition.name || 'Diabetes';
     const config = CONDITION_CONFIGS[conditionName] || CONDITION_CONFIGS.Diabetes;
+    const stabilityStyle = getStabilityStyle(config.stabilityLabel);
+    const statusStyle = getStatusStyle(config.statusLabel);
 
     return (
         <SafeAreaView style={styles.container}>
@@ -474,48 +616,109 @@ const CategoryDiseaseDetailScreen = () => {
                     <TouchableOpacity style={styles.backBtn} onPress={() => navigation.goBack()}>
                         <Icon type={Icons.Ionicons} name="arrow-back" size={ms(20)} color={whiteColor} />
                     </TouchableOpacity>
-                    <Text style={styles.headerTitle}>{conditionName}</Text>
+                    <View style={styles.headerTextWrap}>
+                        <Text style={styles.headerTitle}>{conditionName}</Text>
+                        <Text style={styles.headerSub}>{config.subType}</Text>
+                    </View>
                     <View style={styles.activeBadge}>
                         <View style={styles.activeDot} />
                         <Text style={styles.activeText}>Active</Text>
                     </View>
                 </View>
 
-                {/* ── Condition Summary Card ── */}
-                <View style={styles.condCard}>
-                    <Text style={styles.condLabel}>Condition</Text>
-                    <View style={styles.condNameRow}>
-                        <Text style={styles.condTitle} numberOfLines={2}>{conditionName}</Text>
-                        <Text style={styles.condLastUpdate}>Last update {condition.date || '12 Jan, 12:30 PM'}</Text>
+                {/* ── Summary Card ── */}
+                <View style={styles.summaryCard}>
+                    <Text style={styles.summaryDesc}>{config.description}</Text>
+                    <View style={styles.summaryBadges}>
+                        <View style={[styles.summaryBadge, { backgroundColor: stabilityStyle.bg }]}>
+                            <Icon type={Icons.Ionicons} name="pulse" size={ms(12)} color={stabilityStyle.color} />
+                            <Text style={[styles.summaryBadgeText, { color: stabilityStyle.color }]}>{config.stabilityLabel}</Text>
+                        </View>
+                        <View style={[styles.summaryBadge, { backgroundColor: statusStyle.bg }]}>
+                            <Icon type={Icons.Ionicons} name="eye" size={ms(12)} color={statusStyle.color} />
+                            <Text style={[styles.summaryBadgeText, { color: statusStyle.color }]}>{config.statusLabel}</Text>
+                        </View>
                     </View>
-                    <Text style={styles.condSub}>{config.subType}</Text>
-                    <View style={[styles.condBadge, { backgroundColor: '#FEF9EE' }]}>
-                        <Text style={[styles.condBadgeText, { color: '#92400E' }]}>{config.stabilityLabel}</Text>
-                    </View>
-                    <View style={[styles.condBadge, { backgroundColor: '#EDFAF5', marginTop: vs(8) }]}>
-                        <Text style={[styles.condBadgeText, { color: '#065F46' }]}>{config.statusLabel}</Text>
-                    </View>
+                    <Text style={styles.summaryDate}>Last update: {condition.date || '12 Jan, 12:30 PM'}</Text>
                 </View>
 
-                {/* ── Organs Health Status ── */}
-                {config.organs && config.organs.length > 0 && (
-                    <View style={styles.organsWrap}>
-                        {config.organs.map((item, i) => (
-                            <OrganCard key={i} item={item} />
-                        ))}
+                {/* ── Disease Impact ── */}
+                {config.diseaseImpact && (
+                    <View style={styles.impactCard}>
+                        <View style={styles.impactHeader}>
+                            <Icon type={Icons.Ionicons} name="information-circle" size={ms(18)} color={primaryColor} />
+                            <Text style={styles.impactTitle}>What's Happening</Text>
+                        </View>
+                        <Text style={styles.impactText}>{config.diseaseImpact}</Text>
                     </View>
+                )}
+
+                {/* ── Stage Progression ── */}
+                {config.stageNames && config.stageNum !== null && (
+                    <View style={styles.stageCard}>
+                        <View style={styles.stageHeader}>
+                            <Icon type={Icons.Ionicons} name="git-branch" size={ms(18)} color={blackColor} />
+                            <Text style={styles.stageHeaderText}>Disease Stage</Text>
+                        </View>
+                        <View style={styles.stageBarRow}>
+                            {config.stageNames.map((s, i) => {
+                                const isActive = i <= config.stageNum;
+                                const isCurrent = i === config.stageNum;
+                                const stageColor = i <= 1 ? '#16A34A' : i <= 2 ? '#F59E0B' : '#EF4444';
+                                return (
+                                    <View key={i} style={{ flex: 1 }}>
+                                        <View style={[styles.stageSegment, { backgroundColor: isActive ? stageColor : '#E5E7EB' }]} />
+                                        {isCurrent && (
+                                            <View style={styles.stageCurrentWrap}>
+                                                <View style={[styles.stageCurrentDot, { backgroundColor: stageColor }]} />
+                                                <Text style={[styles.stageCurrentLabel, { color: stageColor }]}>{s}</Text>
+                                            </View>
+                                        )}
+                                    </View>
+                                );
+                            })}
+                        </View>
+                        <View style={styles.stageFooter}>
+                            <Text style={styles.stageFooterNormal}>Normal</Text>
+                            {config.projectedStage && (
+                                <Text style={styles.stageProjected}>
+                                    Projected: {config.projectedStage} in {config.projectedTime}
+                                </Text>
+                            )}
+                        </View>
+                    </View>
+                )}
+
+                {/* ── Organs Health ── */}
+                {config.organs && config.organs.length > 0 && (
+                    <>
+                        <View style={styles.sectionHeader}>
+                            <Icon type={Icons.Ionicons} name="body" size={ms(18)} color={blackColor} />
+                            <Text style={styles.sectionHeaderText}>Organs Affected</Text>
+                        </View>
+                        <View style={styles.organsGrid}>
+                            {config.organs.map((item, i) => (
+                                <OrganCard
+                                    key={i}
+                                    item={item}
+                                    onPress={() => navigation.navigate('OrganDetailScreen', { organ: item.name })}
+                                />
+                            ))}
+                        </View>
+                    </>
                 )}
 
                 {/* ── Bio-Markers Movement ── */}
                 {config.bioMarkers && config.bioMarkers.length > 0 && (
                     <>
-                        <View style={styles.bioSectionHeader}>
-                            <View>
-                                <Text style={styles.bioSectionTitle}>Bio - Markers Movement</Text>
-                                <Text style={styles.bioSectionTitle}>( Lab reports )</Text>
+                        <View style={styles.bioSectionRow}>
+                            <View style={styles.sectionHeader}>
+                                <Icon type={Icons.Ionicons} name="analytics" size={ms(18)} color={blackColor} />
+                                <Text style={styles.sectionHeaderText}>Bio-Markers</Text>
                             </View>
                             <TouchableOpacity style={styles.viewAllBtn} onPress={() => navigation.navigate('BioMarkersTrendScreen')}>
-                                <Text style={styles.viewAllText}>View all trend</Text>
+                                <Text style={styles.viewAllText}>View all</Text>
+                                <Icon type={Icons.Ionicons} name="arrow-forward" size={ms(12)} color={primaryColor} style={{ marginLeft: ms(4) }} />
                             </TouchableOpacity>
                         </View>
                         <View style={styles.bioCardsWrap}>
@@ -529,21 +732,29 @@ const CategoryDiseaseDetailScreen = () => {
                 {/* ── Symptom Tracker ── */}
                 {config.symptoms && config.symptoms.length > 0 && (
                     <>
-                        <Text style={styles.sectionTitle}>Symptom Tracker</Text>
-                        <View style={styles.sectionCard}>
-                            <Text style={styles.cardBoldLabel}>Insight:</Text>
-                            <Text style={styles.cardGrayDesc}>
-                                Increased fatigue correlates with elevated glucose readings
-                            </Text>
-                            <Text style={styles.cardBoldLabel}>Recent Logs:</Text>
-                            {config.symptoms.map((item, i) => (
-                                <View key={i} style={styles.symptomRow}>
-                                    <Text style={styles.symptomText}>
-                                        {item.date} – {item.symptom}{'   '}
-                                        <Text style={styles.symptomSeverity}>Severity {item.severity}</Text>
-                                    </Text>
-                                </View>
-                            ))}
+                        <View style={styles.sectionHeader}>
+                            <Icon type={Icons.Ionicons} name="alert-circle" size={ms(18)} color={blackColor} />
+                            <Text style={styles.sectionHeaderText}>Symptoms</Text>
+                        </View>
+                        <View style={styles.card}>
+                            {config.symptoms.map((item, i) => {
+                                const severityPct = (item.severity / item.maxSeverity) * 100;
+                                const severityColor = item.severity >= 4 ? '#EF4444' : item.severity >= 3 ? '#F59E0B' : '#16A34A';
+                                return (
+                                    <View key={i} style={[styles.symptomRow, i < config.symptoms.length - 1 && styles.symptomBorder]}>
+                                        <View style={styles.symptomLeft}>
+                                            <Text style={styles.symptomName}>{item.symptom}</Text>
+                                            <Text style={styles.symptomDate}>{item.date}</Text>
+                                        </View>
+                                        <View style={styles.symptomRight}>
+                                            <Text style={[styles.symptomSeverity, { color: severityColor }]}>{item.severity}/{item.maxSeverity}</Text>
+                                            <View style={styles.severityTrack}>
+                                                <View style={[styles.severityFill, { width: `${severityPct}%`, backgroundColor: severityColor }]} />
+                                            </View>
+                                        </View>
+                                    </View>
+                                );
+                            })}
                         </View>
                     </>
                 )}
@@ -551,19 +762,48 @@ const CategoryDiseaseDetailScreen = () => {
                 {/* ── Lifestyle Influence ── */}
                 {config.lifestyle && config.lifestyle.length > 0 && (
                     <>
-                        <Text style={styles.sectionTitle}>Lifestyle Influence</Text>
-                        <View style={styles.sectionCard}>
-                            <Text style={styles.cardBoldLabel}>Lifestyle Influence Impact:</Text>
-                            <Text style={styles.cardGrayDesc}>
-                                Current lifestyle patterns are contributing to glucose variability
-                            </Text>
-                            <Text style={styles.cardBoldLabel}>Breakdown</Text>
+                        <View style={styles.sectionHeader}>
+                            <Icon type={Icons.Ionicons} name="leaf" size={ms(18)} color={blackColor} />
+                            <Text style={styles.sectionHeaderText}>Lifestyle Influence</Text>
+                        </View>
+                        <View style={styles.card}>
                             {config.lifestyle.map((item, i) => (
-                                <View key={i} style={[styles.lifestylePill, { backgroundColor: item.bg }]}>
-                                    <Text style={styles.lifestylePillLabel}>{item.label}</Text>
-                                    <Text style={styles.lifestylePillValue}>{item.value}</Text>
+                                <View key={i} style={[styles.lifestyleRow, i < config.lifestyle.length - 1 && styles.lifestyleBorder]}>
+                                    <View style={[styles.lifestyleIcon, { backgroundColor: item.bg }]}>
+                                        <Icon type={Icons.Ionicons} name={item.icon} size={ms(16)} color="#374151" />
+                                    </View>
+                                    <Text style={styles.lifestyleLabel}>{item.label}</Text>
+                                    <Text style={styles.lifestyleValue}>{item.value}</Text>
                                 </View>
                             ))}
+                        </View>
+                    </>
+                )}
+
+                {/* ── Required Actions ── */}
+                {config.interventions && config.interventions.length > 0 && (
+                    <>
+                        <View style={styles.sectionHeader}>
+                            <Icon type={Icons.Ionicons} name="checkmark-circle" size={ms(18)} color={blackColor} />
+                            <Text style={styles.sectionHeaderText}>Required Actions</Text>
+                        </View>
+                        <View style={styles.interventionsWrap}>
+                            {config.interventions.map((item, i) => {
+                                const ps = getPriorityStyle(item.priority);
+                                return (
+                                    <View key={i} style={[styles.interventionCard, { borderLeftColor: ps.color }]}>
+                                        <View style={[styles.interventionIconWrap, { backgroundColor: ps.bg }]}>
+                                            <Icon type={Icons.Ionicons} name={ps.icon} size={ms(14)} color={ps.color} />
+                                        </View>
+                                        <View style={{ flex: 1 }}>
+                                            <Text style={styles.interventionText}>{item.text}</Text>
+                                            <Text style={[styles.interventionPriority, { color: ps.color }]}>
+                                                {item.priority.charAt(0).toUpperCase() + item.priority.slice(1)} priority
+                                            </Text>
+                                        </View>
+                                    </View>
+                                );
+                            })}
                         </View>
                     </>
                 )}
@@ -571,39 +811,45 @@ const CategoryDiseaseDetailScreen = () => {
                 {/* ── Medical Engagement ── */}
                 {config.medicalEngagement && config.medicalEngagement.length > 0 && (
                     <>
-                        <Text style={styles.sectionTitle}>Medical Engagement</Text>
-                        <View style={styles.sectionCard}>
-                            {config.medicalEngagement.map((section, si) => (
-                                <View key={si} style={si === 0 ? styles.meFirstSection : styles.meNestedCard}>
-                                    <Text style={styles.meSectionTitle}>{section.title}</Text>
-                                    {section.rows.map((row, ri) => (
-                                        <View key={ri} style={styles.meRow}>
-                                            <Text style={styles.meLabel}>{row.label}</Text>
-                                            {row.value !== '' && (
-                                                <View style={styles.meDotValueRow}>
-                                                    <View style={styles.meDot} />
-                                                    <Text style={styles.meValue}>{row.value}</Text>
-                                                </View>
-                                            )}
-                                        </View>
-                                    ))}
-                                </View>
-                            ))}
+                        <View style={styles.sectionHeader}>
+                            <Icon type={Icons.Ionicons} name="medkit" size={ms(18)} color={blackColor} />
+                            <Text style={styles.sectionHeaderText}>Medical Engagement</Text>
                         </View>
+                        {config.medicalEngagement.map((section, si) => (
+                            <View key={si} style={styles.meCard}>
+                                <View style={styles.meTitleRow}>
+                                    <View style={styles.meTitleIcon}>
+                                        <Icon type={Icons.Ionicons} name={section.icon} size={ms(14)} color={primaryColor} />
+                                    </View>
+                                    <Text style={styles.meSectionTitle}>{section.title}</Text>
+                                </View>
+                                {section.rows.map((row, ri) => (
+                                    <View key={ri} style={styles.meRow}>
+                                        <Text style={styles.meLabel}>{row.label}</Text>
+                                        {row.value !== '' && <Text style={styles.meValue}>{row.value}</Text>}
+                                    </View>
+                                ))}
+                            </View>
+                        ))}
                     </>
                 )}
 
                 {/* ── Monitoring ── */}
                 {config.monitoring && config.monitoring.length > 0 && (
                     <>
-                        <Text style={styles.sectionTitle}>Monitoring</Text>
-                        <View style={styles.monitorCard}>
-                            {config.monitoring.map((item, i) => (
-                                <View key={i} style={styles.monitorItem}>
-                                    <View style={styles.monitorDot} />
-                                    <Text style={styles.monitorText}>{item}</Text>
-                                </View>
-                            ))}
+                        <View style={styles.sectionHeader}>
+                            <Icon type={Icons.Ionicons} name="eye" size={ms(18)} color={blackColor} />
+                            <Text style={styles.sectionHeaderText}>Active Monitoring</Text>
+                        </View>
+                        <View style={styles.card}>
+                            <View style={styles.monitorWrap}>
+                                {config.monitoring.map((item, i) => (
+                                    <View key={i} style={styles.monitorChip}>
+                                        <Icon type={Icons.Ionicons} name="trending-up" size={ms(14)} color={primaryColor} />
+                                        <Text style={styles.monitorText}>{item}</Text>
+                                    </View>
+                                ))}
+                            </View>
                         </View>
                     </>
                 )}
@@ -632,144 +878,193 @@ const styles = StyleSheet.create({
         width: ms(36), height: ms(36), borderRadius: ms(18),
         backgroundColor: 'rgba(255,255,255,0.3)', justifyContent: 'center', alignItems: 'center',
     },
-    headerTitle: { flex: 1, fontFamily: bold, fontSize: ms(17), color: whiteColor, marginLeft: ms(12) },
+    headerTextWrap: { flex: 1, marginLeft: ms(12) },
+    headerTitle: { fontFamily: bold, fontSize: ms(18), color: whiteColor },
+    headerSub: { fontFamily: regular, fontSize: ms(11), color: 'rgba(255,255,255,0.8)', marginTop: vs(2) },
     activeBadge: {
         flexDirection: 'row', alignItems: 'center',
-        backgroundColor: '#DCFCE7', paddingHorizontal: ms(12),
-        paddingVertical: vs(5), borderRadius: ms(14),
+        backgroundColor: '#DCFCE7', paddingHorizontal: ms(10),
+        paddingVertical: vs(4), borderRadius: ms(12),
     },
     activeDot: { width: ms(7), height: ms(7), borderRadius: ms(4), backgroundColor: '#16A34A', marginRight: ms(5) },
-    activeText: { fontFamily: bold, fontSize: ms(11), color: '#16A34A' },
+    activeText: { fontFamily: bold, fontSize: ms(10), color: '#16A34A' },
 
-    // Condition card
-    condCard: {
+    // Summary Card
+    summaryCard: {
         backgroundColor: whiteColor, borderRadius: ms(16),
         marginHorizontal: ms(20), padding: ms(18), marginBottom: vs(16),
     },
-    condLabel: { fontFamily: regular, fontSize: ms(11), color: '#9CA3AF', marginBottom: vs(8) },
-    condNameRow: {
-        flexDirection: 'row', alignItems: 'flex-start',
-        justifyContent: 'space-between', marginBottom: vs(4),
+    summaryDesc: { fontFamily: regular, fontSize: ms(13), color: '#6B7280', lineHeight: ms(20), marginBottom: vs(14) },
+    summaryBadges: { flexDirection: 'row', flexWrap: 'wrap', gap: ms(8), marginBottom: vs(12) },
+    summaryBadge: {
+        flexDirection: 'row', alignItems: 'center', gap: ms(6),
+        paddingHorizontal: ms(12), paddingVertical: vs(6), borderRadius: ms(10),
     },
-    condTitle: { fontFamily: bold, fontSize: ms(18), color: blackColor, flex: 1, marginRight: ms(8) },
-    condLastUpdate: { fontFamily: regular, fontSize: ms(10), color: '#9CA3AF', marginTop: vs(4) },
-    condSub: { fontFamily: bold, fontSize: ms(13), color: '#374151', marginBottom: vs(14) },
-    condBadge: {
-        alignSelf: 'flex-start', paddingHorizontal: ms(12),
-        paddingVertical: vs(6), borderRadius: ms(10),
+    summaryBadgeText: { fontFamily: bold, fontSize: ms(12) },
+    summaryDate: { fontFamily: regular, fontSize: ms(11), color: '#9CA3AF' },
+
+    // Disease Impact
+    impactCard: {
+        backgroundColor: primaryColor + '08', borderRadius: ms(16), borderWidth: 1,
+        borderColor: primaryColor + '20', marginHorizontal: ms(20),
+        padding: ms(16), marginBottom: vs(16),
     },
-    condBadgeText: { fontFamily: bold, fontSize: ms(12) },
+    impactHeader: { flexDirection: 'row', alignItems: 'center', gap: ms(8), marginBottom: vs(10) },
+    impactTitle: { fontFamily: bold, fontSize: ms(14), color: primaryColor },
+    impactText: { fontFamily: regular, fontSize: ms(13), color: '#374151', lineHeight: ms(21) },
+
+    // Stage Progression
+    stageCard: {
+        backgroundColor: whiteColor, borderRadius: ms(16),
+        marginHorizontal: ms(20), padding: ms(16), marginBottom: vs(16),
+    },
+    stageHeader: { flexDirection: 'row', alignItems: 'center', gap: ms(8), marginBottom: vs(14) },
+    stageHeaderText: { fontFamily: bold, fontSize: ms(15), color: blackColor },
+    stageBarRow: { flexDirection: 'row', gap: ms(3), marginBottom: vs(6) },
+    stageSegment: { height: vs(5), borderRadius: ms(3) },
+    stageCurrentWrap: { flexDirection: 'row', alignItems: 'center', gap: ms(4), marginTop: vs(6) },
+    stageCurrentDot: { width: ms(6), height: ms(6), borderRadius: ms(3) },
+    stageCurrentLabel: { fontFamily: bold, fontSize: ms(10) },
+    stageFooter: { flexDirection: 'row', justifyContent: 'space-between', marginTop: vs(8) },
+    stageFooterNormal: { fontFamily: regular, fontSize: ms(10), color: '#16A34A' },
+    stageProjected: { fontFamily: regular, fontSize: ms(10), color: '#F59E0B' },
+
+    // Section Header
+    sectionHeader: {
+        flexDirection: 'row', alignItems: 'center', gap: ms(8),
+        paddingHorizontal: ms(20), marginBottom: vs(10), marginTop: vs(4),
+    },
+    sectionHeaderText: { fontFamily: bold, fontSize: ms(16), color: blackColor },
+
+    // Shared card
+    card: {
+        backgroundColor: whiteColor, borderRadius: ms(16),
+        marginHorizontal: ms(20), padding: ms(16), marginBottom: vs(14),
+    },
 
     // Organs
-    organsWrap: { paddingHorizontal: ms(20), marginBottom: vs(16), gap: vs(12) },
+    organsGrid: { paddingHorizontal: ms(20), marginBottom: vs(14), gap: vs(10) },
     organCard: { backgroundColor: whiteColor, borderRadius: ms(16), padding: ms(16) },
-    organTopRow: { flexDirection: 'row', alignItems: 'center', marginBottom: vs(14) },
+    organTopRow: { flexDirection: 'row', alignItems: 'center', marginBottom: vs(10) },
     organIconCircle: {
-        width: ms(52), height: ms(52), borderRadius: ms(26),
+        width: ms(46), height: ms(46), borderRadius: ms(23),
         backgroundColor: '#F1F5F9', justifyContent: 'center', alignItems: 'center', marginRight: ms(12),
     },
-    organEmoji: { fontSize: ms(28) },
-    organName: { fontFamily: bold, fontSize: ms(16), color: blackColor, flex: 1 },
-    organStatusRow: { flexDirection: 'row', alignItems: 'center', marginBottom: vs(12) },
-    organStatusLabel: { fontFamily: bold, fontSize: ms(12), color: blackColor },
-    organStatusBadge: { paddingHorizontal: ms(12), paddingVertical: vs(4), borderRadius: ms(10) },
-    organStatusText: { fontFamily: bold, fontSize: ms(11) },
-    organContribTitle: { fontFamily: bold, fontSize: ms(12), color: blackColor, marginBottom: vs(8) },
-    organContribWrap: { flexDirection: 'row', flexWrap: 'wrap', gap: ms(10) },
+    organImg: { width: ms(30), height: ms(30) },
+    organName: { fontFamily: bold, fontSize: ms(15), color: blackColor, marginBottom: vs(4) },
+    organStatusBadge: { paddingHorizontal: ms(10), paddingVertical: vs(3), borderRadius: ms(8), alignSelf: 'flex-start' },
+    organStatusText: { fontFamily: bold, fontSize: ms(10) },
+    organStressWrap: { alignItems: 'center', width: ms(50) },
+    organStressValue: { fontFamily: bold, fontSize: ms(18) },
+    organStressLabel: { fontFamily: regular, fontSize: ms(8), color: '#9CA3AF', marginBottom: vs(3) },
+    organStressBar: { width: ms(40), height: vs(3), backgroundColor: '#E5E7EB', borderRadius: ms(2), overflow: 'hidden' },
+    organStressFill: { height: '100%', borderRadius: ms(2) },
+    organContribWrap: { flexDirection: 'row', flexWrap: 'wrap', gap: ms(8) },
     organContribChip: {
         flexDirection: 'row', alignItems: 'center',
         backgroundColor: '#F3F4F6', borderRadius: ms(20),
-        paddingHorizontal: ms(14), paddingVertical: vs(6),
+        paddingHorizontal: ms(12), paddingVertical: vs(5),
     },
-    organContribName: { fontFamily: regular, fontSize: ms(12), color: '#374151' },
+    organContribName: { fontFamily: regular, fontSize: ms(11), color: '#374151' },
 
-    // Bio-Markers section
-    bioSectionHeader: {
-        flexDirection: 'row', alignItems: 'flex-start',
-        justifyContent: 'space-between', paddingHorizontal: ms(20), marginBottom: vs(12),
+    // Bio-Markers
+    bioSectionRow: {
+        flexDirection: 'row', alignItems: 'center',
+        justifyContent: 'space-between', paddingRight: ms(20),
     },
-    bioSectionTitle: { fontFamily: bold, fontSize: ms(16), color: blackColor, lineHeight: ms(22) },
     viewAllBtn: {
-        borderWidth: 1.5, borderColor: '#3B82F6', borderRadius: ms(20),
-        paddingHorizontal: ms(14), paddingVertical: vs(6),
+        flexDirection: 'row', alignItems: 'center',
+        backgroundColor: primaryColor + '12', borderRadius: ms(20),
+        paddingHorizontal: ms(12), paddingVertical: vs(5),
     },
-    viewAllText: { fontFamily: bold, fontSize: ms(11), color: '#3B82F6' },
-    bioCardsWrap: { paddingHorizontal: ms(20), marginBottom: vs(16) },
-    bioCard: { backgroundColor: whiteColor, borderRadius: ms(16), padding: ms(16), marginBottom: ms(10) },
-    bioCardTop: { flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: vs(14) },
+    viewAllText: { fontFamily: bold, fontSize: ms(11), color: primaryColor },
+    bioCardsWrap: { paddingHorizontal: ms(20), marginBottom: vs(14) },
+    bioCard: { backgroundColor: whiteColor, borderRadius: ms(16), padding: ms(16) },
+    bioCardTop: { flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: vs(12) },
     bioNameWrap: { flex: 1 },
-    bioName: {
-        fontFamily: bold, fontSize: ms(12), color: whiteColor,
-        backgroundColor: 'green', paddingVertical: ms(6), paddingHorizontal: ms(10),
-        borderRadius: ms(5), alignSelf: 'flex-start',
-    },
+    bioName: { fontFamily: bold, fontSize: ms(14), color: blackColor },
     bioSubtitle: { fontFamily: regular, fontSize: ms(11), color: '#9CA3AF', marginTop: vs(2) },
     bioTopRight: { alignItems: 'flex-end' },
-    bioCodeBadge: { backgroundColor: '#F3F4F6', borderRadius: ms(8), paddingHorizontal: ms(10), paddingVertical: vs(4) },
-    bioCodeText: { fontFamily: bold, fontSize: ms(12), color: blackColor },
-    bioStatusLabel: { fontFamily: bold, fontSize: ms(12), marginTop: vs(4) },
+    bioCodeBadge: { borderRadius: ms(8), paddingHorizontal: ms(10), paddingVertical: vs(4) },
+    bioCodeText: { fontFamily: bold, fontSize: ms(12) },
+    bioStatusLabel: { fontFamily: bold, fontSize: ms(11), marginTop: vs(4) },
     bioGrid: { flexDirection: 'row', backgroundColor: '#F8FAFC', borderRadius: ms(12), padding: ms(12), marginBottom: vs(12) },
     bioGridCell: { flex: 1, alignItems: 'center' },
     bioGridCellBorder: { borderLeftWidth: 1, borderLeftColor: '#E5E7EB' },
     bioGridHeader: { fontFamily: regular, fontSize: ms(10), color: '#9CA3AF', marginBottom: vs(4) },
     bioGridValue: { fontFamily: bold, fontSize: ms(14), color: blackColor },
     bioRefRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
-    bioRefText: { fontFamily: regular, fontSize: ms(12), color: '#374151' },
+    bioRefText: { fontFamily: regular, fontSize: ms(12), color: '#9CA3AF' },
     viewTrendBtn: {
         flexDirection: 'row', alignItems: 'center',
-        borderWidth: 1.5, borderColor: '#3B82F6', borderRadius: ms(20),
+        backgroundColor: primaryColor + '12', borderRadius: ms(20),
         paddingHorizontal: ms(12), paddingVertical: vs(5),
     },
-    viewTrendText: { fontFamily: bold, fontSize: ms(11), color: '#3B82F6' },
+    viewTrendText: { fontFamily: bold, fontSize: ms(11), color: primaryColor },
     bioChartWrap: { marginTop: vs(14) },
     xLabels: { flexDirection: 'row', justifyContent: 'space-between', marginTop: vs(8), paddingHorizontal: ms(2) },
     xLabel: { fontFamily: regular, fontSize: ms(9), color: '#9CA3AF' },
 
-    // Shared section styles
-    sectionTitle: {
-        fontFamily: bold, fontSize: ms(16), color: blackColor,
-        paddingHorizontal: ms(20), marginBottom: vs(12),
-    },
-    sectionCard: {
-        backgroundColor: whiteColor, borderRadius: ms(16),
-        marginHorizontal: ms(20), padding: ms(16), marginBottom: vs(16),
-    },
-    cardBoldLabel: { fontFamily: bold, fontSize: ms(13), color: blackColor, marginBottom: vs(6) },
-    cardGrayDesc: { fontFamily: regular, fontSize: ms(12), color: '#6B7280', lineHeight: ms(19), marginBottom: vs(14) },
-
-    // Symptom
-    symptomRow: { paddingVertical: vs(4) },
-    symptomText: { fontFamily: regular, fontSize: ms(13), color: '#374151' },
-    symptomSeverity: { fontFamily: bold, fontSize: ms(13), color: blackColor },
+    // Symptoms
+    symptomRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingVertical: vs(10) },
+    symptomBorder: { borderBottomWidth: 1, borderBottomColor: '#F1F5F9' },
+    symptomLeft: { flex: 1 },
+    symptomName: { fontFamily: bold, fontSize: ms(13), color: blackColor },
+    symptomDate: { fontFamily: regular, fontSize: ms(11), color: '#9CA3AF', marginTop: vs(2) },
+    symptomRight: { alignItems: 'flex-end', width: ms(80) },
+    symptomSeverity: { fontFamily: bold, fontSize: ms(12), marginBottom: vs(4) },
+    severityTrack: { width: ms(60), height: vs(4), backgroundColor: '#F1F5F9', borderRadius: ms(2), overflow: 'hidden' },
+    severityFill: { height: '100%', borderRadius: ms(2) },
 
     // Lifestyle
-    lifestylePill: {
-        flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between',
-        borderRadius: ms(30), paddingHorizontal: ms(16), paddingVertical: vs(12), marginBottom: vs(8),
+    lifestyleRow: { flexDirection: 'row', alignItems: 'center', paddingVertical: vs(10) },
+    lifestyleBorder: { borderBottomWidth: 1, borderBottomColor: '#F1F5F9' },
+    lifestyleIcon: {
+        width: ms(36), height: ms(36), borderRadius: ms(10),
+        justifyContent: 'center', alignItems: 'center', marginRight: ms(12),
     },
-    lifestylePillLabel: { fontFamily: regular, fontSize: ms(13), color: '#374151' },
-    lifestylePillValue: { fontFamily: bold, fontSize: ms(13), color: blackColor },
+    lifestyleLabel: { fontFamily: regular, fontSize: ms(13), color: '#374151', flex: 1 },
+    lifestyleValue: { fontFamily: bold, fontSize: ms(13), color: blackColor },
+
+    // Interventions / Required Actions
+    interventionsWrap: { paddingHorizontal: ms(20), marginBottom: vs(14) },
+    interventionCard: {
+        flexDirection: 'row', alignItems: 'center', gap: ms(12),
+        backgroundColor: whiteColor, borderRadius: ms(14), padding: ms(14),
+        marginBottom: vs(8), borderLeftWidth: ms(3),
+    },
+    interventionIconWrap: {
+        width: ms(32), height: ms(32), borderRadius: ms(8),
+        justifyContent: 'center', alignItems: 'center',
+    },
+    interventionText: { fontFamily: regular, fontSize: ms(12), color: '#374151', lineHeight: ms(18) },
+    interventionPriority: { fontFamily: bold, fontSize: ms(10), marginTop: vs(3) },
 
     // Medical Engagement
-    meFirstSection: { marginBottom: vs(10) },
-    meNestedCard: {
-        backgroundColor: '#F3F4F6', borderRadius: ms(12),
-        padding: ms(14), marginBottom: vs(10),
+    meCard: {
+        backgroundColor: whiteColor, borderRadius: ms(16),
+        marginHorizontal: ms(20), padding: ms(16), marginBottom: vs(10),
     },
-    meSectionTitle: { fontFamily: bold, fontSize: ms(13), color: blackColor, marginBottom: vs(8) },
-    meRow: { flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: vs(4) },
+    meTitleRow: { flexDirection: 'row', alignItems: 'center', marginBottom: vs(10) },
+    meTitleIcon: {
+        width: ms(30), height: ms(30), borderRadius: ms(8),
+        backgroundColor: primaryColor + '12', justifyContent: 'center', alignItems: 'center',
+        marginRight: ms(10),
+    },
+    meSectionTitle: { fontFamily: bold, fontSize: ms(14), color: blackColor },
+    meRow: {
+        flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'space-between',
+        paddingVertical: vs(5), paddingLeft: ms(40),
+    },
     meLabel: { fontFamily: regular, fontSize: ms(12), color: '#374151', flex: 1 },
-    meDotValueRow: { flexDirection: 'row', alignItems: 'center' },
-    meDot: { width: ms(5), height: ms(5), borderRadius: ms(3), backgroundColor: blackColor, marginRight: ms(6) },
     meValue: { fontFamily: regular, fontSize: ms(12), color: '#6B7280' },
 
     // Monitoring
-    monitorCard: {
-        backgroundColor: whiteColor, borderRadius: ms(16),
-        marginHorizontal: ms(20), padding: ms(16), marginBottom: vs(16),
-        flexDirection: 'row', flexWrap: 'wrap', gap: ms(16),
+    monitorWrap: { flexDirection: 'row', flexWrap: 'wrap', gap: ms(10) },
+    monitorChip: {
+        flexDirection: 'row', alignItems: 'center', gap: ms(6),
+        backgroundColor: primaryColor + '10', borderRadius: ms(20),
+        paddingHorizontal: ms(14), paddingVertical: vs(8),
     },
-    monitorItem: { flexDirection: 'row', alignItems: 'center' },
-    monitorDot: { width: ms(8), height: ms(8), borderRadius: ms(4), backgroundColor: blackColor, marginRight: ms(8) },
-    monitorText: { fontFamily: bold, fontSize: ms(13), color: blackColor },
+    monitorText: { fontFamily: bold, fontSize: ms(12), color: primaryColor },
 });

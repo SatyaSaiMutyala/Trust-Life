@@ -9,6 +9,7 @@ import {
     TextInput,
     ScrollView,
     Dimensions,
+    Image,
 } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { ms, vs } from 'react-native-size-matters';
@@ -22,12 +23,12 @@ const CARD_GAP = ms(12);
 const CARD_WIDTH = (width - ms(15) * 2 - CARD_GAP) / 2;
 
 const MOCK_DOCTORS = [
-    { id: '1', name: 'Dr. Ramesh Kumar', rating: 4.5, reviews: '86k', specialty: 'General Physician', online: false },
-    { id: '2', name: 'Dr. Anil Sharma',  rating: 4.5, reviews: '86k', specialty: 'General Physician', online: false },
-    { id: '3', name: 'Dr. Ramesh Kumar', rating: 4.5, reviews: '86k', specialty: 'Dermatologist',     online: false },
-    { id: '4', name: 'Dr. Anil Sharma',  rating: 4.5, reviews: '86k', specialty: 'General Physician', online: true  },
-    { id: '5', name: 'Dr. Anil Sharma',  rating: 4.5, reviews: '86k', specialty: 'General Physician', online: true  },
-    { id: '6', name: 'Dr. Anil Sharma',  rating: 4.5, reviews: '86k', specialty: 'General Physician', online: false },
+    { id: '1', name: 'Dr. Ramesh Kumar', rating: 4.5, reviews: '86k', specialty: 'General Physician', online: false, image: require('../../assets/img/doctor.jpg') },
+    { id: '2', name: 'Dr. Anil Sharma',  rating: 4.5, reviews: '86k', specialty: 'General Physician', online: false, image: require('../../assets/img/doctor.jpg') },
+    { id: '3', name: 'Dr. Ramesh Kumar', rating: 4.5, reviews: '86k', specialty: 'Dermatologist',     online: false, image: require('../../assets/img/doctor.jpg') },
+    { id: '4', name: 'Dr. Anil Sharma',  rating: 4.5, reviews: '86k', specialty: 'General Physician', online: true,  image: require('../../assets/img/doctor.jpg') },
+    { id: '5', name: 'Dr. Anil Sharma',  rating: 4.5, reviews: '86k', specialty: 'General Physician', online: true,  image: require('../../assets/img/doctor.jpg') },
+    { id: '6', name: 'Dr. Anil Sharma',  rating: 4.5, reviews: '86k', specialty: 'General Physician', online: false, image: require('../../assets/img/doctor.jpg') },
 ];
 
 const FILTERS = ['Specialization', 'Experience'];
@@ -43,10 +44,8 @@ const DoctorCard = ({ item, index, onPress }) => (
     >
         {/* Avatar */}
         <View style={styles.avatarWrap}>
-            <View style={styles.avatarBg}>
-                <Icon type={Icons.MaterialIcons} name="person" size={ms(40)} color="#90CAF9" />
-            </View>
-            <View style={[styles.statusDot, { backgroundColor: item.online ? '#4CAF50' : '#F44336' }]} />
+            <Image source={item.image} style={styles.avatarBg} resizeMode="cover" />
+            <View style={[styles.statusDot, { backgroundColor: item.online ? '#4CAF50' : '#9CA3AF' }]} />
         </View>
 
         {/* Name */}
@@ -277,9 +276,6 @@ const styles = StyleSheet.create({
         width: ms(70),
         height: ms(70),
         borderRadius: ms(35),
-        backgroundColor: '#E3F2FD',
-        justifyContent: 'center',
-        alignItems: 'center',
         overflow: 'hidden',
     },
     statusDot: {

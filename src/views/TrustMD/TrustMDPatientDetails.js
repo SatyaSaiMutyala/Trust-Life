@@ -101,6 +101,9 @@ const TrustMDPatientDetails = () => {
 
                 {/* ── Header ── */}
                 <View style={styles.header}>
+                    <TouchableOpacity style={styles.backBtn} onPress={() => navigation.goBack()}>
+                        <Icon type={Icons.Ionicons} name="arrow-back" size={ms(20)} color={blackColor} />
+                    </TouchableOpacity>
                     <Text style={styles.headerTitle}>Patient Details</Text>
                     <Text style={styles.headerSubtitle}>Last Updated: 4hours ago</Text>
                 </View>
@@ -120,6 +123,20 @@ const TrustMDPatientDetails = () => {
                         </View>
                         <Text style={styles.patientAge}>27y, 3m, 6d</Text>
                     </View>
+                </TouchableOpacity>
+
+                {/* ── TrustMD Actions ── */}
+                <TouchableOpacity
+                    style={styles.trustmdActionsBtn}
+                    activeOpacity={0.85}
+                    onPress={() => navigation.navigate('TrustMDActionsScreen')}
+                >
+                    <Image source={require('../../assets/img/trustmdlogo.png')} style={styles.trustmdActionsLogo} resizeMode="contain" />
+                    <View style={{ flex: 1 }}>
+                        <Text style={styles.trustmdActionsTitle}>TrustMD Actions</Text>
+                        <Text style={styles.trustmdActionsSub}>Notes · Order Tests · Prescribe</Text>
+                    </View>
+                    <Icon type={Icons.Ionicons} name="chevron-forward" size={ms(18)} color={whiteColor} />
                 </TouchableOpacity>
 
                 {/* ── Visit Summary ── */}
@@ -376,20 +393,37 @@ const styles = StyleSheet.create({
     // Header
     header: {
         flexDirection: 'row',
-        justifyContent: 'space-between',
         alignItems: 'center',
         paddingTop: ms(50),
         paddingBottom: vs(14),
+        gap: ms(10),
+    },
+    backBtn: {
+        width: ms(34), height: ms(34), borderRadius: ms(17),
+        backgroundColor: whiteColor, justifyContent: 'center', alignItems: 'center',
+        elevation: 2, shadowColor: '#000', shadowOpacity: 0.06, shadowRadius: 4, shadowOffset: { width: 0, height: 1 },
     },
     headerTitle: {
         fontSize: ms(17),
         fontWeight: '700',
         color: blackColor,
+        flex: 1,
     },
     headerSubtitle: {
         fontSize: ms(11),
         color: '#999',
     },
+
+    // TrustMD Actions Button
+    trustmdActionsBtn: {
+        flexDirection: 'row', alignItems: 'center', gap: ms(12),
+        backgroundColor: primaryColor, borderRadius: ms(16),
+        paddingHorizontal: ms(18), paddingVertical: vs(16),
+        marginBottom: vs(10),
+    },
+    trustmdActionsLogo: { width: ms(32), height: ms(32) },
+    trustmdActionsTitle: { fontSize: ms(15), fontWeight: '700', color: whiteColor },
+    trustmdActionsSub: { fontSize: ms(11), color: 'rgba(255,255,255,0.75)', marginTop: vs(2) },
 
     // Card
     card: {

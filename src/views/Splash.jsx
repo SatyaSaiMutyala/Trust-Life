@@ -39,7 +39,7 @@ import {
   updateAddress,
 } from "../actions/CurrentAddressActions";
 import { StatusBar, StatusBar2 } from '../components/StatusBar';
-import { blackColor } from "../utils/globalColors";
+import { blackColor, primaryColor } from "../utils/globalColors";
 import { s, vs, ms } from 'react-native-size-matters';
 
 const Splash = (props) => {
@@ -294,7 +294,9 @@ const Splash = (props) => {
 
       <View style={styles.taglineSection}>
         <Text style={styles.tagline}>
-          The Health Companion you can{'\n'}Trust for Life
+          Your Health.{' '}
+          <Text style={styles.taglineAccent}>Connected.</Text>
+          {' '}For Life
         </Text>
       </View>
 
@@ -344,14 +346,19 @@ const styles = StyleSheet.create({
   },
   taglineSection: {
     alignItems: 'center',
-    marginBottom:ms(20),
+    marginBottom: ms(20),
   },
   tagline: {
-    fontSize: ms(18),
+    fontSize: ms(20),
     textAlign: 'center',
     color: blackColor,
-    lineHeight: ms(26),
-    fontWeight:'600'
+    lineHeight: ms(30),
+    fontWeight: '300',
+    letterSpacing: ms(0.8),
+  },
+  taglineAccent: {
+    fontWeight: '700',
+    color: primaryColor,
   },
   bottomSection: {
     alignItems: 'center',

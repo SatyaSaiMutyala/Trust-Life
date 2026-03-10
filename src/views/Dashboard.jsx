@@ -1168,15 +1168,11 @@ const Dashboard = (props) => {
                                         </TouchableOpacity>
                                     </View>
 
-                                    {/* Condition Cards - Horizontal Scroll */}
-                                    <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles2.macScrollRow}>
+                                    {/* Condition Cards - Row */}
+                                    <View style={styles2.macCardsRow}>
                                         {[
-                                            { label: 'Acute',           count: '4', icon: 'flash',            iconColor: '#EF4444', category: 'Acute' },
-                                            { label: 'Chronic',        count: '4', icon: 'time',             iconColor: '#3B82F6', category: 'Chronic' },
-                                            { label: 'Chronic Infec.', count: '4', icon: 'bug',              iconColor: '#8B5CF6', category: 'Chronic Infectious' },
-                                            { label: 'Genetic',        count: '4', icon: 'git-branch',       iconColor: '#10B981', category: 'Genetic' },
-                                            { label: 'Life Threats',   count: '4', icon: 'alert-circle',     iconColor: '#F59E0B', category: 'Life Threats' },
-                                            { label: 'Preventive',     count: '4', icon: 'shield-checkmark', iconColor: '#0EA5E9', category: 'Preventive' },
+                                            { label: 'Acute',    count: '4', icon: 'flash', iconColor: '#EF4444', category: 'Acute' },
+                                            { label: 'Chronic',  count: '4', icon: 'time',  iconColor: '#3B82F6', category: 'Chronic' },
                                         ].map((item, index) => (
                                             <TouchableOpacity key={index} style={styles2.macGridCell} activeOpacity={0.7}
                                                 onPress={() => navigation.navigate('CategoryDiseasesScreen', { category: item.category })}>
@@ -1194,7 +1190,7 @@ const Dashboard = (props) => {
                                                 </View>
                                             </TouchableOpacity>
                                         ))}
-                                    </ScrollView>
+                                    </View>
                                 </View>
                             </View>
 
@@ -1206,48 +1202,22 @@ const Dashboard = (props) => {
                                         <Text style={styles2.viewAllText}>View all</Text>
                                     </TouchableOpacity>
                                 </View>
-                                <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-                                    <View>
-                                        <View style={styles2.vosRow}>
-                                            {[
-                                                { image: require('../assets/img/human-eye.png'), organ: 'Eye', status: 'Normal' },
-                                                { image: require('../assets/img/human-brain.png'), organ: 'Brain', status: 'Active' },
-                                                { image: require('../assets/img/human-skin.png'), organ: 'Skin', status: 'Healthy' },
-                                                { image: require('../assets/img/human-reproductive.png'), organ: 'Reproductive', status: 'Normal' },
-                                                { image: require('../assets/img/human-pancreas.png'), organ: 'Pancreas', status: 'Stable' },
-                                                { image: require('../assets/img/human-gut.png'), organ: 'Gut', status: 'Balanced' },
-                                                { image: require('../assets/img/human-vascular.png'), organ: 'Vascular System', status: 'Normal' },
-                                            ].map((item, index) => (
-                                                <TouchableOpacity key={index} style={styles2.vosCard} activeOpacity={0.7} onPress={() => navigation.navigate('AnalysisCheck')}>
-                                                    <View style={styles2.vosIconWrap}>
-                                                        <Image source={item.image} style={styles2.vosImage} />
-                                                    </View>
-                                                    <Text style={styles2.vosOrganName}>{item.organ}</Text>
-                                                    <Text style={styles2.vosStatus}>{item.status}</Text>
-                                                </TouchableOpacity>
-                                            ))}
-                                        </View>
-                                        <View style={styles2.vosRow}>
-                                            {[
-                                                { image: require('../assets/img/human-heart.png'), organ: 'Heart', status: 'Optimal' },
-                                                { image: require('../assets/img/human-liver.png'), organ: 'Liver', status: 'Stable' },
-                                                { image: require('../assets/img/human-kidneys.png'), organ: 'Kidney', status: 'Normal' },
-                                                { image: require('../assets/img/human-lungs.png'), organ: 'Lungs', status: 'Efficient' },
-                                                { image: require('../assets/img/human-muscle.png'), organ: 'Muscle', status: 'Strong' },
-                                                { image: require('../assets/img/human-thyroid.png'), organ: 'Thyroid', status: 'Normal' },
-                                                { image: require('../assets/img/human-thymus.png'), organ: 'Thymus', status: 'Active' },
-                                            ].map((item, index) => (
-                                                <TouchableOpacity key={index} style={styles2.vosCard} activeOpacity={0.7} onPress={() => navigation.navigate('AnalysisCheck')}>
-                                                    <View style={styles2.vosIconWrap}>
-                                                        <Image source={item.image} style={styles2.vosImage} />
-                                                    </View>
-                                                    <Text style={styles2.vosOrganName}>{item.organ}</Text>
-                                                    <Text style={styles2.vosStatus}>{item.status}</Text>
-                                                </TouchableOpacity>
-                                            ))}
-                                        </View>
-                                    </View>
-                                </ScrollView>
+                                <View style={styles2.vosGrid}>
+                                    {[
+                                        { image: require('../assets/img/human-heart.png'), organ: 'Heart', status: 'Optimal' },
+                                        { image: require('../assets/img/human-liver.png'), organ: 'Liver', status: 'Stable' },
+                                        { image: require('../assets/img/human-kidneys.png'), organ: 'Kidney', status: 'Normal' },
+                                        { image: require('../assets/img/human-pancreas.png'), organ: 'Pancreas', status: 'Stable' },
+                                    ].map((item, index) => (
+                                        <TouchableOpacity key={index} style={styles2.vosCard} activeOpacity={0.7} onPress={() => navigation.navigate('OrganInsightsScreen')}>
+                                            <View style={styles2.vosIconWrap}>
+                                                <Image source={item.image} style={styles2.vosImage} />
+                                            </View>
+                                            <Text style={styles2.vosOrganName}>{item.organ}</Text>
+                                            <Text style={styles2.vosStatus}>{item.status}</Text>
+                                        </TouchableOpacity>
+                                    ))}
+                                </View>
                             </View>
 
                             {/* ── NOTIFICATIONS ── */}
@@ -1479,16 +1449,16 @@ const Dashboard = (props) => {
                             </View>
                             <View style={styles.wellnessGrid}>
                                 {[
-                                    { image: require('../assets/img/c-hospital.png'), label: 'Hospital', route: 'HospitalScreen' },
+                                    { image: require('../assets/img/c-hospital.png'), label: 'Hospital', route: 'HospitalConsultation' },
                                     { image: require('../assets/img/c-wellness.png'), label: 'Wellness Center', route: 'WellnessCenterScreen' },
                                     { image: require('../assets/img/c-healthinsurance.png'), label: 'Health Insurance', route: 'HealthInsuranceScreen' },
-                                    { image: require('../assets/img/c-ambulance.png'), label: 'Ambulance', route: 'AmbulanceScreen' },
+                                    { image: require('../assets/img/c-ambulance.png'), label: 'Ambulance', call: '108' },
                                 ].map((item, index) => (
                                     <TouchableOpacity
                                         key={index}
                                         style={styles.wellnessCard}
                                         activeOpacity={0.7}
-                                        onPress={() => navigation.navigate(item.route)}
+                                        onPress={() => item.call ? Linking.openURL(`tel:${item.call}`) : navigation.navigate(item.route)}
                                     >
                                         <Image source={item.image} style={styles.wellnessImage} />
                                         <Text style={styles.wellnessLabel} numberOfLines={2}>{item.label}</Text>
@@ -2925,15 +2895,16 @@ const styles2 = StyleSheet.create({
         fontWeight: '600',
         color: '#FFFFFF',
     },
-    macScrollRow: {
+    macCardsRow: {
+        flexDirection: 'row',
+        gap: ms(10),
         marginTop: vs(12),
     },
     macGridCell: {
-        width: ms(130),
+        flex: 1,
         backgroundColor: '#F3F4F6',
         borderRadius: ms(12),
         padding: ms(12),
-        marginRight: ms(10),
         minHeight: vs(90),
         justifyContent: 'space-between',
     },
@@ -3102,13 +3073,18 @@ const styles2 = StyleSheet.create({
         fontWeight: 'bold',
         color: '#111111',
     },
+    vosGrid: {
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+        gap: ms(10),
+    },
     vosRow: {
         flexDirection: 'row',
         gap: ms(10),
         marginBottom: ms(10),
     },
     vosCard: {
-        width: ms(120),
+        width: '48%',
         backgroundColor: '#F1F5F9',
         borderRadius: ms(14),
         paddingHorizontal: ms(12),

@@ -20,7 +20,6 @@ const BANNER_IMAGES = [
     require('../../assets/img/pr-diagnostic.png'),
     require('../../assets/img/pr-medication.png'),
     require('../../assets/img/pr-medical.png'),
-    require('../../assets/img/pr-medicalbills.png'),
 ];
 
 const CARD_DATA = [
@@ -105,21 +104,11 @@ const PatientHealthRecords = () => {
                         onPress={() => navigation.navigate('PatientMedicalSummary')}
                     >
                         <View style={styles.bannerImagesRow}>
-                            <View style={[styles.bannerImgWrap, styles.bannerImgSm, { marginTop: ms(20) }]}>
-                                <Image source={BANNER_IMAGES[0]} style={styles.bannerImage} />
-                            </View>
-                            <View style={[styles.bannerImgWrap, styles.bannerImgMd, { marginTop: ms(0) }]}>
-                                <Image source={BANNER_IMAGES[1]} style={styles.bannerImage} />
-                            </View>
-                            <View style={[styles.bannerImgWrap, styles.bannerImgLg, { marginTop: ms(8) }]}>
-                                <Image source={BANNER_IMAGES[2]} style={styles.bannerImage} />
-                            </View>
-                            <View style={[styles.bannerImgWrap, styles.bannerImgMd, { marginTop: ms(0) }]}>
-                                <Image source={BANNER_IMAGES[3]} style={styles.bannerImage} />
-                            </View>
-                            <View style={[styles.bannerImgWrap, styles.bannerImgSm, { marginTop: ms(20) }]}>
-                                <Image source={BANNER_IMAGES[4]} style={styles.bannerImage} />
-                            </View>
+                            {BANNER_IMAGES.map((img, idx) => (
+                                <View key={idx} style={[styles.bannerImgWrap, styles.bannerImgUniform]}>
+                                    <Image source={img} style={styles.bannerImage} />
+                                </View>
+                            ))}
                         </View>
                         <Text style={styles.bannerTitle}>Patient & Medical Summary</Text>
                         <Text style={styles.bannerSubtitle}>
@@ -193,17 +182,9 @@ const styles = StyleSheet.create({
         borderRadius: ms(10),
         overflow: 'hidden',
     },
-    bannerImgSm: {
-        width: ms(42),
-        height: ms(42),
-    },
-    bannerImgMd: {
-        width: ms(52),
-        height: ms(52),
-    },
-    bannerImgLg: {
-        width: ms(65),
-        height: ms(65),
+    bannerImgUniform: {
+        width: ms(58),
+        height: ms(58),
     },
     bannerImage: {
         width: '100%',

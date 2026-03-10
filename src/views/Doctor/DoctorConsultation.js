@@ -16,7 +16,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import { ms, vs } from 'react-native-size-matters';
 import { StatusBar2 } from '../../components/StatusBar';
 import Icon, { Icons } from '../../components/Icons';
-import { blackColor, whiteColor, primaryColor, globalGradient } from '../../utils/globalColors';
+import { blackColor, whiteColor, primaryColor } from '../../utils/globalColors';
 import StandaloneBottomBar from '../../components/BottomNavBar/StandaloneBottomBar';
 import DoctorAppointmentsContent from './DoctorAppointmentsContent';
 
@@ -24,58 +24,21 @@ const { width } = Dimensions.get('window');
 const CARD_GAP = ms(12);
 const CARD_WIDTH = (width - ms(15) * 2 - CARD_GAP) / 2;
 
-const SPECIALTIES = [
-    {
-        id: '1',
-        name: 'General Physician',
-        image: require('../../assets/img/doc.png'),
-    },
-    {
-        id: '2',
-        name: 'Cardiologist',
-        image: require('../../assets/img/doc.png'),
-    },
-    {
-        id: '3',
-        name: 'Dermatologist',
-        image: require('../../assets/img/doc.png'),
-    },
-    {
-        id: '4',
-        name: 'Orthopedic',
-        image: require('../../assets/img/doc.png'),
-        icon: true,
-    },
-    {
-        id: '5',
-        name: 'Gynaecologist',
-        image: require('../../assets/img/doc.png'),
-    },
-    {
-        id: '6',
-        name: 'Neurologist',
-        image: require('../../assets/img/doc.png'),
-    },
-    {
-        id: '7',
-        name: 'Pediatrician',
-        image: require('../../assets/img/doc.png'),
-    },
-    {
-        id: '8',
-        name: 'Nutritionist',
-        image: require('../../assets/img/doc.png'),
-    },
-    {
-        id: '9',
-        name: 'Psychologist',
-        image: require('../../assets/img/doc.png'),
-    },
-    {
-        id: '10',
-        name: 'Sexologist',
-        image: require('../../assets/img/doc.png'),
-    },
+const ORGANS = [
+    { id: '1',  name: 'Heart',        image: require('../../assets/img/human-heart.png'),        color: '#FFEDED' },
+    { id: '2',  name: 'Brain',        image: require('../../assets/img/human-brain.png'),        color: '#EDE9FF' },
+    { id: '3',  name: 'Kidneys',      image: require('../../assets/img/human-kidneys.png'),      color: '#E9F3FF' },
+    { id: '4',  name: 'Liver',        image: require('../../assets/img/human-liver.png'),        color: '#FFF4E6' },
+    { id: '5',  name: 'Lungs',        image: require('../../assets/img/human-lungs.png'),        color: '#E6F7FF' },
+    { id: '6',  name: 'Pancreas',     image: require('../../assets/img/human-pancreas.png'),     color: '#FFF0E6' },
+    { id: '7',  name: 'Gut',          image: require('../../assets/img/human-gut.png'),          color: '#F0FFF4' },
+    { id: '8',  name: 'Skin',         image: require('../../assets/img/human-skin.png'),         color: '#FFF8E6' },
+    { id: '9',  name: 'Eyes',         image: require('../../assets/img/human-eye.png'),          color: '#F3EDFF' },
+    { id: '10', name: 'Muscle',       image: require('../../assets/img/human-muscle.png'),       color: '#EDFFED' },
+    { id: '11', name: 'Thyroid',      image: require('../../assets/img/human-thyroid.png'),      color: '#FFF3ED' },
+    { id: '12', name: 'Thymus',       image: require('../../assets/img/human-thymus.png'),       color: '#EDFAFF' },
+    { id: '13', name: 'Vascular',     image: require('../../assets/img/human-vascular.png'),     color: '#FFEDEE' },
+    { id: '14', name: 'Reproductive', image: require('../../assets/img/human-reproductive.png'), color: '#FFEDFA' },
 ];
 
 const todayDate = new Date().toLocaleDateString('en-GB', {
@@ -100,10 +63,10 @@ const DoctorConsultation = () => {
     }, []);
 
     const filtered = search.trim()
-        ? SPECIALTIES.filter((s) =>
+        ? ORGANS.filter((s) =>
               s.name.toLowerCase().includes(search.toLowerCase()),
           )
-        : SPECIALTIES;
+        : ORGANS;
 
     const renderCard = ({ item, index }) => (
         <TouchableOpacity
@@ -114,11 +77,11 @@ const DoctorConsultation = () => {
             activeOpacity={0.85}
             onPress={() => navigation.navigate('DoctorSpecialistList', { specialtyName: item.name, flow })}
         >
-            <Image source={item.image} style={styles.cardImage} resizeMode="cover" />
+            <Image source={item.image} style={styles.cardImage} resizeMode="contain" />
             <View style={styles.cardFooter}>
-                <View style={{ flexDirection:'row', paddingHorizontal:ms(10), backgroundColor:'#F1F5F9', borderRadius:ms(20), paddingVertical:ms(4)}}>
-                <Text style={styles.cardName} numberOfLines={1}>{item.name}</Text>
-                <Icon type={Icons.MaterialIcons} name="north-east" color={primaryColor} size={ms(16)} />
+                <View style={styles.cardPill}>
+                    <Text style={styles.cardName} numberOfLines={1}>{item.name}</Text>
+                    <Icon type={Icons.MaterialIcons} name="north-east" color={'#555'} size={ms(14)} />
                 </View>
             </View>
         </TouchableOpacity>
@@ -139,6 +102,11 @@ const DoctorConsultation = () => {
                     {/* ── Header ── */}
                     <View style={styles.header}>
                         <View style={styles.headerLeft}>
+                            {flow && (
+                                <TouchableOpacity onPress={() => navigation.goBack()} style={{ marginRight: ms(8), width: ms(36), height: ms(36), borderRadius: ms(18), backgroundColor: 'rgba(255,255,255,0.2)', justifyContent: 'center', alignItems: 'center' }}>
+                                    <Icon type={Icons.Ionicons} name="arrow-back" size={ms(20)} color={whiteColor} />
+                                </TouchableOpacity>
+                            )}
                             <TouchableOpacity onPress={() => navigation.navigate('Profile')} style={styles.avatarCircle}>
                                 {profilePic ? (
                                     <Image source={{ uri: profilePic }} style={styles.avatarImage} />
@@ -177,7 +145,7 @@ const DoctorConsultation = () => {
                         onPress={() => navigation.navigate('DoctorSearchScreen')}
                     >
                         <Icon type={Icons.Feather} name="search" color="#999" size={ms(18)} />
-                        <Text style={styles.searchPlaceholder}>Search for Specialized Doctors</Text>
+                        <Text style={styles.searchPlaceholder}>Search by organ or specialist</Text>
                         <Icon type={Icons.Ionicons} name="options-outline" color={primaryColor} size={ms(20)} />
                     </TouchableOpacity>
 
@@ -191,13 +159,13 @@ const DoctorConsultation = () => {
                         contentContainerStyle={styles.grid}
                         ListHeaderComponent={
                             <Text style={styles.titleText}>
-                                Find the Right Specialist for{'\n'}Your Health Needs
+                                Find specialists based on the organ
                             </Text>
                         }
                         ListEmptyComponent={
                             <View style={styles.emptyWrap}>
                                 <Icon type={Icons.Ionicons} name="search-outline" color="#CCC" size={ms(40)} />
-                                <Text style={styles.emptyText}>No specialties found</Text>
+                                <Text style={styles.emptyText}>No organs found</Text>
                             </View>
                         }
                     />
@@ -308,7 +276,7 @@ const styles = StyleSheet.create({
 
     // ── Title ──
     titleText: {
-        fontSize: ms(15),
+        fontSize: ms(16),
         fontWeight: '700',
         color: blackColor,
         textAlign: 'center',
@@ -325,29 +293,40 @@ const styles = StyleSheet.create({
     card: {
         width: CARD_WIDTH,
         backgroundColor: whiteColor,
-        borderRadius: ms(16),
-        overflow: 'hidden',
+        borderRadius: ms(20),
         marginBottom: ms(12),
-        paddingVertical:ms(10)
+        paddingTop: ms(18),
+        paddingBottom: ms(14),
+        elevation: 3,
+        shadowColor: '#000',
+        shadowOpacity: 0.07,
+        shadowRadius: 8,
+        shadowOffset: { width: 0, height: 3 },
     },
     cardImage: {
-        width: '100%',
-        height: ms(100),
-        backgroundColor: '#F0F9F7',
+        width: '60%',
+        height: ms(80),
+        alignSelf: 'center',
+        borderRadius: ms(12),
+        backgroundColor: '#F1F5F9',
     },
     cardFooter: {
+        alignItems: 'center',
+        marginTop: vs(10),
+    },
+    cardPill: {
         flexDirection: 'row',
         alignItems: 'center',
-        justifyContent: 'space-between',
-        paddingHorizontal: ms(20),
-        paddingVertical: vs(10),
+        gap: ms(4),
+        backgroundColor: '#EFEFEF',
+        borderRadius: ms(20),
+        paddingHorizontal: ms(14),
+        paddingVertical: vs(5),
     },
     cardName: {
         fontSize: ms(13),
         fontWeight: '600',
         color: blackColor,
-        flex: 1,
-        marginRight: ms(4),
     },
 
     // ── Empty ──

@@ -11,7 +11,7 @@ import Icon, { Icons } from '../Icons';
 import { whiteColor, primaryColor } from '../../utils/globalColors';
 
 // activeTab: 'back' | 'doctors' | 'appointments' | 'more'
-const StandaloneBottomBar = ({ activeTab = 'doctors', onTabChange }) => {
+const StandaloneBottomBar = ({ activeTab = 'doctors', onTabChange, tab2Label = 'Doctors', tab2Icon = 'stethoscope', tab2IconType, tab2Screen = 'DoctorConsultation' }) => {
     const navigation = useNavigation();
 
     return (
@@ -28,15 +28,15 @@ const StandaloneBottomBar = ({ activeTab = 'doctors', onTabChange }) => {
                 </Text>
             </TouchableOpacity>
 
-            <TouchableOpacity style={styles.navItem} onPress={() => onTabChange ? onTabChange('doctors') : navigation.navigate('DoctorConsultation')}>
+            <TouchableOpacity style={styles.navItem} onPress={() => onTabChange ? onTabChange('doctors') : navigation.navigate(tab2Screen)}>
                 <Icon
-                    type={Icons.MaterialCommunityIcons}
-                    name="stethoscope"
+                    type={tab2IconType || Icons.MaterialCommunityIcons}
+                    name={tab2Icon}
                     color={activeTab === 'doctors' ? primaryColor : '#888'}
                     size={ms(24)}
                 />
                 <Text style={[styles.navLabel, activeTab === 'doctors' && styles.navLabelActive]}>
-                    Doctors
+                    {tab2Label}
                 </Text>
             </TouchableOpacity>
 

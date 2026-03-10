@@ -7,6 +7,7 @@ import {
     ScrollView,
     TouchableOpacity,
     Dimensions,
+    Image,
 } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { ms, vs } from 'react-native-size-matters';
@@ -133,14 +134,13 @@ const DoctorProfileScreen = () => {
 
                     {/* Right: avatar */}
                     <View style={styles.avatarWrap}>
-                        <View style={styles.avatarBg}>
-                            <Icon
-                                type={Icons.MaterialIcons}
-                                name="person"
-                                size={ms(140)}
-                                color="rgba(255,255,255,0.55)"
-                            />
-                        </View>
+                        {doctor.image ? (
+                            <Image source={doctor.image} style={styles.avatarBg} resizeMode="cover" />
+                        ) : (
+                            <View style={[styles.avatarBg, { justifyContent: 'center', alignItems: 'center' }]}>
+                                <Icon type={Icons.MaterialIcons} name="person" size={ms(100)} color="rgba(255,255,255,0.55)" />
+                            </View>
+                        )}
                     </View>
                 </View>
             </LinearGradient>
@@ -397,18 +397,17 @@ const styles = StyleSheet.create({
         color: blackColor,
     },
     avatarWrap: {
-        width: ms(150),
+        width: ms(120),
         alignItems: 'center',
         justifyContent: 'center',
     },
     avatarBg: {
-        width: ms(150),
-        height: ms(150),
-        borderRadius: ms(75),
-        backgroundColor: 'rgba(255,255,255,0.18)',
-        justifyContent: 'center',
-        alignItems: 'center',
+        width: ms(120),
+        height: ms(120),
+        borderRadius: ms(60),
         overflow: 'hidden',
+        borderWidth: 3,
+        borderColor: 'rgba(255,255,255,0.4)',
     },
 
     // ── Wave ──

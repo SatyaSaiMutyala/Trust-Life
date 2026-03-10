@@ -232,6 +232,29 @@ import AddSleepEntry from './src/views/SleepTracking/AddSleepEntry';
 import SleepReadings from './src/views/SleepTracking/SleepReadings';
 import Tracking from './src/views/Tracking/Tracking';
 import DoctorConsultation from './src/views/Doctor/DoctorConsultation';
+import HospitalConsultation from './src/views/Hospital/HospitalConsultation';
+import WellnessCenterScreen from './src/views/Wellness/WellnessCenterScreen';
+import HealthInsuranceScreen from './src/views/HealthInsurance/HealthInsuranceScreen';
+import InsurancePlanDetailScreen from './src/views/HealthInsurance/InsurancePlanDetailScreen';
+import InsuranceNomineeDetails from './src/views/HealthInsurance/InsuranceNomineeDetails';
+import InsuranceDocumentVerification from './src/views/HealthInsurance/InsuranceDocumentVerification';
+import InsurancePaymentSuccess from './src/views/HealthInsurance/InsurancePaymentSuccess';
+import CoachConsultation from './src/views/Coach/CoachConsultation';
+import CoachSpecialistList from './src/views/Coach/CoachSpecialistList';
+import CoachProfileScreen from './src/views/Coach/CoachProfileScreen';
+import CoachAppointmentDetail from './src/views/Coach/CoachAppointmentDetail';
+import CounsellingConsultation from './src/views/Counselling/CounsellingConsultation';
+import CounsellingSpecialistList from './src/views/Counselling/CounsellingSpecialistList';
+import CounsellingProfileScreen from './src/views/Counselling/CounsellingProfileScreen';
+import CounsellingAppointmentDetail from './src/views/Counselling/CounsellingAppointmentDetail';
+import NurseConsultation from './src/views/Nurse/NurseConsultation';
+import NurseSpecialistList from './src/views/Nurse/NurseSpecialistList';
+import NurseProfileScreen from './src/views/Nurse/NurseProfileScreen';
+import NurseAppointmentDetail from './src/views/Nurse/NurseAppointmentDetail';
+import PhysiotherapyConsultation from './src/views/Physiotherapy/PhysiotherapyConsultation';
+import PhysiotherapySpecialistList from './src/views/Physiotherapy/PhysiotherapySpecialistList';
+import PhysiotherapyProfileScreen from './src/views/Physiotherapy/PhysiotherapyProfileScreen';
+import PhysiotherapyAppointmentDetail from './src/views/Physiotherapy/PhysiotherapyAppointmentDetail';
 import DoctorSearchScreen from './src/views/Doctor/DoctorSearchScreen';
 import DoctorSpecialistList from './src/views/Doctor/DoctorSpecialistList';
 import DoctorFilters from './src/views/Doctor/DoctorFilters';
@@ -259,6 +282,7 @@ import ViewPrescriptionScreen from './src/views/TrustMD/ViewPrescriptionScreen';
 import AddLabTestScreen from './src/views/TrustMD/AddLabTestScreen';
 import ViewLabTestsScreen from './src/views/TrustMD/ViewLabTestsScreen';
 import ViewLabTestDetailScreen from './src/views/TrustMD/ViewLabTestDetailScreen';
+import TrustMDActionsScreen from './src/views/TrustMD/TrustMDActionsScreen';
 import AsthmaIntroScreen from './src/views/Asthma/AsthmaIntroScreen';
 import AsthmaDashboard from './src/views/Asthma/AsthmaDashboard';
 import AddAsthmaDetails from './src/views/Asthma/AddAsthmaDetails';
@@ -281,6 +305,14 @@ import SymptomsScreen from './src/views/Progress/SymptomsScreen';
 import SymptomDetailScreen from './src/views/Progress/SymptomDetailScreen';
 import MedicalEngagementScreen from './src/views/Progress/MedicalEngagementScreen';
 import DoctorsVisitScreen from './src/views/Progress/DoctorsVisitScreen';
+import AppointmentAdherenceScreen from './src/views/Progress/AppointmentAdherenceScreen';
+import MedicationAdherenceScreen from './src/views/Progress/MedicationAdherenceScreen';
+import DiagnosticComplianceScreen from './src/views/Progress/DiagnosticComplianceScreen';
+import SelfMonitoringScreen from './src/views/Progress/SelfMonitoringScreen';
+import DietPatternScreen from './src/views/Progress/DietPatternScreen';
+import ProgressPhysicalActivityScreen from './src/views/Progress/PhysicalActivityScreen';
+import ProgressSleepPatternScreen from './src/views/Progress/SleepPatternScreen';
+import StressManagementScreen from './src/views/Progress/StressManagementScreen';
 import PrescriptionScreen from './src/views/Progress/PrescriptionScreen';
 import LabTestsScreen from './src/views/Progress/LabTestsScreen';
 import MonitoringContinuityScreen from './src/views/Progress/MonitoringContinuityScreen';
@@ -290,6 +322,9 @@ import ConcernsScreen from './src/views/Progress/ConcernsScreen';
 import ConcernsDetailScreen from './src/views/Progress/ConcernsDetailScreen';
 import NeedAttentionScreen from './src/views/Progress/NeedAttentionScreen';
 import NeedAttentionDetailScreen from './src/views/Progress/NeedAttentionDetailScreen';
+import DiseaseIntelligenceScreen from './src/views/Progress/DiseaseIntelligenceScreen';
+import OrganInsightsScreen from './src/views/Progress/OrganInsightsScreen';
+import OrganLayerScreen from './src/views/Progress/OrganLayerScreen';
 import ConsentManagerScreen from './src/views/More/ConsentManagerScreen';
 import AddConsentManagerScreen from './src/views/More/AddConsentManagerScreen';
 import AnnualTrustReportScreen from './src/views/More/AnnualTrustReportScreen';
@@ -727,6 +762,29 @@ function App() {
               <Stack.Screen name='AddSleepEntry' component={AddSleepEntry} options={{headerShown:false}}/>
               <Stack.Screen name='SleepReadings' component={SleepReadings} options={{headerShown:false}}/>
               <Stack.Screen name='DoctorConsultation' component={DoctorConsultation} options={{headerShown:false}}/>
+              <Stack.Screen name='HospitalConsultation' component={HospitalConsultation} options={{headerShown:false}}/>
+              <Stack.Screen name='WellnessCenterScreen' component={WellnessCenterScreen} options={{headerShown:false}}/>
+              <Stack.Screen name='HealthInsuranceScreen' component={HealthInsuranceScreen} options={{headerShown:false}}/>
+              <Stack.Screen name='InsurancePlanDetailScreen' component={InsurancePlanDetailScreen} options={{headerShown:false}}/>
+              <Stack.Screen name='InsuranceNomineeDetails' component={InsuranceNomineeDetails} options={{headerShown:false}}/>
+              <Stack.Screen name='InsuranceDocumentVerification' component={InsuranceDocumentVerification} options={{headerShown:false}}/>
+              <Stack.Screen name='InsurancePaymentSuccess' component={InsurancePaymentSuccess} options={{headerShown:false}}/>
+              <Stack.Screen name='CoachScreen' component={CoachConsultation} options={{headerShown:false}}/>
+              <Stack.Screen name='CoachSpecialistList' component={CoachSpecialistList} options={{headerShown:false}}/>
+              <Stack.Screen name='CoachProfileScreen' component={CoachProfileScreen} options={{headerShown:false}}/>
+              <Stack.Screen name='CoachAppointmentDetail' component={CoachAppointmentDetail} options={{headerShown:false}}/>
+              <Stack.Screen name='CounsellingScreen' component={CounsellingConsultation} options={{headerShown:false}}/>
+              <Stack.Screen name='CounsellingSpecialistList' component={CounsellingSpecialistList} options={{headerShown:false}}/>
+              <Stack.Screen name='CounsellingProfileScreen' component={CounsellingProfileScreen} options={{headerShown:false}}/>
+              <Stack.Screen name='CounsellingAppointmentDetail' component={CounsellingAppointmentDetail} options={{headerShown:false}}/>
+              <Stack.Screen name='NurseScreen' component={NurseConsultation} options={{headerShown:false}}/>
+              <Stack.Screen name='NurseSpecialistList' component={NurseSpecialistList} options={{headerShown:false}}/>
+              <Stack.Screen name='NurseProfileScreen' component={NurseProfileScreen} options={{headerShown:false}}/>
+              <Stack.Screen name='NurseAppointmentDetail' component={NurseAppointmentDetail} options={{headerShown:false}}/>
+              <Stack.Screen name='PhysiotherapyScreen' component={PhysiotherapyConsultation} options={{headerShown:false}}/>
+              <Stack.Screen name='PhysiotherapySpecialistList' component={PhysiotherapySpecialistList} options={{headerShown:false}}/>
+              <Stack.Screen name='PhysiotherapyProfileScreen' component={PhysiotherapyProfileScreen} options={{headerShown:false}}/>
+              <Stack.Screen name='PhysiotherapyAppointmentDetail' component={PhysiotherapyAppointmentDetail} options={{headerShown:false}}/>
               <Stack.Screen name='DoctorSearchScreen' component={DoctorSearchScreen} options={{headerShown:false}}/>
               <Stack.Screen name='DoctorSpecialistList' component={DoctorSpecialistList} options={{headerShown:false}}/>
               <Stack.Screen name='DoctorFilters' component={DoctorFilters} options={{headerShown:false}}/>
@@ -754,6 +812,7 @@ function App() {
               <Stack.Screen name='AddLabTestScreen' component={AddLabTestScreen} options={{headerShown:false}}/>
               <Stack.Screen name='ViewLabTestsScreen' component={ViewLabTestsScreen} options={{headerShown:false}}/>
               <Stack.Screen name='ViewLabTestDetailScreen' component={ViewLabTestDetailScreen} options={{headerShown:false}}/>
+              <Stack.Screen name='TrustMDActionsScreen' component={TrustMDActionsScreen} options={{headerShown:false}}/>
               <Stack.Screen name='AsthmaIntroScreen' component={AsthmaIntroScreen} options={{headerShown:false}}/>
               <Stack.Screen name='AsthmaDashboard' component={AsthmaDashboard} options={{headerShown:false}}/>
               <Stack.Screen name='AddAsthmaDetails' component={AddAsthmaDetails} options={{headerShown:false}}/>
@@ -778,6 +837,14 @@ function App() {
               <Stack.Screen name='SymptomDetailScreen' component={SymptomDetailScreen} options={{headerShown:false}}/>
               <Stack.Screen name='MedicalEngagementScreen' component={MedicalEngagementScreen} options={{headerShown:false}}/>
               <Stack.Screen name='DoctorsVisitScreen' component={DoctorsVisitScreen} options={{headerShown:false}}/>
+              <Stack.Screen name='AppointmentAdherenceScreen' component={AppointmentAdherenceScreen} options={{headerShown:false}}/>
+              <Stack.Screen name='MedicationAdherenceScreen' component={MedicationAdherenceScreen} options={{headerShown:false}}/>
+              <Stack.Screen name='DiagnosticComplianceScreen' component={DiagnosticComplianceScreen} options={{headerShown:false}}/>
+              <Stack.Screen name='SelfMonitoringScreen' component={SelfMonitoringScreen} options={{headerShown:false}}/>
+              <Stack.Screen name='DietPatternScreen' component={DietPatternScreen} options={{headerShown:false}}/>
+              <Stack.Screen name='ProgressPhysicalActivityScreen' component={ProgressPhysicalActivityScreen} options={{headerShown:false}}/>
+              <Stack.Screen name='ProgressSleepPatternScreen' component={ProgressSleepPatternScreen} options={{headerShown:false}}/>
+              <Stack.Screen name='StressManagementScreen' component={StressManagementScreen} options={{headerShown:false}}/>
               <Stack.Screen name='PrescriptionScreen' component={PrescriptionScreen} options={{headerShown:false}}/>
               <Stack.Screen name='LabTestsScreen' component={LabTestsScreen} options={{headerShown:false}}/>
               <Stack.Screen name='MonitoringContinuityScreen' component={MonitoringContinuityScreen} options={{headerShown:false}}/>
@@ -786,6 +853,9 @@ function App() {
               <Stack.Screen name='ConcernsDetailScreen' component={ConcernsDetailScreen} options={{headerShown:false}}/>
               <Stack.Screen name='NeedAttentionScreen' component={NeedAttentionScreen} options={{headerShown:false}}/>
               <Stack.Screen name='NeedAttentionDetailScreen' component={NeedAttentionDetailScreen} options={{headerShown:false}}/>
+              <Stack.Screen name='DiseaseIntelligenceScreen' component={DiseaseIntelligenceScreen} options={{headerShown:false}}/>
+              <Stack.Screen name='OrganInsightsScreen' component={OrganInsightsScreen} options={{headerShown:false}}/>
+              <Stack.Screen name='OrganLayerScreen' component={OrganLayerScreen} options={{headerShown:false}}/>
               <Stack.Screen name='ConsentManagerScreen' component={ConsentManagerScreen} options={{headerShown:false}}/>
               <Stack.Screen name='AddConsentManagerScreen' component={AddConsentManagerScreen} options={{headerShown:false}}/>
               <Stack.Screen name='AnnualTrustReportScreen' component={AnnualTrustReportScreen} options={{headerShown:false}}/>

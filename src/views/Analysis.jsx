@@ -286,7 +286,8 @@ const Analysis = () => {
   const handleOpenClick = () => setOpen(!open);
 
   const navigateOrgan = (organ) => {
-    navigation.navigate('OrganDetailScreen', { organ });
+    // navigation.navigate('OrganDetailScreen', { organ });
+    navigation.navigate('OrganInsightsScreen');
   };
 
   const totalParameters = 10;
@@ -331,20 +332,50 @@ const Analysis = () => {
                 resizeMode="contain"
               />
               {/* Organ tap overlays */}
-              <TouchableOpacity style={[styles.organTap, { top: '3%', left: '36%', width: '20%', height: '7%' }]} onPress={() => navigateOrgan('Eye')} />
-              <TouchableOpacity style={[styles.organTap, { top: '3%', right: '17%', width: '20%', height: '8%' }]} onPress={() => navigateOrgan('Brain')} />
-              <TouchableOpacity style={[styles.organTap, { top: '10%', left: '12%', width: '20%', height: '10%' }]} onPress={() => navigateOrgan('Thymus')} />
-              <TouchableOpacity style={[styles.organTap, { top: '14%', right: '8%', width: '20%', height: '9%' }]} onPress={() => navigateOrgan('Thyroid')} />
-              <TouchableOpacity style={[styles.organTap, { top: '28%', left: '4%', width: '20%', height: '10%' }]} onPress={() => navigateOrgan('Lungs')} />
-              <TouchableOpacity style={[styles.organTap, { top: '60%', left: '4%', width: '20%', height: '10%' }]} onPress={() => navigateOrgan('Pancreas')} />
-              <TouchableOpacity style={[styles.organTap, { top: '29%', right: '6%', width: '20%', height: '10%' }]} onPress={() => navigateOrgan('Liver')} />
-              <TouchableOpacity style={[styles.organTap, { top: '43%', right: '3%', width: '20%', height: '10%' }]} onPress={() => navigateOrgan('Gut')} />
-              <TouchableOpacity style={[styles.organTap, { top: '57%', right: '3%', width: '20%', height: '10%' }]} onPress={() => navigateOrgan('Skin')} />
+              <TouchableOpacity style={[styles.organTap, { top: '3%', left: '36%', width: '20%', height: '7%' }]}
+            //    onPress={() => navigateOrgan('Eye')}
+               onPress={() => navigateOrgan('OrganInsightsScreen')}
+               />
+              <TouchableOpacity style={[styles.organTap, { top: '3%', right: '17%', width: '20%', height: '8%' }]}
+            //   onPress={() => navigateOrgan('Brain')} />
+               onPress={() => navigateOrgan('OrganInsightsScreen')} />
+
+              <TouchableOpacity style={[styles.organTap, { top: '10%', left: '12%', width: '20%', height: '10%' }]}
+            //   onPress={() => navigateOrgan('Thymus')} />
+               onPress={() => navigateOrgan('OrganInsightsScreen')} />
+
+              <TouchableOpacity style={[styles.organTap, { top: '14%', right: '8%', width: '20%', height: '9%' }]}
+            //   onPress={() => navigateOrgan('Thyroid')} />
+               onPress={() => navigateOrgan('OrganInsightsScreen')}/>
+
+              <TouchableOpacity style={[styles.organTap, { top: '28%', left: '4%', width: '20%', height: '10%' }]}
+            //   onPress={() => navigateOrgan('Lungs')} />
+               onPress={() => navigateOrgan('OrganInsightsScreen')}/>
+
+              <TouchableOpacity style={[styles.organTap, { top: '60%', left: '4%', width: '20%', height: '10%' }]}
+            //   onPress={() => navigateOrgan('Pancreas')} />
+               onPress={() => navigateOrgan('OrganInsightsScreen')}/>
+
+              <TouchableOpacity style={[styles.organTap, { top: '29%', right: '6%', width: '20%', height: '10%' }]}
+            //   onPress={() => navigateOrgan('Liver')} />
+               onPress={() => navigateOrgan('OrganInsightsScreen')}/>
+              <TouchableOpacity style={[styles.organTap, { top: '43%', right: '3%', width: '20%', height: '10%' }]}
+            //   onPress={() => navigateOrgan('Gut')} />
+               onPress={() => navigateOrgan('OrganInsightsScreen')}/>
+              <TouchableOpacity style={[styles.organTap, { top: '57%', right: '3%', width: '20%', height: '10%' }]}
+            //    onPress={() => navigateOrgan('Skin')} />
+               onPress={() => navigateOrgan('OrganInsightsScreen')}/>
               <TouchableOpacity style={[styles.organTap, { top: '45%', left: '0%', width: '22%', height: '12%' }]} onPress={() => navigateOrgan('Heart')} />
               <TouchableOpacity style={[styles.organTap, { top: '76%', left: '10%', width: '22%', height: '10%' }]} onPress={() => navigateOrgan('Muscle')} />
-              <TouchableOpacity style={[styles.organTap, { top: '65%', right: '24%', width: '18%', height: '10%' }]} onPress={() => navigateOrgan('Kidneys')} />
-              <TouchableOpacity style={[styles.organTap, { top: '88%', left: '46%', width: '20%', height: '10%' }]} onPress={() => navigateOrgan('Reproductive')} />
-              <TouchableOpacity style={[styles.organTap, { bottom: '13%', right: '14%', width: '20%', height: '10%' }]} onPress={() => navigateOrgan('Vascular System')} />
+              <TouchableOpacity style={[styles.organTap, { top: '65%', right: '24%', width: '18%', height: '10%' }]}
+            //   onPress={() => navigateOrgan('Kidneys')} />
+               onPress={() => navigateOrgan('OrganInsightsScreen')}/>
+              <TouchableOpacity style={[styles.organTap, { top: '88%', left: '46%', width: '20%', height: '10%' }]}
+            //   onPress={() => navigateOrgan('Reproductive')} />
+               onPress={() => navigateOrgan('OrganInsightsScreen')}/>
+              <TouchableOpacity style={[styles.organTap, { bottom: '13%', right: '14%', width: '20%', height: '10%' }]}
+            //   onPress={() => navigateOrgan('Vascular System')} />
+               onPress={() => navigateOrgan('OrganInsightsScreen')}/>
             </View>
           </View>
 
@@ -355,7 +386,8 @@ const Analysis = () => {
                 key={index}
                 style={styles.organCard}
                 activeOpacity={0.7}
-                onPress={() => navigation.navigate('OrganDetailScreen', { organ: item.label })}
+                // onPress={() => navigation.navigate('OrganDetailScreen', { organ: item.label })}
+                onPress={() => navigation.navigate('OrganInsightsScreen')}
               >
                 <View style={styles.organCardTopRow}>
                   <Image source={item.img} style={styles.organCardImg} />

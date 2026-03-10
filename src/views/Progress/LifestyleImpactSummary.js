@@ -16,36 +16,40 @@ import { bold, regular } from '../../config/Constants';
 const INFLUENCE_SCORE = { current: 18, total: 25 };
 
 const BIGGEST_INFLUENCES = [
-    { label: 'Physical activity', value: '+8', color: '#10B981', bgColor: '#DCFCE7' },
-    { label: 'Sleep quality',     value: '+4', color: '#3B82F6', bgColor: '#DBEAFE' },
-    { label: 'Weight gain',       value: '-5', color: '#EF4444', bgColor: '#FEE2E2' },
-    { label: 'Irregular meals',   value: '-2', color: '#F59E0B', bgColor: '#FEF3C7' },
+    { label: 'Physical Activity', value: '+8', color: '#10B981', bgColor: '#DCFCE7' },
+    { label: 'Diet Pattern',      value: '+4', color: '#16A34A', bgColor: '#DCFCE7' },
+    { label: 'Stress',            value: '-5', color: '#EF4444', bgColor: '#FEE2E2' },
+    { label: 'Sleep',             value: '-2', color: '#F59E0B', bgColor: '#FEF3C7' },
 ];
 
 const DETAIL_TILES = [
     {
-        id: 'activity', title: 'Activity', metric: '8,200 steps/day',
-        impact: '+8', impactColor: '#10B981', trend: 'Improving',
+        id: 'activity', title: 'Physical Activity', metric: '8,200 steps/day • 720 MET-min/wk',
+        impact: '+8', impactColor: '#10B981', trend: 'Improving', score: '76/100',
         trendIcon: 'arrow-up', trendColor: '#10B981',
         iconName: 'walk', iconColor: '#10B981',
+        screen: 'ProgressPhysicalActivityScreen',
     },
     {
-        id: 'sleep', title: 'Sleep', metric: '6.2 hours/night',
-        impact: '+2', impactColor: '#3B82F6', trend: 'Stable',
-        trendIcon: 'remove', trendColor: '#F59E0B',
-        iconName: 'moon', iconColor: '#7B61FF',
-    },
-    {
-        id: 'weight', title: 'Weight Trend', metric: '+3.4 kg this year',
-        impact: '-5', impactColor: '#EF4444', trend: 'Increasing',
-        trendIcon: 'arrow-up', trendColor: '#EF4444',
-        iconName: 'scale', iconType: Icons.MaterialCommunityIcons, iconColor: '#EF4444',
-    },
-    {
-        id: 'diet', title: 'Diet Pattern', metric: 'Irregular meal timing',
-        impact: '-2', impactColor: '#F59E0B', trend: 'Needs attention',
-        trendIcon: 'alert-circle', trendColor: '#F59E0B',
+        id: 'diet', title: 'Diet Pattern', metric: 'Mostly healthy, condition-aware',
+        impact: '+4', impactColor: '#16A34A', trend: 'Good', score: '72/100',
+        trendIcon: 'arrow-up', trendColor: '#16A34A',
         iconName: 'restaurant', iconColor: '#2E7D32',
+        screen: 'DietPatternScreen',
+    },
+    {
+        id: 'sleep', title: 'Sleep Pattern', metric: '6.5 hrs avg • 82% efficiency',
+        impact: '-2', impactColor: '#F59E0B', trend: 'Fair', score: '68/100',
+        trendIcon: 'remove', trendColor: '#F59E0B',
+        iconName: 'moon', iconColor: '#6366F1',
+        screen: 'ProgressSleepPatternScreen',
+    },
+    {
+        id: 'stress', title: 'Stress Management', metric: 'PSS: 18/40 • HRV: 42ms',
+        impact: '-5', impactColor: '#EF4444', trend: 'Moderate', score: '55/100',
+        trendIcon: 'arrow-down', trendColor: '#EF4444',
+        iconName: 'pulse', iconColor: '#D97706',
+        screen: 'StressManagementScreen',
     },
 ];
 
@@ -120,15 +124,18 @@ const LifestyleImpactSummary = () => {
                             key={item.id}
                             style={styles.detailTile}
                             activeOpacity={0.7}
-                            onPress={() => navigation.navigate('LifestyleDetailScreen', { lifestyle: item })}
+                            onPress={() => navigation.navigate(item.screen)}
                         >
                             <View style={styles.tileHeader}>
                                 <View style={[styles.tileIconWrap, { backgroundColor: item.iconColor + '15' }]}>
-                                    <Icon type={item.iconType || Icons.Ionicons} name={item.iconName}
+                                    <Icon type={Icons.Ionicons} name={item.iconName}
                                         size={ms(20)} color={item.iconColor} />
                                 </View>
-                                <Text style={styles.tileTitle}>{item.title}</Text>
-                                <Icon type={Icons.Ionicons} name="chevron-forward" size={ms(16)} color="#9CA3AF" />
+                                <View style={{ flex: 1, marginLeft: ms(10) }}>
+                                    <Text style={styles.tileTitle}>{item.title}</Text>
+                                    <Text style={styles.tileScore}>Score: {item.score}</Text>
+                                </View>
+                                <Icon type={Icons.Ionicons} name="chevron-forward" size={ms(16)} color={blackColor} />
                             </View>
                             <Text style={styles.tileMetric}>{item.metric}</Text>
                             <View style={styles.tileFooter}>
@@ -241,12 +248,16 @@ const styles = StyleSheet.create({
         justifyContent: 'center', alignItems: 'center',
     },
     tileTitle: {
-        flex: 1, fontSize: ms(14), fontFamily: bold,
-        color: blackColor, marginLeft: ms(10),
+        fontSize: ms(14), fontFamily: bold,
+        color: blackColor,
+    },
+    tileScore: {
+        fontSize: ms(11), fontFamily: regular,
+        color: '#6B7280', marginTop: vs(2),
     },
     tileMetric: {
-        fontSize: ms(16), fontFamily: bold,
-        color: blackColor, marginBottom: vs(10),
+        fontSize: ms(13), fontFamily: regular,
+        color: '#374151', marginBottom: vs(10), lineHeight: ms(18),
     },
     tileFooter: {
         flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center',
