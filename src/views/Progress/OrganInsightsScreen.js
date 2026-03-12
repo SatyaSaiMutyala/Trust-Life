@@ -3,7 +3,7 @@ import {
     SafeAreaView, StyleSheet, View, Text, ScrollView,
     TouchableOpacity, Dimensions, Image,
 } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import { ms, vs } from 'react-native-size-matters';
 import Svg, { Circle as SvgCircle } from 'react-native-svg';
 import LinearGradient from 'react-native-linear-gradient';
@@ -21,6 +21,14 @@ const ORGAN_IMAGES = {
     Nerves: require('../../assets/img/human-brain.png'),
     Liver: require('../../assets/img/human-liver.png'),
     Pancreas: require('../../assets/img/human-pancreas.png'),
+    Lungs: require('../../assets/img/human-lungs.png'),
+    Gut: require('../../assets/img/human-gut.png'),
+    Thyroid: require('../../assets/img/human-thyroid.png'),
+    Thymus: require('../../assets/img/human-thymus.png'),
+    Skin: require('../../assets/img/human-skin.png'),
+    Muscle: require('../../assets/img/human-muscle.png'),
+    Vascular: require('../../assets/img/human-vascular.png'),
+    Reproductive: require('../../assets/img/human-reproductive.png'),
 };
 
 // ── ORGAN DATA ──────────────────────────────────────────────────────────────
@@ -121,6 +129,135 @@ const ORGANS = {
         clinicalText: 'Beta-cell depletion: glucotoxicity creates a vicious cycle. Low C-peptide (0.8) confirms moderate secretory failure. GLP-1/insulin evaluation indicated.',
         nextStage: 'Severe Depletion', nextTime: '3-5 yr',
         actions: ['C-peptide monitoring', 'GLP-1 agonist evaluation', 'Insulin therapy assessment', 'Beta-cell preservation protocol'],
+    },
+    lungs: {
+        id: 'lungs', name: 'Lungs', cx: 100, cy: 108, r: 13,
+        stress: 22, stage: 'Mild Restriction', stageI: 1,
+        stages: ['Normal', 'Mild Restriction', 'Moderate', 'Severe', 'Failure'],
+        color: '#06B6D4', trend: 'stable-risk',
+        biomarkers: ['SpO2', 'FEV1', 'CRP'],
+        bms: [
+            { name: 'SpO2', val: '97%', tgt: '>98%', sev: 'low', why: 'Mild reduction in oxygen saturation under exertion' },
+            { name: 'FEV1', val: '82%', tgt: '>80%', sev: 'low', why: 'Borderline airflow — early obstructive pattern' },
+            { name: 'CRP', val: '3.2 mg/L', tgt: '<1.0', sev: 'med', why: 'Systemic inflammation can impair alveolar function' },
+        ],
+        patientText: 'Your lungs are working well, with minor early changes. Staying active and avoiding smoke keeps them healthy.',
+        clinicalText: 'Mild restrictive pattern on spirometry. Elevated CRP may indicate early subclinical pulmonary inflammation. Monitor SpO2 trends.',
+        nextStage: 'Moderate Restriction', nextTime: '36-48 mo',
+        actions: ['Annual spirometry', 'Smoking cessation if applicable', 'Cardiopulmonary exercise test', 'SpO2 monitoring'],
+    },
+    gut: {
+        id: 'gut', name: 'Gut', cx: 100, cy: 192, r: 11,
+        stress: 34, stage: 'Dysbiosis', stageI: 1,
+        stages: ['Normal', 'Dysbiosis', 'Permeability', 'Inflammation', 'Severe'],
+        color: '#84CC16', trend: 'worsening',
+        biomarkers: ['CRP', 'Glucose', 'Ferritin'],
+        bms: [
+            { name: 'CRP', val: '3.2 mg/L', tgt: '<1.0', sev: 'high', why: 'Gut-driven systemic inflammatory signaling' },
+            { name: 'Fasting Glucose', val: '172 mg/dL', tgt: '<100', sev: 'high', why: 'Dysglycemia alters gut microbiome composition' },
+            { name: 'Ferritin', val: '88 ng/mL', tgt: '20-80', sev: 'low', why: 'Mild elevation suggests gut-barrier stress' },
+        ],
+        patientText: 'Your gut bacteria balance is disrupted. High blood sugar changes the gut environment, which can affect digestion and immunity.',
+        clinicalText: 'Dysglycemia-driven microbiome dysbiosis: elevated glucose alters bacterial diversity. CRP elevation may reflect gut permeability increase.',
+        nextStage: 'Gut Permeability', nextTime: '12-24 mo',
+        actions: ['Probiotic trial', 'High-fiber dietary plan', 'Gut microbiome panel', 'GI motility evaluation'],
+    },
+    thyroid: {
+        id: 'thyroid', name: 'Thyroid', cx: 100, cy: 72, r: 11,
+        stress: 18, stage: 'Subclinical Risk', stageI: 0,
+        stages: ['Normal', 'Subclinical Risk', 'Hypothyroid', 'Hyperthyroid', 'Failure'],
+        color: '#A78BFA', trend: 'stable-risk',
+        biomarkers: ['TSH', 'T3', 'T4'],
+        bms: [
+            { name: 'TSH', val: '3.8 mIU/L', tgt: '0.4-4.0', sev: 'low', why: 'High-normal TSH — borderline subclinical hypothyroid' },
+            { name: 'Free T3', val: 'Not tested', tgt: '2.3-4.2', sev: 'med', why: 'Active thyroid hormone — testing overdue' },
+            { name: 'Free T4', val: 'Not tested', tgt: '0.8-1.8', sev: 'med', why: 'Required to rule out subclinical hypothyroidism' },
+        ],
+        patientText: 'Your thyroid controls your metabolism. It looks mostly normal, but some values suggest monitoring is needed.',
+        clinicalText: 'TSH at upper limit — subclinical hypothyroidism possible. Fatigue and insulin resistance can compound thyroid dysfunction.',
+        nextStage: 'Hypothyroid', nextTime: '24-60 mo',
+        actions: ['Free T3/T4 panel', 'Anti-TPO antibodies', 'Annual TSH monitoring', 'Iodine intake review'],
+    },
+    thymus: {
+        id: 'thymus', name: 'Thymus', cx: 90, cy: 95, r: 10,
+        stress: 15, stage: 'Age-related Decline', stageI: 1,
+        stages: ['Active', 'Decline', 'Involution', 'Atrophy', 'Inactive'],
+        color: '#F472B6', trend: 'stable-risk',
+        biomarkers: ['WBC', 'Lymphocytes', 'CRP'],
+        bms: [
+            { name: 'WBC', val: '7.2 K/µL', tgt: '4.5-11', sev: 'low', why: 'Within range — immune output appears adequate' },
+            { name: 'Lymphocytes', val: '28%', tgt: '20-40%', sev: 'low', why: 'Normal adaptive immune cell proportion' },
+            { name: 'CRP', val: '3.2 mg/L', tgt: '<1.0', sev: 'high', why: 'Chronic inflammation suppresses thymic T-cell output' },
+        ],
+        patientText: 'Your thymus trains immune cells. It naturally shrinks with age, but chronic inflammation can speed up this process.',
+        clinicalText: 'Thymic involution expected at this age. Elevated CRP may accelerate immune senescence. Lymphocyte subset analysis recommended.',
+        nextStage: 'Progressive Involution', nextTime: 'Ongoing',
+        actions: ['Lymphocyte subset panel', 'Reduce systemic inflammation', 'Vitamin D optimization', 'Immune function assessment'],
+    },
+    skin: {
+        id: 'skin', name: 'Skin', cx: 70, cy: 200, r: 10,
+        stress: 26, stage: 'Early Changes', stageI: 1,
+        stages: ['Normal', 'Early Changes', 'Moderate', 'Severe', 'Ulceration'],
+        color: '#FB923C', trend: 'stable-risk',
+        biomarkers: ['HbA1c', 'Glucose', 'CRP'],
+        bms: [
+            { name: 'HbA1c', val: '7.8%', tgt: '<7%', sev: 'high', why: 'Glycation impairs skin collagen cross-linking and repair' },
+            { name: 'Fasting Glucose', val: '172 mg/dL', tgt: '<100', sev: 'high', why: 'High glucose slows wound healing and increases infection risk' },
+            { name: 'CRP', val: '3.2 mg/L', tgt: '<1.0', sev: 'med', why: 'Inflammation promotes skin barrier dysfunction' },
+        ],
+        patientText: 'High blood sugar affects how your skin heals. Small wounds may take longer to close and infections may occur more easily.',
+        clinicalText: 'Diabetic dermopathy risk: hyperglycemia impairs microvascular supply and collagen turnover. Monitor for shin spots and slow-healing lesions.',
+        nextStage: 'Moderate Skin Changes', nextTime: '18-36 mo',
+        actions: ['Dermatology skin check', 'Wound care protocol', 'Moisturization plan', 'Foot skin monitoring'],
+    },
+    muscle: {
+        id: 'muscle', name: 'Muscle', cx: 70, cy: 240, r: 10,
+        stress: 30, stage: 'Early Sarcopenia', stageI: 1,
+        stages: ['Normal', 'Early Sarcopenia', 'Moderate', 'Severe', 'Disability'],
+        color: '#10B981', trend: 'worsening',
+        biomarkers: ['CK', 'Glucose', 'Albumin'],
+        bms: [
+            { name: 'Creatine Kinase', val: 'Not tested', tgt: '22-198', sev: 'med', why: 'Muscle breakdown marker — testing recommended' },
+            { name: 'Fasting Glucose', val: '172 mg/dL', tgt: '<100', sev: 'high', why: 'Insulin resistance reduces muscle glucose uptake' },
+            { name: 'Albumin', val: '4.0 g/dL', tgt: '3.5-5.0', sev: 'low', why: 'Normal protein status — critical for muscle preservation' },
+        ],
+        patientText: 'Low physical activity and high blood sugar reduce muscle mass over time. This makes daily tasks harder and raises fall risk.',
+        clinicalText: 'Insulin resistance impairs muscle protein synthesis. Low step count (3,200/day) accelerates sarcopenia. Resistance exercise is primary intervention.',
+        nextStage: 'Moderate Sarcopenia', nextTime: '24-36 mo',
+        actions: ['Grip strength test', 'Resistance training program', 'Protein intake 1.2g/kg', 'DEXA body composition scan'],
+    },
+    vascular: {
+        id: 'vascular', name: 'Vascular', cx: 100, cy: 160, r: 12,
+        stress: 45, stage: 'Early Atherosclerosis', stageI: 2,
+        stages: ['Normal', 'Endothelial Stress', 'Early Atherosclerosis', 'Plaque', 'Occlusion'],
+        color: '#DC2626', trend: 'worsening',
+        biomarkers: ['LDL', 'CRP', 'BP', 'Homocysteine'],
+        bms: [
+            { name: 'LDL Cholesterol', val: '142 mg/dL', tgt: '<100', sev: 'high', why: 'Primary driver of arterial plaque formation' },
+            { name: 'CRP', val: '3.2 mg/L', tgt: '<1.0', sev: 'high', why: 'Endothelial inflammation accelerates atherosclerosis' },
+            { name: 'Blood Pressure', val: '138/88', tgt: '<130/80', sev: 'med', why: 'Chronic pressure stress damages arterial walls' },
+            { name: 'Homocysteine', val: 'Not tested', tgt: '<15', sev: 'med', why: 'Elevated homocysteine is an independent vascular risk factor' },
+        ],
+        patientText: 'Your blood vessels show early signs of narrowing. High cholesterol and blood pressure are the main drivers — both are treatable.',
+        clinicalText: 'Converging cardiovascular risk: LDL 142 + CRP 3.2 + BP 138/88 → accelerated endothelial dysfunction. Statin + lifestyle intervention critical.',
+        nextStage: 'Plaque Formation', nextTime: '12-18 mo',
+        actions: ['Statin initiation', 'Carotid IMT ultrasound', 'Homocysteine + B12 panel', 'BP target <130/80'],
+    },
+    reproductive: {
+        id: 'reproductive', name: 'Repro', cx: 100, cy: 260, r: 10,
+        stress: 20, stage: 'Hormonal Imbalance', stageI: 1,
+        stages: ['Normal', 'Hormonal Imbalance', 'Dysfunction', 'Significant', 'Severe'],
+        color: '#EC4899', trend: 'stable-risk',
+        biomarkers: ['Testosterone', 'LH', 'FSH'],
+        bms: [
+            { name: 'Testosterone', val: 'Not tested', tgt: '300-1000', sev: 'med', why: 'Insulin resistance commonly suppresses testosterone levels' },
+            { name: 'LH', val: 'Not tested', tgt: '1.7-8.6', sev: 'med', why: 'Pituitary hormone affecting reproductive axis' },
+            { name: 'FSH', val: 'Not tested', tgt: '1.5-12.4', sev: 'med', why: 'Testing overdue given metabolic syndrome profile' },
+        ],
+        patientText: 'Hormones controlling reproductive health can be affected by blood sugar and weight. Testing will give a clearer picture.',
+        clinicalText: 'Metabolic syndrome commonly induces hypogonadism in males, PCOS in females. Comprehensive hormone panel is overdue.',
+        nextStage: 'Functional Dysfunction', nextTime: '12-36 mo',
+        actions: ['Hormone panel (LH/FSH/Testosterone)', 'Metabolic syndrome management', 'Endocrinology consult', 'BMI reduction target'],
     },
 };
 
@@ -358,6 +495,8 @@ const OrganDetail = ({ organId, view }) => {
 // ── MAIN SCREEN ─────────────────────────────────────────────────────────────
 const OrganInsightsScreen = () => {
     const navigation = useNavigation();
+    const route = useRoute();
+    const singleOrganId = route.params?.organId || null;
     const [view, setView] = useState('patient');
     const [selectedOrgan, setSelectedOrgan] = useState(null);
     const [selectedNode, setSelectedNode] = useState(null);
@@ -371,6 +510,283 @@ const OrganInsightsScreen = () => {
         setSelectedNode(prev => prev === k ? null : k);
         setSelectedOrgan(null);
     };
+
+    // ── SINGLE ORGAN VIEW ──────────────────────────────────────────────────
+    if (singleOrganId && ORGANS[singleOrganId]) {
+        const o = ORGANS[singleOrganId];
+        const col = stressColor(o.stress);
+        const organBiomarkers = BIOMARKERS.filter(bm => bm.organs.includes(singleOrganId));
+        const organRecs = RECS.filter(r => r.organ === singleOrganId);
+
+        return (
+            <SafeAreaView style={st.container}>
+                <StatusBar2 />
+                <LinearGradient colors={globalGradient2} start={{ x: 0, y: 0 }} end={{ x: 0, y: 3 }} locations={[0, 0.08]} style={st.gradient}>
+                    {/* Header */}
+                    <View style={st.header}>
+                        <TouchableOpacity style={st.backBtn} onPress={() => navigation.goBack()}>
+                            <Icon type={Icons.Ionicons} name="arrow-back" size={ms(20)} color={whiteColor} />
+                        </TouchableOpacity>
+                        <View style={{ flex: 1, marginLeft: ms(12) }}>
+                            <Text style={st.headerTitle}>{o.name}</Text>
+                            <Text style={st.headerSub}>Organ Intelligence · {o.stage}</Text>
+                        </View>
+                        <View style={[st.stressBadge, { backgroundColor: col + '20', borderColor: col }]}>
+                            <Text style={[st.stressBadgeNum, { color: col }]}>{o.stress}</Text>
+                            <Text style={[st.stressBadgeLbl, { color: col }]}>stress</Text>
+                        </View>
+                    </View>
+
+                    <ScrollView showsVerticalScrollIndicator={false} style={{ flex: 1 }} contentContainerStyle={[st.content, { paddingTop: vs(8) }]}>
+
+                        {/* ── BANNER ── */}
+                        <View style={[st.card, { alignItems: 'center', paddingVertical: vs(24) }]}>
+                            {ORGAN_IMAGES[o.name] ? (
+                                <Image source={ORGAN_IMAGES[o.name]} style={{ width: ms(100), height: ms(100) }} resizeMode="contain" />
+                            ) : (
+                                <Icon type={Icons.Ionicons} name="body" size={ms(60)} color={col} />
+                            )}
+                            <Text style={[st.stressScore, { color: col, fontSize: ms(28), marginTop: vs(8) }]}>{o.stress}</Text>
+                            <Text style={[st.stressScoreLabel, { fontSize: ms(12) }]}>Stress Score</Text>
+                            <View style={{ flexDirection: 'row', marginTop: vs(10), gap: ms(8) }}>
+                                <View style={[st.stagePill, { backgroundColor: col + '15', borderColor: col }]}>
+                                    <Text style={[st.stagePillText, { color: col }]}>{o.stage}</Text>
+                                </View>
+                                <View style={[st.stagePill, { backgroundColor: o.trend === 'worsening' ? '#FEE2E2' : '#FEF9C3', borderColor: o.trend === 'worsening' ? '#EF4444' : '#F59E0B' }]}>
+                                    <Text style={[st.stagePillText, { color: o.trend === 'worsening' ? '#EF4444' : '#D97706' }]}>
+                                        {o.trend === 'worsening' ? '↑ Worsening' : '→ Stable Risk'}
+                                    </Text>
+                                </View>
+                            </View>
+                        </View>
+
+                        {/* ── ORGAN STRESS INDEX ── */}
+                        <View style={st.card}>
+                            <View style={st.cardHeader}>
+                                <Icon type={Icons.Ionicons} name="pulse" size={ms(16)} color={primaryColor} />
+                                <Text style={st.cardTitle}>Organ Stress Index</Text>
+                            </View>
+                            <View style={[st.stressRow, { backgroundColor: col + '08', borderColor: col }]}>
+                                <View style={[st.stressIcon, { backgroundColor: col + '12' }]}>
+                                    {ORGAN_IMAGES[o.name] ? (
+                                        <Image source={ORGAN_IMAGES[o.name]} style={{ width: ms(20), height: ms(20) }} resizeMode="contain" />
+                                    ) : (
+                                        <Icon type={Icons.Ionicons} name="body" size={ms(16)} color={col} />
+                                    )}
+                                </View>
+                                <View style={{ flex: 1 }}>
+                                    <Text style={st.stressName}>{o.name}</Text>
+                                    <Text style={[st.stressStageTxt, { color: col }]}>{o.stage}</Text>
+                                    {/* Stage progress dots */}
+                                    <View style={{ flexDirection: 'row', gap: ms(4), marginTop: vs(4) }}>
+                                        {o.stages.map((s, i) => (
+                                            <View key={i} style={[st.stageDot, {
+                                                backgroundColor: i <= o.stageI ? col : '#E5E7EB',
+                                                flex: 1,
+                                            }]} />
+                                        ))}
+                                    </View>
+                                    <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: vs(2) }}>
+                                        <Text style={[st.stressStageTxt, { color: '#9CA3AF', fontSize: ms(9) }]}>{o.stages[0]}</Text>
+                                        <Text style={[st.stressStageTxt, { color: '#9CA3AF', fontSize: ms(9) }]}>{o.stages[o.stages.length - 1]}</Text>
+                                    </View>
+                                </View>
+                                <View style={{ alignItems: 'center', marginLeft: ms(10) }}>
+                                    <Text style={[st.stressScore, { color: col }]}>{o.stress}</Text>
+                                    <Text style={st.stressScoreLabel}>stress</Text>
+                                </View>
+                            </View>
+                        </View>
+
+                        {/* ── DETAIL ANALYSIS ── */}
+                        <View style={[st.card, { borderWidth: 1.5, borderColor: col + '30' }]}>
+                            <View style={st.cardHeader}>
+                                <Icon type={Icons.Ionicons} name="analytics" size={ms(16)} color={primaryColor} />
+                                <Text style={st.cardTitle}>Organ Detail Analysis</Text>
+                            </View>
+                            <OrganDetail organId={singleOrganId} view={view} />
+                        </View>
+
+                        {/* ── HOW YOUR HEALTH CONNECTS ── */}
+                        <View style={st.card}>
+                            <View style={st.cardHeader}>
+                                <Icon type={Icons.Ionicons} name="git-network" size={ms(16)} color={primaryColor} />
+                                <Text style={st.cardTitle}>How Your Health Connects</Text>
+                            </View>
+                            <View style={st.webCenter}>
+                                <View style={[st.webCenterCircle, { borderColor: col, backgroundColor: col + '10' }]}>
+                                    {ORGAN_IMAGES[o.name] ? (
+                                        <Image source={ORGAN_IMAGES[o.name]} style={{ width: ms(26), height: ms(26) }} resizeMode="contain" />
+                                    ) : (
+                                        <Icon type={Icons.Ionicons} name="body" size={ms(18)} color={col} />
+                                    )}
+                                    <Text style={[st.webCenterText, { color: col }]}>{o.name.toUpperCase()}</Text>
+                                </View>
+                            </View>
+                            <View style={st.webGrid}>
+                                {WEB_NODES.map(n => {
+                                    const sel = selectedNode === n.key;
+                                    return (
+                                        <TouchableOpacity key={n.key} activeOpacity={0.7}
+                                            onPress={() => handleNodeClick(n.key)}
+                                            style={[st.webNode, sel
+                                                ? { borderColor: n.color, backgroundColor: n.color + '15' }
+                                                : { borderColor: n.color + '30', backgroundColor: n.color + '06' }]}>
+                                            <View style={[st.webNodeIcon, { backgroundColor: n.color + '15' }]}>
+                                                <Icon type={Icons.Ionicons} name={n.icon} size={ms(16)} color={n.color} />
+                                            </View>
+                                            <Text style={[st.webNodeLabel, { color: n.color }]}>{n.label}</Text>
+                                            <Text style={[st.webNodeDetail, { color: n.color }]}>{n.detail}</Text>
+                                            {sel && (
+                                                <Icon type={Icons.Ionicons} name="chevron-up" size={ms(10)} color={n.color} style={{ marginTop: vs(2) }} />
+                                            )}
+                                        </TouchableOpacity>
+                                    );
+                                })}
+                            </View>
+                            {/* Expanded node panel */}
+                            {selectedNode && (() => {
+                                const node = WEB_NODES.find(n => n.key === selectedNode);
+                                return (
+                                    <View style={[st.webExpanded, { borderColor: node.color + '30', backgroundColor: node.color + '06' }]}>
+                                        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: vs(8) }}>
+                                            <View style={{ flexDirection: 'row', alignItems: 'center', gap: ms(6) }}>
+                                                <Icon type={Icons.Ionicons} name={node.icon} size={ms(14)} color={node.color} />
+                                                <Text style={[st.webExpandedTitle, { color: node.color }]}>{node.label}</Text>
+                                            </View>
+                                            <TouchableOpacity onPress={() => handleNodeClick(selectedNode)} hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}>
+                                                <Icon type={Icons.Ionicons} name="close-circle" size={ms(16)} color={node.color + '80'} />
+                                            </TouchableOpacity>
+                                        </View>
+                                        <View style={st.webExpandedItems}>
+                                            {node.items.map((it, i) => (
+                                                <View key={i} style={st.webExpandedItem}>
+                                                    <View style={[st.webExpandedDot, { backgroundColor: node.color }]} />
+                                                    <Text style={st.webExpandedText}>{it}</Text>
+                                                </View>
+                                            ))}
+                                        </View>
+                                    </View>
+                                );
+                            })()}
+                        </View>
+
+                        {/* ── TEST RESULTS (filtered to organ) ── */}
+                        <View style={st.card}>
+                            <View style={st.cardHeader}>
+                                <Icon type={Icons.Ionicons} name="flask" size={ms(16)} color={primaryColor} />
+                                <Text style={st.cardTitle}>Your Test Results</Text>
+                            </View>
+                            {organBiomarkers.length === 0 ? (
+                                <Text style={[st.stressStageTxt, { color: '#9CA3AF', marginTop: vs(4) }]}>No direct biomarkers linked to this organ.</Text>
+                            ) : organBiomarkers.map((bm, i) => {
+                                const sc = statusColor(bm.status);
+                                return (
+                                    <View key={i} style={[st.bioRow, { backgroundColor: sc + '06', borderColor: sc + '25' }]}>
+                                        <View style={st.bioRowTop}>
+                                            <View style={{ flex: 1 }}>
+                                                <Text style={st.bioName}>{bm.name}</Text>
+                                                <Text style={st.bioDelta}>{bm.delta}</Text>
+                                            </View>
+                                            <View style={{ alignItems: 'flex-end' }}>
+                                                <Text style={[st.bioValue, { color: sc }]}>{bm.val} <Text style={st.bioUnit}>{bm.unit}</Text></Text>
+                                                <Text style={st.bioTarget}>tgt {bm.tgt}</Text>
+                                            </View>
+                                        </View>
+                                    </View>
+                                );
+                            })}
+                        </View>
+
+                        {/* ── LIFESTYLE SIGNALS ── */}
+                        <View style={st.card}>
+                            <View style={st.cardHeader}>
+                                <Icon type={Icons.Ionicons} name="fitness" size={ms(16)} color={primaryColor} />
+                                <Text style={st.cardTitle}>Lifestyle Signals</Text>
+                            </View>
+                            {LIFESTYLE.map((ls, i) => (
+                                <View key={i} style={st.lifeRow}>
+                                    <View style={st.lifeRowTop}>
+                                        <View style={[st.lifeIcon, { backgroundColor: primaryColor + '10' }]}>
+                                            <Icon type={Icons.Ionicons} name={ls.icon} size={ms(14)} color={primaryColor} />
+                                        </View>
+                                        <View style={{ flex: 1, marginLeft: ms(8) }}>
+                                            <Text style={st.lifeLabel}>{ls.label}</Text>
+                                            <Text style={st.lifeWhy}>{ls.why}</Text>
+                                        </View>
+                                        <Text style={st.lifeValue}>{ls.value}</Text>
+                                    </View>
+                                    <View style={st.lifeBarBg}>
+                                        <View style={[st.lifeBarFill, { width: `${ls.score}%` }]} />
+                                    </View>
+                                </View>
+                            ))}
+                        </View>
+
+                        {/* ── ACTION PLAN (filtered to organ) ── */}
+                        <View style={st.card}>
+                            <View style={st.cardHeader}>
+                                <Icon type={Icons.Ionicons} name="checkmark-circle" size={ms(16)} color={primaryColor} />
+                                <Text style={st.cardTitle}>Action Plan</Text>
+                            </View>
+                            {organRecs.length > 0 ? organRecs.map((r, i) => {
+                                const ps = priStyle(r.pri);
+                                return (
+                                    <View key={i} style={[st.recCard, { borderLeftColor: ps.color }]}>
+                                        <View style={[st.recIconWrap, { backgroundColor: ps.bg }]}>
+                                            <Icon type={Icons.Ionicons} name={ps.icon} size={ms(16)} color={ps.color} />
+                                        </View>
+                                        <View style={{ flex: 1 }}>
+                                            <Text style={st.recTitle}>{r.title}</Text>
+                                            <Text style={st.recDesc}>{r.desc}</Text>
+                                            <View style={st.recActionRow}>
+                                                <Icon type={Icons.Ionicons} name="arrow-forward" size={ms(10)} color={primaryColor} />
+                                                <Text style={st.recActionText}>{r.action}</Text>
+                                            </View>
+                                        </View>
+                                    </View>
+                                );
+                            }) : o.actions.map((a, i) => (
+                                <View key={i} style={st.actionRow}>
+                                    <Icon type={Icons.Ionicons} name="arrow-forward" size={ms(11)} color={primaryColor} />
+                                    <Text style={st.actionText}>{a}</Text>
+                                </View>
+                            ))}
+                        </View>
+
+                        {/* ── PROGRESSION TIMELINE ── */}
+                        <View style={st.card}>
+                            <View style={st.cardHeader}>
+                                <Icon type={Icons.Ionicons} name="time" size={ms(16)} color={primaryColor} />
+                                <Text style={st.cardTitle}>What Could Happen Without Action</Text>
+                            </View>
+                            <View style={st.timelineWrap}>
+                                {[
+                                    { t: 'Now', e: `${o.name} at ${o.stage}. Stress score: ${o.stress}/100`, col: col },
+                                    { t: o.nextTime, e: `Progression to ${o.nextStage} without intervention`, col: '#FF7235' },
+                                    { t: o.stages[o.stages.length - 2] || 'Late Stage', e: `Advanced ${o.name.toLowerCase()} dysfunction — medical intervention required`, col: '#EF4444' },
+                                    { t: '✓ Action', e: 'Targeted intervention now can halt or reverse this progression', col: primaryColor },
+                                ].map((pt, i, arr) => (
+                                    <View key={i} style={st.timelineItem}>
+                                        <View style={st.timelineLeft}>
+                                            <View style={[st.timelineDot, { backgroundColor: pt.col }]} />
+                                            {i < arr.length - 1 && <View style={st.timelineConnector} />}
+                                        </View>
+                                        <View style={st.timelineContent}>
+                                            <Text style={[st.timelineTime, { color: pt.col }]}>{pt.t}</Text>
+                                            <Text style={st.timelineEvent}>{pt.e}</Text>
+                                        </View>
+                                    </View>
+                                ))}
+                            </View>
+                        </View>
+
+                        <View style={{ height: vs(40) }} />
+                    </ScrollView>
+                </LinearGradient>
+            </SafeAreaView>
+        );
+    }
 
     return (
         <SafeAreaView style={st.container}>
@@ -387,7 +803,7 @@ const OrganInsightsScreen = () => {
                         <Text style={st.headerSub}>Disease Intelligence Layer</Text>
                     </View>
                     {/* Doctor / Patient toggle */}
-                    <View style={st.toggleWrap}>
+                    {/* <View style={st.toggleWrap}>
                         {['patient', 'doctor'].map(v => (
                             <TouchableOpacity key={v} onPress={() => setView(v)}
                                 style={[st.toggleBtn, view === v && st.toggleBtnActive]}>
@@ -398,7 +814,7 @@ const OrganInsightsScreen = () => {
                                 </Text>
                             </TouchableOpacity>
                         ))}
-                    </View>
+                    </View> */}
                 </View>
 
                 {/* Patient strip */}
@@ -703,18 +1119,24 @@ const OrganInsightsScreen = () => {
                             </Text>
                         </View>
                         <View style={st.timelineWrap}>
-                            <View style={st.timelineLine} />
                             {[
                                 { t: 'Now', e: view === 'patient' ? 'Diabetes active — kidneys, nerves & liver showing early signs' : 'T2DM active. Nephropathy Stage 2, early neuropathy, hepatic steatosis. eGFR 68↓', col: '#EF4444' },
                                 { t: '6 mo', e: view === 'patient' ? 'Blood pressure likely needs treatment' : 'HTN crosses pharmacological threshold. Ophthalmology referral critical.', col: '#FF7235' },
                                 { t: '12 mo', e: view === 'patient' ? 'Kidney specialist care may be needed' : 'CKD → Stage 3. eGFR <60. ACE-i + SGLT2i protocol essential.', col: '#FF7235' },
                                 { t: '18-24 mo', e: view === 'patient' ? 'Heart health at serious risk' : 'CV event risk >30%. LVH, CAD, cerebrovascular events enter risk window.', col: '#9B72FF' },
                                 { t: '✓ Action', e: view === 'patient' ? 'All of this is preventable or reversible — starting now' : 'Cascade preventable. Early polypharmacy + lifestyle modification: ROI high.', col: primaryColor },
-                            ].map((pt, i) => (
+                            ].map((pt, i, arr) => (
                                 <View key={i} style={st.timelineItem}>
-                                    <View style={[st.timelineDot, { backgroundColor: pt.col }]} />
-                                    <Text style={[st.timelineTime, { color: pt.col }]}>{pt.t}</Text>
-                                    <Text style={st.timelineEvent}>{pt.e}</Text>
+                                    {/* Left: dot + connector */}
+                                    <View style={st.timelineLeft}>
+                                        <View style={[st.timelineDot, { backgroundColor: pt.col }]} />
+                                        {i < arr.length - 1 && <View style={st.timelineConnector} />}
+                                    </View>
+                                    {/* Right: time + event */}
+                                    <View style={st.timelineContent}>
+                                        <Text style={[st.timelineTime, { color: pt.col }]}>{pt.t}</Text>
+                                        <Text style={st.timelineEvent}>{pt.e}</Text>
+                                    </View>
                                 </View>
                             ))}
                         </View>
@@ -831,6 +1253,12 @@ const st = StyleSheet.create({
     stressBarFill: { height: '100%', borderRadius: ms(2) },
     stressScore: { fontFamily: bold, fontSize: ms(18) },
     stressScoreLabel: { fontFamily: regular, fontSize: ms(7), color: '#9CA3AF' },
+    stageDot: { height: vs(4), borderRadius: ms(2) },
+    stressBadge: { alignItems: 'center', borderRadius: ms(10), borderWidth: 1.5, paddingHorizontal: ms(10), paddingVertical: vs(4) },
+    stressBadgeNum: { fontFamily: bold, fontSize: ms(16) },
+    stressBadgeLbl: { fontFamily: regular, fontSize: ms(8) },
+    stagePill: { borderRadius: ms(20), borderWidth: 1, paddingHorizontal: ms(10), paddingVertical: vs(3) },
+    stagePillText: { fontFamily: bold, fontSize: ms(11) },
 
     // Organ detail
     odHeader: { flexDirection: 'row', alignItems: 'center', marginBottom: vs(14) },
@@ -963,13 +1391,12 @@ const st = StyleSheet.create({
     recActionText: { fontFamily: bold, fontSize: ms(10), color: primaryColor },
 
     // Timeline
-    timelineWrap: { paddingLeft: ms(16) },
-    timelineLine: { position: 'absolute', left: ms(22), top: 0, bottom: 0, width: 2, backgroundColor: '#E5E7EB' },
-    timelineItem: { flexDirection: 'row', alignItems: 'flex-start', marginBottom: vs(14), paddingLeft: ms(20) },
-    timelineDot: {
-        width: ms(12), height: ms(12), borderRadius: ms(6),
-        position: 'absolute', left: ms(-4), top: vs(2),
-    },
-    timelineTime: { fontFamily: bold, fontSize: ms(10), width: ms(60), marginRight: ms(8) },
-    timelineEvent: { fontFamily: regular, fontSize: ms(11), color: '#374151', flex: 1, lineHeight: ms(17) },
+    timelineWrap: {},
+    timelineItem: { flexDirection: 'row', alignItems: 'flex-start', marginBottom: 0 },
+    timelineLeft: { alignItems: 'center', width: ms(24), marginRight: ms(12) },
+    timelineDot: { width: ms(12), height: ms(12), borderRadius: ms(6), marginTop: vs(3) },
+    timelineConnector: { width: 2, flex: 1, backgroundColor: '#E5E7EB', minHeight: vs(22) },
+    timelineContent: { flex: 1, paddingBottom: vs(18) },
+    timelineTime: { fontFamily: bold, fontSize: ms(10), marginBottom: vs(3) },
+    timelineEvent: { fontFamily: regular, fontSize: ms(11), color: '#374151', lineHeight: ms(17) },
 });

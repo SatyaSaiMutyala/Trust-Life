@@ -156,6 +156,156 @@ const RECOMMENDATIONS = [
     { priority: 'medium', title: 'Liver Imaging', desc: 'Elevated ALT/AST + metabolic profile', action: 'Order abdominal ultrasound', organ: 'liver' },
 ];
 
+// ── DISEASE INSIGHT DATA ─────────────────────────────────────────────────────
+const DISEASE_INSIGHTS = {
+    // ── Acute ────────────────────────────────────────────────────────────────
+    'Fever': {
+        affectedOrgans: ['heart', 'liver', 'kidneys'],
+        severity: '#EF4444', icon: 'pulse',
+        description: 'A temporary rise in body temperature above 38°C, usually triggered by infection or inflammation. Fever activates systemic immune responses that increase cardiac output, accelerate hepatic metabolism, and strain renal filtration through dehydration and cytokine release.',
+        symptoms: ['Body temperature above 38°C (100.4°F)', 'Chills and shivering episodes', 'Profuse sweating as fever breaks', 'Headache and generalised body aches', 'Loss of appetite and nausea', 'Dehydration and weakness'],
+        causes: ['Bacterial or viral infections (most common)', 'Inflammatory or autoimmune conditions', 'Medication side effects (drug fever)', 'Heat exhaustion or heat stroke', 'Post-vaccination immune activation'],
+        treatment: ['Paracetamol 500–1000 mg every 4–6 hrs', 'Ibuprofen for anti-inflammatory effect', 'Adequate hydration (2–3 L/day oral or IV)', 'Antibiotics if bacterial origin confirmed', 'Cool compresses and tepid sponging for comfort'],
+        prevention: 'Frequent handwashing, staying current with vaccinations, avoiding close contact with infected individuals, and maintaining good nutrition reduce fever recurrence significantly.',
+    },
+    'Infection': {
+        affectedOrgans: ['heart', 'liver', 'kidneys'],
+        severity: '#DC2626', icon: 'bug',
+        description: 'Invasion of body tissues by bacteria, viruses, fungi, or parasites that multiply and produce toxic byproducts. Systemic infections trigger inflammatory cascades placing significant stress on cardiac perfusion, hepatic detoxification, and renal filtration pathways.',
+        symptoms: ['Localised redness, swelling, heat, and pain', 'Fever with chills and rigors', 'Fatigue and generalised malaise', 'Elevated WBC and CRP on blood tests', 'Purulent discharge at infection site', 'Organ-specific symptoms by location'],
+        causes: ['Bacterial pathogens (Staphylococcus, Streptococcus, E. coli)', 'Viral agents (Influenza, COVID-19, RSV)', 'Fungal infections in immunocompromised patients', 'Poor wound care and hygiene', 'Healthcare-associated exposure (nosocomial)'],
+        treatment: ['Targeted antibiotic or antiviral based on culture results', 'IV fluid resuscitation if systemic spread', 'Anti-inflammatory agents (NSAIDs or steroids)', 'Wound debridement and irrigation if applicable', 'Hospitalisation for systemic or septic infections'],
+        prevention: 'Hand hygiene, timely vaccination, safe food handling, prompt wound care, and avoiding sharing personal items prevent the majority of common infections.',
+    },
+    'Allergy': {
+        affectedOrgans: ['eyes', 'nerves'],
+        severity: '#8B5CF6', icon: 'flower',
+        description: 'An exaggerated immune response to harmless environmental or dietary substances. Allergic reactions trigger histamine release causing ocular inflammation, neurogenic itch, and in severe cases systemic anaphylaxis affecting multiple systems simultaneously.',
+        symptoms: ['Sneezing and nasal congestion', 'Itchy, watery, or red eyes (allergic conjunctivitis)', 'Skin rash, urticaria, or eczema flares', 'Wheezing or shortness of breath (allergic asthma)', 'Tingling or swelling of lips and tongue', 'Anaphylaxis in severe exposure (rare)'],
+        causes: ['Environmental allergens (pollen, dust mites, mold, pet dander)', 'Food allergens (peanuts, shellfish, dairy, wheat)', 'Insect venom (bees, wasps)', 'Medications (penicillin, aspirin, contrast agents)', 'Genetic predisposition (atopic triad)'],
+        treatment: ['Antihistamines (Cetirizine 10 mg, Loratadine 10 mg)', 'Intranasal corticosteroids (Fluticasone, Mometasone)', 'Epinephrine auto-injector (EpiPen) for anaphylaxis', 'Allergen immunotherapy (3–5 year desensitisation)', 'Trigger avoidance and allergen-proof bedding'],
+        prevention: 'Identify and avoid triggers, use HEPA air purifiers, keep windows closed during high pollen season. Allergen immunotherapy can provide long-term tolerance. Wear medical alert bracelet for severe allergies.',
+    },
+
+    // ── Chronic ───────────────────────────────────────────────────────────────
+    'Diabetes': {
+        affectedOrgans: ['pancreas', 'kidneys', 'eyes', 'nerves', 'heart', 'liver'],
+        severity: '#EF4444', icon: 'pulse',
+        description: 'A chronic metabolic disorder where the body cannot effectively use insulin, causing sustained high blood glucose (HbA1c 7.8%) that progressively damages blood vessels and nerves across all major organ systems.',
+        symptoms: ['Frequent urination (polyuria)', 'Excessive thirst (polydipsia)', 'Blurred vision', 'Foot tingling / numbness', 'Chronic fatigue', 'Slow-healing wounds'],
+        causes: ['Beta-cell exhaustion (C-Peptide 0.8 ng/mL — low)', 'Insulin resistance (Fasting glucose 172 mg/dL)', 'Obesity / central adiposity', 'Sedentary lifestyle', 'Genetic predisposition (family history)'],
+        treatment: ['Metformin 1000 mg (first-line)', 'GLP-1 agonists (Semaglutide/Liraglutide)', 'SGLT2 inhibitors (Empagliflozin)', 'Insulin therapy if C-Peptide continues to decline', 'Dietary glycaemic control + 150 min/week aerobic exercise'],
+        prevention: 'Sustained weight loss of 5–7% body weight, 150 min/week aerobic exercise, and a low-glycaemic diet can delay or prevent all listed complications. HbA1c target: <7%.',
+    },
+    'Hypertension': {
+        affectedOrgans: ['heart', 'kidneys'],
+        severity: '#F97316', icon: 'heart',
+        description: 'Persistently elevated blood pressure (current: 138/88 mmHg, target <130/80) that forces the heart to pump against excess resistance, accelerating left ventricular hypertrophy and glomerular damage in the kidneys.',
+        symptoms: ['Usually asymptomatic ("silent killer")', 'Morning occipital headache', 'Shortness of breath on exertion', 'Chest tightness or pressure', 'Occasional nosebleeds (hypertensive crisis)'],
+        causes: ['Diabetic nephropathy increasing vascular resistance', 'High dietary sodium intake', 'Obesity and insulin resistance', 'Chronic sympathetic overactivation (stress)', 'Hormonal imbalance (aldosterone)'],
+        treatment: ['ACE inhibitors (Ramipril) — preferred in diabetes + HTN', 'ARBs (Losartan) if ACE not tolerated', 'Thiazide diuretics (low-dose)', 'DASH diet + sodium restriction <2 g/day', 'Target BP: <130/80 mmHg'],
+        prevention: 'DASH diet adherence + sodium restriction + 30 min daily aerobic activity can reduce systolic BP by 8–10 mmHg without medication. Regular BP monitoring every 3 months.',
+    },
+    'Thyroid': {
+        affectedOrgans: ['heart', 'liver', 'nerves'],
+        severity: '#10B981', icon: 'body',
+        description: 'Thyroid disorders (hypothyroidism and hyperthyroidism) disrupt systemic metabolic regulation. Both conditions affect cardiac rhythm, hepatic enzyme levels, and peripheral nerve conduction through altered thyroid hormone signalling.',
+        symptoms: ['Fatigue with unexplained weight gain (hypo) or loss (hyper)', 'Heart palpitations or slow heart rate', 'Cold intolerance (hypo) or heat intolerance (hyper)', 'Hair thinning, dry skin, and brittle nails', 'Depression or anxiety and mood swings', 'Muscle weakness and tremors'],
+        causes: ["Autoimmune disease (Hashimoto's thyroiditis or Graves' disease)", 'Iodine deficiency or dietary excess', 'Thyroid nodules or multinodular goitre', 'Post-partum thyroiditis (6–12 months after delivery)', 'Radiation therapy to neck or head region'],
+        treatment: ['Levothyroxine (T4 replacement for hypothyroidism)', 'Methimazole or Carbimazole (hyperthyroidism)', 'Radioactive iodine-131 therapy', 'Beta-blockers (Propranolol) for symptomatic control', 'Thyroid surgery for refractory or compressive goitre'],
+        prevention: 'Adequate iodine intake, regular TSH screening (especially women >35 and post-pregnancy), and early treatment of autoimmune antibody positivity can prevent progression to overt disease.',
+    },
+
+    // ── Chronic Infectious ────────────────────────────────────────────────────
+    'Chronic Kidney Disease': {
+        affectedOrgans: ['kidneys', 'heart'],
+        severity: '#3B82F6', icon: 'water',
+        description: 'Chronic Kidney Disease — progressive loss of kidney function over months to years. Current eGFR: 68 mL/min (Stage 2, target >90). Diabetic nephropathy is the leading cause, creating a destructive cardiorenal cycle of mutual deterioration.',
+        symptoms: ['Often fully asymptomatic in early stages', 'Foamy or bubbly urine (proteinuria)', 'Mild ankle and foot swelling', 'Fatigue and reduced physical stamina', 'Elevated blood pressure resistant to treatment'],
+        causes: ['Diabetic nephropathy — #1 cause globally (glomerular hyperfiltration → fibrosis)', 'Uncontrolled hypertension (138/88 mmHg)', 'Chronic NSAID or analgesic overuse', 'Recurrent urinary tract infections', 'Glomerulonephritis (immune-mediated)'],
+        treatment: ['SGLT2 inhibitors — Empagliflozin (nephroprotective + glucose lowering)', 'ACE inhibitor / ARB to reduce intraglomerular pressure', 'Strict BP control <130/80 mmHg', 'Moderate dietary protein (0.8 g/kg/day)', 'Urgent nephrology referral + ACR urine test'],
+        prevention: 'Tight glucose control (HbA1c <7%) and BP management (<130/80) can slow eGFR decline by up to 50%. Monitor eGFR and urine ACR every 3 months.',
+    },
+    "Alzheimer's Disease": {
+        affectedOrgans: ['nerves', 'heart'],
+        severity: '#8B5CF6', icon: 'medical',
+        description: "A progressive neurodegenerative disorder causing irreversible cognitive decline through amyloid plaque and tau tangle accumulation in the brain. Autonomic nervous system deterioration increases cardiovascular risk and disrupts heart rate variability in advanced stages.",
+        symptoms: ['Progressive short-term memory loss (early hallmark)', 'Difficulty with language, planning, and reasoning', 'Disorientation in time, place, and person', 'Mood changes: depression, anxiety, agitation', 'Loss of initiative and withdrawal from activities', 'Difficulty swallowing and incontinence (late stage)'],
+        causes: ['Beta-amyloid plaque accumulation between neurons', 'Neurofibrillary tau tangles inside neurons', 'ApoE4 genetic variant (strongest risk allele)', 'Cardiovascular risk factors (hypertension, diabetes, obesity)', 'Traumatic brain injury history'],
+        treatment: ['Cholinesterase inhibitors (Donepezil, Rivastigmine, Galantamine)', 'NMDA receptor antagonist (Memantine) for moderate-severe', 'Anti-amyloid therapy (Lecanemab — early stage disease)', 'Cognitive stimulation and structured daily routine', 'Caregiver support programs and respite care'],
+        prevention: 'Regular aerobic exercise, cognitive engagement (reading, puzzles), Mediterranean diet, BP and glucose control, and active social participation reduce dementia risk by 30–40%.',
+    },
+
+    // ── Genetic ───────────────────────────────────────────────────────────────
+    'Sickle Cell Disease': {
+        affectedOrgans: ['heart', 'kidneys', 'liver'],
+        severity: '#DC2626', icon: 'water',
+        description: 'An inherited haemoglobin disorder where abnormal HbS causes red blood cells to sickle under low-oxygen conditions, leading to vaso-occlusive crises, haemolytic anaemia, and progressive multi-organ damage affecting the heart, kidneys, and liver.',
+        symptoms: ['Episodic severe pain crises (bones, chest, abdomen)', 'Chronic anaemia — fatigue and pallor', 'Jaundice and yellowing of eyes (haemolysis)', 'Swollen hands and feet in infants (dactylitis)', 'Delayed growth and puberty in children', 'Increased susceptibility to bacterial infections'],
+        causes: ['Homozygous HbS mutation (both parents carriers)', 'Dehydration triggers red cell sickling', 'Low oxygen environments precipitate crises', 'Cold temperatures increase blood viscosity', 'Infections and physiological stress trigger acute events'],
+        treatment: ['Hydroxyurea (reduces crisis frequency by 50%)', 'L-glutamine supplementation (anti-oxidant support)', 'Voxelotor (Oxbryta) — anti-sickling agent', 'Regular blood transfusions for severe anaemia', 'Allogeneic stem cell transplant (potentially curative)'],
+        prevention: 'Genetic counselling before conception, newborn screening programs, early penicillin prophylaxis in children, and hydroxyurea initiation dramatically reduce morbidity and early mortality.',
+    },
+    'Cystic Fibrosis': {
+        affectedOrgans: ['liver', 'pancreas', 'heart'],
+        severity: '#0EA5E9', icon: 'medical',
+        description: 'A genetic disorder caused by CFTR gene mutations producing abnormally thick mucus across multiple organs. Beyond airway obstruction, CF causes pancreatic exocrine insufficiency, progressive liver cirrhosis, and cardiac strain from chronic hypoxia.',
+        symptoms: ['Persistent productive cough with thick mucus', 'Recurrent lung infections (Pseudomonas aeruginosa)', 'Pancreatic insufficiency and malabsorption', 'Fatty, bulky, foul-smelling stools (steatorrhoea)', 'Salty-tasting skin (classic neonatal sign)', 'Male infertility (congenital bilateral absence of vas deferens)'],
+        causes: ['CFTR gene mutation — most common variant ΔF508 (70% of cases)', 'Autosomal recessive inheritance pattern', 'Defective chloride and bicarbonate ion transport', 'Secondary bacterial colonisation of airways', 'Progressive organ damage from mucus obstruction'],
+        treatment: ['CFTR modulators — Trikafta/Elexacaftor (transformative for eligible patients)', 'Airway clearance physiotherapy (twice daily)', 'Pancreatic enzyme replacement therapy (PERT with every meal)', 'Fat-soluble vitamin supplementation (A, D, E, K)', 'Bilateral lung transplant in end-stage disease'],
+        prevention: 'Carrier genetic screening before or during pregnancy enables informed reproductive planning. Early CF diagnosis through newborn screening and prompt CFTR modulator therapy dramatically improves life expectancy and quality of life.',
+    },
+
+    // ── Life Threats ──────────────────────────────────────────────────────────
+    'Pneumonia': {
+        affectedOrgans: ['heart', 'kidneys', 'liver'],
+        severity: '#F59E0B', icon: 'medical',
+        description: 'An acute lung parenchymal infection causing alveolar inflammation and consolidation. Severe pneumonia triggers systemic inflammatory response syndrome (SIRS), placing significant strain on cardiac output, renal perfusion, and hepatic function through cytokine storm and hypoxia.',
+        symptoms: ['Productive cough with purulent or rust-coloured sputum', 'High fever with rigors and sweating', 'Pleuritic chest pain (sharp, worsens on inspiration)', 'Shortness of breath and increased respiratory rate', 'Dullness on chest percussion over consolidation', 'Confusion in elderly (atypical presentation — high risk)'],
+        causes: ['Streptococcus pneumoniae — most common bacterial cause', 'Influenza, COVID-19, or RSV (viral pneumonia)', 'Aspiration of oral contents (aspiration pneumonia)', 'Atypical organisms (Mycoplasma pneumoniae, Legionella)', 'Pneumocystis jirovecii in immunocompromised patients'],
+        treatment: ['Amoxicillin / Co-amoxiclav (community-acquired, outpatient)', 'Macrolides (Azithromycin) for atypical organism cover', 'IV antibiotics + supplemental oxygen if SpO2 <94%', 'Bronchodilators for airway bronchospasm', 'ICU admission and mechanical ventilation for ARDS'],
+        prevention: 'Pneumococcal vaccine (PCV13 + PPSV23), annual influenza vaccination, COVID-19 vaccination, smoking cessation, and hand hygiene prevent the majority of community-acquired pneumonia cases.',
+    },
+    'Sepsis': {
+        affectedOrgans: ['heart', 'kidneys', 'liver'],
+        severity: '#DC2626', icon: 'alert-circle',
+        description: 'A life-threatening organ dysfunction caused by a dysregulated host response to infection. Sepsis is a medical emergency — every hour of delay in antibiotic administration increases mortality by 7%. Multi-organ failure involving heart, kidneys, and liver occurs within hours without intervention.',
+        symptoms: ['High fever (>38.3°C) OR hypothermia (<36°C)', 'Tachycardia (heart rate >90 bpm)', 'Tachypnoea (respiratory rate >20 breaths/min)', 'Altered mental status or acute confusion', 'Mottled or pale skin with cold extremities', 'Oliguria — urine output <0.5 mL/kg/hr'],
+        causes: ['Bacterial bloodstream infection (gram-negative or positive)', 'Pneumonia, UTI, or abdominal infection as primary source', 'Indwelling catheter, IV line, or surgical wound infection', 'Post-operative or post-procedural complications', 'Immunosuppression — chemotherapy, HIV, long-term steroids'],
+        treatment: ['IV broad-spectrum antibiotics within 1 hour of recognition', 'IV crystalloid fluid resuscitation (30 mL/kg bolus)', 'Vasopressors (Noradrenaline) for refractory septic shock', 'Source control — drain abscess, remove infected device', 'ICU-level haemodynamic monitoring and organ support'],
+        prevention: 'Early identification and treatment of infection sources, antibiotic stewardship to prevent resistant organisms, hand hygiene in healthcare settings, pneumococcal and influenza vaccination reduce sepsis incidence.',
+    },
+    'Malnutrition': {
+        affectedOrgans: ['liver', 'heart', 'nerves'],
+        severity: '#F59E0B', icon: 'nutrition',
+        description: 'A state of nutritional imbalance — deficiency or excess — that impairs organ structure and function. Protein-energy malnutrition causes hepatic steatosis, cardiac muscle atrophy, and peripheral neuropathy, while micronutrient deficiencies compound neurological and vascular damage.',
+        symptoms: ['Significant unintentional weight loss (>5% in 3 months)', 'Muscle wasting and profound weakness (sarcopenia)', 'Fatigue and impaired wound healing', 'Pitting oedema — legs and feet (hypoalbuminaemia)', 'Hair thinning and loss, brittle nails', 'Cognitive impairment and poor concentration in severe cases'],
+        causes: ['Inadequate dietary intake (food insecurity, eating disorders)', 'Malabsorption syndromes (Crohn\'s disease, coeliac disease)', 'Chronic disease with elevated metabolic demand (cancer, COPD)', 'Post-surgical bowel resection reducing absorptive surface', 'Social isolation and depression in elderly populations'],
+        treatment: ['Nutritional rehabilitation with gradual caloric increase (refeeding protocol)', 'Oral nutritional supplements (ONS) — high protein, high calorie', 'Enteral nutrition (nasogastric tube) if oral intake inadequate', 'Parenteral nutrition for severe gut failure or malabsorption', 'Targeted micronutrient correction — Zinc, Iron, B12, Vitamin D'],
+        prevention: 'Regular nutritional screening (MUST tool) in healthcare settings, early dietitian referral, food fortification programs, and weight monitoring in high-risk groups (elderly, oncology, chronic disease) prevent malnutrition and its complications.',
+    },
+
+    // ── Preventive ────────────────────────────────────────────────────────────
+    'Annual Health Screening': {
+        affectedOrgans: ['heart', 'liver', 'kidneys'],
+        severity: '#10B981', icon: 'shield-checkmark',
+        description: 'A comprehensive preventive health assessment covering cardiovascular risk factors, metabolic panel, kidney and liver function, cancer screening, and immunisation review. Early detection at this stage prevents development of conditions listed in all other categories.',
+        symptoms: ['No symptoms — screening is entirely proactive', 'Identifies silent hypertension (BP >130/80)', 'Detects pre-diabetes early (HbA1c 5.7–6.4%)', 'Uncovers silent CKD (eGFR <90)', 'Flags liver enzyme abnormalities (ALT/AST)', 'Screens for dyslipidaemia (LDL, triglycerides)'],
+        causes: ['Preventive care — no active disease required', 'Risk factors include family history, age, BMI, and smoking', 'Lifestyle factors: poor diet, inactivity, alcohol use', 'Occupational chemical or radiation exposures', 'Chronic psychological stress and poor sleep quality'],
+        treatment: ['No active treatment — lifestyle counselling and risk stratification', 'Statin therapy if 10-year ASCVD risk >10%', 'Metformin if confirmed pre-diabetes', 'Antihypertensives if sustained BP >130/80 mmHg', 'Specialist referral if abnormal findings identified'],
+        prevention: 'Annual screening IS the prevention strategy. Targets: BP <130/80, LDL <100 mg/dL, HbA1c <5.7%, BMI 18.5–24.9, eGFR >90 mL/min. Address all modifiable risk factors at each visit.',
+    },
+    'Vaccination Schedule': {
+        affectedOrgans: ['heart', 'liver', 'nerves'],
+        severity: '#0EA5E9', icon: 'medkit',
+        description: 'Adherence to the recommended immunisation schedule protects against infectious diseases that cause direct multi-organ involvement. Hepatitis B directly attacks the liver, influenza causes myocarditis, and varicella-zoster damages peripheral nerves — all preventable with timely vaccination.',
+        symptoms: ['No symptoms — this is preventive intervention', 'Mild post-vaccination site soreness (normal immune response)', 'Low-grade fever for 24–48 hours (expected)', 'Fatigue and headache transiently post-vaccination', 'Rarely: allergic reaction — 1 in 1 million doses', 'VAERS-reportable events are monitored continuously'],
+        causes: ['Vaccine-preventable diseases: Influenza, COVID-19, Hepatitis B, Shingles', 'Hepatitis B — direct hepatocellular infection and cirrhosis risk', 'Influenza — myocarditis and cardiac decompensation risk', 'Tetanus — neuromuscular toxin causing peripheral nerve damage', 'Pneumococcal — cardiac and renal sepsis trigger'],
+        treatment: ['Stay current with national immunisation schedule', 'Influenza vaccine annually (September–November)', 'COVID-19 boosters per current guidelines', 'Hepatitis B series (0, 1, 6 months — 3 doses)', 'Pneumococcal PCV15/20 + PPSV23 per age guidelines', 'Zoster vaccine (Shingrix — 2 doses) after age 50'],
+        prevention: 'Full vaccination schedule completion reduces preventable disease burden by 70–90%. Review and update immunisation status at every annual health screening appointment.',
+    },
+};
+
 const TIMELINE = {
     patient: [
         { time: 'Now', event: 'Diabetes active. Kidneys, nerves, liver showing early signs.', color: '#EF4444' },
@@ -198,69 +348,6 @@ const NODE_SIZE = ms(56);
 const IMG_SIZE = ms(28);
 const ARC_R = NODE_SIZE / 2 + ms(4);
 
-const OrganCircleMap = ({ selectedOrgan, onOrganPress }) => {
-    return (
-        <View style={{ width: CIRCLE_SIZE, height: CIRCLE_SIZE, alignSelf: 'center', marginBottom: vs(10) }}>
-            {/* SVG layer for stress arcs */}
-            <Svg style={{ position: 'absolute', width: CIRCLE_SIZE, height: CIRCLE_SIZE }}>
-                {/* Dashed orbit */}
-                <SvgCircle cx={CIRCLE_CENTER} cy={CIRCLE_CENTER} r={CIRCLE_RADIUS}
-                    fill="none" stroke={primaryColor} strokeWidth="1" strokeOpacity="0.1"
-                    strokeDasharray="4 4" />
-                {/* Stress arcs */}
-                {organsArr.map((o, i) => {
-                    const angle = (i * (360 / organsArr.length) - 90) * (Math.PI / 180);
-                    const nx = CIRCLE_CENTER + Math.cos(angle) * CIRCLE_RADIUS;
-                    const ny = CIRCLE_CENTER + Math.sin(angle) * CIRCLE_RADIUS;
-                    const col = getDetColor(o.deterioration);
-                    const on = selectedOrgan === o.id;
-                    return (
-                        <SvgCircle key={o.id + '-arc'} cx={nx} cy={ny} r={ARC_R}
-                            fill="none" stroke={col} strokeWidth={on ? 3 : 2} strokeOpacity={on ? 0.7 : 0.3}
-                            strokeDasharray={`${(o.deterioration / 100) * (2 * Math.PI * ARC_R)} ${2 * Math.PI * ARC_R}`}
-                            strokeLinecap="round" rotation={-90} origin={`${nx}, ${ny}`} />
-                    );
-                })}
-            </Svg>
-
-            {/* Center hub */}
-            <View style={[cmStyles.centerHub, { left: CIRCLE_CENTER - ms(32), top: CIRCLE_CENTER - ms(32) }]}>
-                <Icon type={Icons.Ionicons} name="fitness" size={ms(20)} color={primaryColor} />
-                <Text style={cmStyles.centerScore}>{avgDet}%</Text>
-                <Text style={cmStyles.centerLabel}>Avg Stress</Text>
-            </View>
-
-            {/* Organ nodes */}
-            {organsArr.map((o, i) => {
-                const angle = (i * (360 / organsArr.length) - 90) * (Math.PI / 180);
-                const nx = CIRCLE_CENTER + Math.cos(angle) * CIRCLE_RADIUS - NODE_SIZE / 2;
-                const ny = CIRCLE_CENTER + Math.sin(angle) * CIRCLE_RADIUS - NODE_SIZE / 2;
-                const col = getDetColor(o.deterioration);
-                const on = selectedOrgan === o.id;
-                return (
-                    <TouchableOpacity key={o.id} activeOpacity={0.7}
-                        onPress={() => onOrganPress(o.id)}
-                        style={[cmStyles.node, {
-                            left: nx, top: ny,
-                            borderColor: on ? col : col + '40',
-                            backgroundColor: on ? col + '15' : whiteColor,
-                            shadowColor: on ? col : 'transparent',
-                            shadowOpacity: on ? 0.3 : 0,
-                            shadowRadius: 8, elevation: on ? 6 : 2,
-                        }]}>
-                        {ORGAN_IMAGES[o.name] ? (
-                            <Image source={ORGAN_IMAGES[o.name]} style={{ width: IMG_SIZE, height: IMG_SIZE }} resizeMode="contain" />
-                        ) : (
-                            <Icon type={Icons.Ionicons} name="body" size={ms(20)} color={col} />
-                        )}
-                        <Text style={[cmStyles.nodeName, { color: on ? col : blackColor }]}>{o.name}</Text>
-                        <Text style={[cmStyles.nodeScore, { color: col }]}>{o.deterioration}</Text>
-                    </TouchableOpacity>
-                );
-            })}
-        </View>
-    );
-};
 
 const cmStyles = StyleSheet.create({
     centerHub: {
@@ -372,19 +459,85 @@ const OrganDetailPanel = ({ organId, view }) => {
     );
 };
 
+// ── Organ Insight Map (only affected organs) ─────────────────────────────────
+const OrganInsightMap = ({ affectedOrgans }) => {
+    const affected = affectedOrgans.map(id => ORGANS[id]).filter(Boolean);
+    const total = affected.length;
+    return (
+        <View style={{ width: CIRCLE_SIZE, height: CIRCLE_SIZE, alignSelf: 'center', marginBottom: vs(10) }}>
+            <Svg style={{ position: 'absolute', width: CIRCLE_SIZE, height: CIRCLE_SIZE }}>
+                <SvgCircle cx={CIRCLE_CENTER} cy={CIRCLE_CENTER} r={CIRCLE_RADIUS}
+                    fill="none" stroke={primaryColor} strokeWidth="1" strokeOpacity="0.1"
+                    strokeDasharray="4 4" />
+                {affected.map((o, i) => {
+                    const angle = (i * (360 / total) - 90) * (Math.PI / 180);
+                    const nx = CIRCLE_CENTER + Math.cos(angle) * CIRCLE_RADIUS;
+                    const ny = CIRCLE_CENTER + Math.sin(angle) * CIRCLE_RADIUS;
+                    const col = getDetColor(o.deterioration);
+                    return (
+                        <SvgCircle key={o.id + '-arc'} cx={nx} cy={ny} r={ARC_R}
+                            fill="none" stroke={col} strokeWidth={3} strokeOpacity={0.8}
+                            strokeDasharray={`${(o.deterioration / 100) * (2 * Math.PI * ARC_R)} ${2 * Math.PI * ARC_R}`}
+                            strokeLinecap="round" rotation={-90} origin={`${nx}, ${ny}`} />
+                    );
+                })}
+            </Svg>
+
+            {/* Center hub */}
+            <View style={[cmStyles.centerHub, { left: CIRCLE_CENTER - ms(32), top: CIRCLE_CENTER - ms(32) }]}>
+                <Icon type={Icons.Ionicons} name="body" size={ms(20)} color={primaryColor} />
+                <Text style={cmStyles.centerScore}>{total}</Text>
+                <Text style={cmStyles.centerLabel}>Affected</Text>
+            </View>
+
+            {/* Organ nodes — only affected */}
+            {affected.map((o, i) => {
+                const angle = (i * (360 / total) - 90) * (Math.PI / 180);
+                const nx = CIRCLE_CENTER + Math.cos(angle) * CIRCLE_RADIUS - NODE_SIZE / 2;
+                const ny = CIRCLE_CENTER + Math.sin(angle) * CIRCLE_RADIUS - NODE_SIZE / 2;
+                const col = getDetColor(o.deterioration);
+                return (
+                    <View key={o.id} style={[cmStyles.node, {
+                        left: nx, top: ny,
+                        borderColor: col,
+                        backgroundColor: col + '18',
+                        shadowColor: col, shadowOpacity: 0.35,
+                        shadowRadius: 8, elevation: 6,
+                    }]}>
+                        {ORGAN_IMAGES[o.name] ? (
+                            <Image source={ORGAN_IMAGES[o.name]} style={{ width: IMG_SIZE, height: IMG_SIZE }} resizeMode="contain" />
+                        ) : (
+                            <Icon type={Icons.Ionicons} name="body" size={ms(20)} color={col} />
+                        )}
+                        <Text style={[cmStyles.nodeName, { color: col }]}>{o.name}</Text>
+                        <Text style={[cmStyles.nodeScore, { color: col }]}>{o.deterioration}</Text>
+                    </View>
+                );
+            })}
+        </View>
+    );
+};
+
 // ── Main Screen ─────────────────────────────────────────────────────────────
 const DiseaseIntelligenceScreen = () => {
     const navigation = useNavigation();
-    const [view, setView] = useState('patient');
-    const [activeTab, setActiveTab] = useState('organs');
+    const route = useRoute();
+    const initialDisease = route.params?.disease && DISEASE_INSIGHTS[route.params.disease]
+        ? route.params.disease
+        : 'Diabetes';
+    const view = 'patient';
+    const [activeTab, setActiveTab] = useState('insight');
     const [selectedOrgan, setSelectedOrgan] = useState('kidneys');
     const [filterOrgan, setFilterOrgan] = useState(null);
+    const [selectedDisease] = useState(initialDisease);
 
     const TABS = [
-        { key: 'organs', label: 'Organ Analysis', icon: 'body' },
+        { key: 'insight', label: 'Insight', icon: 'bulb' },
+        { key: 'organs', label: 'Organs', icon: 'body' },
         { key: 'biomarkers', label: 'Biomarkers', icon: 'analytics' },
         { key: 'cluster', label: 'Cluster', icon: 'git-network' },
         { key: 'actions', label: 'Actions', icon: 'checkmark-circle' },
+        { key: 'care', label: 'Care', icon: 'medical' },
     ];
 
     return (
@@ -398,22 +551,14 @@ const DiseaseIntelligenceScreen = () => {
                         <Icon type={Icons.Ionicons} name="arrow-back" size={ms(20)} color={whiteColor} />
                     </TouchableOpacity>
                     <View style={{ flex: 1, marginLeft: ms(12) }}>
-                        <Text style={s.headerTitle}>Disease Intelligence</Text>
-                        <Text style={s.headerSub}>Multi-organ impact analysis</Text>
-                    </View>
-                    {/* Doctor / Patient toggle */}
-                    <View style={s.toggleWrap}>
-                        {['patient', 'doctor'].map(v => (
-                            <TouchableOpacity key={v} onPress={() => setView(v)}
-                                style={[s.toggleBtn, view === v && s.toggleBtnActive]}
-                            >
-                                <Icon type={Icons.Ionicons} name={v === 'patient' ? 'person' : 'medkit'}
-                                    size={ms(12)} color={view === v ? whiteColor : 'rgba(255,255,255,0.5)'} />
-                                <Text style={[s.toggleText, view === v && s.toggleTextActive]}>
-                                    {v === 'patient' ? 'Patient' : 'Doctor'}
-                                </Text>
-                            </TouchableOpacity>
-                        ))}
+                        <Text style={s.headerTitle} numberOfLines={1}>
+                            {activeTab === 'insight' ? selectedDisease : 'Disease Intelligence'}
+                        </Text>
+                        <Text style={s.headerSub}>
+                            {activeTab === 'insight'
+                                ? `${DISEASE_INSIGHTS[selectedDisease].affectedOrgans.length} organs affected`
+                                : 'Multi-organ impact analysis'}
+                        </Text>
                     </View>
                 </View>
 
@@ -445,69 +590,6 @@ const DiseaseIntelligenceScreen = () => {
                 </ScrollView>
 
                 <ScrollView showsVerticalScrollIndicator={false} style={{ flex: 1 }} contentContainerStyle={s.content}>
-
-                    {/* ── ORGANS TAB ── */}
-                    {activeTab === 'organs' && (
-                        <>
-                            {/* Body silhouette */}
-                            <View style={s.card}>
-                                <Text style={s.cardTitle}>
-                                    {view === 'patient' ? 'Your Body Map' : 'Organ Impact Map'}
-                                </Text>
-                                <OrganCircleMap selectedOrgan={selectedOrgan} onOrganPress={setSelectedOrgan} />
-                                {/* Legend */}
-                                <View style={s.legendRow}>
-                                    {[['#16A34A', '<25'], ['#F59E0B', '25-45'], ['#EF4444', '45-65'], ['#DC2626', '65+']].map(([c, l]) => (
-                                        <View key={l} style={s.legendItem}>
-                                            <View style={[s.legendDot, { backgroundColor: c }]} />
-                                            <Text style={s.legendText}>{l}</Text>
-                                        </View>
-                                    ))}
-                                </View>
-                            </View>
-
-                            {/* Organ cards grid */}
-                            <View style={s.organGrid}>
-                                {organsArr.map(o => {
-                                    const col = getDetColor(o.deterioration);
-                                    const isActive = selectedOrgan === o.id;
-                                    return (
-                                        <TouchableOpacity key={o.id} activeOpacity={0.7}
-                                            onPress={() => setSelectedOrgan(o.id)}
-                                            style={[s.organMiniCard, isActive && { borderColor: col, backgroundColor: col + '08' }]}
-                                        >
-                                            <View style={s.organMiniTop}>
-                                                <View style={[s.organMiniIcon, { backgroundColor: col + '12' }]}>
-                                                    {ORGAN_IMAGES[o.name] ? (
-                                                        <Image source={ORGAN_IMAGES[o.name]} style={{ width: ms(18), height: ms(18) }} resizeMode="contain" />
-                                                    ) : (
-                                                        <Icon type={Icons.Ionicons} name="body" size={ms(14)} color={col} />
-                                                    )}
-                                                </View>
-                                                <View>
-                                                    <Text style={[s.organMiniScore, { color: col }]}>{o.deterioration}</Text>
-                                                    <Text style={s.organMiniStressLabel}>stress</Text>
-                                                </View>
-                                            </View>
-                                            <Text style={s.organMiniName}>{o.name}</Text>
-                                            <Text style={[s.organMiniStage, { color: col }]}>{o.stage}</Text>
-                                            <View style={s.organMiniBar}>
-                                                <View style={[s.organMiniFill, { width: `${o.deterioration}%`, backgroundColor: col }]} />
-                                            </View>
-                                            <Text style={[s.organMiniTrend, { color: o.trend === 'worsening' ? '#F97316' : primaryColor }]}>
-                                                {o.trend === 'worsening' ? '\u2191 Worsening' : '\u2192 Stable Risk'}
-                                            </Text>
-                                        </TouchableOpacity>
-                                    );
-                                })}
-                            </View>
-
-                            {/* Detail panel */}
-                            <View style={s.card}>
-                                <OrganDetailPanel organId={selectedOrgan} view={view} />
-                            </View>
-                        </>
-                    )}
 
                     {/* ── BIOMARKERS TAB ── */}
                     {activeTab === 'biomarkers' && (
@@ -611,17 +693,6 @@ const DiseaseIntelligenceScreen = () => {
                                     );
                                 })}
 
-                                {/* View-specific insight */}
-                                <View style={[s.clusterInsight, { backgroundColor: view === 'patient' ? primaryColor + '10' : '#8B5CF612', borderColor: view === 'patient' ? primaryColor + '30' : '#8B5CF630' }]}>
-                                    <Text style={[s.clusterInsightTitle, { color: view === 'patient' ? primaryColor : '#8B5CF6' }]}>
-                                        {view === 'patient' ? 'What You Can Do' : 'Clinical Rationale'}
-                                    </Text>
-                                    <Text style={s.clusterInsightText}>
-                                        {view === 'patient'
-                                            ? 'Each healthy change you make — better sleep, more movement, medication adherence — reduces risk across all of these conditions simultaneously.'
-                                            : 'Shared pathophysiology: insulin resistance \u2192 endothelial dysfunction \u2192 systemic inflammation \u2192 multi-organ cascade. Polypharmacy review + lifestyle prescription essential.'}
-                                    </Text>
-                                </View>
                             </View>
 
                             {/* Timeline */}
@@ -630,18 +701,190 @@ const DiseaseIntelligenceScreen = () => {
                                     {view === 'patient' ? 'What Could Happen Without Action' : 'Cascade Trajectory'}
                                 </Text>
                                 <View style={s.timelineWrap}>
-                                    <View style={s.timelineLine} />
                                     {TIMELINE[view].map((pt, i) => (
                                         <View key={i} style={s.timelineItem}>
-                                            <View style={[s.timelineDot, { backgroundColor: pt.color }]} />
-                                            <Text style={[s.timelineTime, { color: pt.color }]}>{pt.time}</Text>
-                                            <Text style={s.timelineEvent}>{pt.event}</Text>
+                                            {/* Left: dot + connector line */}
+                                            <View style={s.timelineLeft}>
+                                                <View style={[s.timelineDot, { backgroundColor: pt.color }]} />
+                                                {i < TIMELINE[view].length - 1 && (
+                                                    <View style={s.timelineConnector} />
+                                                )}
+                                            </View>
+                                            {/* Right: label + event */}
+                                            <View style={s.timelineContent}>
+                                                <Text style={[s.timelineTime, { color: pt.color }]}>{pt.time}</Text>
+                                                <Text style={s.timelineEvent}>{pt.event}</Text>
+                                            </View>
                                         </View>
                                     ))}
                                 </View>
                             </View>
                         </>
                     )}
+
+                    {/* ── ORGANS TAB ── */}
+                    {activeTab === 'organs' && (() => {
+                        const insight = DISEASE_INSIGHTS[selectedDisease];
+                        return (
+                            <>
+                                {/* Affected Organs — body map + cards + detail */}
+                                <View style={s.card}>
+                                    <Text style={s.cardTitle}>Affected Organs</Text>
+                                    <OrganInsightMap affectedOrgans={insight.affectedOrgans} />
+                                    {/* Affected organ chips */}
+                                    <View style={s.insightOrganRow}>
+                                        {insight.affectedOrgans.map(oid => {
+                                            const org = ORGANS[oid];
+                                            const col = getDetColor(org.deterioration);
+                                            return (
+                                                <TouchableOpacity key={oid}
+                                                    onPress={() => setSelectedOrgan(oid)}
+                                                    style={[s.insightOrganChip, { backgroundColor: col + '12', borderColor: col + '40' }]}>
+                                                    {ORGAN_IMAGES[org.name] && (
+                                                        <Image source={ORGAN_IMAGES[org.name]} style={{ width: ms(12), height: ms(12) }} resizeMode="contain" />
+                                                    )}
+                                                    <Text style={[s.insightOrganChipText, { color: col }]}>{org.name}</Text>
+                                                    <Text style={[s.insightOrganChipScore, { color: col }]}>{org.deterioration}</Text>
+                                                </TouchableOpacity>
+                                            );
+                                        })}
+                                    </View>
+                                    {/* Organ cards grid — only affected organs */}
+                                    <View style={[s.organGrid, { marginHorizontal: 0, paddingHorizontal: 0, marginBottom: 0, marginTop: vs(12) }]}>
+                                        {insight.affectedOrgans.map(oid => {
+                                            const o = ORGANS[oid];
+                                            const col = getDetColor(o.deterioration);
+                                            const isActive = selectedOrgan === o.id;
+                                            return (
+                                                <TouchableOpacity key={o.id} activeOpacity={0.7}
+                                                    onPress={() => setSelectedOrgan(o.id)}
+                                                    style={[s.organMiniCard, { width: (width - ms(82)) / 2 }, isActive && { borderColor: col, backgroundColor: col + '08' }]}
+                                                >
+                                                    <View style={s.organMiniTop}>
+                                                        <View style={[s.organMiniIcon, { backgroundColor: col + '12' }]}>
+                                                            {ORGAN_IMAGES[o.name] ? (
+                                                                <Image source={ORGAN_IMAGES[o.name]} style={{ width: ms(18), height: ms(18) }} resizeMode="contain" />
+                                                            ) : (
+                                                                <Icon type={Icons.Ionicons} name="body" size={ms(14)} color={col} />
+                                                            )}
+                                                        </View>
+                                                        <View>
+                                                            <Text style={[s.organMiniScore, { color: col }]}>{o.deterioration}</Text>
+                                                            <Text style={s.organMiniStressLabel}>stress</Text>
+                                                        </View>
+                                                    </View>
+                                                    <Text style={s.organMiniName}>{o.name}</Text>
+                                                    <Text style={[s.organMiniStage, { color: col }]}>{o.stage}</Text>
+                                                    <View style={s.organMiniBar}>
+                                                        <View style={[s.organMiniFill, { width: `${o.deterioration}%`, backgroundColor: col }]} />
+                                                    </View>
+                                                    <Text style={[s.organMiniTrend, { color: o.trend === 'worsening' ? '#F97316' : primaryColor }]}>
+                                                        {o.trend === 'worsening' ? '↑ Worsening' : '→ Stable Risk'}
+                                                    </Text>
+                                                </TouchableOpacity>
+                                            );
+                                        })}
+                                    </View>
+                                    {/* Individual organ detail + biomarkers + required actions */}
+                                    <View style={{ marginTop: vs(16), borderTopWidth: 1, borderTopColor: '#F3F4F6', paddingTop: vs(16) }}>
+                                        <OrganDetailPanel organId={selectedOrgan} view={view} />
+                                    </View>
+                                </View>
+                            </>
+                        );
+                    })()}
+
+                    {/* ── CARE TAB ── */}
+                    {activeTab === 'care' && (() => {
+                        const insight = DISEASE_INSIGHTS[selectedDisease];
+                        return (
+                            <>
+                                {/* Treatment */}
+                                <View style={[s.card, { borderWidth: 1, borderColor: '#D1FAE5' }]}>
+                                    <View style={s.insightSectionHeader}>
+                                        <Icon type={Icons.Ionicons} name="checkmark-circle" size={ms(16)} color={primaryColor} />
+                                        <Text style={[s.insightSectionTitle, { color: primaryColor, fontSize: ms(14) }]}>Treatment</Text>
+                                    </View>
+                                    <View style={s.insightListWrap}>
+                                        {insight.treatment.map((t, i) => (
+                                            <View key={i} style={[s.interventionRow, { marginBottom: vs(8) }]}>
+                                                <View style={[s.careBullet, { backgroundColor: primaryColor }]}>
+                                                    <Text style={s.careBulletNum}>{i + 1}</Text>
+                                                </View>
+                                                <Text style={[s.interventionText, { fontSize: ms(12), lineHeight: ms(18) }]}>{t}</Text>
+                                            </View>
+                                        ))}
+                                    </View>
+                                </View>
+
+                                {/* Prevention */}
+                                <View style={[s.card, { backgroundColor: primaryColor + '08', borderWidth: 1, borderColor: primaryColor + '25' }]}>
+                                    <View style={s.insightSectionHeader}>
+                                        <Icon type={Icons.Ionicons} name="shield-checkmark" size={ms(16)} color={primaryColor} />
+                                        <Text style={[s.insightSectionTitle, { color: primaryColor, fontSize: ms(14) }]}>Prevention</Text>
+                                    </View>
+                                    <Text style={s.insightDescription}>{insight.prevention}</Text>
+                                </View>
+                            </>
+                        );
+                    })()}
+
+                    {/* ── INSIGHT TAB ── */}
+                    {activeTab === 'insight' && (() => {
+                        const insight = DISEASE_INSIGHTS[selectedDisease];
+                        return (
+                            <>
+                                {/* Disease header card */}
+                                <View style={[s.card, { borderWidth: 1, borderColor: insight.severity + '30' }]}>
+                                    <View style={s.insightHeader}>
+                                        <View style={[s.insightIconWrap, { backgroundColor: insight.severity + '15', borderColor: insight.severity + '40' }]}>
+                                            <Icon type={Icons.Ionicons} name={insight.icon} size={ms(22)} color={insight.severity} />
+                                        </View>
+                                        <View style={{ flex: 1 }}>
+                                            <Text style={s.insightDiseaseName}>{selectedDisease}</Text>
+                                            <Text style={[s.insightAffectedLabel, { color: insight.severity }]}>
+                                                {insight.affectedOrgans.length} organs affected
+                                            </Text>
+                                        </View>
+                                    </View>
+                                    <Text style={s.insightDescription}>{insight.description}</Text>
+                                </View>
+
+                                {/* Symptoms */}
+                                <View style={s.card}>
+                                    <View style={s.insightSectionHeader}>
+                                        <Icon type={Icons.Ionicons} name="warning" size={ms(14)} color="#F59E0B" />
+                                        <Text style={s.insightSectionTitle}>Symptoms</Text>
+                                    </View>
+                                    <View style={s.insightListWrap}>
+                                        {insight.symptoms.map((sym, i) => (
+                                            <View key={i} style={s.insightListRow}>
+                                                <View style={[s.insightDot, { backgroundColor: insight.severity }]} />
+                                                <Text style={s.insightListText}>{sym}</Text>
+                                            </View>
+                                        ))}
+                                    </View>
+                                </View>
+
+                                {/* Causes */}
+                                <View style={[s.card, { borderColor: '#FEE2E2', borderWidth: 1 }]}>
+                                    <View style={s.insightSectionHeader}>
+                                        <Icon type={Icons.Ionicons} name="alert-circle" size={ms(14)} color="#EF4444" />
+                                        <Text style={[s.insightSectionTitle, { color: '#EF4444' }]}>Causes</Text>
+                                    </View>
+                                    <View style={s.insightListWrap}>
+                                        {insight.causes.map((c, i) => (
+                                            <View key={i} style={s.insightListRow}>
+                                                <View style={[s.insightDot, { backgroundColor: '#EF4444' }]} />
+                                                <Text style={s.insightListText}>{c}</Text>
+                                            </View>
+                                        ))}
+                                    </View>
+                                </View>
+
+                            </>
+                        );
+                    })()}
 
                     {/* ── ACTIONS TAB ── */}
                     {activeTab === 'actions' && (
@@ -707,18 +950,6 @@ const s = StyleSheet.create({
     },
     headerTitle: { fontFamily: bold, fontSize: ms(17), color: whiteColor },
     headerSub: { fontFamily: regular, fontSize: ms(10), color: 'rgba(255,255,255,0.7)', marginTop: vs(2) },
-    toggleWrap: {
-        flexDirection: 'row', backgroundColor: 'rgba(255,255,255,0.15)',
-        borderRadius: ms(10), padding: ms(3),
-    },
-    toggleBtn: {
-        flexDirection: 'row', alignItems: 'center', gap: ms(4),
-        paddingHorizontal: ms(10), paddingVertical: vs(5), borderRadius: ms(8),
-    },
-    toggleBtnActive: { backgroundColor: primaryColor },
-    toggleText: { fontFamily: bold, fontSize: ms(10), color: 'rgba(255,255,255,0.5)' },
-    toggleTextActive: { color: whiteColor },
-
     // Stats bar
     statsBar: {
         flexDirection: 'row', justifyContent: 'space-around',
@@ -823,6 +1054,13 @@ const s = StyleSheet.create({
     bmImpactValue: { fontFamily: bold, fontSize: ms(12) },
     bmImpactDesc: { fontFamily: regular, fontSize: ms(11), color: '#6B7280', lineHeight: ms(16) },
 
+    // Care tab
+    careBullet: {
+        width: ms(22), height: ms(22), borderRadius: ms(11),
+        justifyContent: 'center', alignItems: 'center', marginRight: ms(2),
+    },
+    careBulletNum: { fontFamily: bold, fontSize: ms(10), color: whiteColor },
+
     // Intervention rows
     interventionRow: {
         flexDirection: 'row', alignItems: 'center', gap: ms(8),
@@ -877,15 +1115,14 @@ const s = StyleSheet.create({
     clusterInsightText: { fontFamily: regular, fontSize: ms(12), color: '#374151', lineHeight: ms(19) },
 
     // Timeline
-    timelineWrap: { paddingLeft: ms(16) },
-    timelineLine: { position: 'absolute', left: ms(22), top: 0, bottom: 0, width: 2, backgroundColor: '#E5E7EB' },
-    timelineItem: { flexDirection: 'row', alignItems: 'flex-start', marginBottom: vs(14), paddingLeft: ms(20) },
-    timelineDot: {
-        width: ms(12), height: ms(12), borderRadius: ms(6),
-        position: 'absolute', left: ms(-4), top: vs(2),
-    },
-    timelineTime: { fontFamily: bold, fontSize: ms(11), width: ms(65), marginRight: ms(8) },
-    timelineEvent: { fontFamily: regular, fontSize: ms(12), color: '#374151', flex: 1, lineHeight: ms(18) },
+    timelineWrap: {},
+    timelineItem: { flexDirection: 'row', alignItems: 'flex-start', marginBottom: 0 },
+    timelineLeft: { alignItems: 'center', width: ms(24), marginRight: ms(12) },
+    timelineDot: { width: ms(12), height: ms(12), borderRadius: ms(6), marginTop: vs(3) },
+    timelineConnector: { width: 2, flex: 1, backgroundColor: '#E5E7EB', minHeight: vs(22) },
+    timelineContent: { flex: 1, paddingBottom: vs(18) },
+    timelineTime: { fontFamily: bold, fontSize: ms(11), marginBottom: vs(3) },
+    timelineEvent: { fontFamily: regular, fontSize: ms(12), color: '#374151', lineHeight: ms(18) },
 
     // Actions tab
     actionsTitle: {
@@ -917,4 +1154,42 @@ const s = StyleSheet.create({
         paddingHorizontal: ms(10), paddingVertical: vs(5), alignSelf: 'flex-start',
     },
     actionBtnText: { fontFamily: bold, fontSize: ms(10), color: primaryColor },
+
+    // Insight tab
+    insightChip: {
+        flexDirection: 'row', alignItems: 'center', gap: ms(5),
+        borderRadius: ms(20), paddingHorizontal: ms(12), paddingVertical: vs(7),
+        borderWidth: 1.5, borderColor: '#E5E7EB', backgroundColor: whiteColor,
+    },
+    insightChipText: { fontFamily: bold, fontSize: ms(10) },
+    insightHeader: { flexDirection: 'row', alignItems: 'center', marginBottom: vs(12) },
+    insightIconWrap: {
+        width: ms(46), height: ms(46), borderRadius: ms(14),
+        borderWidth: 1.5, justifyContent: 'center', alignItems: 'center', marginRight: ms(12),
+    },
+    insightDiseaseName: { fontFamily: bold, fontSize: ms(15), color: blackColor },
+    insightAffectedLabel: { fontFamily: bold, fontSize: ms(11), marginTop: vs(2) },
+    insightDescription: { fontFamily: regular, fontSize: ms(12), color: '#374151', lineHeight: ms(19) },
+    insightOrganRow: { flexDirection: 'row', flexWrap: 'wrap', gap: ms(8), marginTop: vs(4) },
+    insightOrganChip: {
+        flexDirection: 'row', alignItems: 'center', gap: ms(5),
+        borderRadius: ms(20), paddingHorizontal: ms(10), paddingVertical: vs(5),
+        borderWidth: 1,
+    },
+    insightOrganChipText: { fontFamily: bold, fontSize: ms(10) },
+    insightOrganChipScore: { fontFamily: bold, fontSize: ms(9) },
+    insightSectionHeader: { flexDirection: 'row', alignItems: 'center', gap: ms(6), marginBottom: vs(10) },
+    insightSectionTitle: { fontFamily: bold, fontSize: ms(12), color: blackColor },
+    insightListWrap: { gap: vs(6) },
+    insightListRow: { flexDirection: 'row', alignItems: 'flex-start', gap: ms(8) },
+    insightDot: { width: ms(6), height: ms(6), borderRadius: ms(3), marginTop: vs(5) },
+    insightListText: { fontFamily: regular, fontSize: ms(12), color: '#374151', flex: 1, lineHeight: ms(18) },
+    insightDoubleRow: {
+        flexDirection: 'row', gap: ms(10),
+        paddingHorizontal: ms(20), marginBottom: vs(14),
+    },
+    insightHalfCard: {
+        flex: 1, backgroundColor: whiteColor, borderRadius: ms(14),
+        padding: ms(14), borderWidth: 1,
+    },
 });

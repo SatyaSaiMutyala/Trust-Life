@@ -6,7 +6,11 @@ import {
   Text,
   Platform,
   PermissionsAndroid,
+  Modal,
+  TouchableOpacity,
+  ActivityIndicator,
 } from "react-native";
+import NetInfo from "@react-native-community/netinfo";
 import {
   bold,
   white_logo,
@@ -44,6 +48,8 @@ import { s, vs, ms } from 'react-native-size-matters';
 
 const Splash = (props) => {
   const navigation = useNavigation();
+  const [netError, setNetError] = useState({ visible: false, message: '' });
+  const [retrying, setRetrying] = useState(false);
 
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', async () => {
@@ -120,6 +126,7 @@ const Splash = (props) => {
 
   const app_settings = async () => {
     console.log('im in app setting method');
+    setNetError({ visible: false, message: '' });
     axios({
       method: "get",
       url: api_url + customer_app_settings,
@@ -130,14 +137,21 @@ const Splash = (props) => {
         await props.updateDeliveryCharge(response.data.result.pharm_delivery_charge);
         await saveData(response.data.result);
       })
-      .catch((error) => {
+      .catch(async (error) => {
         console.log('--- Axios full error ---');
         console.log('Message :', error.message);
-        console.log('Code    :', error.code);
-        console.log('Config  :', error.config);
-        console.log('Request :', error.request);
-        console.log('Raw     :', JSON.stringify(error, Object.getOwnPropertyNames(error), 2));
+        const netState = await NetInfo.fetch();
+        const message = !netState.isConnected
+          ? 'No internet connection.\nPlease check your Wi-Fi or mobile data and try again.'
+          : 'Internet is slow or server is unreachable.\nPlease check your connection and try again.';
+        setNetError({ visible: true, message });
       });
+  };
+
+  const handleRetry = async () => {
+    setRetrying(true);
+    await app_settings();
+    setRetrying(false);
   };
 
   const saveData = async (data) => {
@@ -279,6 +293,30 @@ const Splash = (props) => {
       end={{ x: 1, y: 1 }}
       style={styles.background}
     >
+      <Modal
+        transparent
+        animationType="fade"
+        visible={netError.visible}
+        onRequestClose={() => {}}
+      >
+        <View style={styles.modalOverlay}>
+          <View style={styles.modalBox}>
+            <Text style={styles.modalIcon}>📶</Text>
+            <Text style={styles.modalTitle}>Connection Problem</Text>
+            <Text style={styles.modalMessage}>{netError.message}</Text>
+            <TouchableOpacity
+              style={styles.retryButton}
+              onPress={handleRetry}
+              disabled={retrying}
+            >
+              {retrying
+                ? <ActivityIndicator color="#fff" />
+                : <Text style={styles.retryText}>Retry</Text>
+              }
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
       <StatusBar2 />
       <View style={styles.topSection}>
         <Text style={styles.welcomeText}>Welcome</Text>
@@ -379,6 +417,55 @@ const styles = StyleSheet.create({
     width: ms(100),
     height: ms(40),
     resizeMode: 'contain',
+  },
+  modalOverlay: {
+    flex: 1,
+    backgroundColor: 'rgba(0,0,0,0.5)',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  modalBox: {
+    backgroundColor: '#fff',
+    borderRadius: ms(16),
+    padding: ms(24),
+    width: '80%',
+    alignItems: 'center',
+    elevation: 8,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.2,
+    shadowRadius: 8,
+  },
+  modalIcon: {
+    fontSize: ms(40),
+    marginBottom: vs(10),
+  },
+  modalTitle: {
+    fontSize: ms(18),
+    fontWeight: '700',
+    color: blackColor,
+    marginBottom: vs(8),
+    textAlign: 'center',
+  },
+  modalMessage: {
+    fontSize: ms(14),
+    color: '#555',
+    textAlign: 'center',
+    lineHeight: ms(22),
+    marginBottom: vs(20),
+  },
+  retryButton: {
+    backgroundColor: '#1A7E70',
+    borderRadius: ms(10),
+    paddingVertical: vs(10),
+    paddingHorizontal: s(40),
+    minWidth: s(100),
+    alignItems: 'center',
+  },
+  retryText: {
+    color: '#fff',
+    fontSize: ms(15),
+    fontWeight: '600',
   },
 });
 

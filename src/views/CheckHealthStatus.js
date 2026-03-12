@@ -487,7 +487,7 @@ const CheckHealthStatus = () => {
                         { label: 'Hypertension', type: 'Chronic', typeColor: '#3B82F6', status: 'Poor control', statusType: 'poor', screen: 'DiseaseIntelligenceScreen', condition: { id: '2', name: 'Hypertension', category: 'Chronic', status: 'Active', stability: 'Unstable', stabilityColor: '#1F2937', stabilityBgColor: '#F3F4F6', date: '12 Jan 2026  •  12:30 PM', description: 'Monitors your blood pressure to maintain healthy heart and circulation.' } },
                         { label: 'Fever', type: 'Acute', typeColor: '#EF4444', status: 'Need to monitor', statusType: 'moderate', condition: { id: '1', name: 'Fever', category: 'Acute', status: 'Active', stability: 'Stable', stabilityColor: primaryColor, stabilityBgColor: '#DCFCE7', date: '12 Jan, 2026  •  12:30 PM', description: 'Body temperature above normal, usually due to infection or inflammation' } },
                     ].map((item, index) => (
-                        <TouchableOpacity key={index} style={styles.condRow} activeOpacity={0.7} onPress={() => item.screen ? navigation.navigate(item.screen) : navigation.navigate('CategoryDiseaseDetailScreen', { condition: item.condition, category: item.type })}>
+                        <TouchableOpacity key={index} style={styles.condRow} activeOpacity={0.7} onPress={() => navigation.navigate('DiseaseIntelligenceScreen', { disease: item.label })}>
                             <View style={{ flex: 1 }}>
                                 <Text style={styles.condName}>{item.label}</Text>
                                 <View style={[styles.condTypeBadge, { backgroundColor: item.typeColor + '15', marginTop: vs(3) }]}>
@@ -535,14 +535,13 @@ const CheckHealthStatus = () => {
                     )} */}
                     <View style={styles.organGrid}>
                         {[
-                            { img: require('../assets/img/vo-heart.png'),     label: 'Heart',    status: 'Stable', statusType: 'strong' },
-                            { img: require('../assets/img/human-kidneys.png'), label: 'Kidney',   status: 'Stable', statusType: 'strong' },
-                            { img: require('../assets/img/human-liver.png'),   label: 'Liver',    status: 'Stable', statusType: 'strong' },
-                            { img: require('../assets/img/human-pancreas.png'), label: 'Pancreas', status: 'Stable', statusType: 'strong' },
+                            { img: require('../assets/img/vo-heart.png'),     label: 'Heart',    organId: 'heart',    status: 'Stable', statusType: 'strong' },
+                            { img: require('../assets/img/human-kidneys.png'), label: 'Kidney',   organId: 'kidneys',  status: 'Stable', statusType: 'strong' },
+                            { img: require('../assets/img/human-liver.png'),   label: 'Liver',    organId: 'liver',    status: 'Stable', statusType: 'strong' },
+                            { img: require('../assets/img/human-pancreas.png'), label: 'Pancreas', organId: 'pancreas', status: 'Stable', statusType: 'strong' },
                         ].map((item, index) => (
                             <TouchableOpacity key={index} style={styles.organGridCard} activeOpacity={0.7}
-                            // onPress={() => navigation.navigate('OrganDetailScreen', { organ: item.label })}>
-                            onPress={() => navigation.navigate('OrganInsightsScreen')}>
+                            onPress={() => navigation.navigate('OrganInsightsScreen', { organId: item.organId })}>
                                 <View style={styles.organGridTop}>
                                     <Image source={item.img} style={styles.organGridImage} />
                                     <Text style={styles.organGridLabel}>{item.label}</Text>

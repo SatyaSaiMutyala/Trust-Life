@@ -217,14 +217,14 @@
 
 import React, { useState } from 'react';
 import {
-  StyleSheet,
-  SafeAreaView,
-  Text,
-  ScrollView,
-  View,
-  Dimensions,
-  TouchableOpacity,
-  Image,
+    StyleSheet,
+    SafeAreaView,
+    Text,
+    ScrollView,
+    View,
+    Dimensions,
+    TouchableOpacity,
+    Image,
 } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import * as colors from '../assets/css/Colors';
@@ -240,334 +240,316 @@ import { useSnack } from '../context/GlobalSnackBarContext';
 const { width, height } = Dimensions.get('window');
 
 const ORGANS = [
-  { label: 'Heart', img: require('../assets/img/vo-heart.png'), bgColor: '#FEE2E2', status: 'Watch', statusType: 'moderate', description: 'Pumps blood throughout the body' },
-  { label: 'Kidney', img: require('../assets/img/human-kidneys.png'), bgColor: '#FEE2E2', status: 'Stable', statusType: 'strong', description: 'Filters waste and regulates fluid balance' },
-  { label: 'Liver', img: require('../assets/img/human-liver.png'), bgColor: '#FEF3C7', status: 'Stable', statusType: 'strong', description: 'Processes nutrients and detoxifies blood' },
-  { label: 'Pancreas', img: require('../assets/img/human-pancreas.png'), bgColor: '#DCFCE7', status: 'Watch', statusType: 'moderate', description: 'Produces insulin and digestive enzymes' },
-  { label: 'Lungs', img: require('../assets/img/human-lungs.png'), bgColor: '#E0F2FE', status: 'Efficient', statusType: 'strong', description: 'Handles breathing and oxygen exchange' },
-  { label: 'Brain', img: require('../assets/img/human-brain.png'), bgColor: '#FCE7F3', status: 'Active', statusType: 'strong', description: 'Controls body functions and cognition' },
-  { label: 'Eye', img: require('../assets/img/human-eye.png'), bgColor: '#EDE9FE', status: 'Normal', statusType: 'strong', description: 'Provides vision and light perception' },
-  { label: 'Thymus', img: require('../assets/img/human-thymus.png'), bgColor: '#CCFBF1', status: 'Active', statusType: 'strong', description: 'Supports immune system development' },
-  { label: 'Skin', img: require('../assets/img/human-skin.png'), bgColor: '#FEF3C7', status: 'Healthy', statusType: 'strong', description: 'Protects body and regulates temperature' },
-  { label: 'Gut', img: require('../assets/img/human-gut.png'), bgColor: '#FFEDD5', status: 'Balanced', statusType: 'strong', description: 'Digests food and absorbs nutrients' },
-  { label: 'Muscle', img: require('../assets/img/human-muscle.png'), bgColor: '#FAE8FF', status: 'Strong', statusType: 'strong', description: 'Supports movement and posture' },
-  { label: 'Thyroid', img: require('../assets/img/human-thyroid.png'), bgColor: '#CFFAFE', status: 'Normal', statusType: 'strong', description: 'Regulates metabolism and energy balance' },
-  { label: 'Vascular System', img: require('../assets/img/human-vascular.png'), bgColor: '#FEE2E2', status: 'Normal', statusType: 'strong', description: 'Blood vessels circulating blood throughout body' },
-  { label: 'Reproductive', img: require('../assets/img/human-reproductive.png'), bgColor: '#EDE9FE', status: 'Normal', statusType: 'strong', description: 'Reproductive organs and hormonal health' },
+    { label: 'Heart', organId: 'heart', img: require('../assets/img/vo-heart.png'), bgColor: '#FEE2E2', status: 'Watch', statusType: 'moderate', description: 'Pumps blood throughout the body' },
+    { label: 'Kidney', organId: 'kidneys', img: require('../assets/img/human-kidneys.png'), bgColor: '#FEE2E2', status: 'Stable', statusType: 'strong', description: 'Filters waste and regulates fluid balance' },
+    { label: 'Liver', organId: 'liver', img: require('../assets/img/human-liver.png'), bgColor: '#FEF3C7', status: 'Stable', statusType: 'strong', description: 'Processes nutrients and detoxifies blood' },
+    { label: 'Pancreas', organId: 'pancreas', img: require('../assets/img/human-pancreas.png'), bgColor: '#DCFCE7', status: 'Watch', statusType: 'moderate', description: 'Produces insulin and digestive enzymes' },
+    { label: 'Lungs', organId: 'lungs', img: require('../assets/img/human-lungs.png'), bgColor: '#E0F2FE', status: 'Efficient', statusType: 'strong', description: 'Handles breathing and oxygen exchange' },
+    { label: 'Brain', organId: 'nerves', img: require('../assets/img/human-brain.png'), bgColor: '#FCE7F3', status: 'Active', statusType: 'strong', description: 'Controls body functions and cognition' },
+    { label: 'Eye', organId: 'eyes', img: require('../assets/img/human-eye.png'), bgColor: '#EDE9FE', status: 'Normal', statusType: 'strong', description: 'Provides vision and light perception' },
+    { label: 'Thymus', organId: 'thymus', img: require('../assets/img/human-thymus.png'), bgColor: '#CCFBF1', status: 'Active', statusType: 'strong', description: 'Supports immune system development' },
+    { label: 'Skin', organId: 'skin', img: require('../assets/img/human-skin.png'), bgColor: '#FEF3C7', status: 'Healthy', statusType: 'strong', description: 'Protects body and regulates temperature' },
+    { label: 'Gut', organId: 'gut', img: require('../assets/img/human-gut.png'), bgColor: '#FFEDD5', status: 'Balanced', statusType: 'strong', description: 'Digests food and absorbs nutrients' },
+    { label: 'Muscle', organId: 'muscle', img: require('../assets/img/human-muscle.png'), bgColor: '#FAE8FF', status: 'Strong', statusType: 'strong', description: 'Supports movement and posture' },
+    { label: 'Thyroid', organId: 'thyroid', img: require('../assets/img/human-thyroid.png'), bgColor: '#CFFAFE', status: 'Normal', statusType: 'strong', description: 'Regulates metabolism and energy balance' },
+    { label: 'Vascular System', organId: 'vascular', img: require('../assets/img/human-vascular.png'), bgColor: '#FEE2E2', status: 'Normal', statusType: 'strong', description: 'Blood vessels circulating blood throughout body' },
+    { label: 'Reproductive', organId: 'reproductive', img: require('../assets/img/human-reproductive.png'), bgColor: '#EDE9FE', status: 'Normal', statusType: 'strong', description: 'Reproductive organs and hormonal health' },
 ];
 
 const RingComponent = ({ size, outerRadius, percentage }) => {
-  return (
-    <View style={{ width: width, height: size, justifyContent: 'center', alignItems: 'center' }}>
-      <View
-        style={{
-          width: outerRadius * 2,
-          height: outerRadius * 2,
-          justifyContent: 'center',
-          alignItems: 'center',
-          position: 'absolute',
-        }}>
-        <Text style={styles.scoreText}>{percentage}</Text>
-        <Text style={styles.scoreSubText}>Out of 100</Text>
-      </View>
-      <AnalysisProgress percentage={percentage} ringColor={primaryColor} size={size} thickness={8} />
-    </View>
-  );
+    return (
+        <View style={{ width: width, height: size, justifyContent: 'center', alignItems: 'center' }}>
+            <View
+                style={{
+                    width: outerRadius * 2,
+                    height: outerRadius * 2,
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    position: 'absolute',
+                }}>
+                <Text style={styles.scoreText}>{percentage}</Text>
+                <Text style={styles.scoreSubText}>Out of 100</Text>
+            </View>
+            <AnalysisProgress percentage={percentage} ringColor={primaryColor} size={size} thickness={8} />
+        </View>
+    );
 };
 
 const Analysis = () => {
-  const navigation = useNavigation();
-  const route = useRoute();
-  const { showSnack } = useSnack();
-  const [progress] = useState(80);
-  const [open, setOpen] = useState(true);
-  const [type] = useState(route.params ? route.params.type : 'default');
-  const handleBackButtonClick = () => navigation.goBack();
-  const handleOpenClick = () => setOpen(!open);
+    const navigation = useNavigation();
+    const route = useRoute();
+    const { showSnack } = useSnack();
+    const [progress] = useState(80);
+    const [open, setOpen] = useState(true);
+    const [type] = useState(route.params ? route.params.type : 'default');
+    const handleBackButtonClick = () => navigation.goBack();
+    const handleOpenClick = () => setOpen(!open);
 
-  const navigateOrgan = (organ) => {
-    // navigation.navigate('OrganDetailScreen', { organ });
-    navigation.navigate('OrganInsightsScreen');
-  };
+    const navigateOrgan = (organId) => {
+        navigation.navigate('OrganInsightsScreen', { organId });
+    };
 
-  const totalParameters = 10;
+    const totalParameters = 10;
 
-  return (
-    <SafeAreaView style={styles.container}>
-        <StatusBar2 />
-      <LinearGradient colors={globalGradient2} style={styles.gradientBackground}
-        start={{ x: 0, y: 0 }}
-        end={{ x: 0, y: 3 }}
-        locations={[0, 0.1]}>
-        {/* Header */}
-        <View style={styles.header}>
-          <TouchableOpacity onPress={handleBackButtonClick} style={styles.headerButton}>
-            <Icon type={Icons.Ionicons} name="arrow-back" color={blackColor} size={ms(20)} />
-          </TouchableOpacity>
+    return (
+        <SafeAreaView style={styles.container}>
+            <StatusBar2 />
+            <LinearGradient colors={globalGradient2} style={styles.gradientBackground}
+                start={{ x: 0, y: 0 }}
+                end={{ x: 0, y: 3 }}
+                locations={[0, 0.1]}>
+                {/* Header */}
+                <View style={styles.header}>
+                    <TouchableOpacity onPress={handleBackButtonClick} style={styles.headerButton}>
+                        <Icon type={Icons.Ionicons} name="arrow-back" color={blackColor} size={ms(20)} />
+                    </TouchableOpacity>
 
-          <View style={styles.headerRight}>
-            <TouchableOpacity style={styles.headerButton}>
-              <Icon type={Icons.Ionicons} name="share-social-outline" color={blackColor} size={ms(20)} />
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.headerButton}>
-              <Icon type={Icons.Ionicons} name="download-outline" color={blackColor} size={ms(20)} />
-            </TouchableOpacity>
-          </View>
-        </View>
+                    <View style={styles.headerRight}>
+                        <TouchableOpacity style={styles.headerButton}>
+                            <Icon type={Icons.Ionicons} name="share-social-outline" color={blackColor} size={ms(20)} />
+                        </TouchableOpacity>
+                        <TouchableOpacity style={styles.headerButton}>
+                            <Icon type={Icons.Ionicons} name="download-outline" color={blackColor} size={ms(20)} />
+                        </TouchableOpacity>
+                    </View>
+                </View>
 
-        <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: vs(30) }}>
-          {/* Health Score Ring */}
-          {/* <View style={styles.Analysis}>
+                <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: vs(30) }}>
+                    {/* Health Score Ring */}
+                    {/* <View style={styles.Analysis}>
             <RingComponent size={140} outerRadius={70} percentage={progress} />
             <Text style={styles.healthScoreTitle}>Health Score</Text>
             <Text style={styles.calculatedFromReport}>Calculated from test report</Text>
           </View> */}
 
-          {/* Human Body Image with organ tap zones */}
-          <View style={styles.humanBodyContainer}>
-            <View style={styles.humanBodyWrapper}>
-              <Image
-                source={require('../assets/img/human-body.png')}
-                style={styles.humanBodyImage}
-                resizeMode="contain"
-              />
-              {/* Organ tap overlays */}
-              <TouchableOpacity style={[styles.organTap, { top: '3%', left: '36%', width: '20%', height: '7%' }]}
-            //    onPress={() => navigateOrgan('Eye')}
-               onPress={() => navigateOrgan('OrganInsightsScreen')}
-               />
-              <TouchableOpacity style={[styles.organTap, { top: '3%', right: '17%', width: '20%', height: '8%' }]}
-            //   onPress={() => navigateOrgan('Brain')} />
-               onPress={() => navigateOrgan('OrganInsightsScreen')} />
+                    {/* Human Body Image with organ tap zones */}
+                    <View style={styles.humanBodyContainer}>
+                        <View style={styles.humanBodyWrapper}>
+                            <Image
+                                source={require('../assets/img/human-body.png')}
+                                style={styles.humanBodyImage}
+                                resizeMode="contain"
+                            />
+                            {/* Organ tap overlays */}
+                            <TouchableOpacity style={[styles.organTap, { top: '3%', left: '36%', width: '20%', height: '7%' }]}
+                                onPress={() => navigateOrgan('eyes')} />
+                            <TouchableOpacity style={[styles.organTap, { top: '3%', right: '17%', width: '20%', height: '8%' }]}
+                                onPress={() => navigateOrgan('nerves')} />
+                            <TouchableOpacity style={[styles.organTap, { top: '10%', left: '12%', width: '20%', height: '10%' }]}
+                                onPress={() => navigateOrgan('thymus')} />
+                            <TouchableOpacity style={[styles.organTap, { top: '14%', right: '8%', width: '20%', height: '9%' }]}
+                                onPress={() => navigateOrgan('thyroid')} />
+                            <TouchableOpacity style={[styles.organTap, { top: '28%', left: '4%', width: '20%', height: '10%' }]}
+                                onPress={() => navigateOrgan('lungs')} />
+                            <TouchableOpacity style={[styles.organTap, { top: '60%', left: '4%', width: '20%', height: '10%' }]}
+                                onPress={() => navigateOrgan('pancreas')} />
+                            <TouchableOpacity style={[styles.organTap, { top: '29%', right: '6%', width: '20%', height: '10%' }]}
+                                onPress={() => navigateOrgan('liver')} />
+                            <TouchableOpacity style={[styles.organTap, { top: '43%', right: '3%', width: '20%', height: '10%' }]}
+                                onPress={() => navigateOrgan('gut')} />
+                            <TouchableOpacity style={[styles.organTap, { top: '57%', right: '3%', width: '20%', height: '10%' }]}
+                                onPress={() => navigateOrgan('skin')} />
+                            <TouchableOpacity style={[styles.organTap, { top: '45%', left: '0%', width: '22%', height: '12%' }]}
+                                onPress={() => navigateOrgan('heart')} />
+                            <TouchableOpacity style={[styles.organTap, { top: '76%', left: '10%', width: '22%', height: '10%' }]}
+                                onPress={() => navigateOrgan('muscle')} />
+                            <TouchableOpacity style={[styles.organTap, { top: '65%', right: '24%', width: '18%', height: '10%' }]}
+                                onPress={() => navigateOrgan('kidneys')} />
+                            <TouchableOpacity style={[styles.organTap, { top: '88%', left: '46%', width: '20%', height: '10%' }]}
+                                onPress={() => navigateOrgan('reproductive')} />
+                            <TouchableOpacity style={[styles.organTap, { bottom: '13%', right: '14%', width: '20%', height: '10%' }]}
+                                onPress={() => navigateOrgan('vascular')} />
+                        </View>
+                    </View>
 
-              <TouchableOpacity style={[styles.organTap, { top: '10%', left: '12%', width: '20%', height: '10%' }]}
-            //   onPress={() => navigateOrgan('Thymus')} />
-               onPress={() => navigateOrgan('OrganInsightsScreen')} />
+                    {/* Organ Cards */}
+                    <View style={styles.organCardsWrap}>
+                        {ORGANS.map((item, index) => (
+                            <TouchableOpacity
+                                key={index}
+                                style={styles.organCard}
+                                activeOpacity={0.7}
+                                onPress={() => navigateOrgan(item.organId)}
+                            >
+                                <View style={styles.organCardTopRow}>
+                                    <Image source={item.img} style={styles.organCardImg} />
+                                    <Text style={styles.organCardLabel} numberOfLines={1}>{item.label}</Text>
+                                </View>
+                                <View style={styles.organStatusRow}>
+                                    <Text style={styles.organStatusLabel}>Status :</Text>
+                                    <View style={item.statusType === 'strong' ? styles.organBadgeStrong : styles.organBadgeModerate}>
+                                        <Text style={item.statusType === 'strong' ? styles.organBadgeTextStrong : styles.organBadgeTextModerate}>
+                                            {item.status}
+                                        </Text>
+                                    </View>
+                                </View>
+                            </TouchableOpacity>
+                        ))}
+                    </View>
 
-              <TouchableOpacity style={[styles.organTap, { top: '14%', right: '8%', width: '20%', height: '9%' }]}
-            //   onPress={() => navigateOrgan('Thyroid')} />
-               onPress={() => navigateOrgan('OrganInsightsScreen')}/>
-
-              <TouchableOpacity style={[styles.organTap, { top: '28%', left: '4%', width: '20%', height: '10%' }]}
-            //   onPress={() => navigateOrgan('Lungs')} />
-               onPress={() => navigateOrgan('OrganInsightsScreen')}/>
-
-              <TouchableOpacity style={[styles.organTap, { top: '60%', left: '4%', width: '20%', height: '10%' }]}
-            //   onPress={() => navigateOrgan('Pancreas')} />
-               onPress={() => navigateOrgan('OrganInsightsScreen')}/>
-
-              <TouchableOpacity style={[styles.organTap, { top: '29%', right: '6%', width: '20%', height: '10%' }]}
-            //   onPress={() => navigateOrgan('Liver')} />
-               onPress={() => navigateOrgan('OrganInsightsScreen')}/>
-              <TouchableOpacity style={[styles.organTap, { top: '43%', right: '3%', width: '20%', height: '10%' }]}
-            //   onPress={() => navigateOrgan('Gut')} />
-               onPress={() => navigateOrgan('OrganInsightsScreen')}/>
-              <TouchableOpacity style={[styles.organTap, { top: '57%', right: '3%', width: '20%', height: '10%' }]}
-            //    onPress={() => navigateOrgan('Skin')} />
-               onPress={() => navigateOrgan('OrganInsightsScreen')}/>
-              <TouchableOpacity style={[styles.organTap, { top: '45%', left: '0%', width: '22%', height: '12%' }]} onPress={() => navigateOrgan('Heart')} />
-              <TouchableOpacity style={[styles.organTap, { top: '76%', left: '10%', width: '22%', height: '10%' }]} onPress={() => navigateOrgan('Muscle')} />
-              <TouchableOpacity style={[styles.organTap, { top: '65%', right: '24%', width: '18%', height: '10%' }]}
-            //   onPress={() => navigateOrgan('Kidneys')} />
-               onPress={() => navigateOrgan('OrganInsightsScreen')}/>
-              <TouchableOpacity style={[styles.organTap, { top: '88%', left: '46%', width: '20%', height: '10%' }]}
-            //   onPress={() => navigateOrgan('Reproductive')} />
-               onPress={() => navigateOrgan('OrganInsightsScreen')}/>
-              <TouchableOpacity style={[styles.organTap, { bottom: '13%', right: '14%', width: '20%', height: '10%' }]}
-            //   onPress={() => navigateOrgan('Vascular System')} />
-               onPress={() => navigateOrgan('OrganInsightsScreen')}/>
-            </View>
-          </View>
-
-          {/* Organ Cards */}
-          <View style={styles.organCardsWrap}>
-            {ORGANS.map((item, index) => (
-              <TouchableOpacity
-                key={index}
-                style={styles.organCard}
-                activeOpacity={0.7}
-                // onPress={() => navigation.navigate('OrganDetailScreen', { organ: item.label })}
-                onPress={() => navigation.navigate('OrganInsightsScreen')}
-              >
-                <View style={styles.organCardTopRow}>
-                  <Image source={item.img} style={styles.organCardImg} />
-                  <Text style={styles.organCardLabel} numberOfLines={1}>{item.label}</Text>
-                </View>
-                <View style={styles.organStatusRow}>
-                  <Text style={styles.organStatusLabel}>Status :</Text>
-                  <View style={item.statusType === 'strong' ? styles.organBadgeStrong : styles.organBadgeModerate}>
-                    <Text style={item.statusType === 'strong' ? styles.organBadgeTextStrong : styles.organBadgeTextModerate}>
-                      {item.status}
-                    </Text>
-                  </View>
-                </View>
-              </TouchableOpacity>
-            ))}
-          </View>
-
-        </ScrollView>
-      </LinearGradient>
-    </SafeAreaView>
-  );
+                </ScrollView>
+            </LinearGradient>
+        </SafeAreaView>
+    );
 };
 
 export default Analysis;
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: colors.theme_bg,
-  },
-  gradientBackground: {
-    flex: 1,
-    width: width,
-    minHeight: height,
-  },
-  // scrollViewContent: {
-  //   paddingBottom: 50,
-  // },
-  header: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    width: '100%',
-    paddingHorizontal: ms(15),
-    paddingTop: ms(50),
-  },
-  headerRight: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: s(10),
-  },
-  headerButton: {
-    backgroundColor: whiteColor,
-    width: ms(38),
-    height: ms(38),
-    borderRadius: ms(19),
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  Analysis: {
-    alignItems: 'center',
-    width: '100%',
-    marginTop: vs(20),
-  },
-  scoreText: {
-    color: primaryColor,
-    fontWeight: 'bold',
-    fontSize: ms(26),
-  },
-  scoreSubText: {
-    color: blackColor,
-    fontWeight: '600',
-    fontSize: ms(10),
-  },
-  healthScoreTitle: {
-    color: blackColor,
-    fontWeight: 'bold',
-    fontSize: 22,
-    marginTop: 20,
-  },
-  calculatedFromReport: {
-    color: blackColor,
-    fontSize: 14,
-    marginTop: 5,
-    opacity: 0.8,
-  },
-  vitalParametersHeader: {
-    flexDirection: 'row',
-    marginHorizontal: 20,
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginVertical: 20,
-    borderRadius: 12,
-    padding: 10,
-  },
-  vitalParametersTitle: {
-    color: '#2A2A2A',
-    fontSize: 18,
-    fontWeight: 'bold',
-  },
-  viewAllContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  viewAllTouch: {
-    paddingVertical: 5,
-  },
-  viewAllText: {
-    color: '#4CAF50',
-    fontSize: 14,
-    fontWeight: '500',
-    marginRight: 2,
-  },
-  humanBodyContainer: {
-    alignItems: 'center',
-    marginVertical: ms(20),
-  },
-  humanBodyWrapper: {
-    width: ms(320),
-    height: ms(320 * (2167 / 1114)),
-    position: 'relative',
-    backgroundColor: whiteColor,
-    borderRadius: ms(16),
-    elevation: 4,
-    shadowColor: blackColor,
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 6,
-    padding: ms(10),
-  },
-  humanBodyImage: {
-    width: '100%',
-    height: '100%',
-    resizeMode: 'contain',
-  },
-  organTap: {
-    position: 'absolute',
-    zIndex: 10,
-  },
-  organCardsWrap: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: 'space-between',
-    paddingHorizontal: ms(14),
-  },
-  organCard: {
-    backgroundColor: whiteColor,
-    borderRadius: ms(14),
-    padding: ms(14),
-    marginBottom: vs(12),
-    width: '48.5%',
-  },
-  organCardTopRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: vs(14),
-  },
-  organIconWrap: {
-    width: ms(42),
-    height: ms(42),
-    borderRadius: ms(21),
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginRight: ms(10),
-  },
-  organCardImg: { width: ms(40), height: ms(40), resizeMode: 'contain', marginRight: ms(10) },
-  organCardLabel: { fontFamily: bold, fontSize: ms(14), color: blackColor, flex: 1 },
-  organStatusRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  organStatusLabel: { fontFamily: bold, fontSize: ms(12), color: blackColor, marginRight: ms(10) },
-  organBadgeStrong: {
-    backgroundColor: '#DCFCE7', borderRadius: ms(20),
-    paddingHorizontal: ms(14), paddingVertical: vs(5),
-  },
-  organBadgeTextStrong: { fontFamily: bold, fontSize: ms(11), color: '#065F46' },
-  organBadgeModerate: {
-    backgroundColor: '#FEF9C3', borderRadius: ms(20),
-    paddingHorizontal: ms(14), paddingVertical: vs(5),
-  },
-  organBadgeTextModerate: { fontFamily: bold, fontSize: ms(11), color: '#92400E' },
+    container: {
+        flex: 1,
+        backgroundColor: colors.theme_bg,
+    },
+    gradientBackground: {
+        flex: 1,
+        width: width,
+        minHeight: height,
+    },
+    // scrollViewContent: {
+    //   paddingBottom: 50,
+    // },
+    header: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        width: '100%',
+        paddingHorizontal: ms(15),
+        paddingTop: ms(50),
+    },
+    headerRight: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        gap: s(10),
+    },
+    headerButton: {
+        backgroundColor: whiteColor,
+        width: ms(38),
+        height: ms(38),
+        borderRadius: ms(19),
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    Analysis: {
+        alignItems: 'center',
+        width: '100%',
+        marginTop: vs(20),
+    },
+    scoreText: {
+        color: primaryColor,
+        fontWeight: 'bold',
+        fontSize: ms(26),
+    },
+    scoreSubText: {
+        color: blackColor,
+        fontWeight: '600',
+        fontSize: ms(10),
+    },
+    healthScoreTitle: {
+        color: blackColor,
+        fontWeight: 'bold',
+        fontSize: 22,
+        marginTop: 20,
+    },
+    calculatedFromReport: {
+        color: blackColor,
+        fontSize: 14,
+        marginTop: 5,
+        opacity: 0.8,
+    },
+    vitalParametersHeader: {
+        flexDirection: 'row',
+        marginHorizontal: 20,
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        marginVertical: 20,
+        borderRadius: 12,
+        padding: 10,
+    },
+    vitalParametersTitle: {
+        color: '#2A2A2A',
+        fontSize: 18,
+        fontWeight: 'bold',
+    },
+    viewAllContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
+    viewAllTouch: {
+        paddingVertical: 5,
+    },
+    viewAllText: {
+        color: '#4CAF50',
+        fontSize: 14,
+        fontWeight: '500',
+        marginRight: 2,
+    },
+    humanBodyContainer: {
+        alignItems: 'center',
+        marginVertical: ms(20),
+    },
+    humanBodyWrapper: {
+        width: ms(320),
+        height: ms(320 * (2167 / 1114)),
+        position: 'relative',
+        backgroundColor: whiteColor,
+        borderRadius: ms(16),
+        elevation: 4,
+        shadowColor: blackColor,
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.1,
+        shadowRadius: 6,
+        padding: ms(10),
+    },
+    humanBodyImage: {
+        width: '100%',
+        height: '100%',
+        resizeMode: 'contain',
+    },
+    organTap: {
+        position: 'absolute',
+        zIndex: 10,
+    },
+    organCardsWrap: {
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+        justifyContent: 'space-between',
+        paddingHorizontal: ms(14),
+    },
+    organCard: {
+        backgroundColor: whiteColor,
+        borderRadius: ms(14),
+        padding: ms(14),
+        marginBottom: vs(12),
+        width: '48.5%',
+    },
+    organCardTopRow: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginBottom: vs(14),
+    },
+    organIconWrap: {
+        width: ms(42),
+        height: ms(42),
+        borderRadius: ms(21),
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginRight: ms(10),
+    },
+    organCardImg: { width: ms(40), height: ms(40), resizeMode: 'contain', marginRight: ms(10) },
+    organCardLabel: { fontFamily: bold, fontSize: ms(14), color: blackColor, flex: 1 },
+    organStatusRow: {
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
+    organStatusLabel: { fontFamily: bold, fontSize: ms(12), color: blackColor, marginRight: ms(10) },
+    organBadgeStrong: {
+        backgroundColor: '#DCFCE7', borderRadius: ms(20),
+        paddingHorizontal: ms(14), paddingVertical: vs(5),
+    },
+    organBadgeTextStrong: { fontFamily: bold, fontSize: ms(11), color: '#065F46' },
+    organBadgeModerate: {
+        backgroundColor: '#FEF9C3', borderRadius: ms(20),
+        paddingHorizontal: ms(14), paddingVertical: vs(5),
+    },
+    organBadgeTextModerate: { fontFamily: bold, fontSize: ms(11), color: '#92400E' },
 });

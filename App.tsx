@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from 'react'
+import NetworkModal from './src/components/NetworkModal';
 import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer, DefaultTheme, useNavigation } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -891,6 +892,7 @@ function App() {
               <Stack.Screen name='MyPrescriptions' component={MyPrescriptions} options={{ headerShown: false}} />
             </Stack.Navigator>
           </NavigationContainer>
+          <NetworkModal />
         </SnackProvider>
         </PaperProvider>
       </SafeAreaProvider>

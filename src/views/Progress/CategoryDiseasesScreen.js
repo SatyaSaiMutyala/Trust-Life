@@ -165,7 +165,7 @@ const CategoryDiseasesScreen = () => {
                             key={item.id}
                             item={item}
                             meta={meta}
-                            onPress={() => navigation.navigate('CategoryDiseaseDetailScreen', { condition: item, category })}
+                            onPress={() => navigation.navigate('DiseaseIntelligenceScreen', { disease: item.name })}
                         />
                     ))}
                 </ScrollView>

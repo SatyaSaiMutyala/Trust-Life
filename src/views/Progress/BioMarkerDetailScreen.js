@@ -612,7 +612,7 @@ const BioMarkerDetailScreen = () => {
                 )}
 
                 {/* ── Monitoring ── */}
-                {config.monitoring && config.monitoring.length > 0 && (
+                {/* {config.monitoring && config.monitoring.length > 0 && (
                     <>
                         <Text style={styles.sectionTitle}>Monitoring</Text>
                         <View style={styles.monitorCard}>
@@ -624,7 +624,7 @@ const BioMarkerDetailScreen = () => {
                             ))}
                         </View>
                     </>
-                )}
+                )} */}
 
                 <View style={{ height: vs(30) }} />
             </ScrollView>
