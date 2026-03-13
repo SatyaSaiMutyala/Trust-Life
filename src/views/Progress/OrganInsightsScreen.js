@@ -501,6 +501,7 @@ const OrganInsightsScreen = () => {
     const [selectedOrgan, setSelectedOrgan] = useState(null);
     const [selectedNode, setSelectedNode] = useState(null);
     const [clusterOpen, setClusterOpen] = useState(false);
+    const [activeTab, setActiveTab] = useState('overview');
 
     const handleOrganSelect = id => {
         setSelectedOrgan(prev => prev === id ? null : id);
@@ -517,6 +518,14 @@ const OrganInsightsScreen = () => {
         const col = stressColor(o.stress);
         const organBiomarkers = BIOMARKERS.filter(bm => bm.organs.includes(singleOrganId));
         const organRecs = RECS.filter(r => r.organ === singleOrganId);
+
+        const ORGAN_TABS = [
+            { key: 'overview',  label: 'Overview',  icon: 'pulse' },
+            { key: 'analysis',  label: 'Analysis',  icon: 'analytics' },
+            { key: 'results',   label: 'Results',   icon: 'flask' },
+            { key: 'lifestyle', label: 'Lifestyle', icon: 'fitness' },
+            { key: 'actions',   label: 'Actions',   icon: 'checkmark-circle' },
+        ];
 
         return (
             <SafeAreaView style={st.container}>
@@ -537,249 +546,264 @@ const OrganInsightsScreen = () => {
                         </View>
                     </View>
 
+                    {/* ── TAB BAR ── */}
+                    <ScrollView horizontal showsHorizontalScrollIndicator={false} style={st.tabScroll} contentContainerStyle={st.tabRow}>
+                        {ORGAN_TABS.map(tab => {
+                            const isActive = activeTab === tab.key;
+                            return (
+                                <TouchableOpacity key={tab.key} onPress={() => setActiveTab(tab.key)}
+                                    style={[st.tab, isActive && st.tabActive]}>
+                                    <Icon type={Icons.Ionicons} name={tab.icon} size={ms(12)}
+                                        color={isActive ? primaryColor : '#9CA3AF'} />
+                                    <Text style={[st.tabText, isActive && st.tabTextActive]}>{tab.label}</Text>
+                                </TouchableOpacity>
+                            );
+                        })}
+                    </ScrollView>
+
                     <ScrollView showsVerticalScrollIndicator={false} style={{ flex: 1 }} contentContainerStyle={[st.content, { paddingTop: vs(8) }]}>
 
-                        {/* ── BANNER ── */}
-                        <View style={[st.card, { alignItems: 'center', paddingVertical: vs(24) }]}>
-                            {ORGAN_IMAGES[o.name] ? (
-                                <Image source={ORGAN_IMAGES[o.name]} style={{ width: ms(100), height: ms(100) }} resizeMode="contain" />
-                            ) : (
-                                <Icon type={Icons.Ionicons} name="body" size={ms(60)} color={col} />
-                            )}
-                            <Text style={[st.stressScore, { color: col, fontSize: ms(28), marginTop: vs(8) }]}>{o.stress}</Text>
-                            <Text style={[st.stressScoreLabel, { fontSize: ms(12) }]}>Stress Score</Text>
-                            <View style={{ flexDirection: 'row', marginTop: vs(10), gap: ms(8) }}>
-                                <View style={[st.stagePill, { backgroundColor: col + '15', borderColor: col }]}>
-                                    <Text style={[st.stagePillText, { color: col }]}>{o.stage}</Text>
-                                </View>
-                                <View style={[st.stagePill, { backgroundColor: o.trend === 'worsening' ? '#FEE2E2' : '#FEF9C3', borderColor: o.trend === 'worsening' ? '#EF4444' : '#F59E0B' }]}>
-                                    <Text style={[st.stagePillText, { color: o.trend === 'worsening' ? '#EF4444' : '#D97706' }]}>
-                                        {o.trend === 'worsening' ? '↑ Worsening' : '→ Stable Risk'}
-                                    </Text>
-                                </View>
-                            </View>
-                        </View>
-
-                        {/* ── ORGAN STRESS INDEX ── */}
-                        <View style={st.card}>
-                            <View style={st.cardHeader}>
-                                <Icon type={Icons.Ionicons} name="pulse" size={ms(16)} color={primaryColor} />
-                                <Text style={st.cardTitle}>Organ Stress Index</Text>
-                            </View>
-                            <View style={[st.stressRow, { backgroundColor: col + '08', borderColor: col }]}>
-                                <View style={[st.stressIcon, { backgroundColor: col + '12' }]}>
-                                    {ORGAN_IMAGES[o.name] ? (
-                                        <Image source={ORGAN_IMAGES[o.name]} style={{ width: ms(20), height: ms(20) }} resizeMode="contain" />
-                                    ) : (
-                                        <Icon type={Icons.Ionicons} name="body" size={ms(16)} color={col} />
-                                    )}
-                                </View>
-                                <View style={{ flex: 1 }}>
-                                    <Text style={st.stressName}>{o.name}</Text>
-                                    <Text style={[st.stressStageTxt, { color: col }]}>{o.stage}</Text>
-                                    {/* Stage progress dots */}
-                                    <View style={{ flexDirection: 'row', gap: ms(4), marginTop: vs(4) }}>
-                                        {o.stages.map((s, i) => (
-                                            <View key={i} style={[st.stageDot, {
-                                                backgroundColor: i <= o.stageI ? col : '#E5E7EB',
-                                                flex: 1,
-                                            }]} />
-                                        ))}
+                        {/* ── OVERVIEW TAB: Banner + Organ Stress Index ── */}
+                        {activeTab === 'overview' && (<>
+                            <View style={[st.card, { alignItems: 'center', paddingVertical: vs(24) }]}>
+                                {ORGAN_IMAGES[o.name] ? (
+                                    <Image source={ORGAN_IMAGES[o.name]} style={{ width: ms(100), height: ms(100) }} resizeMode="contain" />
+                                ) : (
+                                    <Icon type={Icons.Ionicons} name="body" size={ms(60)} color={col} />
+                                )}
+                                <Text style={[st.stressScore, { color: col, fontSize: ms(28), marginTop: vs(8) }]}>{o.stress}</Text>
+                                <Text style={[st.stressScoreLabel, { fontSize: ms(12) }]}>Stress Score</Text>
+                                <View style={{ flexDirection: 'row', marginTop: vs(10), gap: ms(8) }}>
+                                    <View style={[st.stagePill, { backgroundColor: col + '15', borderColor: col }]}>
+                                        <Text style={[st.stagePillText, { color: col }]}>{o.stage}</Text>
                                     </View>
-                                    <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: vs(2) }}>
-                                        <Text style={[st.stressStageTxt, { color: '#9CA3AF', fontSize: ms(9) }]}>{o.stages[0]}</Text>
-                                        <Text style={[st.stressStageTxt, { color: '#9CA3AF', fontSize: ms(9) }]}>{o.stages[o.stages.length - 1]}</Text>
+                                    <View style={[st.stagePill, { backgroundColor: o.trend === 'worsening' ? '#FEE2E2' : '#FEF9C3', borderColor: o.trend === 'worsening' ? '#EF4444' : '#F59E0B' }]}>
+                                        <Text style={[st.stagePillText, { color: o.trend === 'worsening' ? '#EF4444' : '#D97706' }]}>
+                                            {o.trend === 'worsening' ? '↑ Worsening' : '→ Stable Risk'}
+                                        </Text>
                                     </View>
                                 </View>
-                                <View style={{ alignItems: 'center', marginLeft: ms(10) }}>
-                                    <Text style={[st.stressScore, { color: col }]}>{o.stress}</Text>
-                                    <Text style={st.stressScoreLabel}>stress</Text>
+                            </View>
+
+                            <View style={st.card}>
+                                <View style={st.cardHeader}>
+                                    <Icon type={Icons.Ionicons} name="pulse" size={ms(16)} color={primaryColor} />
+                                    <Text style={st.cardTitle}>Organ Stress Index</Text>
+                                </View>
+                                <View style={[st.stressRow, { backgroundColor: col + '08', borderColor: col }]}>
+                                    <View style={[st.stressIcon, { backgroundColor: col + '12' }]}>
+                                        {ORGAN_IMAGES[o.name] ? (
+                                            <Image source={ORGAN_IMAGES[o.name]} style={{ width: ms(20), height: ms(20) }} resizeMode="contain" />
+                                        ) : (
+                                            <Icon type={Icons.Ionicons} name="body" size={ms(16)} color={col} />
+                                        )}
+                                    </View>
+                                    <View style={{ flex: 1 }}>
+                                        <Text style={st.stressName}>{o.name}</Text>
+                                        <Text style={[st.stressStageTxt, { color: col }]}>{o.stage}</Text>
+                                        <View style={{ flexDirection: 'row', gap: ms(4), marginTop: vs(4) }}>
+                                            {o.stages.map((sg, i) => (
+                                                <View key={i} style={[st.stageDot, { backgroundColor: i <= o.stageI ? col : '#E5E7EB', flex: 1 }]} />
+                                            ))}
+                                        </View>
+                                        <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: vs(2) }}>
+                                            <Text style={[st.stressStageTxt, { color: '#9CA3AF', fontSize: ms(9) }]}>{o.stages[0]}</Text>
+                                            <Text style={[st.stressStageTxt, { color: '#9CA3AF', fontSize: ms(9) }]}>{o.stages[o.stages.length - 1]}</Text>
+                                        </View>
+                                    </View>
+                                    <View style={{ alignItems: 'center', marginLeft: ms(10) }}>
+                                        <Text style={[st.stressScore, { color: col }]}>{o.stress}</Text>
+                                        <Text style={st.stressScoreLabel}>stress</Text>
+                                    </View>
                                 </View>
                             </View>
-                        </View>
+                        </>)}
 
-                        {/* ── DETAIL ANALYSIS ── */}
-                        <View style={[st.card, { borderWidth: 1.5, borderColor: col + '30' }]}>
-                            <View style={st.cardHeader}>
-                                <Icon type={Icons.Ionicons} name="analytics" size={ms(16)} color={primaryColor} />
-                                <Text style={st.cardTitle}>Organ Detail Analysis</Text>
-                            </View>
-                            <OrganDetail organId={singleOrganId} view={view} />
-                        </View>
-
-                        {/* ── HOW YOUR HEALTH CONNECTS ── */}
-                        <View style={st.card}>
-                            <View style={st.cardHeader}>
-                                <Icon type={Icons.Ionicons} name="git-network" size={ms(16)} color={primaryColor} />
-                                <Text style={st.cardTitle}>How Your Health Connects</Text>
-                            </View>
-                            <View style={st.webCenter}>
-                                <View style={[st.webCenterCircle, { borderColor: col, backgroundColor: col + '10' }]}>
-                                    {ORGAN_IMAGES[o.name] ? (
-                                        <Image source={ORGAN_IMAGES[o.name]} style={{ width: ms(26), height: ms(26) }} resizeMode="contain" />
-                                    ) : (
-                                        <Icon type={Icons.Ionicons} name="body" size={ms(18)} color={col} />
-                                    )}
-                                    <Text style={[st.webCenterText, { color: col }]}>{o.name.toUpperCase()}</Text>
+                        {/* ── ANALYSIS TAB: Organ Detail + Health Connects ── */}
+                        {activeTab === 'analysis' && (<>
+                            <View style={[st.card, { borderWidth: 1.5, borderColor: col + '30' }]}>
+                                <View style={st.cardHeader}>
+                                    <Icon type={Icons.Ionicons} name="analytics" size={ms(16)} color={primaryColor} />
+                                    <Text style={st.cardTitle}>Organ Detail Analysis</Text>
                                 </View>
+                                <OrganDetail organId={singleOrganId} view={view} />
                             </View>
-                            <View style={st.webGrid}>
-                                {WEB_NODES.map(n => {
-                                    const sel = selectedNode === n.key;
+
+                            <View style={st.card}>
+                                <View style={st.cardHeader}>
+                                    <Icon type={Icons.Ionicons} name="git-network" size={ms(16)} color={primaryColor} />
+                                    <Text style={st.cardTitle}>How Your Health Connects</Text>
+                                </View>
+                                <View style={st.webCenter}>
+                                    <View style={[st.webCenterCircle, { borderColor: col, backgroundColor: col + '10' }]}>
+                                        {ORGAN_IMAGES[o.name] ? (
+                                            <Image source={ORGAN_IMAGES[o.name]} style={{ width: ms(26), height: ms(26) }} resizeMode="contain" />
+                                        ) : (
+                                            <Icon type={Icons.Ionicons} name="body" size={ms(18)} color={col} />
+                                        )}
+                                        <Text style={[st.webCenterText, { color: col }]}>{o.name.toUpperCase()}</Text>
+                                    </View>
+                                </View>
+                                <View style={st.webGrid}>
+                                    {WEB_NODES.map(n => {
+                                        const sel = selectedNode === n.key;
+                                        return (
+                                            <TouchableOpacity key={n.key} activeOpacity={0.7}
+                                                onPress={() => handleNodeClick(n.key)}
+                                                style={[st.webNode, sel
+                                                    ? { borderColor: n.color, backgroundColor: n.color + '15' }
+                                                    : { borderColor: n.color + '30', backgroundColor: n.color + '06' }]}>
+                                                <View style={[st.webNodeIcon, { backgroundColor: n.color + '15' }]}>
+                                                    <Icon type={Icons.Ionicons} name={n.icon} size={ms(16)} color={n.color} />
+                                                </View>
+                                                <Text style={[st.webNodeLabel, { color: n.color }]}>{n.label}</Text>
+                                                <Text style={[st.webNodeDetail, { color: n.color }]}>{n.detail}</Text>
+                                                {sel && <Icon type={Icons.Ionicons} name="chevron-up" size={ms(10)} color={n.color} style={{ marginTop: vs(2) }} />}
+                                            </TouchableOpacity>
+                                        );
+                                    })}
+                                </View>
+                                {selectedNode && (() => {
+                                    const node = WEB_NODES.find(n => n.key === selectedNode);
                                     return (
-                                        <TouchableOpacity key={n.key} activeOpacity={0.7}
-                                            onPress={() => handleNodeClick(n.key)}
-                                            style={[st.webNode, sel
-                                                ? { borderColor: n.color, backgroundColor: n.color + '15' }
-                                                : { borderColor: n.color + '30', backgroundColor: n.color + '06' }]}>
-                                            <View style={[st.webNodeIcon, { backgroundColor: n.color + '15' }]}>
-                                                <Icon type={Icons.Ionicons} name={n.icon} size={ms(16)} color={n.color} />
+                                        <View style={[st.webExpanded, { borderColor: node.color + '30', backgroundColor: node.color + '06' }]}>
+                                            <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: vs(8) }}>
+                                                <View style={{ flexDirection: 'row', alignItems: 'center', gap: ms(6) }}>
+                                                    <Icon type={Icons.Ionicons} name={node.icon} size={ms(14)} color={node.color} />
+                                                    <Text style={[st.webExpandedTitle, { color: node.color }]}>{node.label}</Text>
+                                                </View>
+                                                <TouchableOpacity onPress={() => handleNodeClick(selectedNode)} hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}>
+                                                    <Icon type={Icons.Ionicons} name="close-circle" size={ms(16)} color={node.color + '80'} />
+                                                </TouchableOpacity>
                                             </View>
-                                            <Text style={[st.webNodeLabel, { color: n.color }]}>{n.label}</Text>
-                                            <Text style={[st.webNodeDetail, { color: n.color }]}>{n.detail}</Text>
-                                            {sel && (
-                                                <Icon type={Icons.Ionicons} name="chevron-up" size={ms(10)} color={n.color} style={{ marginTop: vs(2) }} />
-                                            )}
-                                        </TouchableOpacity>
+                                            <View style={st.webExpandedItems}>
+                                                {node.items.map((it, i) => (
+                                                    <View key={i} style={st.webExpandedItem}>
+                                                        <View style={[st.webExpandedDot, { backgroundColor: node.color }]} />
+                                                        <Text style={st.webExpandedText}>{it}</Text>
+                                                    </View>
+                                                ))}
+                                            </View>
+                                        </View>
+                                    );
+                                })()}
+                            </View>
+                        </>)}
+
+                        {/* ── RESULTS TAB: Test Results ── */}
+                        {activeTab === 'results' && (
+                            <View style={st.card}>
+                                <View style={st.cardHeader}>
+                                    <Icon type={Icons.Ionicons} name="flask" size={ms(16)} color={primaryColor} />
+                                    <Text style={st.cardTitle}>Your Test Results</Text>
+                                </View>
+                                {organBiomarkers.length === 0 ? (
+                                    <Text style={[st.stressStageTxt, { color: '#9CA3AF', marginTop: vs(4) }]}>No direct biomarkers linked to this organ.</Text>
+                                ) : organBiomarkers.map((bm, i) => {
+                                    const sc = statusColor(bm.status);
+                                    return (
+                                        <View key={i} style={[st.bioRow, { backgroundColor: sc + '06', borderColor: sc + '25' }]}>
+                                            <View style={st.bioRowTop}>
+                                                <View style={{ flex: 1 }}>
+                                                    <Text style={st.bioName}>{bm.name}</Text>
+                                                    <Text style={st.bioDelta}>{bm.delta}</Text>
+                                                </View>
+                                                <View style={{ alignItems: 'flex-end' }}>
+                                                    <Text style={[st.bioValue, { color: sc }]}>{bm.val} <Text style={st.bioUnit}>{bm.unit}</Text></Text>
+                                                    <Text style={st.bioTarget}>tgt {bm.tgt}</Text>
+                                                </View>
+                                            </View>
+                                        </View>
                                     );
                                 })}
                             </View>
-                            {/* Expanded node panel */}
-                            {selectedNode && (() => {
-                                const node = WEB_NODES.find(n => n.key === selectedNode);
-                                return (
-                                    <View style={[st.webExpanded, { borderColor: node.color + '30', backgroundColor: node.color + '06' }]}>
-                                        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: vs(8) }}>
-                                            <View style={{ flexDirection: 'row', alignItems: 'center', gap: ms(6) }}>
-                                                <Icon type={Icons.Ionicons} name={node.icon} size={ms(14)} color={node.color} />
-                                                <Text style={[st.webExpandedTitle, { color: node.color }]}>{node.label}</Text>
-                                            </View>
-                                            <TouchableOpacity onPress={() => handleNodeClick(selectedNode)} hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}>
-                                                <Icon type={Icons.Ionicons} name="close-circle" size={ms(16)} color={node.color + '80'} />
-                                            </TouchableOpacity>
-                                        </View>
-                                        <View style={st.webExpandedItems}>
-                                            {node.items.map((it, i) => (
-                                                <View key={i} style={st.webExpandedItem}>
-                                                    <View style={[st.webExpandedDot, { backgroundColor: node.color }]} />
-                                                    <Text style={st.webExpandedText}>{it}</Text>
-                                                </View>
-                                            ))}
-                                        </View>
-                                    </View>
-                                );
-                            })()}
-                        </View>
+                        )}
 
-                        {/* ── TEST RESULTS (filtered to organ) ── */}
-                        <View style={st.card}>
-                            <View style={st.cardHeader}>
-                                <Icon type={Icons.Ionicons} name="flask" size={ms(16)} color={primaryColor} />
-                                <Text style={st.cardTitle}>Your Test Results</Text>
-                            </View>
-                            {organBiomarkers.length === 0 ? (
-                                <Text style={[st.stressStageTxt, { color: '#9CA3AF', marginTop: vs(4) }]}>No direct biomarkers linked to this organ.</Text>
-                            ) : organBiomarkers.map((bm, i) => {
-                                const sc = statusColor(bm.status);
-                                return (
-                                    <View key={i} style={[st.bioRow, { backgroundColor: sc + '06', borderColor: sc + '25' }]}>
-                                        <View style={st.bioRowTop}>
-                                            <View style={{ flex: 1 }}>
-                                                <Text style={st.bioName}>{bm.name}</Text>
-                                                <Text style={st.bioDelta}>{bm.delta}</Text>
-                                            </View>
-                                            <View style={{ alignItems: 'flex-end' }}>
-                                                <Text style={[st.bioValue, { color: sc }]}>{bm.val} <Text style={st.bioUnit}>{bm.unit}</Text></Text>
-                                                <Text style={st.bioTarget}>tgt {bm.tgt}</Text>
-                                            </View>
-                                        </View>
-                                    </View>
-                                );
-                            })}
-                        </View>
-
-                        {/* ── LIFESTYLE SIGNALS ── */}
-                        <View style={st.card}>
-                            <View style={st.cardHeader}>
-                                <Icon type={Icons.Ionicons} name="fitness" size={ms(16)} color={primaryColor} />
-                                <Text style={st.cardTitle}>Lifestyle Signals</Text>
-                            </View>
-                            {LIFESTYLE.map((ls, i) => (
-                                <View key={i} style={st.lifeRow}>
-                                    <View style={st.lifeRowTop}>
-                                        <View style={[st.lifeIcon, { backgroundColor: primaryColor + '10' }]}>
-                                            <Icon type={Icons.Ionicons} name={ls.icon} size={ms(14)} color={primaryColor} />
-                                        </View>
-                                        <View style={{ flex: 1, marginLeft: ms(8) }}>
-                                            <Text style={st.lifeLabel}>{ls.label}</Text>
-                                            <Text style={st.lifeWhy}>{ls.why}</Text>
-                                        </View>
-                                        <Text style={st.lifeValue}>{ls.value}</Text>
-                                    </View>
-                                    <View style={st.lifeBarBg}>
-                                        <View style={[st.lifeBarFill, { width: `${ls.score}%` }]} />
-                                    </View>
+                        {/* ── LIFESTYLE TAB ── */}
+                        {activeTab === 'lifestyle' && (
+                            <View style={st.card}>
+                                <View style={st.cardHeader}>
+                                    <Icon type={Icons.Ionicons} name="fitness" size={ms(16)} color={primaryColor} />
+                                    <Text style={st.cardTitle}>Lifestyle Signals</Text>
                                 </View>
-                            ))}
-                        </View>
-
-                        {/* ── ACTION PLAN (filtered to organ) ── */}
-                        <View style={st.card}>
-                            <View style={st.cardHeader}>
-                                <Icon type={Icons.Ionicons} name="checkmark-circle" size={ms(16)} color={primaryColor} />
-                                <Text style={st.cardTitle}>Action Plan</Text>
-                            </View>
-                            {organRecs.length > 0 ? organRecs.map((r, i) => {
-                                const ps = priStyle(r.pri);
-                                return (
-                                    <View key={i} style={[st.recCard, { borderLeftColor: ps.color }]}>
-                                        <View style={[st.recIconWrap, { backgroundColor: ps.bg }]}>
-                                            <Icon type={Icons.Ionicons} name={ps.icon} size={ms(16)} color={ps.color} />
-                                        </View>
-                                        <View style={{ flex: 1 }}>
-                                            <Text style={st.recTitle}>{r.title}</Text>
-                                            <Text style={st.recDesc}>{r.desc}</Text>
-                                            <View style={st.recActionRow}>
-                                                <Icon type={Icons.Ionicons} name="arrow-forward" size={ms(10)} color={primaryColor} />
-                                                <Text style={st.recActionText}>{r.action}</Text>
+                                {LIFESTYLE.map((ls, i) => (
+                                    <View key={i} style={st.lifeRow}>
+                                        <View style={st.lifeRowTop}>
+                                            <View style={[st.lifeIcon, { backgroundColor: primaryColor + '10' }]}>
+                                                <Icon type={Icons.Ionicons} name={ls.icon} size={ms(14)} color={primaryColor} />
                                             </View>
+                                            <View style={{ flex: 1, marginLeft: ms(8) }}>
+                                                <Text style={st.lifeLabel}>{ls.label}</Text>
+                                                <Text style={st.lifeWhy}>{ls.why}</Text>
+                                            </View>
+                                            <Text style={st.lifeValue}>{ls.value}</Text>
                                         </View>
-                                    </View>
-                                );
-                            }) : o.actions.map((a, i) => (
-                                <View key={i} style={st.actionRow}>
-                                    <Icon type={Icons.Ionicons} name="arrow-forward" size={ms(11)} color={primaryColor} />
-                                    <Text style={st.actionText}>{a}</Text>
-                                </View>
-                            ))}
-                        </View>
-
-                        {/* ── PROGRESSION TIMELINE ── */}
-                        <View style={st.card}>
-                            <View style={st.cardHeader}>
-                                <Icon type={Icons.Ionicons} name="time" size={ms(16)} color={primaryColor} />
-                                <Text style={st.cardTitle}>What Could Happen Without Action</Text>
-                            </View>
-                            <View style={st.timelineWrap}>
-                                {[
-                                    { t: 'Now', e: `${o.name} at ${o.stage}. Stress score: ${o.stress}/100`, col: col },
-                                    { t: o.nextTime, e: `Progression to ${o.nextStage} without intervention`, col: '#FF7235' },
-                                    { t: o.stages[o.stages.length - 2] || 'Late Stage', e: `Advanced ${o.name.toLowerCase()} dysfunction — medical intervention required`, col: '#EF4444' },
-                                    { t: '✓ Action', e: 'Targeted intervention now can halt or reverse this progression', col: primaryColor },
-                                ].map((pt, i, arr) => (
-                                    <View key={i} style={st.timelineItem}>
-                                        <View style={st.timelineLeft}>
-                                            <View style={[st.timelineDot, { backgroundColor: pt.col }]} />
-                                            {i < arr.length - 1 && <View style={st.timelineConnector} />}
-                                        </View>
-                                        <View style={st.timelineContent}>
-                                            <Text style={[st.timelineTime, { color: pt.col }]}>{pt.t}</Text>
-                                            <Text style={st.timelineEvent}>{pt.e}</Text>
+                                        <View style={st.lifeBarBg}>
+                                            <View style={[st.lifeBarFill, { width: `${ls.score}%` }]} />
                                         </View>
                                     </View>
                                 ))}
                             </View>
-                        </View>
+                        )}
+
+                        {/* ── ACTIONS TAB: Action Plan + Progression Timeline ── */}
+                        {activeTab === 'actions' && (<>
+                            <View style={st.card}>
+                                <View style={st.cardHeader}>
+                                    <Icon type={Icons.Ionicons} name="checkmark-circle" size={ms(16)} color={primaryColor} />
+                                    <Text style={st.cardTitle}>Action Plan</Text>
+                                </View>
+                                {organRecs.length > 0 ? organRecs.map((r, i) => {
+                                    const ps = priStyle(r.pri);
+                                    return (
+                                        <View key={i} style={[st.recCard, { borderLeftColor: ps.color }]}>
+                                            <View style={[st.recIconWrap, { backgroundColor: ps.bg }]}>
+                                                <Icon type={Icons.Ionicons} name={ps.icon} size={ms(16)} color={ps.color} />
+                                            </View>
+                                            <View style={{ flex: 1 }}>
+                                                <Text style={st.recTitle}>{r.title}</Text>
+                                                <Text style={st.recDesc}>{r.desc}</Text>
+                                                <View style={st.recActionRow}>
+                                                    <Icon type={Icons.Ionicons} name="arrow-forward" size={ms(10)} color={primaryColor} />
+                                                    <Text style={st.recActionText}>{r.action}</Text>
+                                                </View>
+                                            </View>
+                                        </View>
+                                    );
+                                }) : o.actions.map((a, i) => (
+                                    <View key={i} style={st.actionRow}>
+                                        <Icon type={Icons.Ionicons} name="arrow-forward" size={ms(11)} color={primaryColor} />
+                                        <Text style={st.actionText}>{a}</Text>
+                                    </View>
+                                ))}
+                            </View>
+
+                            <View style={st.card}>
+                                <View style={st.cardHeader}>
+                                    <Icon type={Icons.Ionicons} name="time" size={ms(16)} color={primaryColor} />
+                                    <Text style={st.cardTitle}>What Could Happen Without Action</Text>
+                                </View>
+                                <View style={st.timelineWrap}>
+                                    {[
+                                        { t: 'Now', e: `${o.name} at ${o.stage}. Stress score: ${o.stress}/100`, col: col },
+                                        { t: o.nextTime, e: `Progression to ${o.nextStage} without intervention`, col: '#FF7235' },
+                                        { t: o.stages[o.stages.length - 2] || 'Late Stage', e: `Advanced ${o.name.toLowerCase()} dysfunction — medical intervention required`, col: '#EF4444' },
+                                        { t: '✓ Action', e: 'Targeted intervention now can halt or reverse this progression', col: primaryColor },
+                                    ].map((pt, i, arr) => (
+                                        <View key={i} style={st.timelineItem}>
+                                            <View style={st.timelineLeft}>
+                                                <View style={[st.timelineDot, { backgroundColor: pt.col }]} />
+                                                {i < arr.length - 1 && <View style={st.timelineConnector} />}
+                                            </View>
+                                            <View style={st.timelineContent}>
+                                                <Text style={[st.timelineTime, { color: pt.col }]}>{pt.t}</Text>
+                                                <Text style={st.timelineEvent}>{pt.e}</Text>
+                                            </View>
+                                        </View>
+                                    ))}
+                                </View>
+                            </View>
+                        </>)}
 
                         <View style={{ height: vs(40) }} />
                     </ScrollView>
@@ -1156,6 +1180,19 @@ const st = StyleSheet.create({
     container: { flex: 1, backgroundColor: whiteColor },
     gradient: { flex: 1 },
     content: { paddingBottom: vs(40) },
+
+    // Tab bar
+    tabScroll: { marginBottom: vs(8), flexGrow: 0 },
+    tabRow: { paddingHorizontal: ms(16), gap: ms(4) },
+    tab: {
+        flexDirection: 'row', alignItems: 'center', gap: ms(4),
+        backgroundColor: whiteColor, borderRadius: ms(10),
+        paddingHorizontal: ms(8), paddingVertical: vs(6),
+        borderWidth: 1, borderColor: '#E5E7EB',
+    },
+    tabActive: { borderColor: primaryColor, backgroundColor: primaryColor + '10' },
+    tabText: { fontFamily: bold, fontSize: ms(9.5), color: '#9CA3AF' },
+    tabTextActive: { color: primaryColor },
 
     // Header
     header: {

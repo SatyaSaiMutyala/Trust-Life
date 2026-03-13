@@ -13,44 +13,40 @@ import { bold, regular } from '../../config/Constants';
 
 const ENGAGEMENTS = [
     {
-        label: 'Doctor Visits', icon: 'calendar', iconType: Icons.Ionicons,
-        iconColor: '#2E7D32', bgColor: '#E8F5E9', status: 'Regular', statusType: 'strong',
-        description: 'Scheduled consultations with your physician',
+        label: 'Appointment Adherence',
+        icon: 'calendar', iconType: Icons.Ionicons,
+        iconColor: '#1A7E70', bgColor: '#E6F4F2',
+        status: 'Moderate', statusType: 'moderate',
+        prevScore: '72/100', currScore: '73/100',
+        desc: 'PDC Score: 0.83 • Adherence Rate: 83.3%',
+        screen: 'AppointmentAdherenceScreen',
     },
     {
-        label: 'Prescriptions', icon: 'medkit', iconType: Icons.Ionicons,
-        iconColor: '#1565C0', bgColor: '#DBEAFE', status: 'Active', statusType: 'strong',
-        description: 'Current medications and dosage tracking',
+        label: 'Medication Adherence',
+        icon: 'medkit', iconType: Icons.Ionicons,
+        iconColor: '#1565C0', bgColor: '#DBEAFE',
+        status: 'Good', statusType: 'strong',
+        prevScore: '82/100', currScore: '88/100',
+        desc: 'PDC Score: 0.93 • Adherence Rate: 92.9%',
+        screen: 'MedicationAdherenceScreen',
     },
     {
-        label: 'Lab Tests', icon: 'clipboard-check', iconType: Icons.MaterialCommunityIcons,
-        iconColor: '#7B61FF', bgColor: '#EDE9FE', status: 'Up to date', statusType: 'strong',
-        description: 'Blood work and diagnostic test results',
+        label: 'Diagnostic Compliance',
+        icon: 'flask', iconType: Icons.Ionicons,
+        iconColor: '#7B61FF', bgColor: '#EDE9FE',
+        status: 'Active', statusType: 'strong',
+        prevScore: '22/25', currScore: '22/25',
+        desc: 'Your score has slightly decreased since the last check.',
+        screen: 'DiagnosticComplianceScreen',
     },
     {
-        label: 'Follow-ups', icon: 'chatbubbles', iconType: Icons.Ionicons,
-        iconColor: '#F59E0B', bgColor: '#FEF3C7', status: 'Pending', statusType: 'moderate',
-        description: 'Pending follow-up appointments',
-    },
-    {
-        label: 'Specialist Referrals', icon: 'people', iconType: Icons.Ionicons,
-        iconColor: '#EC4899', bgColor: '#FCE7F3', status: 'Active', statusType: 'strong',
-        description: 'Referrals to specialist doctors',
-    },
-    {
-        label: 'Vaccinations', icon: 'shield-checkmark', iconType: Icons.Ionicons,
-        iconColor: '#10B981', bgColor: '#DCFCE7', status: 'Up to date', statusType: 'strong',
-        description: 'Immunization records and schedules',
-    },
-    {
-        label: 'Health Insurance', icon: 'card', iconType: Icons.Ionicons,
-        iconColor: '#0EA5E9', bgColor: '#E0F2FE', status: 'Active', statusType: 'strong',
-        description: 'Insurance coverage and claims status',
-    },
-    {
-        label: 'Emergency Contacts', icon: 'call', iconType: Icons.Ionicons,
-        iconColor: '#EF4444', bgColor: '#FEE2E2', status: 'Updated', statusType: 'strong',
-        description: 'Emergency contact information on file',
+        label: 'Self Monitoring',
+        icon: 'pulse', iconType: Icons.Ionicons,
+        iconColor: '#10B981', bgColor: '#DCFCE7',
+        status: 'Active', statusType: 'strong',
+        prevScore: '22/25', currScore: '22/25',
+        desc: 'Your score has slightly decreased since the last check.',
+        screen: 'SelfMonitoringScreen',
     },
 ];
 
@@ -73,29 +69,63 @@ const MedicalEngagementScreen = () => {
                     </TouchableOpacity>
                     <View style={styles.headerTextWrap}>
                         <Text style={styles.headerTitle}>Medical Engagement</Text>
-                        <Text style={styles.headerSubtitle}>Your medical activities and records</Text>
+                        <Text style={styles.headerSubtitle}>Track your medical adherence & compliance</Text>
+                    </View>
+                </View>
+
+                {/* Summary Banner */}
+                <View style={styles.banner}>
+                    <View style={styles.bannerItem}>
+                        <Text style={styles.bannerNum}>22</Text>
+                        <Text style={styles.bannerLbl}>Total Score</Text>
+                    </View>
+                    <View style={styles.bannerDivider} />
+                    <View style={styles.bannerItem}>
+                        <Text style={styles.bannerNum}>3</Text>
+                        <Text style={styles.bannerLbl}>Active</Text>
+                    </View>
+                    <View style={styles.bannerDivider} />
+                    <View style={styles.bannerItem}>
+                        <Text style={styles.bannerNum}>1</Text>
+                        <Text style={styles.bannerLbl}>Moderate</Text>
                     </View>
                 </View>
 
                 <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.scrollContent}>
                     {ENGAGEMENTS.map((item, index) => (
-                        <TouchableOpacity key={index} style={styles.card} activeOpacity={0.7} onPress={() => {
-                            if (item.label === 'Doctor Visits') navigation.navigate('DoctorsVisitScreen');
-                            if (item.label === 'Prescriptions') navigation.navigate('PrescriptionScreen');
-                            if (item.label === 'Lab Tests') navigation.navigate('LabTestsScreen');
-                        }}>
+                        <TouchableOpacity
+                            key={index}
+                            style={styles.card}
+                            activeOpacity={0.7}
+                            onPress={() => navigation.navigate(item.screen)}
+                        >
                             <View style={styles.cardRow}>
                                 <View style={[styles.iconWrap, { backgroundColor: item.bgColor }]}>
                                     <Icon type={item.iconType} name={item.icon} size={ms(22)} color={item.iconColor} />
                                 </View>
                                 <View style={styles.cardTextWrap}>
-                                    <Text style={styles.cardLabel}>{item.label}</Text>
-                                    <Text style={styles.cardDesc}>{item.description}</Text>
-                                </View>
-                                <View style={item.statusType === 'strong' ? styles.badgeStrong : styles.badgeModerate}>
-                                    <Text style={item.statusType === 'strong' ? styles.badgeTextStrong : styles.badgeTextModerate}>
-                                        {item.status}
-                                    </Text>
+                                    <View style={styles.cardTopRow}>
+                                        <Text style={styles.cardLabel}>{item.label}</Text>
+                                        <View style={[
+                                            styles.badge,
+                                            item.statusType === 'strong'
+                                                ? { backgroundColor: '#DCFCE7' }
+                                                : { backgroundColor: '#FEF3C7' },
+                                        ]}>
+                                            <Text style={[
+                                                styles.badgeText,
+                                                item.statusType === 'strong'
+                                                    ? { color: '#16A34A' }
+                                                    : { color: '#D97706' },
+                                            ]}>{item.status}</Text>
+                                        </View>
+                                    </View>
+                                    <View style={styles.scoreRow}>
+                                        <Text style={styles.scoreVal}>{item.prevScore}</Text>
+                                        <Icon type={Icons.Ionicons} name="arrow-forward" size={ms(12)} color="#9CA3AF" style={{ marginHorizontal: ms(4) }} />
+                                        <Text style={[styles.scoreVal, { color: primaryColor }]}>{item.currScore}</Text>
+                                    </View>
+                                    <Text style={styles.cardDesc}>{item.desc}</Text>
                                 </View>
                                 <Icon type={Icons.Ionicons} name="chevron-forward" size={ms(18)} color="#9CA3AF" />
                             </View>
@@ -111,7 +141,7 @@ const MedicalEngagementScreen = () => {
 const styles = StyleSheet.create({
     container: { flex: 1, backgroundColor: whiteColor },
     fullGradient: { flex: 1, paddingHorizontal: ms(14), paddingTop: ms(50) },
-    header: { flexDirection: 'row', alignItems: 'center', marginBottom: ms(16) },
+    header: { flexDirection: 'row', alignItems: 'center', marginBottom: ms(14) },
     backBtn: {
         width: ms(35), height: ms(35), borderRadius: ms(17.5),
         backgroundColor: 'rgba(255, 255, 255, 0.3)',
@@ -120,17 +150,34 @@ const styles = StyleSheet.create({
     headerTextWrap: { marginLeft: ms(10), flex: 1 },
     headerTitle: { fontFamily: bold, fontSize: ms(18), color: whiteColor },
     headerSubtitle: { fontFamily: regular, fontSize: ms(11), color: 'rgba(255,255,255,0.8)', marginTop: vs(2) },
+
+    banner: {
+        flexDirection: 'row', backgroundColor: 'rgba(255,255,255,0.18)',
+        borderRadius: ms(14), paddingVertical: vs(12), marginBottom: vs(14),
+        justifyContent: 'space-around', alignItems: 'center',
+    },
+    bannerItem: { alignItems: 'center' },
+    bannerNum: { fontFamily: bold, fontSize: ms(20), color: whiteColor },
+    bannerLbl: { fontFamily: regular, fontSize: ms(10), color: 'rgba(255,255,255,0.8)', marginTop: vs(2) },
+    bannerDivider: { width: 1, height: vs(32), backgroundColor: 'rgba(255,255,255,0.3)' },
+
     scrollContent: { paddingBottom: vs(40) },
-    card: { backgroundColor: whiteColor, borderRadius: ms(14), padding: ms(16), marginBottom: vs(10) },
+    card: {
+        backgroundColor: whiteColor, borderRadius: ms(14),
+        padding: ms(14), marginBottom: vs(10),
+        shadowColor: '#1A7E70', shadowOpacity: 0.07,
+        shadowOffset: { width: 0, height: 2 }, shadowRadius: 6, elevation: 3,
+    },
     cardRow: { flexDirection: 'row', alignItems: 'center' },
-    iconWrap: { width: ms(42), height: ms(42), borderRadius: ms(12), justifyContent: 'center', alignItems: 'center' },
+    iconWrap: { width: ms(44), height: ms(44), borderRadius: ms(12), justifyContent: 'center', alignItems: 'center' },
     cardTextWrap: { flex: 1, marginLeft: ms(12) },
-    cardLabel: { fontFamily: bold, fontSize: ms(14), color: blackColor },
-    cardDesc: { fontFamily: regular, fontSize: ms(11), color: '#6B7280', marginTop: vs(2) },
-    badgeStrong: { backgroundColor: '#E8F5E9', borderRadius: ms(20), paddingHorizontal: ms(12), paddingVertical: vs(4), marginRight: ms(6) },
-    badgeTextStrong: { fontFamily: bold, fontSize: ms(11), color: '#2E7D32' },
-    badgeModerate: { backgroundColor: '#FFF4E5', borderRadius: ms(20), paddingHorizontal: ms(12), paddingVertical: vs(4), marginRight: ms(6) },
-    badgeTextModerate: { fontFamily: bold, fontSize: ms(11), color: '#E07B00' },
+    cardTopRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: vs(4) },
+    cardLabel: { fontFamily: bold, fontSize: ms(13), color: blackColor, flex: 1, marginRight: ms(6) },
+    badge: { borderRadius: ms(20), paddingHorizontal: ms(10), paddingVertical: vs(3) },
+    badgeText: { fontFamily: bold, fontSize: ms(10) },
+    scoreRow: { flexDirection: 'row', alignItems: 'center', marginBottom: vs(3) },
+    scoreVal: { fontFamily: bold, fontSize: ms(12), color: '#374151' },
+    cardDesc: { fontFamily: regular, fontSize: ms(11), color: '#6B7280' },
 });
 
 export default MedicalEngagementScreen;

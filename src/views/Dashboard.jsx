@@ -56,111 +56,76 @@ const DASH_RING_ARC_LEN = (DASH_RING_ARC_DEG / 360) * DASH_RING_CIRC;
 // Score value config
 const DASH_SCORE_MIN = 300;
 const DASH_SCORE_MAX = 900;
-const DASH_SCORE_MID = 500; // Orange-to-green threshold
 const DASH_SCORE_VALUE = 320;
-const DASH_SCORE_FRACTION = (DASH_SCORE_VALUE - DASH_SCORE_MIN) / (DASH_SCORE_MAX - DASH_SCORE_MIN);
-const DASH_RING_FILL_LEN = DASH_RING_ARC_LEN * DASH_SCORE_FRACTION;
-// Orange zone covers 300-500 range
-const DASH_ORANGE_FRACTION = (DASH_SCORE_MID - DASH_SCORE_MIN) / (DASH_SCORE_MAX - DASH_SCORE_MIN);
-const DASH_ORANGE_ARC_LEN = DASH_RING_ARC_LEN * DASH_ORANGE_FRACTION;
-// Fill color: orange if score <= 500, green if > 500
-const DASH_FILL_COLOR = DASH_SCORE_VALUE <= DASH_SCORE_MID ? '#E8940A' : null;
 
-const DashScoreRing = () => {
-    const isOrangeZone = DASH_SCORE_VALUE <= DASH_SCORE_MID;
-    // If in green zone, split into orange portion + green portion
-    const greenFraction = isOrangeZone ? 0 : ((DASH_SCORE_VALUE - DASH_SCORE_MID) / (DASH_SCORE_MAX - DASH_SCORE_MIN));
-    const greenArcLen = DASH_RING_ARC_LEN * greenFraction;
-    const greenRotation = DASH_RING_START_DEG + (DASH_ORANGE_FRACTION * DASH_RING_ARC_DEG);
-
-    return (
-        <View style={{ width: DASH_RING_SIZE, height: DASH_RING_SIZE }}>
-            <Svg width={DASH_RING_SIZE} height={DASH_RING_SIZE}>
-                <Defs>
-                    <SvgLinearGradient id="dRingGreen" x1="0" y1="0" x2="1" y2="1">
-                        <Stop offset="0%" stopColor="#094A3D" />
-                        <Stop offset="30%" stopColor="#1A8A68" />
-                        <Stop offset="50%" stopColor="#2CB888" />
-                        <Stop offset="70%" stopColor="#1A8A68" />
-                        <Stop offset="100%" stopColor="#094A3D" />
-                    </SvgLinearGradient>
-                    <SvgLinearGradient id="dRingOrange" x1="0" y1="0" x2="1" y2="1">
-                        <Stop offset="0%" stopColor="#C47A08" />
-                        <Stop offset="50%" stopColor="#E8940A" />
-                        <Stop offset="100%" stopColor="#C47A08" />
-                    </SvgLinearGradient>
-                    <RadialGradient id="dRingGlow" cx="50%" cy="50%" r="50%">
-                        <Stop offset="68%" stopColor="#1A7E70" stopOpacity="0.18" />
-                        <Stop offset="100%" stopColor="#1A7E70" stopOpacity="0" />
-                    </RadialGradient>
-                </Defs>
-                <Circle cx={DASH_RING_CX} cy={DASH_RING_CY} r={DASH_RING_R + ms(8)} fill="url(#dRingGlow)" />
-                {/* Gray background track */}
-                <Circle
-                    cx={DASH_RING_CX} cy={DASH_RING_CY}
-                    r={DASH_RING_R}
-                    fill="none" stroke="#E8E8E8"
-                    strokeWidth={DASH_RING_STROKE}
-                    strokeDasharray={`${DASH_RING_ARC_LEN} ${DASH_RING_CIRC}`}
-                    strokeLinecap="round"
-                    transform={`rotate(${DASH_RING_START_DEG}, ${DASH_RING_CX}, ${DASH_RING_CY})`}
-                />
-                {isOrangeZone ? (
-                    /* Orange fill arc - score is <= 500 */
-                    <Circle
-                        cx={DASH_RING_CX} cy={DASH_RING_CY} r={DASH_RING_R}
-                        fill="none" stroke="url(#dRingOrange)"
-                        strokeWidth={DASH_RING_STROKE}
-                        strokeDasharray={`${DASH_RING_FILL_LEN} ${DASH_RING_CIRC}`}
-                        strokeLinecap="round"
-                        transform={`rotate(${DASH_RING_START_DEG}, ${DASH_RING_CX}, ${DASH_RING_CY})`}
-                    />
-                ) : (
-                    <>
-                        {/* Orange arc - covers 300 to 500 */}
-                        <Circle
-                            cx={DASH_RING_CX} cy={DASH_RING_CY} r={DASH_RING_R}
-                            fill="none" stroke="url(#dRingOrange)"
-                            strokeWidth={DASH_RING_STROKE}
-                            strokeDasharray={`${DASH_ORANGE_ARC_LEN} ${DASH_RING_CIRC}`}
-                            strokeLinecap="round"
-                            transform={`rotate(${DASH_RING_START_DEG}, ${DASH_RING_CX}, ${DASH_RING_CY})`}
-                        />
-                        {/* Green arc - covers 500 to score value */}
-                        <Circle
-                            cx={DASH_RING_CX} cy={DASH_RING_CY} r={DASH_RING_R}
-                            fill="none" stroke="url(#dRingGreen)"
-                            strokeWidth={DASH_RING_STROKE}
-                            strokeDasharray={`${greenArcLen} ${DASH_RING_CIRC}`}
-                            strokeLinecap="round"
-                            transform={`rotate(${greenRotation}, ${DASH_RING_CX}, ${DASH_RING_CY})`}
-                        />
-                    </>
-                )}
-                {/* White inner circle */}
-                <Circle
-                    cx={DASH_RING_CX} cy={DASH_RING_CY}
-                    r={DASH_RING_R - DASH_RING_STROKE / 2 - ms(2)}
-                    fill="#FFFFFF"
-                />
-            </Svg>
-            <View style={{ position: 'absolute', width: DASH_RING_SIZE, height: DASH_RING_SIZE, justifyContent: 'center', alignItems: 'center' }}>
-                <Text style={{ fontSize: ms(17), fontWeight: 'bold', color: '#1A4E44', lineHeight: ms(20) }}>320</Text>
-                <Text style={{ fontSize: ms(8), color: '#555', textAlign: 'center' }}>Out of 900</Text>
-            </View>
-            <Text style={{
-                position: 'absolute', color: '#fff', fontSize: ms(9), fontWeight: '600',
-                left: dashPolar(DASH_RING_CX, DASH_RING_CY, DASH_RING_R + DASH_RING_STROKE / 2 + ms(4), DASH_RING_START_DEG).x - ms(11),
-                top: dashPolar(DASH_RING_CX, DASH_RING_CY, DASH_RING_R + DASH_RING_STROKE / 2 + ms(4), DASH_RING_START_DEG).y - ms(2),
-            }}>300</Text>
-            <Text style={{
-                position: 'absolute', color: '#fff', fontSize: ms(9), fontWeight: '600',
-                left: dashPolar(DASH_RING_CX, DASH_RING_CY, DASH_RING_R + DASH_RING_STROKE / 2 + ms(4), DASH_RING_START_DEG + DASH_RING_ARC_DEG).x - ms(2),
-                top: dashPolar(DASH_RING_CX, DASH_RING_CY, DASH_RING_R + DASH_RING_STROKE / 2 + ms(4), DASH_RING_START_DEG + DASH_RING_ARC_DEG).y - ms(2),
-            }}>900</Text>
-        </View>
-    );
+const getDashScoreStatus = (score) => {
+    if (score >= 750) return { label: 'Exceptional', color: '#16A34A', arcColors: ['#059669', '#10B981', '#34D399'] };
+    if (score >= 650) return { label: 'Very Good',   color: '#22C55E', arcColors: ['#22C55E', '#4ADE80', '#86EFAC'] };
+    if (score >= 550) return { label: 'Good',         color: '#EAB308', arcColors: ['#CA8A04', '#EAB308', '#FACC15'] };
+    if (score >= 450) return { label: 'Fair',         color: '#CA8A04', arcColors: ['#A16207', '#CA8A04', '#EAB308'] };
+    return                      { label: 'Poor',         color: '#DC2626', arcColors: ['#991B1B', '#DC2626', '#EF4444'] };
 };
+const DASH_SCORE_STATUS = getDashScoreStatus(DASH_SCORE_VALUE);
+const DASH_SCORE_FRACTION = Math.max(0, Math.min(1, (DASH_SCORE_VALUE - DASH_SCORE_MIN) / (DASH_SCORE_MAX - DASH_SCORE_MIN)));
+const DASH_RING_FILL_LEN = DASH_RING_ARC_LEN * DASH_SCORE_FRACTION;
+
+const DashScoreRing = () => (
+    <View style={{ width: DASH_RING_SIZE, height: DASH_RING_SIZE }}>
+        <Svg width={DASH_RING_SIZE} height={DASH_RING_SIZE}>
+            <Defs>
+                <SvgLinearGradient id="dRingArcGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <Stop offset="0%"   stopColor={DASH_SCORE_STATUS.arcColors[0]} />
+                    <Stop offset="40%"  stopColor={DASH_SCORE_STATUS.arcColors[1]} />
+                    <Stop offset="100%" stopColor={DASH_SCORE_STATUS.arcColors[2]} />
+                </SvgLinearGradient>
+                <RadialGradient id="dRingGlow" cx="50%" cy="50%" r="50%">
+                    <Stop offset="68%" stopColor="#1A7E70" stopOpacity="0.18" />
+                    <Stop offset="100%" stopColor="#1A7E70" stopOpacity="0" />
+                </RadialGradient>
+            </Defs>
+            <Circle cx={DASH_RING_CX} cy={DASH_RING_CY} r={DASH_RING_R + ms(8)} fill="url(#dRingGlow)" />
+            {/* Gray background track */}
+            <Circle
+                cx={DASH_RING_CX} cy={DASH_RING_CY}
+                r={DASH_RING_R}
+                fill="none" stroke="#E8E8E8"
+                strokeWidth={DASH_RING_STROKE}
+                strokeDasharray={`${DASH_RING_ARC_LEN} ${DASH_RING_CIRC}`}
+                strokeLinecap="round"
+                transform={`rotate(${DASH_RING_START_DEG}, ${DASH_RING_CX}, ${DASH_RING_CY})`}
+            />
+            {/* Progress arc */}
+            <Circle
+                cx={DASH_RING_CX} cy={DASH_RING_CY} r={DASH_RING_R}
+                fill="none" stroke="url(#dRingArcGrad)"
+                strokeWidth={DASH_RING_STROKE}
+                strokeDasharray={`${DASH_RING_FILL_LEN} ${DASH_RING_CIRC}`}
+                strokeLinecap="round"
+                transform={`rotate(${DASH_RING_START_DEG}, ${DASH_RING_CX}, ${DASH_RING_CY})`}
+            />
+            {/* White inner circle */}
+            <Circle
+                cx={DASH_RING_CX} cy={DASH_RING_CY}
+                r={DASH_RING_R - DASH_RING_STROKE / 2 - ms(2)}
+                fill="#FFFFFF"
+            />
+        </Svg>
+        <View style={{ position: 'absolute', width: DASH_RING_SIZE, height: DASH_RING_SIZE, justifyContent: 'center', alignItems: 'center' }}>
+            <Text style={{ fontSize: ms(17), fontWeight: 'bold', color: DASH_SCORE_STATUS.color, lineHeight: ms(20) }}>{DASH_SCORE_VALUE}</Text>
+            <Text style={{ fontSize: ms(8), color: '#555', textAlign: 'center' }}>Out of 900</Text>
+        </View>
+        <Text style={{
+            position: 'absolute', color: '#fff', fontSize: ms(9), fontWeight: '600',
+            left: dashPolar(DASH_RING_CX, DASH_RING_CY, DASH_RING_R + DASH_RING_STROKE / 2 + ms(4), DASH_RING_START_DEG).x - ms(11),
+            top: dashPolar(DASH_RING_CX, DASH_RING_CY, DASH_RING_R + DASH_RING_STROKE / 2 + ms(4), DASH_RING_START_DEG).y - ms(2),
+        }}>300</Text>
+        <Text style={{
+            position: 'absolute', color: '#fff', fontSize: ms(9), fontWeight: '600',
+            left: dashPolar(DASH_RING_CX, DASH_RING_CY, DASH_RING_R + DASH_RING_STROKE / 2 + ms(4), DASH_RING_START_DEG + DASH_RING_ARC_DEG).x - ms(2),
+            top: dashPolar(DASH_RING_CX, DASH_RING_CY, DASH_RING_R + DASH_RING_STROKE / 2 + ms(4), DASH_RING_START_DEG + DASH_RING_ARC_DEG).y - ms(2),
+        }}>900</Text>
+    </View>
+);
 
 const Dashboard = (props) => {
     const navigation = useNavigation();

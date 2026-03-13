@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import {
     SafeAreaView, StyleSheet, View, Text, ScrollView,
     TouchableOpacity, Dimensions, Image,
@@ -460,7 +460,7 @@ const OrganDetailPanel = ({ organId, view }) => {
 };
 
 // ── Organ Insight Map (only affected organs) ─────────────────────────────────
-const OrganInsightMap = ({ affectedOrgans }) => {
+const OrganInsightMap = ({ affectedOrgans, selectedOrgan, onSelect }) => {
     const affected = affectedOrgans.map(id => ORGANS[id]).filter(Boolean);
     const total = affected.length;
     return (
@@ -496,14 +496,18 @@ const OrganInsightMap = ({ affectedOrgans }) => {
                 const nx = CIRCLE_CENTER + Math.cos(angle) * CIRCLE_RADIUS - NODE_SIZE / 2;
                 const ny = CIRCLE_CENTER + Math.sin(angle) * CIRCLE_RADIUS - NODE_SIZE / 2;
                 const col = getDetColor(o.deterioration);
+                const isSelected = selectedOrgan === o.id;
                 return (
-                    <View key={o.id} style={[cmStyles.node, {
-                        left: nx, top: ny,
-                        borderColor: col,
-                        backgroundColor: col + '18',
-                        shadowColor: col, shadowOpacity: 0.35,
-                        shadowRadius: 8, elevation: 6,
-                    }]}>
+                    <TouchableOpacity key={o.id} activeOpacity={0.75}
+                        onPress={() => onSelect && onSelect(o.id)}
+                        style={[cmStyles.node, {
+                            left: nx, top: ny,
+                            borderColor: col,
+                            borderWidth: isSelected ? ms(2.5) : ms(1.5),
+                            backgroundColor: isSelected ? col + '30' : col + '18',
+                            shadowColor: col, shadowOpacity: isSelected ? 0.6 : 0.35,
+                            shadowRadius: isSelected ? 12 : 8, elevation: isSelected ? 10 : 6,
+                        }]}>
                         {ORGAN_IMAGES[o.name] ? (
                             <Image source={ORGAN_IMAGES[o.name]} style={{ width: IMG_SIZE, height: IMG_SIZE }} resizeMode="contain" />
                         ) : (
@@ -511,7 +515,7 @@ const OrganInsightMap = ({ affectedOrgans }) => {
                         )}
                         <Text style={[cmStyles.nodeName, { color: col }]}>{o.name}</Text>
                         <Text style={[cmStyles.nodeScore, { color: col }]}>{o.deterioration}</Text>
-                    </View>
+                    </TouchableOpacity>
                 );
             })}
         </View>
@@ -527,7 +531,20 @@ const DiseaseIntelligenceScreen = () => {
         : 'Diabetes';
     const view = 'patient';
     const [activeTab, setActiveTab] = useState('insight');
-    const [selectedOrgan, setSelectedOrgan] = useState('kidneys');
+    const [selectedOrgan, setSelectedOrgan] = useState(null);
+    const scrollRef = useRef(null);
+    const detailRef = useRef(null);
+
+    const handleOrganSelect = (id) => {
+        setSelectedOrgan(id);
+        setTimeout(() => {
+            detailRef.current?.measureLayout(
+                scrollRef.current,
+                (_x, y) => scrollRef.current?.scrollTo({ y, animated: true }),
+                () => {},
+            );
+        }, 80);
+    };
     const [filterOrgan, setFilterOrgan] = useState(null);
     const [selectedDisease] = useState(initialDisease);
 
@@ -589,7 +606,7 @@ const DiseaseIntelligenceScreen = () => {
                     ))}
                 </ScrollView>
 
-                <ScrollView showsVerticalScrollIndicator={false} style={{ flex: 1 }} contentContainerStyle={s.content}>
+                <ScrollView ref={scrollRef} showsVerticalScrollIndicator={false} style={{ flex: 1 }} contentContainerStyle={s.content}>
 
                     {/* ── BIOMARKERS TAB ── */}
                     {activeTab === 'biomarkers' && (
@@ -730,7 +747,11 @@ const DiseaseIntelligenceScreen = () => {
                                 {/* Affected Organs — body map + cards + detail */}
                                 <View style={s.card}>
                                     <Text style={s.cardTitle}>Affected Organs</Text>
-                                    <OrganInsightMap affectedOrgans={insight.affectedOrgans} />
+                                    <OrganInsightMap
+                                        affectedOrgans={insight.affectedOrgans}
+                                        selectedOrgan={selectedOrgan}
+                                        onSelect={handleOrganSelect}
+                                    />
                                     {/* Affected organ chips */}
                                     <View style={s.insightOrganRow}>
                                         {insight.affectedOrgans.map(oid => {
@@ -738,7 +759,7 @@ const DiseaseIntelligenceScreen = () => {
                                             const col = getDetColor(org.deterioration);
                                             return (
                                                 <TouchableOpacity key={oid}
-                                                    onPress={() => setSelectedOrgan(oid)}
+                                                    onPress={() => handleOrganSelect(oid)}
                                                     style={[s.insightOrganChip, { backgroundColor: col + '12', borderColor: col + '40' }]}>
                                                     {ORGAN_IMAGES[org.name] && (
                                                         <Image source={ORGAN_IMAGES[org.name]} style={{ width: ms(12), height: ms(12) }} resizeMode="contain" />
@@ -757,7 +778,7 @@ const DiseaseIntelligenceScreen = () => {
                                             const isActive = selectedOrgan === o.id;
                                             return (
                                                 <TouchableOpacity key={o.id} activeOpacity={0.7}
-                                                    onPress={() => setSelectedOrgan(o.id)}
+                                                    onPress={() => handleOrganSelect(o.id)}
                                                     style={[s.organMiniCard, { width: (width - ms(82)) / 2 }, isActive && { borderColor: col, backgroundColor: col + '08' }]}
                                                 >
                                                     <View style={s.organMiniTop}>
@@ -786,7 +807,7 @@ const DiseaseIntelligenceScreen = () => {
                                         })}
                                     </View>
                                     {/* Individual organ detail + biomarkers + required actions */}
-                                    <View style={{ marginTop: vs(16), borderTopWidth: 1, borderTopColor: '#F3F4F6', paddingTop: vs(16) }}>
+                                    <View ref={detailRef} style={{ marginTop: vs(16), borderTopWidth: 1, borderTopColor: '#F3F4F6', paddingTop: vs(16) }}>
                                         <OrganDetailPanel organId={selectedOrgan} view={view} />
                                     </View>
                                 </View>
