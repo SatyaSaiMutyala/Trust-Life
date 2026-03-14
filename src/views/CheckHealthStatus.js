@@ -430,10 +430,16 @@ const CheckHealthStatus = () => {
                             </TouchableOpacity>
                         );
                     })}
-                    <TouchableOpacity style={styles.condViewAll} onPress={() => navigation.navigate('BioMarkersScreen')}>
-                        <Text style={styles.condViewAllText}>View all</Text>
-                        <Icon type={Icons.Ionicons} name="chevron-forward" size={ms(14)} color={primaryColor} />
-                    </TouchableOpacity>
+                    {/* <View style={styles.bioFooterRow}>
+                        <TouchableOpacity style={styles.condViewAll} onPress={() => navigation.navigate('BioMarkersScreen', { filter: ['Bio-Markers Status', 'Stability', 'Trend Velocity'], title: 'Bio-Markers Stability' })}>
+                            <Text style={styles.condViewAllText}>View all</Text>
+                            <Icon type={Icons.Ionicons} name="chevron-forward" size={ms(14)} color={primaryColor} />
+                        </TouchableOpacity>
+                        <TouchableOpacity style={styles.analyteTrendBtn} onPress={() => navigation.navigate('AnalyteTrendScreen')}>
+                            <Icon type={Icons.Ionicons} name="analytics-outline" size={ms(13)} color={whiteColor} />
+                            <Text style={styles.analyteTrendBtnText}>Analyte Trend</Text>
+                        </TouchableOpacity>
+                    </View> */}
                 </View>
 
                 {/* ── Health Progression Story ── */}
@@ -1107,11 +1113,22 @@ const styles = StyleSheet.create({
         fontSize: ms(10),
         fontWeight: '600',
     },
+    bioFooterRow: {
+        flexDirection: 'row', alignItems: 'center',
+        justifyContent: 'space-between', marginTop: vs(12),
+    },
+    analyteTrendBtn: {
+        flexDirection: 'row', alignItems: 'center', gap: ms(5),
+        backgroundColor: primaryColor, borderRadius: ms(20),
+        paddingHorizontal: ms(12), paddingVertical: vs(7),
+    },
+    analyteTrendBtnText: {
+        fontFamily: bold, fontSize: ms(11), color: whiteColor,
+    },
     condViewAll: {
         flexDirection: 'row',
         alignItems: 'center',
         alignSelf: 'flex-start',
-        marginTop: vs(12),
         gap: ms(4),
     },
     condViewAllText: {

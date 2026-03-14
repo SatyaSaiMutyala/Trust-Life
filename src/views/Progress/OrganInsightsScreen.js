@@ -1181,7 +1181,7 @@ const st = StyleSheet.create({
     gradient: { flex: 1 },
     content: { paddingBottom: vs(40) },
 
-    // Tab bar
+    // Tab bar  
     tabScroll: { marginBottom: vs(8), flexGrow: 0 },
     tabRow: { paddingHorizontal: ms(16), gap: ms(4) },
     tab: {

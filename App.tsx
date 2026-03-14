@@ -128,6 +128,7 @@ import VitaminScreen from './src/views/VitaminScreen';
 import SearchItems from './src/views/SearchItems';
 import MedicalRecordsVault from './src/views/MedicalRecordsVault';
 import BioMarkerDetailScreen from './src/views/Progress/BioMarkerDetailScreen';
+import AnalyteTrendScreen from './src/views/Progress/AnalyteTrendScreen';
 import UploadHealthReport from './src/views/UploadHealthReport';
 import MedicationTracking from './src/views/MedicationTracking';
 import AddMedicines from './src/views/AddMedicines';
@@ -832,6 +833,7 @@ function App() {
               <Stack.Screen name='CategoryDiseaseDetailScreen' component={CategoryDiseaseDetailScreen} options={{headerShown:false}}/>
               <Stack.Screen name='BioMarkersScreen' component={BioMarkersScreen} options={{headerShown:false}}/>
               <Stack.Screen name='BioMarkerDetailScreen' component={BioMarkerDetailScreen} options={{headerShown:false}}/>
+              <Stack.Screen name='AnalyteTrendScreen' component={AnalyteTrendScreen} options={{headerShown:false}}/>
               <Stack.Screen name='OrgansHealthScreen' component={OrgansHealthScreen} options={{headerShown:false}}/>
               <Stack.Screen name='OrganDetailScreen' component={OrganDetailScreen} options={{headerShown:false}}/>
               <Stack.Screen name='SymptomsScreen' component={SymptomsScreen} options={{headerShown:false}}/>

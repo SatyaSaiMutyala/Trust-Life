@@ -144,16 +144,27 @@ const MedicalRecordsVault = () => {
                 keyExtractor={(item, index) => index.toString()}
                 showsVerticalScrollIndicator={false}
                 contentContainerStyle={{ paddingBottom: vs(90), paddingHorizontal: ms(2) }}
-                renderItem={({ item }) => (
-                    <TouchableOpacity style={styles.bioRow} activeOpacity={0.7} onPress={() => navigation.navigate('BioMarkerDetailScreen', { name: item.name, code: item.code })}>
-                        <Text style={[styles.bioCode, { flex: 0.8 }]}>{item.code}</Text>
-                        <Text style={[styles.bioName, { flex: 1.2, textAlign: 'center' }]}>{item.name}</Text>
-                        <View style={{ flex: 0.5, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end' }}>
-                            <Text style={styles.bioCount}>{item.count}</Text>
-                            <Icon type={Icons.Ionicons} name="chevron-forward" color="#9CA3AF" size={ms(16)} />
-                        </View>
-                    </TouchableOpacity>
-                )}
+                renderItem={({ item }) => {
+                    const ANALYTE_NAMES = ['HbA1c', 'Glucose', 'TSH', 'Creatinine', 'Hemoglobin', 'LDL', 'ALT', 'Ferritin'];
+                    const isAnalyte = ANALYTE_NAMES.includes(item.name);
+                    return (
+                        <TouchableOpacity
+                            style={styles.bioRow}
+                            activeOpacity={0.7}
+                            onPress={() => isAnalyte
+                                ? navigation.navigate('AnalyteTrendScreen', { analyteName: item.name })
+                                : navigation.navigate('BioMarkerDetailScreen', { name: item.name, code: item.code })
+                            }
+                        >
+                            <Text style={[styles.bioCode, { flex: 0.8 }]}>{item.code}</Text>
+                            <Text style={[styles.bioName, { flex: 1.2, textAlign: 'center' }]}>{item.name}</Text>
+                            <View style={{ flex: 0.5, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end' }}>
+                                <Text style={styles.bioCount}>{item.count}</Text>
+                                <Icon type={Icons.Ionicons} name="chevron-forward" color="#9CA3AF" size={ms(16)} />
+                            </View>
+                        </TouchableOpacity>
+                    );
+                }}
             />
         </View>
     );
@@ -709,7 +720,7 @@ const styles = StyleSheet.create({
     bioHeaderText: {
         fontSize: ms(14),
         fontFamily: bold,
-        color: '#6B7280',
+        color: blackColor,
     },
     bioRow: {
         flexDirection: 'row',
