@@ -529,57 +529,29 @@ const BioChart = ({ points, id }) => (
 const BioMarkerRow = ({ item, index }) => {
     const navigation = useNavigation();
     return (
-        <View style={[styles.bioCard, index > 0 && { marginTop: vs(10) }]}>
-            {/* Colored left accent bar */}
-            <View style={[styles.bioAccent, { backgroundColor: item.statusColor }]} />
+        <TouchableOpacity
+            style={[styles.bioCard, index > 0 && { marginTop: vs(8) }]}
+            activeOpacity={0.75}
+            onPress={() => navigation.navigate('AnalyteTrendScreen', { analyteName: item.name })}
+        >
             <View style={styles.bioCardInner}>
-                {/* Top: name + status */}
-                <View style={styles.bioCardTop}>
-                    <View style={styles.bioNameWrap}>
-                        <Text style={styles.bioName}>{item.name}</Text>
-                        <Text style={styles.bioSubtitle}>{item.subtitle}</Text>
-                    </View>
-                    <View style={styles.bioTopRight}>
-                        <View style={[styles.bioCodeBadge, { backgroundColor: item.statusColor + '18' }]}>
-                            <Text style={[styles.bioCodeText, { color: item.statusColor }]}>{item.statusCode}</Text>
-                        </View>
-                        <Text style={[styles.bioStatusLabel, { color: item.statusColor }]}>{item.statusLabel}</Text>
-                    </View>
+                {/* Left: icon circle + name */}
+                <View style={[styles.bioIconCircle, { backgroundColor: item.statusColor + '18' }]}>
+                    <Icon type={Icons.Ionicons} name="flask-outline" size={ms(16)} color={item.statusColor} />
                 </View>
 
-                {/* Stats grid */}
-                <View style={styles.bioGrid}>
-                    <View style={styles.bioGridCell}>
-                        <Text style={styles.bioGridHeader}>Normal</Text>
-                        <Text style={styles.bioGridValue}>{item.normal}</Text>
-                    </View>
-                    <View style={[styles.bioGridCell, styles.bioGridCellBorder]}>
-                        <Text style={styles.bioGridHeader}>Abnormal</Text>
-                        <Text style={[styles.bioGridValue, item.abnormal !== '-' && { color: item.statusColor }]}>{item.abnormal}</Text>
-                    </View>
-                    <View style={[styles.bioGridCell, styles.bioGridCellBorder]}>
-                        <Text style={styles.bioGridHeader}>Unit</Text>
-                        <Text style={styles.bioGridValue}>{item.unit}</Text>
-                    </View>
+                <View style={styles.bioNameWrap}>
+                    <Text style={styles.bioName}>{item.name}</Text>
+                    <Text style={styles.bioSubtitle}>{item.subtitle}</Text>
                 </View>
 
-                {/* Ref + trend button */}
-                <View style={styles.bioRefRow}>
-                    <View style={styles.bioRefChip}>
-                        <Icon type={Icons.Ionicons} name="information-circle-outline" size={ms(13)} color="#6B7280" />
-                        <Text style={styles.bioRefText}>Ref: {item.ref}</Text>
-                    </View>
-                    <TouchableOpacity
-                        style={[styles.viewTrendBtn, { borderColor: primaryColor }]}
-                        onPress={() => navigation.navigate('AnalyteTrendScreen', { analyteName: item.name })}
-                    >
-                        <Icon type={Icons.Ionicons} name="analytics-outline" size={ms(13)} color={primaryColor} />
-                        <Text style={styles.viewTrendText}>Trend</Text>
-                        <Icon type={Icons.Ionicons} name="chevron-forward" size={ms(13)} color={primaryColor} />
-                    </TouchableOpacity>
+                {/* Right: status pill */}
+                <View style={[styles.bioStatusPill, { backgroundColor: item.statusColor + '18', borderColor: item.statusColor + '40' }]}>
+                    <View style={[styles.bioStatusDot, { backgroundColor: item.statusColor }]} />
+                    <Text style={[styles.bioStatusPillText, { color: item.statusColor }]}>{item.statusLabel}</Text>
                 </View>
             </View>
-        </View>
+        </TouchableOpacity>
     );
 };
 
@@ -666,16 +638,28 @@ const BioMarkerDetailScreen = () => {
                             <Icon type={Icons.Ionicons} name="pulse-outline" size={ms(15)} color={primaryColor} />
                             <Text style={styles.condInfo}>{config.info}</Text>
                         </View>
-                        <View style={styles.badgeRow}>
-                            <View style={styles.condBadgeAmber}>
-                                <Icon type={Icons.Ionicons} name="analytics-outline" size={ms(12)} color="#92400E" />
-                                <Text style={styles.condBadgeAmberText}>{config.stabilityLabel}</Text>
-                            </View>
-                            <View style={styles.condBadgeGreen}>
-                                <Icon type={Icons.Ionicons} name="checkmark-circle-outline" size={ms(12)} color="#065F46" />
-                                <Text style={styles.condBadgeGreenText}>{config.statusLabel}</Text>
-                            </View>
-                        </View>
+                        {(() => {
+                            const markers = config.bioMarkers || [];
+                            const normal = markers.filter(m => m.statusCode === 'N').length;
+                            const critical = markers.filter(m => m.statusCode.includes('**')).length;
+                            const abnormal = markers.length - normal - critical;
+                            return (
+                                <View style={styles.statusCountRow}>
+                                    <View style={[styles.statusCountChip, { backgroundColor: '#DCFCE7' }]}>
+                                        <Text style={[styles.statusCountNum, { color: '#10B981' }]}>{normal}</Text>
+                                        <Text style={[styles.statusCountLabel, { color: '#10B981' }]}>Normal</Text>
+                                    </View>
+                                    <View style={[styles.statusCountChip, { backgroundColor: '#FEF3C7' }]}>
+                                        <Text style={[styles.statusCountNum, { color: '#F59E0B' }]}>{abnormal}</Text>
+                                        <Text style={[styles.statusCountLabel, { color: '#F59E0B' }]}>Abnormal</Text>
+                                    </View>
+                                    <View style={[styles.statusCountChip, { backgroundColor: '#FEE2E2' }]}>
+                                        <Text style={[styles.statusCountNum, { color: '#EF4444' }]}>{critical}</Text>
+                                        <Text style={[styles.statusCountLabel, { color: '#EF4444' }]}>Critical</Text>
+                                    </View>
+                                </View>
+                            );
+                        })()}
                     </View>
 
                     {/* ── Bio-Markers Movement ── */}
@@ -696,7 +680,7 @@ const BioMarkerDetailScreen = () => {
                     )}
 
                     {/* ── Symptom Tracker ── */}
-                    {config.symptoms && config.symptoms.length > 0 && (
+                    {/* {config.symptoms && config.symptoms.length > 0 && (
                         <>
                             <SectionHeader icon="flash-outline" label="Symptom Tracker" />
                             <View style={styles.sectionCard}>
@@ -721,10 +705,10 @@ const BioMarkerDetailScreen = () => {
                                 ))}
                             </View>
                         </>
-                    )}
+                    )} */}
 
                     {/* ── Organs Affected ── */}
-                    {config.organs && config.organs.length > 0 && (
+                    {/* {config.organs && config.organs.length > 0 && (
                         <>
                             <SectionHeader icon="body-outline" label="Organs Affected" />
                             <View style={styles.organsWrap}>
@@ -733,10 +717,10 @@ const BioMarkerDetailScreen = () => {
                                 ))}
                             </View>
                         </>
-                    )}
+                    )} */}
 
                     {/* ── Lifestyle Influence ── */}
-                    {config.lifestyle && config.lifestyle.length > 0 && (
+                    {/* {config.lifestyle && config.lifestyle.length > 0 && (
                         <>
                             <SectionHeader icon="fitness-outline" label="Lifestyle Influence" />
                             <View style={styles.sectionCard}>
@@ -755,10 +739,10 @@ const BioMarkerDetailScreen = () => {
                                 ))}
                             </View>
                         </>
-                    )}
+                    )} */}
 
                     {/* ── Medical Engagement ── */}
-                    {config.medicalEngagement && config.medicalEngagement.length > 0 && (
+                    {/* {config.medicalEngagement && config.medicalEngagement.length > 0 && (
                         <>
                             <SectionHeader icon="medkit-outline" label="Medical Engagement" />
                             <View style={styles.sectionCard}>
@@ -782,7 +766,7 @@ const BioMarkerDetailScreen = () => {
                                 ))}
                             </View>
                         </>
-                    )}
+                    )} */}
 
                     <View style={{ height: vs(30) }} />
                 </ScrollView>
@@ -832,6 +816,13 @@ const styles = StyleSheet.create({
     },
     condInfo: { fontFamily: regular, fontSize: ms(12), color: '#1A4A44', flex: 1, lineHeight: ms(18) },
     badgeRow: { flexDirection: 'row', gap: ms(8), flexWrap: 'wrap' },
+    statusCountRow: { flexDirection: 'row', gap: ms(8) },
+    statusCountChip: {
+        flex: 1, borderRadius: ms(10), paddingVertical: vs(8),
+        alignItems: 'center', justifyContent: 'center',
+    },
+    statusCountNum: { fontFamily: bold, fontSize: ms(20), lineHeight: ms(24) },
+    statusCountLabel: { fontFamily: regular, fontSize: ms(10), marginTop: vs(2) },
     condBadgeAmber: {
         flexDirection: 'row', alignItems: 'center', gap: ms(5),
         backgroundColor: '#FEF9EE', paddingHorizontal: ms(10), paddingVertical: vs(6), borderRadius: ms(10),
@@ -869,15 +860,30 @@ const styles = StyleSheet.create({
         shadowOffset: { width: 0, height: 2 }, elevation: 2,
     },
     bioAccent: { width: ms(4) },
-    bioCardInner: { flex: 1, padding: ms(14) },
-    bioCardTop: { flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: vs(12) },
-    bioNameWrap: { flex: 1, marginRight: ms(8) },
+    bioCardStrip: { position: 'absolute', top: 0, left: 0, right: 0, height: ms(4) },
+    bioCardInner: {
+        flex: 1, flexDirection: 'row', alignItems: 'center',
+        paddingHorizontal: ms(12), paddingVertical: ms(12), gap: ms(10),
+    },
+    bioIconCircle: {
+        width: ms(38), height: ms(38), borderRadius: ms(19),
+        justifyContent: 'center', alignItems: 'center',
+    },
+    bioCardTop: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
+    bioNameWrap: { flex: 1 },
     bioName: { fontFamily: bold, fontSize: ms(13), color: blackColor },
-    bioSubtitle: { fontFamily: regular, fontSize: ms(11), color: '#9CA3AF', marginTop: vs(2) },
+    bioSubtitle: { fontFamily: regular, fontSize: ms(10.5), color: '#9CA3AF', marginTop: vs(2) },
     bioTopRight: { alignItems: 'flex-end', gap: vs(4) },
     bioCodeBadge: { borderRadius: ms(8), paddingHorizontal: ms(10), paddingVertical: vs(4) },
     bioCodeText: { fontFamily: bold, fontSize: ms(11) },
     bioStatusLabel: { fontFamily: bold, fontSize: ms(11) },
+    bioStatusPill: {
+        flexDirection: 'row', alignItems: 'center', gap: ms(5),
+        borderRadius: ms(20), borderWidth: 1,
+        paddingHorizontal: ms(10), paddingVertical: vs(5),
+    },
+    bioStatusDot: { width: ms(6), height: ms(6), borderRadius: ms(3) },
+    bioStatusPillText: { fontFamily: bold, fontSize: ms(10.5) },
     bioGrid: {
         flexDirection: 'row', backgroundColor: '#F8FAFC',
         borderRadius: ms(10), padding: ms(10), marginBottom: vs(10),

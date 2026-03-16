@@ -142,6 +142,7 @@ const Dashboard = (props) => {
     const [savedLocation, setSavedLocation] = useState(null);
     const [profilePic, setProfilePic] = useState(null);
     const [isSecondUser, setIsSecondUser] = useState(true);
+    const [actionDone, setActionDone] = useState(false);
     const LOCATION_KEY = 'SAVED_LOCATION';
 
     const doctor_categories = () => {
@@ -975,146 +976,238 @@ const Dashboard = (props) => {
                         {/* ── SECOND USER COMPONENTS ── */}
                         {isSecondUser && <>
 
-                            {/* ── CONTINUITY TRACKER ── */}
-                            <View style={styles2.continuityTrackerSection}>
-                                <View style={styles2.continuityCard}>
+                            {/* ── THE HEALTH CHRONICLE (all 7 sections) ── */}
+                            <View style={styles2.npSection}>
+                                <View style={styles2.npCard}>
 
-                                    <View style={styles2.continuityCardHeader}>
-                                        <Text style={styles2.continuityCardTitle}>Continuity Tracker</Text>
+                                    {/* Masthead */}
+                                    <View style={styles2.npMastheadRule} />
+                                    <View style={styles2.npMastheadRow}>
+                                        <Text style={styles2.npMastheadTitle}>MY HEALTH CHRONICLE</Text>
+                                        <Text style={styles2.npEdition}>MON, MAR 16, 2026</Text>
+                                    </View>
+                                    <View style={styles2.npMastheadRuleThick} />
+                                    <View style={styles2.npMastheadRuleThin} />
+
+                                    {/* Greeting */}
+                                    {(() => {
+                                        const h = new Date().getHours();
+                                        const greeting = h < 12 ? 'Good Morning' : h < 17 ? 'Good Afternoon' : 'Good Evening';
+                                        const name = (global.customer_name || '').split(' ')[0];
+                                        return (
+                                            <View style={styles2.npGreetRow}>
+                                                <Text style={styles2.npGreetText}>{greeting}{name ? `, ${name}` : ''}</Text>
+                                                <Text style={styles2.npGreetEmoji}>
+                                                    {h < 12 ? '🌤' : h < 17 ? '☀️' : '🌙'}
+                                                </Text>
+                                            </View>
+                                        );
+                                    })()}
+
+                                    {/* Tags + Read More */}
+                                    {/* <View style={styles2.npTagRow}>
+                                        {['SIGNALS','DRIVERS','CONTINUITY','ACTION'].map((t,i)=>(
+                                            <View key={i} style={styles2.npTag}><Text style={styles2.npTagText}>{t}</Text></View>
+                                        ))}
+                                        <View style={{ flex: 1 }} />
                                         <TouchableOpacity onPress={() => navigation.navigate('ContinuityTracking')}>
-                                            <Text style={styles2.continuityViewAll}>View all</Text>
+                                            <Text style={styles2.npReadMoreText}>MORE →</Text>
+                                        </TouchableOpacity>
+                                    </View> */}
+
+                                    {/* Main Headline */}
+                                    <Text style={styles2.npHeadline}>A quick look at how yesterday’s actions are shaping your health today.</Text>
+                                    {/* <Text style={styles2.npDeck}>Consistent readings above healthy range for 5 months — action required</Text> */}
+
+                                    <View style={styles2.npThinRule} />
+
+                                    {/* ① KEY SIGNALS */}
+                                    <View style={styles2.npInSecRow}>
+                                        <Text style={styles2.npInSecTitle}>KEY SIGNALS</Text>
+                                        <View style={{ flex: 1 }} />
+                                        <TouchableOpacity onPress={() => navigation.navigate('HealthChronicleScreen', { section: 'keySignals' })}>
+                                            <Text style={styles2.npViewMore}>View more →</Text>
                                         </TouchableOpacity>
                                     </View>
-
-                                    <View style={styles2.medicationRow}>
-                                        <Text style={styles2.medicationLabel}>Medication</Text>
-                                        <Text style={styles2.medicationDate}>Last updated  Thu, Mar 02,2026</Text>
-                                    </View>
-
-                                    <View style={styles2.streakSection}>
-                                        <View style={styles2.streakLeft}>
-                                            <Text style={styles2.streakTitle}>Active Days Streak</Text>
-                                            <Text style={styles2.streakMaintain}>3 more days to maintain your streak</Text>
+                                    {[
+                                        { accent: primaryColor, iconBg: primaryColor+'18', icon:'heart', name:'Heart health supported', desc:"Yesterday's activity improved cardiovascular stability." },
+                                        { accent: '#1A5A8A', iconBg:'#E6F0FA', icon:'water', name:'Blood sugar stable', desc:'Meals and medication helped maintain balance.' },
+                                        { accent: '#5A3F9E', iconBg:'#EDE8FB', icon:'moon', name:'Recovery good', desc:'Sleep duration supported overnight recovery.' },
+                                    ].map((item, i) => (
+                                        <View key={i} style={styles2.npSignalRow}>
+                                            <View style={[styles2.npSignalDot, { backgroundColor: item.accent }]} />
+                                            <View style={[styles2.npSignalIco, { backgroundColor: item.iconBg }]}>
+                                                <Icon type={Icons.Ionicons} name={item.icon} size={ms(16)} color={item.accent} />
+                                            </View>
+                                            <View style={{ flex: 1 }}>
+                                                <Text style={styles2.npSignalName}>{item.name}</Text>
+                                                <Text style={styles2.npSignalDesc}>{item.desc}</Text>
+                                            </View>
+                                            <View style={[styles2.npSignalCheck, { backgroundColor: item.iconBg }]}>
+                                                <Icon type={Icons.Ionicons} name="checkmark" size={ms(11)} color={item.accent} />
+                                            </View>
                                         </View>
-                                        <View style={styles2.streakRight}>
-                                            <Text style={styles2.streakDaysNumber}>4/7</Text>
-                                            <Text style={styles2.streakDaysLabel}> days</Text>
-                                        </View>
-                                    </View>
+                                    ))}
 
-                                    <View style={styles2.progressBarTrack}>
-                                        <View style={[styles2.progressBarFill, { width: `${(4 / 7) * 100}%` }]} />
-                                    </View>
+                                    <View style={styles2.npThinRule} />
 
-                                    <View style={styles2.daysRow}>
-                                        {['M', 'T', 'W', 'T', 'F', 'S', 'S'].map((day, index) => (
-                                            <View
-                                                key={index}
-                                                style={[
-                                                    styles2.dayCircle,
-                                                    index < 4 ? styles2.dayCircleActive : styles2.dayCircleInactive,
-                                                ]}
-                                            >
-                                                <Text style={[
-                                                    styles2.dayLabel,
-                                                    index < 4 ? styles2.dayLabelActive : styles2.dayLabelInactive,
-                                                ]}>
-                                                    {day}
-                                                </Text>
+                                    {/* ② TOP DRIVERS TODAY */}
+                                    <View style={styles2.npInSecRow}>
+                                        <Text style={styles2.npInSecTitle}>TOP DRIVERS</Text>
+                                        <View style={{ flex: 1 }} />
+                                        <TouchableOpacity onPress={() => navigation.navigate('HealthChronicleScreen', { section: 'topDrivers' })}>
+                                            <Text style={styles2.npViewMore}>View more →</Text>
+                                        </TouchableOpacity>
+                                    </View>
+                                    <View style={styles2.npDriversWrap}>
+                                        {[
+                                            { icon:'walk', name:'Walking', pill:'28 min' },
+                                            { icon:'medical', name:'Medication taken', pill:'On time' },
+                                            { icon:'moon', name:'Sleep duration', pill:'7h 12m' },
+                                        ].map((item, i, arr) => (
+                                            <View key={i} style={[styles2.npDriverRow, i < arr.length-1 && styles2.npDriverDivider]}>
+                                                <View style={styles2.npDriverIco}>
+                                                    <Icon type={Icons.Ionicons} name={item.icon} size={ms(15)} color={'#666'} />
+                                                </View>
+                                                <Text style={styles2.npDriverName}>{item.name}</Text>
+                                                <View style={styles2.npDriverPill}>
+                                                    <Text style={styles2.npDriverPillText}>{item.pill}</Text>
+                                                </View>
                                             </View>
                                         ))}
                                     </View>
-                                </View>
-                            </View>
 
-                            {/* ── TODAY'S HEALTH SIGNAL ── */}
-                            <View style={styles2.healthSignalSection}>
-                                <View style={styles2.healthSignalCard}>
+                                    <View style={styles2.npThinRule} />
 
-                                    {/* Badge */}
-                                    <View style={styles2.hsBadge}>
-                                        <Text style={styles2.hsBadgeText}>Today's Health Signal</Text>
-                                    </View>
-
-                                    {/* Title */}
-                                    <Text style={styles2.hsTitle}>Blood Pressure – Persistently Elevated</Text>
-
-                                    {/* Chart */}
-                                    <View style={styles2.hsChartWrapper}>
-                                        <Svg width="100%" height={ms(110)} viewBox="0 0 300 100" preserveAspectRatio="none">
-                                            <Defs>
-                                                <SvgLinearGradient id="hsChartGrad" x1="0" y1="0" x2="0" y2="1">
-                                                    <Stop offset="0" stopColor="#FF6B35" stopOpacity="0.45" />
-                                                    <Stop offset="1" stopColor="#FF6B35" stopOpacity="0.02" />
-                                                </SvgLinearGradient>
-                                            </Defs>
-                                            {/* Area fill */}
-                                            <Polygon
-                                                points="0,100 0,76 60,60 120,46 180,33 240,20 300,8 300,100"
-                                                fill="url(#hsChartGrad)"
-                                            />
-                                            {/* Line */}
-                                            <Polyline
-                                                points="0,76 60,60 120,46 180,33 240,20 300,8"
-                                                fill="none"
-                                                stroke="#FF6B35"
-                                                strokeWidth="2.5"
-                                                strokeLinejoin="round"
-                                                strokeLinecap="round"
-                                            />
-                                            {/* Vertical dashed marker at last point */}
-                                            <Line x1="300" y1="2" x2="300" y2="100" stroke="#FF6B35" strokeWidth="1.5" strokeDasharray="4,3" />
-                                            {/* Data point dots */}
-                                            {[[0, 76], [60, 60], [120, 46], [180, 33], [240, 20], [300, 8]].map(([cx, cy], i) => (
-                                                <Circle key={i} cx={cx} cy={cy} r="4" fill="#FF6B35" />
-                                            ))}
-                                        </Svg>
-                                        {/* 180/20 callout — top-right above vertical line */}
-                                        <View style={styles2.hsValueCallout}>
-                                            <Text style={styles2.hsValueText}>180/20</Text>
+                                    {/* ③ ATTENTION AREA */}
+                                    <Text style={[styles2.npInSecTitle, {marginBottom:ms(10)}]}>ATTENTION AREA</Text>
+                                    <View style={styles2.npAttnRow}>
+                                        <View style={styles2.npAttnIco}>
+                                            <Icon type={Icons.Ionicons} name="warning" size={ms(15)} color={'#A05C0A'} />
+                                        </View>
+                                        <View style={{ flex: 1 }}>
+                                            <Text style={styles2.npAttnTitle}>Hydration slightly low</Text>
+                                            <Text style={styles2.npAttnDesc}>Increasing water intake may improve energy and kidney function.</Text>
                                         </View>
                                     </View>
 
-                                    {/* X-axis labels */}
-                                    <View style={styles2.hsXAxis}>
-                                        {['12 Feb', '13 Mar', '25 Apr', '21 May', '12 June', '12 July'].map((lbl, i) => (
-                                            <Text key={i} style={styles2.hsXLabel}>{lbl}</Text>
+                                    <View style={styles2.npThinRule} />
+
+                                    {/* ④ HEALTH SIGNAL */}
+                                    <View style={styles2.npInSecRow}>
+                                        <Text style={styles2.npInSecTitle}>HEALTH SIGNAL</Text>
+                                        <View style={{ flex: 1 }} />
+                                        <TouchableOpacity onPress={() => navigation.navigate('HealthChronicleScreen', { section: 'bpTrend' })}>
+                                            <Text style={styles2.npViewMore}>View more →</Text>
+                                        </TouchableOpacity>
+                                    </View>
+                                    <Text style={styles2.npHsHeadline}>Blood Pressure Persistently Elevated</Text>
+                                    <Text style={styles2.npHsSubtitle}>Your BP readings have stayed above the healthy range for 5+ months. This chart tracks your trend — consistent elevation signals the need for lifestyle or medication review.</Text>
+                                    <View style={{ height: ms(8) }} />
+                                    <View style={styles2.npChartWrap}>
+                                        <Svg width="100%" height={ms(110)} viewBox="0 0 300 100" preserveAspectRatio="none">
+                                            <Defs>
+                                                <SvgLinearGradient id="npChartGrad2" x1="0" y1="0" x2="0" y2="1">
+                                                    <Stop offset="0" stopColor="#FF6B35" stopOpacity="0.3" />
+                                                    <Stop offset="1" stopColor="#FF6B35" stopOpacity="0.02" />
+                                                </SvgLinearGradient>
+                                            </Defs>
+                                            <Polygon points="0,100 0,76 60,60 120,46 180,33 240,20 300,8 300,100" fill="url(#npChartGrad2)" />
+                                            <Polyline points="0,76 60,60 120,46 180,33 240,20 300,8" fill="none" stroke="#FF6B35" strokeWidth="2" strokeLinejoin="round" />
+                                            <Line x1="300" y1="2" x2="300" y2="100" stroke="#FF6B35" strokeWidth="1.5" strokeDasharray="3,3" />
+                                            {[[0,76],[60,60],[120,46],[180,33],[240,20],[300,8]].map(([cx,cy],i)=>(
+                                                <Circle key={i} cx={cx} cy={cy} r="3.5" fill="#FF6B35" />
+                                            ))}
+                                        </Svg>
+                                        <View style={styles2.npCallout}>
+                                            <Text style={styles2.npCalloutText}>180/20</Text>
+                                        </View>
+                                    </View>
+                                    <View style={styles2.npXAxis}>
+                                        {['12 Feb','13 Mar','25 Apr','21 May','12 Jun','12 Jul'].map((l,i)=>(
+                                            <Text key={i} style={styles2.npXLabel}>{l}</Text>
                                         ))}
                                     </View>
 
-                                    {/* Pattern Explanation */}
-                                    <Text style={styles2.hsSectionHeader}>Pattern Explanation</Text>
-                                    <Text style={styles2.hsSectionBody}>
-                                        Your blood pressure readings have been consistently above the healthy range for the past 5 months, indicating a persistent elevation trend that requires attention.
-                                    </Text>
+                                    <View style={styles2.npThinRule} />
 
-                                    {/* Health Impact */}
-                                    <Text style={styles2.hsSectionHeader}>Health Impact</Text>
-                                    <View style={styles2.hsBulletRow}>
-                                        <View style={styles2.hsBulletDot} />
-                                        <Text style={styles2.hsBulletText}>Increased risk of heart disease and stroke</Text>
-                                    </View>
-                                    <View style={styles2.hsBulletRow}>
-                                        <View style={styles2.hsBulletDot} />
-                                        <Text style={styles2.hsBulletText}>Potential kidney damage over time if left unmanaged</Text>
-                                    </View>
-
-                                    {/* Peer Comparison */}
-                                    <View style={styles2.hsPeerRow}>
-                                        <Icon type={Icons.MaterialIcons} name="people" size={ms(18)} color="#FF6B35" />
-                                        <Text style={styles2.hsPeerText}>Blood Pressure: Higher Than Most Peers</Text>
-                                    </View>
-                                    <Text style={styles2.hsPeerDesc}>
-                                        Your readings are higher than 78% of people in your age and health group.
-                                    </Text>
-
-                                    {/* Suggestion box */}
-                                    <View style={styles2.hsSuggestionBox}>
-                                        <Text style={styles2.hsSuggestionTitle}>Suggestion</Text>
-                                        <Text style={styles2.hsSuggestionBody}>
-                                            Consider reducing sodium intake, increasing physical activity, and consulting your doctor about medication options to bring your blood pressure to a healthier range.
+                                    {/* ⑤ TODAY'S ACTION */}
+                                    <View style={styles2.npActionBox}>
+                                        <Text style={styles2.npActionEye}>TODAY'S ACTION  ·  RECOMMENDED</Text>
+                                        <Text style={styles2.npActionText}>
+                                            Drink two more glasses of water today to improve your hydration balance.
                                         </Text>
+                                        <TouchableOpacity
+                                            style={[styles2.npActionBtn, actionDone && styles2.npActionBtnDone]}
+                                            activeOpacity={0.8}
+                                            onPress={() => setActionDone(true)}
+                                        >
+                                            {/* <Icon type={Icons.Ionicons} name="checkmark" size={ms(11)} color={whiteColor} /> */}
+                                            <Text style={styles2.npActionBtnText}>{actionDone ? '✓  Done' : 'Mark as done'}</Text>
+                                        </TouchableOpacity>
                                     </View>
+
+                                    <View style={styles2.npThinRule} />
+
+                                    {/* ⑤ HEALTH MOMENTUM */}
+                                    <View style={styles2.npInSecRow}>
+                                        <Text style={styles2.npInSecTitle}>HEALTH MOMENTUM</Text>
+                                        <View style={{ flex: 1 }} />
+                                        <TouchableOpacity onPress={() => navigation.navigate('HealthChronicleScreen', { section: 'momentum' })}>
+                                            <Text style={styles2.npViewMore}>View more →</Text>
+                                        </TouchableOpacity>
+                                    </View>
+                                    <View style={styles2.npMomentumRow}>
+                                        <View style={{ flex: 1 }}>
+                                            <View style={styles2.npMomentumTag}>
+                                                <Icon type={Icons.Ionicons} name="trending-up" size={ms(12)} color={primaryColor} />
+                                                <Text style={styles2.npMomentumTagText}> IMPROVING</Text>
+                                            </View>
+                                            <Text style={styles2.npMomentumDesc}>Your consistency this week is improving metabolic stability.</Text>
+                                        </View>
+                                        <View style={styles2.npSparkRow}>
+                                            {[52,61,58,67,72,75,81].map((v,i)=>(
+                                                <View key={i} style={[styles2.npSparkBar, {
+                                                    height: Math.round((v/81)*ms(28)),
+                                                    backgroundColor: i===6 ? primaryColor : primaryColor+'30',
+                                                }]} />
+                                            ))}
+                                        </View>
+                                    </View>
+
+                                    <View style={styles2.npThinRule} />
+
+                                    {/* ⑥ MEDICATION STREAK — full width row */}
+                                    <View style={styles2.npInSecRow}>
+                                        <Text style={styles2.npInSecTitle}>MEDICATION STREAK</Text>
+                                        <View style={{ flex: 1 }} />
+                                        <TouchableOpacity onPress={() => navigation.navigate('HealthChronicleScreen', { section: 'medication' })}>
+                                            <Text style={styles2.npViewMore}>View more →</Text>
+                                        </TouchableOpacity>
+                                    </View>
+                                    <View style={styles2.npStreakFullRow}>
+                                        <View style={styles2.npStreakFullLeft}>
+                                            <View style={styles2.npStreakNumRow}>
+                                                <Text style={styles2.npStreakNum}>4</Text>
+                                                <Text style={styles2.npStreakSlash}>/7</Text>
+                                                <Text style={styles2.npStreakUnit}> DAYS</Text>
+                                            </View>
+                                            <Text style={styles2.npStreakNote}>3 more days to maintain your streak</Text>
+                                            <View style={styles2.npStreakBar}>
+                                                <View style={[styles2.npStreakFill, { width: `${(4/7)*100}%` }]} />
+                                            </View>
+                                        </View>
+                                        <View style={styles2.npDaysGrid}>
+                                            {[{d:'M',ok:true},{d:'T',ok:true},{d:'W',ok:true},{d:'T',ok:true},{d:'F',ok:false},{d:'S',ok:false},{d:'S',ok:false}].map((item,i)=>(
+                                                <View key={i} style={styles2.npDayItem}>
+                                                    <View style={[styles2.npDayDot, item.ok ? styles2.npDayDotOn : styles2.npDayDotOff]} />
+                                                    <Text style={[styles2.npDayTxt, item.ok ? styles2.npDayTxtOn : styles2.npDayTxtOff]}>{item.d}</Text>
+                                                </View>
+                                            ))}
+                                        </View>
+                                    </View>
+
+
                                 </View>
                             </View>
 
@@ -1186,7 +1279,7 @@ const Dashboard = (props) => {
                             </View>
 
                             {/* ── NOTIFICATIONS ── */}
-                            <View style={styles2.notifCard}>
+                            {/* <View style={styles2.notifCard}>
                                 <View style={styles2.sectionHeader}>
                                     <Text style={styles2.notifTitle}>Notifications</Text>
                                     <TouchableOpacity onPress={() => navigation.navigate('Notifications')}>
@@ -1213,7 +1306,7 @@ const Dashboard = (props) => {
                                         </View>
                                     </View>
                                 ))}
-                            </View>
+                            </View> */}
 
                         </>}
                         {/* ── END SECOND USER COMPONENTS ── */}
@@ -2579,248 +2672,102 @@ const styles2 = StyleSheet.create({
     },
 
     // ── Continuity Tracker ──────────────────────────────────────────
-    continuityTrackerSection: {
-        marginBottom: ms(12),
-    },
-    continuityCard: {
-        backgroundColor: whiteColor,
-        borderRadius: ms(16),
+    /* ── Health Chronicle (merged newspaper) ── */
+    npSection: { marginBottom: ms(14) },
+    npCard: {
+        backgroundColor: '#FAFAF6',
+        borderRadius: ms(4),
         marginHorizontal: ms(15),
         paddingHorizontal: ms(14),
-        paddingVertical: ms(14),
-    },
-    continuityCardHeader: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        marginBottom: ms(10),
-    },
-    continuityCardTitle: {
-        fontSize: ms(15),
-        fontWeight: 'bold',
-        color: '#000',
-    },
-    continuityViewAll: {
-        fontSize: ms(12),
-        fontFamily: bold,
-        color: primaryColor,
-    },
-    medicationRow: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        marginBottom: ms(12),
-    },
-    medicationLabel: {
-        fontSize: ms(13),
-        fontWeight: '400',
-        color: '#000',
-    },
-    medicationDate: {
-        fontSize: ms(10),
-        color: '#AAAAAA',
-    },
-    streakSection: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        marginBottom: ms(10),
-    },
-    streakLeft: {
-        flex: 1,
-        paddingRight: ms(8),
-    },
-    streakTitle: {
-        fontSize: ms(13),
-        fontWeight: 'bold',
-        color: '#000',
-        marginBottom: ms(3),
-    },
-    streakMaintain: {
-        fontSize: ms(10),
-        color: '#AAAAAA',
-    },
-    streakRight: {
-        flexDirection: 'row',
-        alignItems: 'baseline',
-    },
-    streakDaysNumber: {
-        fontSize: ms(17),
-        fontWeight: 'bold',
-        color: '#000',
-    },
-    streakDaysLabel: {
-        fontSize: ms(12),
-        fontWeight: '400',
-        color: '#AAAAAA',
-    },
-    progressBarTrack: {
-        height: ms(9),
-        backgroundColor: '#EBEBEB',
-        borderRadius: ms(5),
-        marginBottom: ms(12),
-        overflow: 'hidden',
-    },
-    progressBarFill: {
-        height: '100%',
-        backgroundColor: '#2979FF',
-        borderRadius: ms(5),
-    },
-    daysRow: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-    },
-    dayCircle: {
-        width: ms(32),
-        height: ms(32),
-        borderRadius: ms(16),
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    dayCircleActive: {
-        backgroundColor: '#2979FF',
-    },
-    dayCircleInactive: {
-        backgroundColor: '#F0F0F0',
-    },
-    dayLabel: {
-        fontSize: ms(10),
-        fontWeight: '600',
-    },
-    dayLabelActive: {
-        color: '#FFFFFF',
-    },
-    dayLabelInactive: {
-        color: '#BBBBBB',
+        paddingTop: ms(12),
+        paddingBottom: ms(16),
+        borderWidth: 1,
+        borderColor: '#D8D0C0',
     },
 
-    /* ── Today's Health Signal ── */
-    healthSignalSection: {
-        marginBottom: ms(14),
+    /* Masthead */
+    npMastheadRule: { height: 2, backgroundColor: '#1A1A1A', marginBottom: ms(4) },
+    npMastheadRow: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: ms(4) },
+    npMastheadTitle: { fontSize: ms(13), fontWeight: '900', color: '#1A1A1A', letterSpacing: 1.5 },
+    npEdition: { fontSize: ms(9), color: '#888', letterSpacing: 0.5 },
+    npMastheadRuleThick: { height: 3, backgroundColor: '#1A1A1A', marginBottom: ms(1.5) },
+    npMastheadRuleThin: { height: 1, backgroundColor: '#1A1A1A', marginBottom: ms(8) },
+    npGreetRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', backgroundColor: '#F3F0E8', borderRadius: ms(6), paddingHorizontal: ms(10), paddingVertical: ms(7), marginBottom: ms(10) },
+    npGreetText: { fontSize: ms(12), fontWeight: '700', color: '#1A1A1A', fontStyle: 'italic' },
+    npGreetEmoji: { fontSize: ms(16) },
+
+    /* Tags */
+    npTagRow: { flexDirection: 'row', alignItems: 'center', marginBottom: ms(8) },
+    npTag: { backgroundColor: '#1A1A1A', paddingHorizontal: ms(6), paddingVertical: ms(2), borderRadius: ms(2) },
+    npTagText: { fontSize: ms(8), fontWeight: '800', color: '#FAFAF6', letterSpacing: 0.8 },
+    npTagDivider: { fontSize: ms(9), color: '#BBB', marginHorizontal: ms(2) },
+    npReadMoreBtn: {},
+    npReadMoreText: { fontSize: ms(9), fontWeight: '700', color: primaryColor, letterSpacing: 0.5 },
+
+    /* Headline */
+    npHeadline: { fontSize: ms(18), fontWeight: '900', color: '#1A1A1A', lineHeight: ms(22), marginBottom: ms(5), letterSpacing: 0.3 },
+    npDeck: { fontSize: ms(11), color: '#555', fontStyle: 'italic', lineHeight: ms(16), marginBottom: ms(8) },
+    npThinRule: { height: 1, backgroundColor: '#D8D0C0', marginVertical: ms(10) },
+
+    /* Two Columns */
+    npColumns: { flexDirection: 'row', gap: ms(10) },
+    npColLeft: { flex: 1.4 },
+    npColRight: { flex: 1, alignItems: 'center' },
+    npColDivider: { width: 1, backgroundColor: '#D8D0C0' },
+    npColLabel: { fontSize: ms(8), fontWeight: '800', color: '#888', letterSpacing: 1, marginBottom: ms(5), textTransform: 'uppercase' },
+
+    /* Chart */
+    npChartWrap: { position: 'relative', marginBottom: ms(4) },
+    npCallout: {
+        position: 'absolute', top: ms(2), right: ms(0),
+        backgroundColor: '#FF6B35', borderRadius: ms(3),
+        paddingHorizontal: ms(4), paddingVertical: ms(1),
     },
-    healthSignalCard: {
-        backgroundColor: whiteColor,
-        borderRadius: ms(16),
-        marginHorizontal: ms(15),
-        paddingHorizontal: ms(14),
-        paddingVertical: ms(16),
+    npCalloutText: { fontSize: ms(9), fontWeight: '800', color: whiteColor },
+    npXAxis: { flexDirection: 'row', justifyContent: 'space-between' },
+    npXLabel: { fontSize: ms(8), color: '#AAAAAA' },
+
+    /* Streak */
+    npStreakNumRow: { flexDirection: 'row', alignItems: 'baseline' },
+    npStreakNum: { fontSize: ms(30), fontWeight: '900', color: '#1A1A1A', lineHeight: ms(34) },
+    npStreakSlash: { fontSize: ms(16), fontWeight: '600', color: '#888' },
+    npStreakUnit: { fontSize: ms(8), fontWeight: '800', color: '#888', letterSpacing: 1, marginBottom: ms(6) },
+    npStreakBar: { width: '100%', height: ms(5), backgroundColor: '#E0E0E0', borderRadius: ms(3), overflow: 'hidden', marginBottom: ms(5) },
+    npStreakFill: { height: '100%', backgroundColor: primaryColor, borderRadius: ms(3) },
+    npStreakNote: { fontSize: ms(9), color: '#888', textAlign: 'center', lineHeight: ms(13), marginBottom: ms(8) },
+    npDaysGrid: { flexDirection: 'row', flexWrap: 'wrap', gap: ms(4), justifyContent: 'center' },
+    npDayItem: { alignItems: 'center', gap: ms(2) },
+    npDayDot: { width: ms(10), height: ms(10), borderRadius: ms(5) },
+    npDayDotOn: { backgroundColor: primaryColor },
+    npDayDotOff: { backgroundColor: '#E0E0E0' },
+    npDayTxt: { fontSize: ms(8), fontWeight: '700' },
+    npDayTxtOn: { color: primaryColor },
+    npDayTxtOff: { color: '#BBBBBB' },
+
+    /* Body */
+    npSectionCap: { fontSize: ms(9), fontWeight: '900', color: '#1A1A1A', letterSpacing: 1.2, marginBottom: ms(5) },
+    npBodyText: { fontSize: ms(12), color: '#444', lineHeight: ms(18) },
+    npBulletRow: { flexDirection: 'row', alignItems: 'flex-start', gap: ms(6), marginBottom: ms(4) },
+    npBulletChar: { fontSize: ms(7), color: '#1A1A1A', marginTop: ms(4) },
+    npBulletText: { flex: 1, fontSize: ms(12), color: '#444', lineHeight: ms(17) },
+
+    /* Pull Quote */
+    npPullQuote: { flexDirection: 'row', gap: ms(10), paddingVertical: ms(6) },
+    npPullBar: { width: ms(3), backgroundColor: '#FF6B35', borderRadius: ms(2) },
+    npPullTopRow: { flexDirection: 'row', alignItems: 'center', marginBottom: ms(2) },
+    npPullLabel: { fontSize: ms(8), fontWeight: '800', color: '#FF6B35', letterSpacing: 0.8 },
+    npPullTitle: { fontSize: ms(13), fontWeight: '900', color: '#1A1A1A', marginBottom: ms(3) },
+    npPullDesc: { fontSize: ms(11), color: '#555', lineHeight: ms(16) },
+
+    /* Editor's Note */
+    npEditorBox: {
+        borderWidth: 1, borderColor: '#1A1A1A',
+        borderRadius: ms(2), padding: ms(10), marginTop: ms(10),
     },
-    hsBadge: {
-        alignSelf: 'flex-start',
-        backgroundColor: '#FFF0E8',
-        borderRadius: ms(20),
-        paddingHorizontal: ms(12),
-        paddingVertical: ms(5),
-        marginBottom: ms(10),
-    },
-    hsBadgeText: {
-        fontSize: ms(11),
-        fontWeight: '600',
-        color: '#FF6B35',
-    },
-    hsTitle: {
-        fontSize: ms(15),
-        fontWeight: 'bold',
-        color: '#111111',
-        marginBottom: ms(12),
-        lineHeight: ms(22),
-    },
-    hsChartWrapper: {
-        position: 'relative',
-        marginBottom: ms(4),
-    },
-    hsValueCallout: {
-        position: 'absolute',
-        top: ms(2),
-        right: ms(2),
-        backgroundColor: '#FF6B35',
-        borderRadius: ms(6),
-        paddingHorizontal: ms(7),
-        paddingVertical: ms(3),
-    },
-    hsValueText: {
-        fontSize: ms(11),
-        fontWeight: 'bold',
-        color: '#FFFFFF',
-    },
-    hsXAxis: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        marginBottom: ms(14),
-        paddingHorizontal: ms(2),
-    },
-    hsXLabel: {
-        fontSize: ms(9),
-        color: whiteColor,
-        textAlign: 'center',
-    },
-    hsSectionHeader: {
-        fontSize: ms(13),
-        fontWeight: 'bold',
-        color: '#111111',
-        marginBottom: ms(5),
-        marginTop: ms(4),
-    },
-    hsSectionBody: {
-        fontSize: ms(12),
-        color: '#555555',
-        lineHeight: ms(18),
-        marginBottom: ms(10),
-    },
-    hsBulletRow: {
-        flexDirection: 'row',
-        alignItems: 'flex-start',
-        marginBottom: ms(5),
-    },
-    hsBulletDot: {
-        width: ms(6),
-        height: ms(6),
-        borderRadius: ms(3),
-        backgroundColor: '#111111',
-        marginTop: ms(5),
-        marginRight: ms(8),
-    },
-    hsBulletText: {
-        flex: 1,
-        fontSize: ms(12),
-        color: '#444444',
-        lineHeight: ms(18),
-    },
-    hsPeerRow: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        marginTop: ms(12),
-        marginBottom: ms(5),
-        gap: ms(6),
-    },
-    hsPeerText: {
-        fontSize: ms(13),
-        fontWeight: 'bold',
-        color: '#FF6B35',
-    },
-    hsPeerDesc: {
-        fontSize: ms(12),
-        color: '#666666',
-        lineHeight: ms(18),
-        marginBottom: ms(12),
-    },
-    hsSuggestionBox: {
-        backgroundColor: '#F8F8F8',
-        borderRadius: ms(12),
-        paddingHorizontal: ms(12),
-        paddingVertical: ms(12),
-    },
-    hsSuggestionTitle: {
-        fontSize: ms(13),
-        fontWeight: 'bold',
-        color: '#111111',
-        marginBottom: ms(5),
-    },
-    hsSuggestionBody: {
-        fontSize: ms(12),
-        color: '#555555',
-        lineHeight: ms(18),
-    },
+    npEditorLabel: { fontSize: ms(8), fontWeight: '900', color: '#1A1A1A', letterSpacing: 1.5, marginBottom: ms(5) },
+    npEditorRule: { height: 1, backgroundColor: '#1A1A1A', marginBottom: ms(8) },
+    npEditorBody: { fontSize: ms(11), color: '#444', lineHeight: ms(17), fontStyle: 'italic' },
+
 
     /* ── My Active Condition ── */
     macSection: {
@@ -3083,6 +3030,182 @@ const styles2 = StyleSheet.create({
         color: '#111111',
         textAlign: 'center',
     },
+
+    /* ── Health Pulse sections ── */
+    hpSectionHead: {
+        flexDirection: 'row', alignItems: 'center',
+        paddingHorizontal: ms(15), marginTop: ms(14), marginBottom: ms(6),
+    },
+    hpSecTitle: {
+        fontSize: ms(14), fontWeight: '700', letterSpacing: 1,
+        color: blackColor, textTransform: 'uppercase', flex: 1,
+    },
+    hpSecCount: {
+        backgroundColor: '#F0EDE6', borderRadius: ms(20),
+        paddingHorizontal: ms(8), paddingVertical: ms(2),
+    },
+    hpSecCountText: { fontSize: ms(11), color: '#9C9A92' },
+
+    /* Key Signals */
+    hpSignals: { paddingHorizontal: ms(15), gap: ms(8) },
+    hpSignalCard: {
+        backgroundColor: whiteColor,
+        borderRadius: ms(16), padding: ms(14),
+        flexDirection: 'row', alignItems: 'flex-start', gap: ms(12),
+        borderWidth: 0.5, borderColor: 'rgba(0,0,0,0.07)',
+        overflow: 'hidden',
+    },
+    hpSignalAccent: {
+        position: 'absolute', left: 0, top: 0, bottom: 0, width: ms(3),
+        borderTopLeftRadius: ms(16), borderBottomLeftRadius: ms(16),
+    },
+    hpSignalIcon: {
+        width: ms(38), height: ms(38), borderRadius: ms(11),
+        justifyContent: 'center', alignItems: 'center', marginLeft: ms(4),
+    },
+    hpSignalContent: { flex: 1 },
+    hpSignalName: { fontSize: ms(13), fontWeight: '600', color: blackColor, marginBottom: ms(3), lineHeight: ms(17) },
+    hpSignalDesc: { fontSize: ms(12), color: '#5A5850', lineHeight: ms(18) },
+    hpSignalCheck: {
+        width: ms(20), height: ms(20), borderRadius: ms(10),
+        backgroundColor: primaryColor + '18',
+        justifyContent: 'center', alignItems: 'center', marginTop: ms(2),
+    },
+
+    /* Top Drivers */
+    hpDriversCard: {
+        marginHorizontal: ms(15), backgroundColor: whiteColor,
+        borderRadius: ms(16), overflow: 'hidden',
+        borderWidth: 0.5, borderColor: 'rgba(0,0,0,0.07)',
+    },
+    hpDriverRow: {
+        flexDirection: 'row', alignItems: 'center', gap: ms(11),
+        paddingHorizontal: ms(14), paddingVertical: ms(12),
+    },
+    hpDriverBorder: { borderBottomWidth: 0.5, borderBottomColor: 'rgba(0,0,0,0.07)' },
+    hpDriverIco: {
+        width: ms(34), height: ms(34), borderRadius: ms(10),
+        backgroundColor: '#F0EDE6', justifyContent: 'center', alignItems: 'center',
+    },
+    hpDriverName: { flex: 1, fontSize: ms(13), color: blackColor },
+    hpDriverPill: {
+        backgroundColor: primaryColor + '18', borderRadius: ms(20),
+        paddingHorizontal: ms(10), paddingVertical: ms(4),
+    },
+    hpDriverPillText: { fontSize: ms(11), fontWeight: '600', color: primaryColor },
+
+    /* Attention Area */
+    hpAttnCard: {
+        marginHorizontal: ms(15), backgroundColor: '#FDF2E3',
+        borderRadius: ms(16), padding: ms(14),
+        flexDirection: 'row', alignItems: 'flex-start', gap: ms(12),
+        borderWidth: 0.5, borderColor: '#F9D9A0',
+    },
+    hpAttnIco: {
+        width: ms(34), height: ms(34), borderRadius: ms(10),
+        backgroundColor: 'rgba(160,92,10,0.12)',
+        justifyContent: 'center', alignItems: 'center',
+    },
+    hpAttnTitle: { fontSize: ms(13), fontWeight: '600', color: '#A05C0A', marginBottom: ms(4) },
+    hpAttnDesc: { fontSize: ms(12), color: '#A05C0A', opacity: 0.8, lineHeight: ms(18) },
+
+    /* Today's Action */
+    hpActionCard: {
+        marginHorizontal: ms(15), backgroundColor: blackColor,
+        borderRadius: ms(16), padding: ms(18), overflow: 'hidden',
+    },
+    hpActionEye: {
+        fontSize: ms(10), fontWeight: '700', letterSpacing: 1.4,
+        color: 'rgba(255,255,255,0.45)', marginBottom: ms(8),
+    },
+    hpActionText: {
+        fontSize: ms(15), color: whiteColor, lineHeight: ms(24),
+        fontStyle: 'italic', fontWeight: '400',
+    },
+    hpActionBtn: {
+        flexDirection: 'row', alignItems: 'center', gap: ms(6),
+        marginTop: ms(14), alignSelf: 'flex-start',
+        backgroundColor: 'rgba(255,255,255,0.12)',
+        borderWidth: 1, borderColor: 'rgba(255,255,255,0.2)',
+        borderRadius: ms(20), paddingHorizontal: ms(16), paddingVertical: ms(7),
+    },
+    hpActionBtnText: { fontSize: ms(12), fontWeight: '600', color: whiteColor },
+    hpActionBtnDone: { backgroundColor: 'rgba(77,191,160,0.25)', borderColor: 'rgba(77,191,160,0.4)' },
+
+    /* Health Momentum */
+    hpMomentumCard: {
+        marginHorizontal: ms(15), backgroundColor: whiteColor,
+        borderRadius: ms(16), padding: ms(16),
+        flexDirection: 'row', alignItems: 'center', gap: ms(14),
+        borderWidth: 0.5, borderColor: 'rgba(0,0,0,0.07)',marginBottom:ms(10)
+    },
+    hpMomentumLeft: { flex: 1 },
+    hpMomentumTag: {
+        flexDirection: 'row', alignItems: 'center',
+        marginBottom: ms(6),
+    },
+    hpMomentumTagText: {
+        fontSize: ms(12), fontWeight: '700', color: primaryColor,
+        letterSpacing: 0.4, textTransform: 'uppercase',
+    },
+    hpMomentumDesc: { fontSize: ms(12), color: '#5A5850', lineHeight: ms(18) },
+    hpSparkWrap: { flexDirection: 'row', alignItems: 'flex-end', gap: ms(3), height: ms(44), paddingVertical: ms(4) },
+    hpSparkBar: { width: ms(7), borderRadius: ms(3) },
+
+    /* ── Newspaper inner sections ── */
+    npInSecRow: { flexDirection: 'row', alignItems: 'center', marginBottom: ms(7) },
+    npInSecTitle: { fontSize: ms(11), fontWeight: '900', color: '#1A1A1A', letterSpacing: 1.2, textTransform: 'uppercase', marginBottom: ms(5) },
+    npHsHeadline: { fontSize: ms(14), fontWeight: '800', color: '#1A1A1A', lineHeight: ms(19), marginBottom: ms(4) },
+    npHsSubtitle: { fontSize: ms(11), color: '#666', lineHeight: ms(16), fontStyle: 'italic' },
+    npInSecBadge: { marginLeft: ms(8), backgroundColor: '#E8E4DA', borderRadius: ms(20), paddingHorizontal: ms(7), paddingVertical: ms(1) },
+    npInSecBadgeText: { fontSize: ms(9), color: '#9C9A92' },
+    npViewMore: { fontSize: ms(10), fontWeight: '700', color: primaryColor, letterSpacing: 0.3, marginBottom:ms(7) },
+
+    /* Key Signals rows */
+    npSignalRow: {
+        flexDirection: 'row', alignItems: 'center', gap: ms(12),
+        marginBottom: ms(7), paddingVertical: ms(8),
+        paddingHorizontal: ms(8), backgroundColor: '#FDFCF8',
+        borderRadius: ms(8), borderWidth: 0.5, borderColor: '#E8E4DA',
+    },
+    npSignalDot: { width: ms(3), alignSelf: 'stretch', borderRadius: ms(2) },
+    npSignalIco: { width: ms(34), height: ms(34), borderRadius: ms(9), justifyContent: 'center', alignItems: 'center' },
+    npSignalName: { fontSize: ms(12), fontWeight: '700', color: '#1A1A1A', marginBottom: ms(2) },
+    npSignalDesc: { fontSize: ms(10.5), color: '#5A5850', lineHeight: ms(15) },
+    npSignalCheck: { width: ms(20), height: ms(20), borderRadius: ms(10), justifyContent: 'center', alignItems: 'center' },
+
+    /* Top Drivers */
+    npDriversWrap: { borderWidth: 1, borderColor: '#E8E4DA', borderRadius: ms(6), overflow: 'hidden', marginBottom: ms(2) },
+    npDriverRow: { flexDirection: 'row', alignItems: 'center', gap: ms(10), paddingHorizontal: ms(10), paddingVertical: ms(9) },
+    npDriverDivider: { borderBottomWidth: 0.5, borderBottomColor: '#E8E4DA' },
+    npDriverIco: { width: ms(28), height: ms(28), borderRadius: ms(7), backgroundColor: '#F0EDE6', justifyContent: 'center', alignItems: 'center' },
+    npDriverName: { flex: 1, fontSize: ms(12), color: '#1A1A1A' },
+    npDriverPill: { backgroundColor: primaryColor + '18', borderRadius: ms(20), paddingHorizontal: ms(8), paddingVertical: ms(3) },
+    npDriverPillText: { fontSize: ms(10), fontWeight: '700', color: primaryColor },
+
+    /* Attention */
+    npAttnRow: { flexDirection: 'row', alignItems: 'flex-start', gap: ms(10), backgroundColor: '#FDF2E3', borderRadius: ms(6), padding: ms(10), borderWidth: 0.5, borderColor: '#F9D9A0', marginBottom: ms(2) },
+    npAttnIco: { width: ms(28), height: ms(28), borderRadius: ms(7), backgroundColor: 'rgba(160,92,10,0.12)', justifyContent: 'center', alignItems: 'center' },
+    npAttnTitle: { fontSize: ms(12), fontWeight: '700', color: '#A05C0A', marginBottom: ms(2) },
+    npAttnDesc: { fontSize: ms(11), color: '#A05C0A', opacity: 0.85, lineHeight: ms(16) },
+
+    /* Today's Action */
+    npActionBox: { backgroundColor: '#1C1B17', borderRadius: ms(6), padding: ms(12), marginBottom: ms(2) },
+    npActionEye: { fontSize: ms(9), fontWeight: '700', letterSpacing: 1.2, color: 'rgba(255,255,255,0.4)', marginBottom: ms(7) },
+    npActionText: { fontSize: ms(13), color: whiteColor, lineHeight: ms(20), fontStyle: 'italic', fontWeight: '300' },
+    npActionBtn: { flexDirection: 'row', alignItems: 'center', gap: ms(5), marginTop: ms(12), alignSelf: 'flex-start', backgroundColor: 'rgba(255,255,255,0.1)', borderWidth: 1, borderColor: 'rgba(255,255,255,0.2)', borderRadius: ms(20), paddingHorizontal: ms(14), paddingVertical: ms(6) },
+    npActionBtnDone: { backgroundColor: 'rgba(77,191,160,0.25)', borderColor: 'rgba(77,191,160,0.45)' },
+    npActionBtnText: { fontSize: ms(11), fontWeight: '600', color: whiteColor },
+
+    /* Health Momentum */
+    npMomentumRow: { flexDirection: 'row', alignItems: 'center', gap: ms(12) },
+    npMomentumTag: { flexDirection: 'row', alignItems: 'center', marginBottom: ms(5) },
+    npMomentumTagText: { fontSize: ms(9), fontWeight: '800', color: primaryColor, letterSpacing: 0.6, textTransform: 'uppercase' },
+    npMomentumDesc: { fontSize: ms(11), color: '#5A5850', lineHeight: ms(16) },
+    npSparkRow: { flexDirection: 'row', alignItems: 'flex-end', gap: ms(3), height: ms(36) },
+    npSparkBar: { width: ms(7), borderRadius: ms(3) },
+    npStreakFullRow: { flexDirection: 'row', alignItems: 'center', gap: ms(14), marginBottom: ms(8) },
+    npStreakFullLeft: { flex: 1 },
 });
 
 function mapStateToProps(state) {

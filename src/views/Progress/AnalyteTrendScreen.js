@@ -321,11 +321,8 @@ const AnalyteTrendScreen = () => {
                         {DATES.map((date, i) => {
                             const r          = rirs[i];
                             const st2        = rirStatus(r);
-                            const dRir       = i > 0 ? r - rirs[i - 1] : null;
                             const machChanged = i > 0 && analyte.machines[i] !== analyte.machines[i - 1];
                             const mc         = MACHINE_COLORS[analyte.machines[i]] || '#888';
-                            const deltaColor = dRir === null ? '#888' : dRir > 0.05 ? '#E24B4A' : dRir < -0.05 ? '#1D9E75' : '#888';
-                            const deltaIcon  = dRir === null ? null : dRir > 0.05 ? 'trending-up' : dRir < -0.05 ? 'trending-down' : 'remove';
                             return (
                                 <View key={i} style={visitSt.card}>
                                     {/* Top row: visit badge + date/note + status */}
@@ -347,41 +344,62 @@ const AnalyteTrendScreen = () => {
                                     {/* Divider */}
                                     <View style={visitSt.divider} />
 
-                                    {/* Bottom row: value + machine + delta */}
+                                    {/* Bottom section */}
                                     <View style={visitSt.cardBottom}>
-                                        {/* Value block */}
-                                        <View style={visitSt.valueBlock}>
-                                            <Text style={visitSt.valueLabel}>Value</Text>
-                                            <Text style={visitSt.valueNum}>
-                                                {rawVals[i]}
-                                                <Text style={visitSt.valueUnit}> {analyte.unit}</Text>
-                                            </Text>
-                                        </View>
-
-                                        {/* Machine block */}
-                                        <View style={visitSt.machineBlock}>
-                                            <Text style={visitSt.valueLabel}>Machine</Text>
-                                            <View style={[visitSt.machinePill, { backgroundColor: mc + '18' }]}>
-                                                {machChanged && (
-                                                    <Icon type={Icons.Ionicons} name="swap-horizontal" size={ms(10)} color="#BA7517" style={{ marginRight: ms(3) }} />
-                                                )}
-                                                <Text style={[visitSt.machineText, { color: mc }]} numberOfLines={1}>{analyte.machines[i]}</Text>
-                                            </View>
-                                        </View>
-
-                                        {/* Delta block */}
-                                        <View style={visitSt.deltaBlock}>
-                                            <Text style={visitSt.valueLabel}>Δ RIR</Text>
-                                            {dRir !== null ? (
-                                                <View style={visitSt.deltaRow}>
-                                                    <Icon type={Icons.Ionicons} name={deltaIcon} size={ms(13)} color={deltaColor} />
-                                                    <Text style={[visitSt.deltaVal, { color: deltaColor }]}>
-                                                        {dRir >= 0 ? '+' : ''}{dRir.toFixed(2)}
-                                                    </Text>
+                                        {/* Row 1: Value + Machine + RIR/Baseline */}
+                                        {(() => {
+                                            const rir = rirs[i];
+                                            const bDelta = i === 0 ? null : rir - rirs[0];
+                                            const bColor = bDelta === null ? '#9CA3AF' : bDelta > 0.05 ? '#E24B4A' : bDelta < -0.05 ? '#1D9E75' : '#9CA3AF';
+                                            return (
+                                                <View style={visitSt.machineRow}>
+                                                    <View style={visitSt.machineInline}>
+                                                        <Text style={visitSt.valueLabel}>Machine</Text>
+                                                        <View style={[visitSt.machinePill, { backgroundColor: mc + '18' }]}>
+                                                            {machChanged && (
+                                                                <Icon type={Icons.Ionicons} name="swap-horizontal" size={ms(10)} color="#BA7517" style={{ marginRight: ms(3) }} />
+                                                            )}
+                                                            <Text style={[visitSt.machineText, { color: mc }]} numberOfLines={1}>{analyte.machines[i]}</Text>
+                                                        </View>
+                                                    </View>
+                                                    <View style={visitSt.valueInline}>
+                                                        <Text style={visitSt.valueLabel}>Value</Text>
+                                                        <Text style={[visitSt.valueNum, { color: STATUS_FG[st2] }]}>
+                                                            {rawVals[i]}<Text style={visitSt.valueUnit}> {analyte.unit}</Text>
+                                                        </Text>
+                                                    </View>
+                                                    <View style={visitSt.rirBlock}>
+                                                        <Text style={visitSt.valueLabel}>RIR</Text>
+                                                        <Text style={[visitSt.valueNum, { color: DOT_COLOR[st2], fontSize: ms(15) }]}>{rir.toFixed(2)}</Text>
+                                                        <Text style={[visitSt.rirBaseline, { color: bColor }]}>
+                                                            {bDelta === null ? 'Baseline' : `${bDelta >= 0 ? '+' : ''}${bDelta.toFixed(2)} vs base`}
+                                                        </Text>
+                                                    </View>
                                                 </View>
-                                            ) : (
-                                                <Text style={visitSt.deltaNA}>Baseline</Text>
-                                            )}
+                                            );
+                                        })()}
+
+                                        {/* Divider */}
+                                        <View style={visitSt.innerDivider} />
+
+                                        {/* Row 2: Normal | Abnormal | Unit — centered */}
+                                        <View style={visitSt.statsRow}>
+                                            <View style={visitSt.statBlock}>
+                                                <Text style={visitSt.statLabel}>Normal</Text>
+                                                <Text style={[visitSt.statVal, { color: '#1D9E75' }]}>
+                                                    {analyte.lo} – {analyte.hi}
+                                                </Text>
+                                            </View>
+                                            <View style={[visitSt.statBlock, visitSt.statBorder]}>
+                                                <Text style={visitSt.statLabel}>Deviation</Text>
+                                                <Text style={[visitSt.statVal, { color: st2 !== 'normal' ? STATUS_FG[st2] : '#1D9E75' }]}>
+                                                    {st2 === 'normal'
+                                                        ? 'OK'
+                                                        : st2 === 'low'
+                                                            ? `−${(analyte.lo - rawVals[i]).toFixed(1)}`
+                                                            : `+${(rawVals[i] - analyte.hi).toFixed(1)}`}
+                                                </Text>
+                                            </View>
                                         </View>
                                     </View>
                                 </View>
@@ -517,14 +535,22 @@ const visitSt = StyleSheet.create({
 
     divider: { height: 1, backgroundColor: '#F1F5F9', marginHorizontal: ms(14) },
 
-    // Bottom row
-    cardBottom: { flexDirection: 'row', padding: ms(14), gap: ms(12) },
+    // Bottom section
+    cardBottom: { paddingHorizontal: ms(14), paddingBottom: ms(14) },
+    machineRow: { flexDirection: 'row', alignItems: 'flex-start', gap: ms(12), paddingTop: ms(12) },
+    valueInline: { flex: 1, alignItems: 'center' },
+    machineInline: { flex: 1.4 },
+    rirBlock: { flex: 1, alignItems: 'flex-end' },
+    rirBaseline: { fontFamily: regular, fontSize: ms(9.5), marginTop: vs(2) },
+    innerDivider: { height: 1, backgroundColor: '#F1F5F9', marginVertical: ms(10) },
+    statsRow: { flexDirection: 'row' },
+
     valueBlock: { flex: 1 },
     machineBlock: { flex: 1.6 },
     deltaBlock: { flex: 0.9, alignItems: 'flex-end' },
 
-    valueLabel: { fontFamily: regular, fontSize: ms(11), color: '#9CA3AF', marginBottom: vs(5), textTransform: 'uppercase' },
-    valueNum: { fontFamily: bold, fontSize: ms(17), color: blackColor },
+    valueLabel: { fontFamily: regular, fontSize: ms(10), color: '#9CA3AF', marginBottom: vs(4), textTransform: 'uppercase', letterSpacing: 0.4 },
+    valueNum: { fontFamily: bold, fontSize: ms(17) },
     valueUnit: { fontFamily: regular, fontSize: ms(12), color: '#9CA3AF' },
 
     machinePill: {
@@ -537,4 +563,8 @@ const visitSt = StyleSheet.create({
     deltaRow: { flexDirection: 'row', alignItems: 'center', gap: ms(4) },
     deltaVal: { fontFamily: bold, fontSize: ms(16) },
     deltaNA: { fontFamily: regular, fontSize: ms(13), color: '#9CA3AF' },
+    statBlock: { flex: 1, alignItems: 'center' },
+    statBorder: { borderLeftWidth: 1, borderLeftColor: '#F1F5F9' },
+    statLabel: { fontFamily: regular, fontSize: ms(10), color: '#9CA3AF', marginBottom: vs(4), textTransform: 'uppercase', letterSpacing: 0.4 },
+    statVal: { fontFamily: bold, fontSize: ms(13), color: blackColor },
 });

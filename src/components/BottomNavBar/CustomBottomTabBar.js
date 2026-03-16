@@ -61,11 +61,6 @@ const AnimatedTab = ({ focused, iconSource, iconStyle, label, onPress }) => {
     outputRange: [1, 1.15],
   });
 
-  const dotScale = scaleAnim.interpolate({
-    inputRange: [0, 1],
-    outputRange: [0, 1],
-  });
-
   const translateY = scaleAnim.interpolate({
     inputRange: [0, 1],
     outputRange: [0, -2],
@@ -75,7 +70,7 @@ const AnimatedTab = ({ focused, iconSource, iconStyle, label, onPress }) => {
     <TouchableOpacity
       onPress={onPress}
       activeOpacity={0.7}
-      style={styles.tab}
+      style={[styles.tab, focused && styles.tabFocused]}
     >
       <Animated.View style={{ transform: [{ scale: iconScale }, { translateY }] }}>
         <Image
@@ -87,12 +82,6 @@ const AnimatedTab = ({ focused, iconSource, iconStyle, label, onPress }) => {
       <Text style={[styles.label, focused && styles.labelActive]}>
         {label}
       </Text>
-      <Animated.View
-        style={[
-          styles.activeDot,
-          { transform: [{ scale: dotScale }], opacity: scaleAnim },
-        ]}
-      />
     </TouchableOpacity>
   );
 };
@@ -176,6 +165,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     paddingVertical: ms(6),
+    borderRadius: ms(12),
+    marginHorizontal: ms(3),
+    marginVertical: ms(4),
   },
   tabIcon: {
     width: ms(30),
@@ -192,12 +184,8 @@ const styles = StyleSheet.create({
     color: primaryColor,
     fontWeight: '700',
   },
-  activeDot: {
-    width: ms(5),
-    height: ms(5),
-    borderRadius: ms(2.5),
-    backgroundColor: primaryColor,
-    marginTop: ms(3),
+  tabFocused: {
+    backgroundColor: primaryColor + '18',
   },
 });
 

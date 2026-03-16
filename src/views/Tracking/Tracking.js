@@ -60,6 +60,7 @@ const MONITORING_DATA = [
     { name: 'Migraine', image: require('../../assets/img/migraine.png'), route: 'MigraineLog' },
     { name: 'Asthma', image: require('../../assets/img/astama.png'), route: 'AsthmaIntroScreen' },
     { name: 'Musculo Skeletal', image: require('../../assets/img/skeletal.png'), route: 'MusculoskeletalIntroScreen' },
+    { name: 'ECG', image: require('../../assets/img/ecg-track.png'), route: 'EcgIntroScreen' },
 ];
 
 const Tracking = () => {
@@ -132,6 +133,7 @@ const Tracking = () => {
                             ))}
                         </View>
                     </View>
+
                 </ScrollView>
             </LinearGradient>
         </SafeAreaView>

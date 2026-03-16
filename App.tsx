@@ -129,6 +129,10 @@ import SearchItems from './src/views/SearchItems';
 import MedicalRecordsVault from './src/views/MedicalRecordsVault';
 import BioMarkerDetailScreen from './src/views/Progress/BioMarkerDetailScreen';
 import AnalyteTrendScreen from './src/views/Progress/AnalyteTrendScreen';
+import KeySignalsScreen from './src/views/HealthPulse/KeySignalsScreen';
+import TopDriversScreen from './src/views/HealthPulse/TopDriversScreen';
+import HealthMomentumScreen from './src/views/HealthPulse/HealthMomentumScreen';
+import HealthChronicleScreen from './src/views/HealthPulse/HealthChronicleScreen';
 import UploadHealthReport from './src/views/UploadHealthReport';
 import MedicationTracking from './src/views/MedicationTracking';
 import AddMedicines from './src/views/AddMedicines';
@@ -293,6 +297,10 @@ import MusculoskeletalIntroScreen from './src/views/Musculoskeletal/Musculoskele
 import MusculoskeletalDashboard from './src/views/Musculoskeletal/MusculoskeletalDashboard';
 import AddMusculoskeletalDetails from './src/views/Musculoskeletal/AddMusculoskeletalDetails';
 import MusculoskeletalReadings from './src/views/Musculoskeletal/MusculoskeletalReadings';
+import EcgIntroScreen from './src/views/ECG/EcgIntroScreen';
+import EcgDashboard from './src/views/ECG/EcgDashboard';
+import AddEcgDetails from './src/views/ECG/AddEcgDetails';
+import EcgReadings from './src/views/ECG/EcgReadings';
 import ProfileScreen from './src/views/More/ProfileScreen';
 import AccessLogScreen from './src/views/More/AccessLogScreen';
 import AccessDetailScreen from './src/views/More/AccessDetailScreen';
@@ -823,6 +831,14 @@ function App() {
               <Stack.Screen name='MusculoskeletalDashboard' component={MusculoskeletalDashboard} options={{headerShown:false}}/>
               <Stack.Screen name='AddMusculoskeletalDetails' component={AddMusculoskeletalDetails} options={{headerShown:false}}/>
               <Stack.Screen name='MusculoskeletalReadings' component={MusculoskeletalReadings} options={{headerShown:false}}/>
+              <Stack.Screen name='EcgIntroScreen' component={EcgIntroScreen} options={{headerShown:false}}/>
+              <Stack.Screen name='EcgDashboard' component={EcgDashboard} options={{headerShown:false}}/>
+              <Stack.Screen name='AddEcgDetails' component={AddEcgDetails} options={{headerShown:false}}/>
+              <Stack.Screen name='EcgReadings' component={EcgReadings} options={{headerShown:false}}/>
+              <Stack.Screen name='KeySignalsScreen' component={KeySignalsScreen} options={{headerShown:false}}/>
+              <Stack.Screen name='TopDriversScreen' component={TopDriversScreen} options={{headerShown:false}}/>
+              <Stack.Screen name='HealthMomentumScreen' component={HealthMomentumScreen} options={{headerShown:false}}/>
+              <Stack.Screen name='HealthChronicleScreen' component={HealthChronicleScreen} options={{headerShown:false}}/>
               <Stack.Screen name='ProfileScreen' component={ProfileScreen} options={{headerShown:false}}/>
               <Stack.Screen name='AccessLogScreen' component={AccessLogScreen} options={{headerShown:false}}/>
               <Stack.Screen name='AccessDetailScreen' component={AccessDetailScreen} options={{headerShown:false}}/>
