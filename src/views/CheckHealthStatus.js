@@ -390,6 +390,10 @@ const CheckHealthStatus = () => {
                             <Icon type={Icons.Ionicons} name="trending-up" size={ms(13)} color="#16A34A" />
                             <Text style={styles.trendBadgeText}>+9</Text>
                         </View>
+                        <TouchableOpacity onPress={() => navigation.navigate('BioMarkerDetailScreen')} style={styles.viewBtn}>
+                            <Text style={styles.viewBtnText}>View</Text>
+                            <Icon type={Icons.Ionicons} name="chevron-forward" size={ms(11)} color={whiteColor} />
+                        </TouchableOpacity>
                         <TouchableOpacity onPress={() => setShowBioInfo(!showBioInfo)} style={{ padding: ms(4) }}>
                             <Icon type={Icons.Ionicons} name="information-circle-outline" size={ms(20)} color="#9CA3AF" />
                         </TouchableOpacity>
@@ -412,7 +416,7 @@ const CheckHealthStatus = () => {
                             <TouchableOpacity
                                 key={index}
                                 activeOpacity={0.7}
-                                onPress={() => navigation.navigate('BioMarkerDetailScreen', { marker: item.label })}
+                                // onPress={() => navigation.navigate('BioMarkerDetailScreen', { marker: item.label })}
                                 style={styles.bioRow}
                             >
                                 {/* <View style={[styles.bioRowIcon, { backgroundColor: iconBg }]}>
@@ -426,7 +430,7 @@ const CheckHealthStatus = () => {
                                 <View style={[styles.bioRowBadge, { backgroundColor: bgColor }]}>
                                     <Text style={[styles.bioRowBadgeText, { color }]}>{item.status}</Text>
                                 </View>
-                                <Icon type={Icons.Ionicons} name="chevron-forward" size={ms(16)} color={blackColor} />
+                                {/* <Icon type={Icons.Ionicons} name="chevron-forward" size={ms(16)} color={blackColor} /> */}
                             </TouchableOpacity>
                         );
                     })}
@@ -685,8 +689,8 @@ const CheckHealthStatus = () => {
                         </View>
                     )}
                     {[
-                        { label: 'Appointment Adherence', status: 'Moderate',    statusType: 'moderate', prevScore: '72/100', currScore: '73/100', desc: 'PDC Score: 0.83 • Adherence Rate: 83.3%', screen: 'AppointmentAdherenceScreen' },
                         { label: 'Medication Adherence', status: 'Good',     statusType: 'strong', prevScore: '82/100', currScore: '88/100', desc: 'PDC Score: 0.93 • Adherence Rate: 92.9%', screen: 'MedicationAdherenceScreen' },
+                        { label: 'Appointment Adherence', status: 'Moderate',    statusType: 'moderate', prevScore: '72/100', currScore: '73/100', desc: 'PDC Score: 0.83 • Adherence Rate: 83.3%', screen: 'AppointmentAdherenceScreen' },
                         { label: 'Diagnostic Compliance', status: 'Active',     statusType: 'strong', prevScore: '22/25', currScore: '22/25', desc: 'Your score has slightly decreased since the last check.', screen: 'DiagnosticComplianceScreen' },
                         { label: 'Self Monitoring', status: 'Active',     statusType: 'strong', prevScore: '22/25', currScore: '22/25', desc: 'Your score has slightly decreased since the last check.', screen: 'SelfMonitoringScreen' },
                     ].map((item, index) => (
@@ -1313,5 +1317,13 @@ const styles = StyleSheet.create({
         fontWeight: '800',
         color: '#16A34A',
         letterSpacing: 0.3,
+    },
+    viewBtn: {
+        flexDirection: 'row', alignItems: 'center', gap: ms(2),
+        backgroundColor: primaryColor,
+        borderRadius: ms(6), paddingHorizontal: ms(8), paddingVertical: vs(5),
+    },
+    viewBtnText: {
+        fontSize: ms(11), fontFamily: bold, color: whiteColor,
     },
 });

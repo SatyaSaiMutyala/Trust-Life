@@ -1229,8 +1229,8 @@ const Dashboard = (props) => {
                                     {/* Condition Cards - Row */}
                                     <View style={styles2.macCardsRow}>
                                         {[
-                                            { label: 'Acute',    count: '4', icon: 'flash', iconColor: '#EF4444', category: 'Acute' },
-                                            { label: 'Chronic',  count: '4', icon: 'time',  iconColor: '#3B82F6', category: 'Chronic' },
+                                            { label: 'Acute',    count: '3', icon: 'flash', iconColor: '#EF4444', category: 'Acute' },
+                                            { label: 'Chronic',  count: '3', icon: 'time',  iconColor: '#3B82F6', category: 'Chronic' },
                                         ].map((item, index) => (
                                             <TouchableOpacity key={index} style={styles2.macGridCell} activeOpacity={0.7}
                                                 onPress={() => navigation.navigate('CategoryDiseasesScreen', { category: item.category })}>
@@ -1262,12 +1262,12 @@ const Dashboard = (props) => {
                                 </View>
                                 <View style={styles2.vosGrid}>
                                     {[
-                                        { image: require('../assets/img/human-heart.png'), organ: 'Heart', status: 'Optimal' },
-                                        { image: require('../assets/img/human-liver.png'), organ: 'Liver', status: 'Stable' },
-                                        { image: require('../assets/img/human-kidneys.png'), organ: 'Kidney', status: 'Normal' },
-                                        { image: require('../assets/img/human-pancreas.png'), organ: 'Pancreas', status: 'Stable' },
+                                        { image: require('../assets/img/human-heart.png'), organ: 'Heart', status: 'Optimal', organId: 'heart' },
+                                        { image: require('../assets/img/human-liver.png'), organ: 'Liver', status: 'Stable', organId: 'liver' },
+                                        { image: require('../assets/img/human-kidneys.png'), organ: 'Kidney', status: 'Normal', organId: 'kidneys' },
+                                        { image: require('../assets/img/human-pancreas.png'), organ: 'Pancreas', status: 'Stable', organId: 'pancreas' },
                                     ].map((item, index) => (
-                                        <TouchableOpacity key={index} style={styles2.vosCard} activeOpacity={0.7} onPress={() => navigation.navigate('OrganInsightsScreen')}>
+                                        <TouchableOpacity key={index} style={styles2.vosCard} activeOpacity={0.7} onPress={() => navigation.navigate('OrganInsightsScreen', { organId: item.organId })}>
                                             <View style={styles2.vosIconWrap}>
                                                 <Image source={item.image} style={styles2.vosImage} />
                                             </View>

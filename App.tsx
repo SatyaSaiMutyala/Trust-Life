@@ -175,6 +175,7 @@ import VaccinationDetailsScreen from './src/views/SignUp/VaccinationDetailsScree
 import AddFamilyScreen from './src/views/SignUp/AddFamilyScreen';
 import PatientHealthRecords from './src/views/PatientHealthRecord/PatientHealthRecors';
 import PatientMedicalSummary from './src/views/PatientHealthRecord/PatientMedicalSummary';
+import ClinicalMedicalSummary from './src/views/PatientHealthRecord/ClinicalMedicalSummary';
 import DoctorNotes from './src/views/PatientHealthRecord/DoctorNotes';
 import LabReports from './src/views/PatientHealthRecord/LabReports';
 import MedicationPrescription from './src/views/PatientHealthRecord/MedicationPrescription';
@@ -710,6 +711,7 @@ function App() {
               <Stack.Screen name='VaccinationDetailsScreen' component={VaccinationDetailsScreen} options={{headerShown:false}}/>
               <Stack.Screen name='AddFamilyScreen' component={AddFamilyScreen} options={{headerShown:false}}/>
               <Stack.Screen name='PatientMedicalSummary' component={PatientMedicalSummary} options={{headerShown:false}}/>
+              <Stack.Screen name='ClinicalMedicalSummary' component={ClinicalMedicalSummary} options={{headerShown:false}}/>
               <Stack.Screen name='DoctorNotes' component={DoctorNotes} options={{headerShown:false}}/>
               <Stack.Screen name='LabReports' component={LabReports} options={{headerShown:false}}/>
               <Stack.Screen name='MedicationPrescription' component={MedicationPrescription} options={{headerShown:false}}/>

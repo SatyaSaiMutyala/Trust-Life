@@ -101,7 +101,7 @@ const PatientHealthRecords = () => {
                     <TouchableOpacity
                         style={styles.bannerCard}
                         activeOpacity={0.7}
-                        onPress={() => navigation.navigate('PatientMedicalSummary')}
+                        onPress={() => navigation.navigate('ClinicalMedicalSummary')}
                     >
                         <View style={styles.bannerImagesRow}>
                             {BANNER_IMAGES.map((img, idx) => (
