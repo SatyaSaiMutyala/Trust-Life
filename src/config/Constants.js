@@ -294,6 +294,9 @@ export const light_colors = [
 //Font Family
 export const regular = "GoogleSans-Medium";
 export const bold = "GoogleSans-Bold";
+export const heading = "Montserrat-Bold";
+export const interMedium = "Inter-Medium";
+export const interRegular = "Inter-Regular";
 
 //Nutrition API (API Ninjas - https://api-ninjas.com/api/nutrition)
 export const NUTRITION_API_KEY = "MHVVPutmxYLprDNMXUx3LL6RONHYziGUiZB7ini1";

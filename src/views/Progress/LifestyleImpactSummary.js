@@ -11,7 +11,7 @@ import Icon, { Icons } from '../../components/Icons';
 import {
     blackColor, whiteColor, primaryColor, globalGradient2,
 } from '../../utils/globalColors';
-import { bold, regular } from '../../config/Constants';
+import { heading, interMedium, interRegular } from '../../config/Constants';
 
 const INFLUENCE_SCORE = { current: 18, total: 25 };
 
@@ -201,10 +201,10 @@ const styles = StyleSheet.create({
         justifyContent: 'center', alignItems: 'center',
     },
     headerTextWrap: { marginLeft: ms(10), flex: 1 },
-    headerTitle: { fontSize: ms(18), fontFamily: bold, color: whiteColor },
+    headerTitle: { fontSize: ms(18), fontFamily: heading, color: whiteColor },
     headerSubtitle: {
-        fontSize: ms(11), fontFamily: regular,
-        color: 'rgba(255,255,255,0.8)', marginTop: vs(2),
+        fontSize: ms(11), fontFamily: interRegular,
+        color: 'rgba(255,255,255,0.8)',
     },
 
     card: {
@@ -212,14 +212,14 @@ const styles = StyleSheet.create({
         padding: ms(16), marginBottom: vs(12),
     },
     cardTitle: {
-        fontSize: ms(15), fontFamily: bold,
-        color: blackColor, marginBottom: vs(10),
+        fontSize: ms(16), fontFamily: heading,
+        color: blackColor,
     },
 
     // Score
     scoreRow: { flexDirection: 'row', alignItems: 'baseline', marginBottom: vs(8) },
-    scoreValue: { fontSize: ms(32), fontFamily: bold, color: primaryColor },
-    scoreTotal: { fontSize: ms(16), fontFamily: regular, color: '#9CA3AF' },
+    scoreValue: { fontSize: ms(32), fontFamily: interMedium, color: primaryColor },
+    scoreTotal: { fontSize: ms(16), fontFamily: interRegular, color: '#9CA3AF' },
     scoreProgressBg: {
         height: vs(8), backgroundColor: '#E8E8E8',
         borderRadius: ms(4), overflow: 'hidden',
@@ -234,8 +234,8 @@ const styles = StyleSheet.create({
         flexDirection: 'row', alignItems: 'center', borderRadius: ms(20),
         paddingHorizontal: ms(12), paddingVertical: vs(6),
     },
-    badgeValue: { fontSize: ms(13), fontFamily: bold, marginRight: ms(4) },
-    badgeLabel: { fontSize: ms(12), fontFamily: regular },
+    badgeValue: { fontSize: ms(13), fontFamily: interMedium, marginRight: ms(4) },
+    badgeLabel: { fontSize: ms(12), fontFamily: interMedium },
 
     // Detail Tiles
     detailTile: {
@@ -248,15 +248,15 @@ const styles = StyleSheet.create({
         justifyContent: 'center', alignItems: 'center',
     },
     tileTitle: {
-        fontSize: ms(14), fontFamily: bold,
+        fontSize: ms(14), fontFamily: heading,
         color: blackColor,
     },
     tileScore: {
-        fontSize: ms(11), fontFamily: regular,
+        fontSize: ms(11), fontFamily: interMedium,
         color: '#6B7280', marginTop: vs(2),
     },
     tileMetric: {
-        fontSize: ms(13), fontFamily: regular,
+        fontSize: ms(13), fontFamily: interRegular,
         color: '#374151', marginBottom: vs(10), lineHeight: ms(18),
     },
     tileFooter: {
@@ -266,9 +266,9 @@ const styles = StyleSheet.create({
         borderRadius: ms(12),
         paddingHorizontal: ms(10), paddingVertical: vs(4),
     },
-    tileImpactText: { fontSize: ms(12), fontFamily: bold },
+    tileImpactText: { fontSize: ms(12), fontFamily: interMedium },
     tileTrendRow: { flexDirection: 'row', alignItems: 'center', gap: ms(4) },
-    tileTrendText: { fontSize: ms(12), fontFamily: regular },
+    tileTrendText: { fontSize: ms(12), fontFamily: interRegular },
 
     // Habit links
     habitRow: {
@@ -279,17 +279,17 @@ const styles = StyleSheet.create({
         width: ms(8), height: ms(8), borderRadius: ms(4),
     },
     habitLabel: {
-        fontSize: ms(13), fontFamily: bold, color: blackColor,
+        fontSize: ms(13), fontFamily: interMedium, color: blackColor,
         width: ms(85),
     },
     habitEffect: {
-        fontSize: ms(12), fontFamily: regular, color: '#6B7280', flex: 1,
+        fontSize: ms(12), fontFamily: interRegular, color: '#6B7280', flex: 1,
     },
 
     // Tips
     tipRow: {
         flexDirection: 'row', alignItems: 'center',
-        paddingVertical: vs(10), gap: ms(12),
+        paddingVertical: vs(5), gap: ms(12),
     },
     tipIconWrap: {
         width: ms(34), height: ms(34), borderRadius: ms(10),
@@ -297,7 +297,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center', alignItems: 'center',
     },
     tipText: {
-        fontSize: ms(13), fontFamily: regular, color: '#374151', flex: 1,
+        fontSize: ms(13), fontFamily: interRegular, color: '#374151', flex: 1,
     },
 });
 

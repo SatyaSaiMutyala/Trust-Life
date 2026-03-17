@@ -22,7 +22,7 @@ import { connect, useDispatch } from 'react-redux';
 import { updateProfilePicture } from '../actions/CurrentAddressActions';
 import { StatusBar, StatusBar2 } from '../components/StatusBar';
 import Icon, { Icons } from '../components/Icons';
-import { bold, img_url, regular, doctor } from '../config/Constants';
+import { heading, interMedium, interRegular, img_url, doctor } from '../config/Constants';
 import * as colors from '../assets/css/Colors';
 import { ms, vs } from 'react-native-size-matters';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -493,7 +493,7 @@ const styles = StyleSheet.create({
     padding: ms(18),
   },
   cardSectionTitle: {
-    fontFamily: bold,
+    fontFamily: heading,
     fontSize: ms(16),
     color: blackColor,
     marginBottom: vs(16),
@@ -534,12 +534,12 @@ const styles = StyleSheet.create({
     marginLeft: ms(14),
   },
   profileName: {
-    fontFamily: bold,
+    fontFamily: heading,
     fontSize: ms(16),
     color: blackColor,
   },
   profileAge: {
-    fontFamily: regular,
+    fontFamily: interRegular,
     fontSize: ms(12),
     color: '#6B7280',
     marginTop: vs(2),
@@ -555,7 +555,7 @@ const styles = StyleSheet.create({
     gap: ms(6),
   },
   editButtonText: {
-    fontFamily: bold,
+    fontFamily: interMedium,
     fontSize: ms(13),
     color: blackColor,
   },
@@ -571,12 +571,12 @@ const styles = StyleSheet.create({
     paddingVertical: vs(12),
   },
   infoLabel: {
-    fontFamily: regular,
+    fontFamily: interRegular,
     fontSize: ms(13),
     color: '#6B7280',
   },
   infoValue: {
-    fontFamily: bold,
+    fontFamily: interMedium,
     fontSize: ms(13),
     color: blackColor,
   },
@@ -587,7 +587,7 @@ const styles = StyleSheet.create({
 
   // Manage Your Details
   manageSectionTitle: {
-    fontFamily: bold,
+    fontFamily: heading,
     fontSize: ms(16),
     color: blackColor,
     marginTop: vs(24),
@@ -613,12 +613,12 @@ const styles = StyleSheet.create({
     marginRight: ms(10),
   },
   manageTitle: {
-    fontFamily: bold,
+    fontFamily: heading,
     fontSize: ms(14),
     color: blackColor,
   },
   manageSubtitle: {
-    fontFamily: regular,
+    fontFamily: interRegular,
     fontSize: ms(11),
     color: '#6B7280',
     marginTop: vs(2),
@@ -650,7 +650,7 @@ const styles = StyleSheet.create({
   },
   updatingText: {
     fontSize: ms(14),
-    fontFamily: regular,
+    fontFamily: interRegular,
     color: blackColor,
   },
 });

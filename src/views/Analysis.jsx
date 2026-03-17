@@ -233,7 +233,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import AnalysisList from '../components/AnalysisList';
 import AnalysisProgress from '../components/AnalysisProgress';
 import { blackColor, globalGradient, globalGradient2, primaryColor, whiteColor } from '../utils/globalColors';
-import { bold, regular } from '../config/Constants';
+import { heading, interMedium, interRegular } from '../config/Constants';
 import { s, vs, ms } from 'react-native-size-matters';
 import { StatusBar2 } from '../components/StatusBar';
 import { useSnack } from '../context/GlobalSnackBarContext';
@@ -436,22 +436,23 @@ const styles = StyleSheet.create({
     },
     scoreText: {
         color: primaryColor,
-        fontWeight: 'bold',
+        fontFamily: heading,
         fontSize: ms(26),
     },
     scoreSubText: {
         color: blackColor,
-        fontWeight: '600',
+        fontFamily: interMedium,
         fontSize: ms(10),
     },
     healthScoreTitle: {
         color: blackColor,
-        fontWeight: 'bold',
+        fontFamily: heading,
         fontSize: 22,
         marginTop: 20,
     },
     calculatedFromReport: {
         color: blackColor,
+        fontFamily: interRegular,
         fontSize: 14,
         marginTop: 5,
         opacity: 0.8,
@@ -467,8 +468,8 @@ const styles = StyleSheet.create({
     },
     vitalParametersTitle: {
         color: '#2A2A2A',
+        fontFamily: heading,
         fontSize: 18,
-        fontWeight: 'bold',
     },
     viewAllContainer: {
         flexDirection: 'row',
@@ -479,8 +480,8 @@ const styles = StyleSheet.create({
     },
     viewAllText: {
         color: '#4CAF50',
+        fontFamily: interMedium,
         fontSize: 14,
-        fontWeight: '500',
         marginRight: 2,
     },
     humanBodyContainer: {
@@ -536,20 +537,20 @@ const styles = StyleSheet.create({
         marginRight: ms(10),
     },
     organCardImg: { width: ms(40), height: ms(40), resizeMode: 'contain', marginRight: ms(10) },
-    organCardLabel: { fontFamily: bold, fontSize: ms(14), color: blackColor, flex: 1 },
+    organCardLabel: { fontFamily: heading, fontSize: ms(14), color: blackColor, flex: 1 },
     organStatusRow: {
         flexDirection: 'row',
         alignItems: 'center',
     },
-    organStatusLabel: { fontFamily: bold, fontSize: ms(12), color: blackColor, marginRight: ms(10) },
+    organStatusLabel: { fontFamily: interMedium, fontSize: ms(12), color: blackColor, marginRight: ms(10) },
     organBadgeStrong: {
         backgroundColor: '#DCFCE7', borderRadius: ms(20),
         paddingHorizontal: ms(14), paddingVertical: vs(5),
     },
-    organBadgeTextStrong: { fontFamily: bold, fontSize: ms(11), color: '#065F46' },
+    organBadgeTextStrong: { fontFamily: interMedium, fontSize: ms(11), color: '#065F46' },
     organBadgeModerate: {
         backgroundColor: '#FEF9C3', borderRadius: ms(20),
         paddingHorizontal: ms(14), paddingVertical: vs(5),
     },
-    organBadgeTextModerate: { fontFamily: bold, fontSize: ms(11), color: '#92400E' },
+    organBadgeTextModerate: { fontFamily: interMedium, fontSize: ms(11), color: '#92400E' },
 });

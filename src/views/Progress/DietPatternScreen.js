@@ -10,7 +10,7 @@ import Svg, { Circle, Defs, LinearGradient as SvgLinearGradient, Stop } from 're
 import { StatusBar2 } from '../../components/StatusBar';
 import Icon, { Icons } from '../../components/Icons';
 import { blackColor, whiteColor, primaryColor, globalGradient2 } from '../../utils/globalColors';
-import { bold, regular } from '../../config/Constants';
+import { heading, interMedium, interRegular } from '../../config/Constants';
 
 // ── Diet Data ──
 const DIET_BEHAVIOR = 'mostly_healthy'; // whole_food | mostly_healthy | mixed | poor | restricted
@@ -173,7 +173,7 @@ const DietPatternScreen = () => {
                         {BEHAVIOR_SCALE.map((item, index) => (
                             <View key={index} style={[styles.scaleRow, item.active && { backgroundColor: '#F8FAFC', borderRadius: ms(10) }]}>
                                 <View style={[styles.scaleDot, { backgroundColor: item.color }]} />
-                                <Text style={[styles.scaleLabel, item.active && { fontFamily: bold, color: blackColor }]}>{item.label}</Text>
+                                <Text style={[styles.scaleLabel, item.active && { fontFamily: interMedium, color: blackColor }]}>{item.label}</Text>
                                 <Text style={[styles.scaleRange, { color: item.color }]}>{item.range}</Text>
                                 {item.active && (
                                     <View style={[styles.scaleActiveBadge, { backgroundColor: item.color }]}>
@@ -351,7 +351,7 @@ const styles = StyleSheet.create({
         backgroundColor: 'rgba(255,255,255,0.3)',
         justifyContent: 'center', alignItems: 'center', marginRight: ms(12),
     },
-    headerTitle: { fontFamily: bold, fontSize: ms(18), color: whiteColor },
+    headerTitle: { fontFamily: heading, fontSize: ms(18), color: whiteColor },
     scrollContent: { paddingBottom: vs(40) },
 
     // Score Card
@@ -364,18 +364,18 @@ const styles = StyleSheet.create({
         position: 'absolute', top: 0, left: 0, right: 0, bottom: 0,
         justifyContent: 'center', alignItems: 'center',
     },
-    ringScore: { fontFamily: bold, fontSize: ms(22), color: blackColor },
-    ringLabel: { fontFamily: regular, fontSize: ms(11), color: '#9CA3AF' },
+    ringScore: { fontFamily: interMedium, fontSize: ms(22), color: blackColor },
+    ringLabel: { fontFamily: interRegular, fontSize: ms(11), color: '#9CA3AF' },
     scoreInfo: { flex: 1, marginLeft: ms(16) },
     adherenceBadge: {
         backgroundColor: '#DCFCE7', borderRadius: ms(12),
         paddingHorizontal: ms(14), paddingVertical: vs(4),
         alignSelf: 'flex-start', marginBottom: vs(8),
     },
-    adherenceBadgeText: { fontFamily: bold, fontSize: ms(12), color: '#16A34A' },
-    scoreDesc: { fontFamily: regular, fontSize: ms(12), color: '#6B7280', lineHeight: ms(18), marginBottom: vs(8) },
+    adherenceBadgeText: { fontFamily: interMedium, fontSize: ms(12), color: '#16A34A' },
+    scoreDesc: { fontFamily: interRegular, fontSize: ms(12), color: '#6B7280', lineHeight: ms(18), marginBottom: vs(8) },
     streakRow: { flexDirection: 'row', alignItems: 'center', gap: ms(4) },
-    streakText: { fontFamily: bold, fontSize: ms(12), color: '#F59E0B' },
+    streakText: { fontFamily: interMedium, fontSize: ms(12), color: '#F59E0B' },
 
     // Behavior Scale
     scaleRow: {
@@ -384,12 +384,12 @@ const styles = StyleSheet.create({
         borderBottomWidth: 1, borderBottomColor: '#F1F5F9',
     },
     scaleDot: { width: ms(10), height: ms(10), borderRadius: ms(5), marginRight: ms(10) },
-    scaleLabel: { fontFamily: regular, fontSize: ms(12), color: '#6B7280', flex: 1 },
-    scaleRange: { fontFamily: bold, fontSize: ms(11), marginRight: ms(6) },
+    scaleLabel: { fontFamily: interRegular, fontSize: ms(12), color: '#6B7280', flex: 1 },
+    scaleRange: { fontFamily: interMedium, fontSize: ms(11), marginRight: ms(6) },
     scaleActiveBadge: {
         borderRadius: ms(8), paddingHorizontal: ms(8), paddingVertical: vs(2),
     },
-    scaleActiveText: { fontFamily: bold, fontSize: ms(9), color: whiteColor },
+    scaleActiveText: { fontFamily: interMedium, fontSize: ms(9), color: whiteColor },
 
     // Stats Grid
     statsGrid: {
@@ -404,37 +404,37 @@ const styles = StyleSheet.create({
         width: ms(40), height: ms(40), borderRadius: ms(12),
         justifyContent: 'center', alignItems: 'center', marginBottom: vs(8),
     },
-    statValue: { fontFamily: bold, fontSize: ms(20), color: blackColor },
-    statLabel: { fontFamily: regular, fontSize: ms(12), color: '#6B7280', marginTop: vs(2) },
+    statValue: { fontFamily: interMedium, fontSize: ms(20), color: blackColor },
+    statLabel: { fontFamily: interRegular, fontSize: ms(12), color: '#6B7280', marginTop: vs(2) },
 
     // Card
     card: {
         backgroundColor: whiteColor, borderRadius: ms(14),
         padding: ms(16), marginBottom: vs(12),
     },
-    cardTitle: { fontFamily: bold, fontSize: ms(15), color: blackColor, marginBottom: vs(14) },
+    cardTitle: { fontFamily: heading, fontSize: ms(15), color: blackColor, marginBottom: vs(14) },
 
     // Weekly Calendar
     weekRow: { flexDirection: 'row', justifyContent: 'space-between' },
     dayCol: { alignItems: 'center' },
-    dayLabel: { fontFamily: regular, fontSize: ms(11), color: '#6B7280', marginBottom: vs(6) },
+    dayLabel: { fontFamily: interRegular, fontSize: ms(11), color: '#6B7280', marginBottom: vs(6) },
     dayCircle: {
         width: ms(36), height: ms(36), borderRadius: ms(18),
         borderWidth: 1.5, justifyContent: 'center', alignItems: 'center',
     },
-    dayDate: { fontFamily: regular, fontSize: ms(12), color: '#9CA3AF' },
-    dayCount: { fontFamily: bold, fontSize: ms(10) },
+    dayDate: { fontFamily: interRegular, fontSize: ms(12), color: '#9CA3AF' },
+    dayCount: { fontFamily: interMedium, fontSize: ms(10) },
 
     // Nutrient Tracking
     nutrientRow: {
         paddingVertical: vs(8), borderBottomWidth: 1, borderBottomColor: '#F1F5F9',
     },
     nutrientTop: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: vs(6) },
-    nutrientName: { fontFamily: bold, fontSize: ms(13), color: blackColor },
-    nutrientValue: { fontFamily: regular, fontSize: ms(11), color: '#6B7280' },
+    nutrientName: { fontFamily: interMedium, fontSize: ms(13), color: blackColor },
+    nutrientValue: { fontFamily: interRegular, fontSize: ms(11), color: '#6B7280' },
     nutrientBarTrack: { height: vs(6), backgroundColor: '#F1F5F9', borderRadius: ms(3), overflow: 'hidden' },
     nutrientBarFill: { height: '100%', borderRadius: ms(3) },
-    nutrientWarning: { fontFamily: regular, fontSize: ms(10), color: '#DC2626', marginTop: vs(3) },
+    nutrientWarning: { fontFamily: interRegular, fontSize: ms(10), color: '#DC2626', marginTop: vs(3) },
 
     // Meal Log
     mealRow: {
@@ -446,29 +446,29 @@ const styles = StyleSheet.create({
         justifyContent: 'center', alignItems: 'center', marginRight: ms(12),
     },
     mealInfo: { flex: 1 },
-    mealType: { fontFamily: bold, fontSize: ms(13), color: blackColor },
-    mealItem: { fontFamily: regular, fontSize: ms(11), color: '#6B7280', marginTop: vs(1) },
-    mealTime: { fontFamily: regular, fontSize: ms(10), color: '#9CA3AF', marginTop: vs(2) },
+    mealType: { fontFamily: interMedium, fontSize: ms(13), color: blackColor },
+    mealItem: { fontFamily: interRegular, fontSize: ms(11), color: '#6B7280', marginTop: vs(1) },
+    mealTime: { fontFamily: interRegular, fontSize: ms(10), color: '#9CA3AF', marginTop: vs(2) },
     mealBadge: { borderRadius: ms(12), paddingHorizontal: ms(10), paddingVertical: vs(3) },
-    mealBadgeText: { fontFamily: bold, fontSize: ms(10) },
+    mealBadgeText: { fontFamily: interMedium, fontSize: ms(10) },
 
     // Condition Diet
     condRow: {
         paddingVertical: vs(10), borderBottomWidth: 1, borderBottomColor: '#F1F5F9',
     },
     condTop: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: vs(4) },
-    condName: { fontFamily: bold, fontSize: ms(13), color: blackColor },
+    condName: { fontFamily: interMedium, fontSize: ms(13), color: blackColor },
     condBadge: { borderRadius: ms(12), paddingHorizontal: ms(10), paddingVertical: vs(3) },
-    condBadgeText: { fontFamily: bold, fontSize: ms(10) },
-    condRec: { fontFamily: regular, fontSize: ms(11), color: '#6B7280', lineHeight: ms(17) },
+    condBadgeText: { fontFamily: interMedium, fontSize: ms(10) },
+    condRec: { fontFamily: interRegular, fontSize: ms(11), color: '#6B7280', lineHeight: ms(17) },
 
     // Impact
     impactRow: { flexDirection: 'row', alignItems: 'center', paddingVertical: vs(10), borderBottomWidth: 1, borderBottomColor: '#F1F5F9' },
     impactLeft: { flex: 1 },
-    impactMarker: { fontFamily: bold, fontSize: ms(13), color: blackColor },
-    impactDesc: { fontFamily: regular, fontSize: ms(11), color: '#6B7280', marginTop: vs(2), lineHeight: ms(16) },
+    impactMarker: { fontFamily: interMedium, fontSize: ms(13), color: blackColor },
+    impactDesc: { fontFamily: interRegular, fontSize: ms(11), color: '#6B7280', marginTop: vs(2), lineHeight: ms(16) },
     impactBadge: { borderRadius: ms(12), paddingHorizontal: ms(10), paddingVertical: vs(3) },
-    impactBadgeText: { fontFamily: bold, fontSize: ms(10) },
+    impactBadgeText: { fontFamily: interMedium, fontSize: ms(10) },
 
     // Tips
     tipRow: {
@@ -480,7 +480,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#F0FDF4', justifyContent: 'center', alignItems: 'center',
         marginRight: ms(12),
     },
-    tipText: { fontFamily: regular, fontSize: ms(12), color: '#374151', flex: 1, lineHeight: ms(18) },
+    tipText: { fontFamily: interRegular, fontSize: ms(12), color: '#374151', flex: 1, lineHeight: ms(18) },
 });
 
 export default DietPatternScreen;

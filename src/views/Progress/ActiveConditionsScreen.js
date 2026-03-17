@@ -9,7 +9,7 @@ import { ms, vs } from 'react-native-size-matters';
 import { StatusBar2 } from '../../components/StatusBar';
 import Icon, { Icons } from '../../components/Icons';
 import { blackColor, whiteColor, primaryColor, globalGradient2 } from '../../utils/globalColors';
-import { bold, regular } from '../../config/Constants';
+import { heading, interMedium, interRegular } from '../../config/Constants';
 
 const CONDITIONS = [
     {
@@ -196,10 +196,10 @@ const styles = StyleSheet.create({
         justifyContent: 'center', alignItems: 'center',
     },
     headerTextWrap: { flex: 1, marginLeft: ms(12) },
-    headerTitle: { fontFamily: bold, fontSize: ms(20), color: whiteColor },
+    headerTitle: { fontFamily: heading, fontSize: ms(20), color: whiteColor },
     headerSubtitle: {
-        fontFamily: regular, fontSize: ms(11),
-        color: 'rgba(255,255,255,0.75)', marginTop: vs(2),
+        fontFamily: interRegular, fontSize: ms(11),
+        color: 'rgba(255,255,255,0.75)',
     },
 
     // Banner
@@ -217,14 +217,14 @@ const styles = StyleSheet.create({
         shadowOffset: { width: 0, height: 4 },
     },
     bannerItem: { flex: 1, alignItems: 'center' },
-    bannerNum: { fontFamily: bold, fontSize: ms(22), color: primaryColor },
-    bannerLbl: { fontFamily: regular, fontSize: ms(10), color: '#9CA3AF', marginTop: vs(2) },
+    bannerNum: { fontFamily: interMedium, fontSize: ms(22), color: primaryColor },
+    bannerLbl: { fontFamily: interRegular, fontSize: ms(10), color: '#9CA3AF', marginTop: vs(2) },
     bannerDivider: { width: 1, backgroundColor: '#E5E7EB', marginVertical: vs(4) },
 
     // Scroll
     scrollContent: { paddingHorizontal: ms(16), paddingBottom: vs(40) },
     sectionLabel: {
-        fontFamily: regular,
+        fontFamily: interRegular,
         fontSize: ms(12),
         color: '#9CA3AF',
         marginBottom: vs(12),
@@ -270,7 +270,7 @@ const styles = StyleSheet.create({
         marginLeft: ms(12),
     },
     cardLabel: {
-        fontFamily: bold,
+        fontFamily: heading,
         fontSize: ms(15),
         color: blackColor,
         marginBottom: vs(4),
@@ -291,7 +291,7 @@ const styles = StyleSheet.create({
         width: ms(6), height: ms(6), borderRadius: ms(3),
     },
     tagText: {
-        fontFamily: bold,
+        fontFamily: interMedium,
         fontSize: ms(10),
         color: primaryColor,
     },
@@ -306,13 +306,13 @@ const styles = StyleSheet.create({
         minWidth: ms(52),
     },
     countNumber: {
-        fontFamily: bold,
+        fontFamily: interMedium,
         fontSize: ms(18),
         color: primaryColor,
         lineHeight: ms(20),
     },
     countSub: {
-        fontFamily: regular,
+        fontFamily: interRegular,
         fontSize: ms(9),
         color: primaryColor + 'AA',
     },
@@ -322,7 +322,7 @@ const styles = StyleSheet.create({
     },
     cardDesc: {
         flex: 1,
-        fontFamily: regular,
+        fontFamily: interRegular,
         fontSize: ms(12),
         color: '#6B7280',
         lineHeight: ms(17),

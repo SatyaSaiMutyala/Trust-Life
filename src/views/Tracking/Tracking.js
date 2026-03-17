@@ -13,7 +13,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import { useNavigation } from '@react-navigation/native';
 import { ms, vs } from 'react-native-size-matters';
 import { StatusBar2 } from '../../components/StatusBar';
-import { bold, regular } from '../../config/Constants';
+import { heading, interMedium, interRegular } from '../../config/Constants';
 import { blackColor, globalGradient, globalGradient2, whiteColor } from '../../utils/globalColors';
 
 const { width } = Dimensions.get('window');
@@ -151,7 +151,7 @@ const styles = StyleSheet.create({
     },
     headerTitle: {
         fontSize: ms(22),
-        fontFamily: bold,
+        fontFamily: heading,
         color: whiteColor,
         marginBottom: vs(20),
     },
@@ -163,7 +163,7 @@ const styles = StyleSheet.create({
     // Section Heading
     sectionHeading: {
         fontSize: ms(18),
-        fontFamily: bold,
+        fontFamily: heading,
         color: blackColor,
         textAlign: 'center',
         marginBottom: ms(12),
@@ -217,13 +217,13 @@ const styles = StyleSheet.create({
     continuumTitle: {
         color: whiteColor,
         fontSize: ms(12),
-        fontFamily: bold,
+        fontFamily: heading,
         textAlign: 'center',
     },
     continuumSub: {
         color: whiteColor,
         fontSize: ms(9),
-        fontFamily: regular,
+        fontFamily: interRegular,
         marginTop: ms(2),
         textAlign: 'center',
     },
@@ -265,7 +265,7 @@ const styles = StyleSheet.create({
     },
     monitoringText: {
         fontSize: ms(11),
-        fontFamily: bold,
+        fontFamily: interMedium,
         color: blackColor,
         textAlign: 'center',
     },

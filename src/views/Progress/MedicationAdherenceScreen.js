@@ -12,7 +12,7 @@ import Svg, { Circle, Defs, LinearGradient as SvgLinearGradient, Stop } from 're
 import { StatusBar2 } from '../../components/StatusBar';
 import Icon, { Icons } from '../../components/Icons';
 import { blackColor, whiteColor, primaryColor, globalGradient2 } from '../../utils/globalColors';
-import { bold, regular } from '../../config/Constants';
+import { heading, interMedium, interRegular } from '../../config/Constants';
 
 // ── Medication Data ──
 const TOTAL_DOSES = 56;
@@ -504,7 +504,7 @@ const MedicationAdherenceScreen = () => {
                         </View>
                         <View style={styles.pdcRow}>
                             <Text style={styles.pdcLabel}>Calculated Score</Text>
-                            <Text style={[styles.pdcValue, { color: scoreStatus.color, fontFamily: bold }]}>{ADHERENCE_SCORE}/100</Text>
+                            <Text style={[styles.pdcValue, { color: scoreStatus.color, fontFamily: interMedium }]}>{ADHERENCE_SCORE}/100</Text>
                         </View>
                         {DRUG_HOLIDAY_DETECTED && (
                             <View style={styles.pdcWarning}>
@@ -975,7 +975,7 @@ const styles = StyleSheet.create({
         backgroundColor: 'rgba(255,255,255,0.3)',
         justifyContent: 'center', alignItems: 'center', marginRight: ms(12),
     },
-    headerTitle: { fontFamily: bold, fontSize: ms(18), color: whiteColor },
+    headerTitle: { fontFamily: heading, fontSize: ms(18), color: whiteColor },
     scrollContent: { paddingBottom: vs(40), paddingHorizontal: ms(14) },
 
     // Tab Bar
@@ -983,7 +983,7 @@ const styles = StyleSheet.create({
     tabRow: { paddingHorizontal: ms(16), gap: ms(4) },
     tab: { flexDirection: 'row', alignItems: 'center', gap: ms(4), backgroundColor: whiteColor, borderRadius: ms(10), paddingHorizontal: ms(8), paddingVertical: vs(6), borderWidth: 1, borderColor: '#E5E7EB' },
     tabActive: { borderColor: primaryColor, backgroundColor: primaryColor + '10' },
-    tabText: { fontFamily: bold, fontSize: ms(9.5), color: '#9CA3AF' },
+    tabText: { fontFamily: interMedium, fontSize: ms(9.5), color: '#9CA3AF' },
     tabTextActive: { color: primaryColor },
 
     // Score Card
@@ -996,40 +996,40 @@ const styles = StyleSheet.create({
         position: 'absolute', top: 0, left: 0, right: 0, bottom: 0,
         justifyContent: 'center', alignItems: 'center',
     },
-    ringScore: { fontFamily: bold, fontSize: ms(22), color: blackColor },
-    ringLabel: { fontFamily: regular, fontSize: ms(11), color: '#9CA3AF' },
+    ringScore: { fontFamily: interMedium, fontSize: ms(22), color: blackColor },
+    ringLabel: { fontFamily: interRegular, fontSize: ms(11), color: '#9CA3AF' },
     scoreInfo: { flex: 1, marginLeft: ms(16) },
     adherenceBadge: {
         backgroundColor: '#DCFCE7', borderRadius: ms(12),
         paddingHorizontal: ms(14), paddingVertical: vs(4),
         alignSelf: 'flex-start', marginBottom: vs(8),
     },
-    adherenceBadgeText: { fontFamily: bold, fontSize: ms(12), color: '#16A34A' },
-    scoreDesc: { fontFamily: regular, fontSize: ms(12), color: '#6B7280', lineHeight: ms(18), marginBottom: vs(8) },
+    adherenceBadgeText: { fontFamily: interMedium, fontSize: ms(12), color: '#16A34A' },
+    scoreDesc: { fontFamily: interRegular, fontSize: ms(12), color: '#6B7280', lineHeight: ms(18), marginBottom: vs(8) },
     streakRow: { flexDirection: 'row', alignItems: 'center', gap: ms(4) },
-    streakText: { fontFamily: bold, fontSize: ms(12), color: '#F59E0B' },
+    streakText: { fontFamily: interMedium, fontSize: ms(12), color: '#F59E0B' },
 
     // PDC Breakdown
     pdcRow: {
         flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center',
         paddingVertical: vs(8), borderBottomWidth: 1, borderBottomColor: '#F1F5F9',
     },
-    pdcLabel: { fontFamily: regular, fontSize: ms(12), color: '#6B7280', flex: 1 },
-    pdcValue: { fontFamily: bold, fontSize: ms(13), color: blackColor },
+    pdcLabel: { fontFamily: interRegular, fontSize: ms(12), color: '#6B7280', flex: 1 },
+    pdcValue: { fontFamily: interMedium, fontSize: ms(13), color: blackColor },
     pdcWarning: {
         flexDirection: 'row', alignItems: 'center', gap: ms(6),
         backgroundColor: '#FEE2E2', borderRadius: ms(10),
         padding: ms(10), marginTop: vs(8),
     },
-    pdcWarningText: { fontFamily: bold, fontSize: ms(11), color: '#E11D48' },
+    pdcWarningText: { fontFamily: interMedium, fontSize: ms(11), color: '#E11D48' },
     pdcScaleRow: {
         flexDirection: 'row', justifyContent: 'space-between',
         marginTop: vs(14), paddingTop: vs(10), borderTopWidth: 1, borderTopColor: '#F1F5F9',
     },
     pdcScaleItem: { alignItems: 'center' },
     pdcScaleDot: { width: ms(8), height: ms(8), borderRadius: ms(4), marginBottom: vs(3) },
-    pdcScaleLabel: { fontFamily: regular, fontSize: ms(9), color: '#6B7280' },
-    pdcScaleScore: { fontFamily: bold, fontSize: ms(9), color: blackColor, marginTop: vs(1) },
+    pdcScaleLabel: { fontFamily: interRegular, fontSize: ms(9), color: '#6B7280' },
+    pdcScaleScore: { fontFamily: interMedium, fontSize: ms(9), color: blackColor, marginTop: vs(1) },
 
     // Stats Grid
     statsGrid: {
@@ -1044,25 +1044,25 @@ const styles = StyleSheet.create({
         width: ms(40), height: ms(40), borderRadius: ms(12),
         justifyContent: 'center', alignItems: 'center', marginBottom: vs(8),
     },
-    statValue: { fontFamily: bold, fontSize: ms(20), color: blackColor },
-    statLabel: { fontFamily: regular, fontSize: ms(12), color: '#6B7280', marginTop: vs(2) },
+    statValue: { fontFamily: interMedium, fontSize: ms(20), color: blackColor },
+    statLabel: { fontFamily: interRegular, fontSize: ms(12), color: '#6B7280', marginTop: vs(2) },
 
     // Card
     card: {
         backgroundColor: whiteColor, borderRadius: ms(14),
         padding: ms(16), marginBottom: vs(12),
     },
-    cardTitle: { fontFamily: bold, fontSize: ms(15), color: blackColor, marginBottom: vs(14) },
+    cardTitle: { fontFamily: heading, fontSize: ms(15), color: blackColor, marginBottom: vs(14) },
 
     // Weekly Calendar
     weekRow: { flexDirection: 'row', justifyContent: 'space-between' },
     dayCol: { alignItems: 'center' },
-    dayLabel: { fontFamily: regular, fontSize: ms(11), color: '#6B7280', marginBottom: vs(6) },
+    dayLabel: { fontFamily: interRegular, fontSize: ms(11), color: '#6B7280', marginBottom: vs(6) },
     dayCircle: {
         width: ms(36), height: ms(36), borderRadius: ms(18),
         borderWidth: 1.5, justifyContent: 'center', alignItems: 'center',
     },
-    dayDate: { fontFamily: regular, fontSize: ms(12), color: '#9CA3AF' },
+    dayDate: { fontFamily: interRegular, fontSize: ms(12), color: '#9CA3AF' },
 
     // Medications
     medRow: {
@@ -1074,24 +1074,24 @@ const styles = StyleSheet.create({
         justifyContent: 'center', alignItems: 'center', marginRight: ms(12),
     },
     medInfo: { flex: 1 },
-    medName: { fontFamily: bold, fontSize: ms(13), color: blackColor },
-    medDosage: { fontFamily: regular, fontSize: ms(11), color: '#6B7280', marginTop: vs(2) },
+    medName: { fontFamily: interMedium, fontSize: ms(13), color: blackColor },
+    medDosage: { fontFamily: interRegular, fontSize: ms(11), color: '#6B7280', marginTop: vs(2) },
     medStreakRow: { flexDirection: 'row', alignItems: 'center', gap: ms(3), marginTop: vs(3) },
-    medStreakText: { fontFamily: regular, fontSize: ms(10), color: '#F59E0B' },
+    medStreakText: { fontFamily: interRegular, fontSize: ms(10), color: '#F59E0B' },
     medBadge: { borderRadius: ms(12), paddingHorizontal: ms(10), paddingVertical: vs(3) },
-    medBadgeText: { fontFamily: bold, fontSize: ms(10) },
+    medBadgeText: { fontFamily: interMedium, fontSize: ms(10) },
 
     // Impact
-    impactSubtitle: { fontFamily: regular, fontSize: ms(12), color: '#6B7280', marginTop: vs(-8), marginBottom: vs(12) },
+    impactSubtitle: { fontFamily: interRegular, fontSize: ms(12), color: '#6B7280', marginTop: vs(-8), marginBottom: vs(12) },
     impactRow: {
         flexDirection: 'row', alignItems: 'center',
         paddingVertical: vs(10), borderBottomWidth: 1, borderBottomColor: '#F1F5F9',
     },
     impactLeft: { flex: 1 },
-    impactMarker: { fontFamily: bold, fontSize: ms(13), color: blackColor },
-    impactDesc: { fontFamily: regular, fontSize: ms(11), color: '#6B7280', marginTop: vs(2), lineHeight: ms(16) },
+    impactMarker: { fontFamily: interMedium, fontSize: ms(13), color: blackColor },
+    impactDesc: { fontFamily: interRegular, fontSize: ms(11), color: '#6B7280', marginTop: vs(2), lineHeight: ms(16) },
     impactChange: { flexDirection: 'row', alignItems: 'center', gap: ms(2) },
-    impactChangeText: { fontFamily: bold, fontSize: ms(14), color: '#16A34A' },
+    impactChangeText: { fontFamily: interMedium, fontSize: ms(14), color: '#16A34A' },
 
     // Tips
     tipRow: {
@@ -1103,7 +1103,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#F0FDF4', justifyContent: 'center', alignItems: 'center',
         marginRight: ms(12),
     },
-    tipText: { fontFamily: regular, fontSize: ms(12), color: '#374151', flex: 1, lineHeight: ms(18) },
+    tipText: { fontFamily: interRegular, fontSize: ms(12), color: '#374151', flex: 1, lineHeight: ms(18) },
 
     // Organs Tab
     organBanner: {
@@ -1111,105 +1111,105 @@ const styles = StyleSheet.create({
         padding: ms(16), marginBottom: vs(12), justifyContent: 'space-around', alignItems: 'center',
     },
     organBannerItem: { alignItems: 'center' },
-    organBannerCount: { fontFamily: bold, fontSize: ms(22) },
-    organBannerLabel: { fontFamily: regular, fontSize: ms(10), color: '#6B7280', marginTop: vs(2) },
+    organBannerCount: { fontFamily: interMedium, fontSize: ms(22) },
+    organBannerLabel: { fontFamily: interRegular, fontSize: ms(10), color: '#6B7280', marginTop: vs(2) },
     organBannerDivider: { width: 1, height: vs(32), backgroundColor: '#E5E7EB' },
 
     organsCard: { backgroundColor: whiteColor, borderRadius: ms(16), padding: ms(16), marginBottom: vs(14) },
-    organCardTitle: { fontFamily: bold, fontSize: ms(14), color: blackColor, marginBottom: vs(12) },
+    organCardTitle: { fontFamily: heading, fontSize: ms(14), color: blackColor, marginBottom: vs(12) },
     organGrid: { flexDirection: 'row', flexWrap: 'wrap', gap: ms(10), marginTop: vs(4) },
 
     organMiniCard: { backgroundColor: whiteColor, borderRadius: ms(14), padding: ms(14), borderWidth: 1.5, borderColor: '#E5E7EB' },
     organMiniTop: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: vs(8) },
     organMiniIcon: { width: ms(34), height: ms(34), borderRadius: ms(10), justifyContent: 'center', alignItems: 'center' },
-    organMiniScore: { fontFamily: bold, fontSize: ms(18), textAlign: 'right' },
-    organMiniStressLabel: { fontFamily: regular, fontSize: ms(8), color: '#9CA3AF', textAlign: 'right' },
-    organMiniName: { fontFamily: bold, fontSize: ms(12), color: blackColor, marginBottom: vs(2) },
-    organMiniStage: { fontFamily: regular, fontSize: ms(10), marginBottom: vs(8) },
+    organMiniScore: { fontFamily: interMedium, fontSize: ms(18), textAlign: 'right' },
+    organMiniStressLabel: { fontFamily: interRegular, fontSize: ms(8), color: '#9CA3AF', textAlign: 'right' },
+    organMiniName: { fontFamily: interMedium, fontSize: ms(12), color: blackColor, marginBottom: vs(2) },
+    organMiniStage: { fontFamily: interRegular, fontSize: ms(10), marginBottom: vs(8) },
     organMiniBar: { height: vs(4), backgroundColor: '#E5E7EB', borderRadius: ms(2), overflow: 'hidden' },
     organMiniFill: { height: '100%', borderRadius: ms(2) },
-    organMiniTrend: { fontFamily: bold, fontSize: ms(9), marginTop: vs(6) },
+    organMiniTrend: { fontFamily: interMedium, fontSize: ms(9), marginTop: vs(6) },
 
     opImpactCard: { borderRadius: ms(12), borderWidth: 1, padding: ms(14) },
     opImpactHeader: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: vs(4) },
-    opImpactTitle: { fontFamily: bold, fontSize: ms(11) },
+    opImpactTitle: { fontFamily: interMedium, fontSize: ms(11) },
     opImpactBadge: { flexDirection: 'row', alignItems: 'center', gap: ms(3), borderRadius: ms(8), paddingHorizontal: ms(7), paddingVertical: vs(2) },
-    opImpactBadgeText: { fontFamily: bold, fontSize: ms(9) },
-    opImpactMed: { fontFamily: regular, fontSize: ms(10), color: '#9CA3AF', marginBottom: vs(6) },
-    opImpactText: { fontFamily: regular, fontSize: ms(12), color: '#374151', lineHeight: ms(19) },
+    opImpactBadgeText: { fontFamily: interMedium, fontSize: ms(9) },
+    opImpactMed: { fontFamily: interRegular, fontSize: ms(10), color: '#9CA3AF', marginBottom: vs(6) },
+    opImpactText: { fontFamily: interRegular, fontSize: ms(12), color: '#374151', lineHeight: ms(19) },
 
     // Biomarkers Tab
     bmCard: { borderRadius: ms(14), borderWidth: 1, padding: ms(14) },
     bmTopRow: { flexDirection: 'row', alignItems: 'center', marginBottom: vs(10) },
     bmIconBox: { width: ms(36), height: ms(36), borderRadius: ms(10), justifyContent: 'center', alignItems: 'center' },
-    bmName: { fontFamily: bold, fontSize: ms(13), color: blackColor },
-    bmMed: { fontFamily: regular, fontSize: ms(10), color: '#9CA3AF', marginTop: vs(1) },
+    bmName: { fontFamily: interMedium, fontSize: ms(13), color: blackColor },
+    bmMed: { fontFamily: interRegular, fontSize: ms(10), color: '#9CA3AF', marginTop: vs(1) },
     bmRightCol: { alignItems: 'flex-end', gap: vs(4) },
-    bmValue: { fontFamily: bold, fontSize: ms(16) },
-    bmUnit: { fontFamily: regular, fontSize: ms(10), color: '#6B7280' },
+    bmValue: { fontFamily: interMedium, fontSize: ms(16) },
+    bmUnit: { fontFamily: interRegular, fontSize: ms(10), color: '#6B7280' },
     bmStatusBadge: { flexDirection: 'row', alignItems: 'center', gap: ms(3), borderRadius: ms(8), paddingHorizontal: ms(7), paddingVertical: vs(2) },
-    bmStatusText: { fontFamily: bold, fontSize: ms(9) },
+    bmStatusText: { fontFamily: interMedium, fontSize: ms(9) },
     bmBarTrack: { height: vs(5), backgroundColor: '#E5E7EB', borderRadius: ms(3), overflow: 'hidden', marginBottom: vs(6) },
     bmBarFill: { height: '100%', borderRadius: ms(3) },
     bmRangeRow: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: vs(8) },
-    bmRangeLabel: { fontFamily: regular, fontSize: ms(10), color: '#9CA3AF' },
+    bmRangeLabel: { fontFamily: interRegular, fontSize: ms(10), color: '#9CA3AF' },
     bmTrendBadge: { flexDirection: 'row', alignItems: 'center', gap: ms(3) },
-    bmTrendText: { fontFamily: bold, fontSize: ms(10) },
-    bmDesc: { fontFamily: regular, fontSize: ms(11), color: '#6B7280', lineHeight: ms(17) },
+    bmTrendText: { fontFamily: interMedium, fontSize: ms(10) },
+    bmDesc: { fontFamily: interRegular, fontSize: ms(11), color: '#6B7280', lineHeight: ms(17) },
 
     // Cluster Tab
-    clusterSubtitle: { fontFamily: regular, fontSize: ms(11), color: '#9CA3AF', marginBottom: vs(12), marginTop: vs(-6) },
+    clusterSubtitle: { fontFamily: interRegular, fontSize: ms(11), color: '#9CA3AF', marginBottom: vs(12), marginTop: vs(-6) },
     clusterCard: { borderRadius: ms(14), borderWidth: 1, padding: ms(14) },
     clusterHeader: { flexDirection: 'row', alignItems: 'center', marginBottom: vs(8) },
     clusterIconBox: { width: ms(38), height: ms(38), borderRadius: ms(11), justifyContent: 'center', alignItems: 'center' },
-    clusterName: { fontFamily: bold, fontSize: ms(13), color: blackColor },
-    clusterTrend: { fontFamily: bold, fontSize: ms(10), marginTop: vs(2) },
+    clusterName: { fontFamily: interMedium, fontSize: ms(13), color: blackColor },
+    clusterTrend: { fontFamily: interMedium, fontSize: ms(10), marginTop: vs(2) },
     clusterScoreWrap: { alignItems: 'center' },
-    clusterScore: { fontFamily: bold, fontSize: ms(20) },
-    clusterScoreLabel: { fontFamily: regular, fontSize: ms(9), color: '#9CA3AF' },
+    clusterScore: { fontFamily: interMedium, fontSize: ms(20) },
+    clusterScoreLabel: { fontFamily: interRegular, fontSize: ms(9), color: '#9CA3AF' },
     clusterTagsRow: { flexDirection: 'row', flexWrap: 'wrap', gap: ms(6), marginBottom: vs(10) },
     clusterTag: { flexDirection: 'row', alignItems: 'center', gap: ms(4), borderRadius: ms(8), borderWidth: 1, paddingHorizontal: ms(8), paddingVertical: vs(3) },
-    clusterTagText: { fontFamily: bold, fontSize: ms(9) },
-    clusterSummary: { fontFamily: regular, fontSize: ms(11), color: '#374151', lineHeight: ms(17), marginBottom: vs(8) },
+    clusterTagText: { fontFamily: interMedium, fontSize: ms(9) },
+    clusterSummary: { fontFamily: interRegular, fontSize: ms(11), color: '#374151', lineHeight: ms(17), marginBottom: vs(8) },
     clusterRiskRow: { flexDirection: 'row', alignItems: 'flex-start', gap: ms(6), backgroundColor: '#FFF7ED', borderRadius: ms(8), padding: ms(8) },
-    clusterRiskText: { fontFamily: regular, fontSize: ms(10), color: '#F97316', flex: 1, lineHeight: ms(15) },
+    clusterRiskText: { fontFamily: interRegular, fontSize: ms(10), color: '#F97316', flex: 1, lineHeight: ms(15) },
 
     // Actions Tab
     actionGroupHeader: { marginBottom: vs(10) },
     actionGroupBadge: { flexDirection: 'row', alignItems: 'center', gap: ms(6), alignSelf: 'flex-start', borderRadius: ms(10), paddingHorizontal: ms(10), paddingVertical: vs(4) },
-    actionGroupLabel: { fontFamily: bold, fontSize: ms(12) },
+    actionGroupLabel: { fontFamily: interMedium, fontSize: ms(12) },
     actionCard: { flexDirection: 'row', alignItems: 'center', borderWidth: 1, borderColor: '#E5E7EB', borderRadius: ms(12), padding: ms(12) },
     actionIconBox: { width: ms(40), height: ms(40), borderRadius: ms(11), justifyContent: 'center', alignItems: 'center' },
-    actionTitle: { fontFamily: bold, fontSize: ms(12), color: blackColor, marginBottom: vs(3) },
-    actionDesc: { fontFamily: regular, fontSize: ms(11), color: '#6B7280', lineHeight: ms(16) },
+    actionTitle: { fontFamily: interMedium, fontSize: ms(12), color: blackColor, marginBottom: vs(3) },
+    actionDesc: { fontFamily: interRegular, fontSize: ms(11), color: '#6B7280', lineHeight: ms(16) },
 
     // Care Tab
     goalRow: { flexDirection: 'row', alignItems: 'center', paddingVertical: vs(10), borderBottomWidth: 1, borderBottomColor: '#F3F4F6' },
     goalDot: { width: ms(10), height: ms(10), borderRadius: ms(5), marginRight: ms(12) },
     goalLabelRow: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: vs(3) },
-    goalLabel: { fontFamily: bold, fontSize: ms(13), color: blackColor },
-    goalStatus: { fontFamily: bold, fontSize: ms(11) },
+    goalLabel: { fontFamily: interMedium, fontSize: ms(13), color: blackColor },
+    goalStatus: { fontFamily: interMedium, fontSize: ms(11) },
     goalValueRow: { flexDirection: 'row', gap: ms(12) },
-    goalCurrent: { fontFamily: regular, fontSize: ms(11), color: '#6B7280' },
-    goalCurrentVal: { fontFamily: bold },
-    goalTarget: { fontFamily: regular, fontSize: ms(11), color: '#9CA3AF' },
+    goalCurrent: { fontFamily: interRegular, fontSize: ms(11), color: '#6B7280' },
+    goalCurrentVal: { fontFamily: interMedium },
+    goalTarget: { fontFamily: interRegular, fontSize: ms(11), color: '#9CA3AF' },
 
     apptCard: { flexDirection: 'row', alignItems: 'center', borderWidth: 1, borderRadius: ms(12), padding: ms(12) },
     apptIconBox: { width: ms(40), height: ms(40), borderRadius: ms(11), justifyContent: 'center', alignItems: 'center' },
-    apptTitle: { fontFamily: bold, fontSize: ms(12), color: blackColor, marginBottom: vs(3) },
-    apptDate: { fontFamily: regular, fontSize: ms(11), color: '#6B7280' },
+    apptTitle: { fontFamily: interMedium, fontSize: ms(12), color: blackColor, marginBottom: vs(3) },
+    apptDate: { fontFamily: interRegular, fontSize: ms(11), color: '#6B7280' },
     apptTypeBadge: { borderRadius: ms(8), paddingHorizontal: ms(8), paddingVertical: vs(3) },
-    apptTypeText: { fontFamily: bold, fontSize: ms(10) },
+    apptTypeText: { fontFamily: interMedium, fontSize: ms(10) },
 
     careTeamRow: { flexDirection: 'row', justifyContent: 'space-between' },
     careTeamCard: { alignItems: 'center', width: '30%' },
     careTeamAvatar: { width: ms(54), height: ms(54), borderRadius: ms(27), justifyContent: 'center', alignItems: 'center', marginBottom: vs(8) },
-    careTeamName: { fontFamily: bold, fontSize: ms(10), color: blackColor, textAlign: 'center', marginBottom: vs(3) },
-    careTeamRole: { fontFamily: regular, fontSize: ms(9), textAlign: 'center' },
+    careTeamName: { fontFamily: interMedium, fontSize: ms(10), color: blackColor, textAlign: 'center', marginBottom: vs(3) },
+    careTeamRole: { fontFamily: interRegular, fontSize: ms(9), textAlign: 'center' },
 
     careTipRow: { flexDirection: 'row', alignItems: 'center', paddingVertical: vs(10), borderBottomColor: '#F3F4F6' },
     careTipIcon: { width: ms(34), height: ms(34), borderRadius: ms(10), backgroundColor: primaryColor + '12', justifyContent: 'center', alignItems: 'center', marginRight: ms(12) },
-    careTipText: { fontFamily: regular, fontSize: ms(12), color: '#374151', flex: 1, lineHeight: ms(18) },
+    careTipText: { fontFamily: interRegular, fontSize: ms(12), color: '#374151', flex: 1, lineHeight: ms(18) },
 });
 
 export default MedicationAdherenceScreen;

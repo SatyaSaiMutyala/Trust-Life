@@ -10,7 +10,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import { StatusBar2 } from '../../components/StatusBar';
 import Icon, { Icons } from '../../components/Icons';
 import { blackColor, whiteColor, primaryColor, grayColor, globalGradient2 } from '../../utils/globalColors';
-import { bold, regular } from '../../config/Constants';
+import { heading, interMedium, interRegular } from '../../config/Constants';
 
 const { width } = Dimensions.get('window');
 
@@ -397,15 +397,15 @@ const cmSt = StyleSheet.create({
         backgroundColor: primaryColor + '12', borderWidth: 2, borderColor: primaryColor,
         justifyContent: 'center', alignItems: 'center',
     },
-    centerScore: { fontFamily: bold, fontSize: ms(14), color: primaryColor, marginTop: vs(1) },
-    centerLabel: { fontFamily: regular, fontSize: ms(7), color: primaryColor },
+    centerScore: { fontFamily: interMedium, fontSize: ms(14), color: primaryColor, marginTop: vs(1) },
+    centerLabel: { fontFamily: interRegular, fontSize: ms(7), color: primaryColor },
     node: {
         position: 'absolute', width: NODE_SIZE, height: NODE_SIZE, borderRadius: NODE_SIZE / 2,
         borderWidth: 2, justifyContent: 'center', alignItems: 'center',
         shadowOffset: { width: 0, height: 2 },
     },
-    nodeName: { fontFamily: bold, fontSize: ms(7), marginTop: vs(1) },
-    nodeScore: { fontFamily: bold, fontSize: ms(9) },
+    nodeName: { fontFamily: interMedium, fontSize: ms(7), marginTop: vs(1) },
+    nodeScore: { fontFamily: interMedium, fontSize: ms(9) },
 });
 
 // ── ORGAN DETAIL PANEL ──────────────────────────────────────────────────────
@@ -1181,7 +1181,7 @@ const st = StyleSheet.create({
     gradient: { flex: 1 },
     content: { paddingBottom: vs(40) },
 
-    // Tab bar  
+    // Tab bar
     tabScroll: { marginBottom: vs(8), flexGrow: 0 },
     tabRow: { paddingHorizontal: ms(16), gap: ms(4) },
     tab: {
@@ -1191,7 +1191,7 @@ const st = StyleSheet.create({
         borderWidth: 1, borderColor: '#E5E7EB',
     },
     tabActive: { borderColor: primaryColor, backgroundColor: primaryColor + '10' },
-    tabText: { fontFamily: bold, fontSize: ms(9.5), color: '#9CA3AF' },
+    tabText: { fontFamily: interMedium, fontSize: ms(9.5), color: '#9CA3AF' },
     tabTextActive: { color: primaryColor },
 
     // Header
@@ -1203,8 +1203,8 @@ const st = StyleSheet.create({
         width: ms(36), height: ms(36), borderRadius: ms(18),
         backgroundColor: 'rgba(255,255,255,0.3)', justifyContent: 'center', alignItems: 'center',
     },
-    headerTitle: { fontFamily: bold, fontSize: ms(17), color: whiteColor },
-    headerSub: { fontFamily: regular, fontSize: ms(10), color: 'rgba(255,255,255,0.65)', marginTop: vs(1) },
+    headerTitle: { fontFamily: heading, fontSize: ms(17), color: whiteColor },
+    headerSub: { fontFamily: interRegular, fontSize: ms(10), color: 'rgba(255,255,255,0.65)', },
     toggleWrap: {
         flexDirection: 'row', backgroundColor: 'rgba(255,255,255,0.15)',
         borderRadius: ms(10), padding: ms(3),
@@ -1214,7 +1214,7 @@ const st = StyleSheet.create({
         paddingHorizontal: ms(10), paddingVertical: vs(5), borderRadius: ms(8),
     },
     toggleBtnActive: { backgroundColor: primaryColor },
-    toggleText: { fontFamily: bold, fontSize: ms(10), color: 'rgba(255,255,255,0.5)' },
+    toggleText: { fontFamily: interMedium, fontSize: ms(10), color: 'rgba(255,255,255,0.5)' },
     toggleTextActive: { color: whiteColor },
 
     // Patient strip
@@ -1228,11 +1228,11 @@ const st = StyleSheet.create({
         width: ms(28), height: ms(28), borderRadius: ms(14),
         backgroundColor: '#F97316', justifyContent: 'center', alignItems: 'center',
     },
-    patientName: { fontFamily: bold, fontSize: ms(11), color: whiteColor },
-    patientMeta: { fontFamily: regular, fontSize: ms(8), color: 'rgba(255,255,255,0.5)', marginTop: vs(1) },
+    patientName: { fontFamily: interMedium, fontSize: ms(11), color: whiteColor },
+    patientMeta: { fontFamily: interRegular, fontSize: ms(8), color: 'rgba(255,255,255,0.5)', marginTop: vs(1) },
     patientStat: { alignItems: 'center', marginLeft: ms(10) },
-    patientStatVal: { fontFamily: bold, fontSize: ms(14) },
-    patientStatLbl: { fontFamily: regular, fontSize: ms(7), color: 'rgba(255,255,255,0.5)' },
+    patientStatVal: { fontFamily: interMedium, fontSize: ms(14) },
+    patientStatLbl: { fontFamily: interRegular, fontSize: ms(7), color: 'rgba(255,255,255,0.5)' },
 
     // Cluster toggle
     clusterToggle: {
@@ -1241,7 +1241,7 @@ const st = StyleSheet.create({
         backgroundColor: '#FF723515', borderWidth: 1, borderColor: '#FF723535',
         borderRadius: ms(20), paddingHorizontal: ms(14), paddingVertical: vs(5),
     },
-    clusterToggleText: { fontFamily: bold, fontSize: ms(10), color: '#FF7235' },
+    clusterToggleText: { fontFamily: interMedium, fontSize: ms(10), color: '#FF7235' },
 
     // Cluster banner
     clusterBanner: {
@@ -1249,15 +1249,15 @@ const st = StyleSheet.create({
         marginHorizontal: ms(20), padding: ms(16), marginBottom: vs(14),
         borderWidth: 1, borderColor: '#FF723530',
     },
-    clusterBannerTitle: { fontFamily: bold, fontSize: ms(12), color: '#FF7235', marginBottom: vs(10) },
+    clusterBannerTitle: { fontFamily: heading, fontSize: ms(12), color: '#FF7235', marginBottom: vs(10) },
     clusterDiseaseRow: { marginBottom: vs(8) },
     clusterDiseaseInfo: { flexDirection: 'row', justifyContent: 'space-between', marginBottom: vs(3) },
-    clusterDiseaseName: { fontFamily: regular, fontSize: ms(11), color: blackColor },
-    clusterDiseaseType: { fontFamily: bold, fontSize: ms(9) },
+    clusterDiseaseName: { fontFamily: interRegular, fontSize: ms(11), color: blackColor },
+    clusterDiseaseType: { fontFamily: interMedium, fontSize: ms(9) },
     clusterBar: { height: vs(4), backgroundColor: '#E5E7EB', borderRadius: ms(2), overflow: 'hidden' },
     clusterBarFill: { height: '100%', borderRadius: ms(2) },
     clusterNote: { borderRadius: ms(10), padding: ms(12), marginTop: vs(6) },
-    clusterNoteText: { fontFamily: regular, fontSize: ms(11), lineHeight: ms(17) },
+    clusterNoteText: { fontFamily: interRegular, fontSize: ms(11), lineHeight: ms(17) },
 
     // Card
     card: {
@@ -1265,13 +1265,13 @@ const st = StyleSheet.create({
         marginHorizontal: ms(20), padding: ms(16), marginBottom: vs(14),
     },
     cardHeader: { flexDirection: 'row', alignItems: 'center', gap: ms(8), marginBottom: vs(12) },
-    cardTitle: { fontFamily: bold, fontSize: ms(14), color: blackColor },
+    cardTitle: { fontFamily: heading, fontSize: ms(14), color: blackColor },
 
     // Legend
     legendRow: { flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center', gap: ms(12), marginTop: vs(10) },
     legendItem: { flexDirection: 'row', alignItems: 'center', gap: ms(4) },
     legendDot: { width: ms(7), height: ms(7), borderRadius: ms(4) },
-    legendText: { fontFamily: regular, fontSize: ms(8), color: '#9CA3AF' },
+    legendText: { fontFamily: interRegular, fontSize: ms(8), color: '#9CA3AF' },
 
     // Stress index list
     stressRow: {
@@ -1284,18 +1284,18 @@ const st = StyleSheet.create({
         width: ms(36), height: ms(36), borderRadius: ms(10),
         justifyContent: 'center', alignItems: 'center',
     },
-    stressName: { fontFamily: bold, fontSize: ms(12), color: blackColor },
-    stressStageTxt: { fontFamily: regular, fontSize: ms(9), marginTop: vs(1), marginBottom: vs(4) },
+    stressName: { fontFamily: interMedium, fontSize: ms(12), color: blackColor },
+    stressStageTxt: { fontFamily: interRegular, fontSize: ms(9), marginTop: vs(1), marginBottom: vs(4) },
     stressBarBg: { height: vs(3), backgroundColor: '#E5E7EB', borderRadius: ms(2), overflow: 'hidden' },
     stressBarFill: { height: '100%', borderRadius: ms(2) },
-    stressScore: { fontFamily: bold, fontSize: ms(18) },
-    stressScoreLabel: { fontFamily: regular, fontSize: ms(7), color: '#9CA3AF' },
+    stressScore: { fontFamily: interMedium, fontSize: ms(18) },
+    stressScoreLabel: { fontFamily: interRegular, fontSize: ms(7), color: '#9CA3AF' },
     stageDot: { height: vs(4), borderRadius: ms(2) },
     stressBadge: { alignItems: 'center', borderRadius: ms(10), borderWidth: 1.5, paddingHorizontal: ms(10), paddingVertical: vs(4) },
-    stressBadgeNum: { fontFamily: bold, fontSize: ms(16) },
-    stressBadgeLbl: { fontFamily: regular, fontSize: ms(8) },
+    stressBadgeNum: { fontFamily: interMedium, fontSize: ms(16) },
+    stressBadgeLbl: { fontFamily: interRegular, fontSize: ms(8) },
     stagePill: { borderRadius: ms(20), borderWidth: 1, paddingHorizontal: ms(10), paddingVertical: vs(3) },
-    stagePillText: { fontFamily: bold, fontSize: ms(11) },
+    stagePillText: { fontFamily: interMedium, fontSize: ms(11) },
 
     // Organ detail
     odHeader: { flexDirection: 'row', alignItems: 'center', marginBottom: vs(14) },
@@ -1303,36 +1303,36 @@ const st = StyleSheet.create({
         width: ms(44), height: ms(44), borderRadius: ms(12),
         borderWidth: 1.5, justifyContent: 'center', alignItems: 'center', marginRight: ms(12),
     },
-    odName: { fontFamily: bold, fontSize: ms(15), color: blackColor },
-    odStage: { fontFamily: bold, fontSize: ms(10), marginTop: vs(2) },
+    odName: { fontFamily: heading, fontSize: ms(15), color: blackColor },
+    odStage: { fontFamily: interMedium, fontSize: ms(10), marginTop: vs(2) },
     odScoreCircle: { alignItems: 'center' },
     odScoreOuter: {
         width: ms(42), height: ms(42), borderRadius: ms(21),
         borderWidth: 2.5, justifyContent: 'center', alignItems: 'center',
     },
-    odScoreNum: { fontFamily: bold, fontSize: ms(15) },
-    odScoreLabel: { fontFamily: regular, fontSize: ms(7), color: '#9CA3AF', marginTop: vs(2) },
+    odScoreNum: { fontFamily: interMedium, fontSize: ms(15) },
+    odScoreLabel: { fontFamily: interRegular, fontSize: ms(7), color: '#9CA3AF', marginTop: vs(2) },
 
     // Stage section
     stageSection: { marginBottom: vs(14) },
-    sectionLabel: { fontFamily: bold, fontSize: ms(10), color: '#6B7280', textTransform: 'uppercase', letterSpacing: 0.5, marginBottom: vs(8) },
+    sectionLabel: { fontFamily: interMedium, fontSize: ms(10), color: '#6B7280', textTransform: 'uppercase', letterSpacing: 0.5, marginBottom: vs(8) },
     stageBarRow: { flexDirection: 'row', gap: ms(3) },
     stageSeg: { height: vs(5), borderRadius: ms(3), flex: 1 },
     stageFooter: { flexDirection: 'row', justifyContent: 'space-between', marginTop: vs(6) },
-    stageNormal: { fontFamily: regular, fontSize: ms(9), color: '#22C55E' },
-    stageProj: { fontFamily: regular, fontSize: ms(9) },
+    stageNormal: { fontFamily: interRegular, fontSize: ms(9), color: '#22C55E' },
+    stageProj: { fontFamily: interRegular, fontSize: ms(9) },
 
     // Impact card
     impactCard: { borderRadius: ms(12), borderWidth: 1, padding: ms(14), marginBottom: vs(14) },
-    impactTitle: { fontFamily: bold, fontSize: ms(11), marginBottom: vs(5) },
-    impactText: { fontFamily: regular, fontSize: ms(12), color: '#374151', lineHeight: ms(19) },
+    impactTitle: { fontFamily: heading, fontSize: ms(11), marginBottom: vs(5) },
+    impactText: { fontFamily: interRegular, fontSize: ms(12), color: '#374151', lineHeight: ms(19) },
 
     // Biomarker impact rows
     bmRow: { backgroundColor: '#F8FAFC', borderRadius: ms(10), padding: ms(12), marginBottom: vs(5), borderLeftWidth: ms(3) },
     bmRowTop: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: vs(3) },
-    bmName: { fontFamily: bold, fontSize: ms(12), color: blackColor },
-    bmVal: { fontFamily: bold, fontSize: ms(12) },
-    bmWhy: { fontFamily: regular, fontSize: ms(10), color: '#6B7280', lineHeight: ms(15) },
+    bmName: { fontFamily: interMedium, fontSize: ms(12), color: blackColor },
+    bmVal: { fontFamily: interMedium, fontSize: ms(12) },
+    bmWhy: { fontFamily: interRegular, fontSize: ms(10), color: '#6B7280', lineHeight: ms(15) },
 
     // Action rows
     actionRow: {
@@ -1340,7 +1340,7 @@ const st = StyleSheet.create({
         backgroundColor: primaryColor + '08', borderRadius: ms(8),
         paddingHorizontal: ms(12), paddingVertical: vs(9), marginBottom: vs(4),
     },
-    actionText: { fontFamily: regular, fontSize: ms(12), color: '#374151', flex: 1 },
+    actionText: { fontFamily: interRegular, fontSize: ms(12), color: '#374151', flex: 1 },
 
     // Disease web
     webCenter: { alignItems: 'center', marginBottom: vs(14) },
@@ -1349,7 +1349,7 @@ const st = StyleSheet.create({
         backgroundColor: '#FF456012', borderWidth: 2, borderColor: '#FF4560',
         justifyContent: 'center', alignItems: 'center',
     },
-    webCenterText: { fontFamily: bold, fontSize: ms(8), color: '#FF4560', textAlign: 'center', lineHeight: ms(10), marginTop: vs(2) },
+    webCenterText: { fontFamily: interMedium, fontSize: ms(8), color: '#FF4560', textAlign: 'center', lineHeight: ms(10), marginTop: vs(2) },
     webGrid: { flexDirection: 'row', flexWrap: 'wrap', gap: ms(8), justifyContent: 'center', marginBottom: vs(10) },
     webNode: {
         width: (width - ms(100)) / 3, alignItems: 'center',
@@ -1361,10 +1361,10 @@ const st = StyleSheet.create({
         width: ms(34), height: ms(34), borderRadius: ms(10),
         justifyContent: 'center', alignItems: 'center', marginBottom: vs(5),
     },
-    webNodeLabel: { fontFamily: bold, fontSize: ms(9), color: '#6B7280', textAlign: 'center' },
-    webNodeDetail: { fontFamily: bold, fontSize: ms(7.5), marginTop: vs(2) },
+    webNodeLabel: { fontFamily: interMedium, fontSize: ms(9), color: '#6B7280', textAlign: 'center' },
+    webNodeDetail: { fontFamily: interMedium, fontSize: ms(7.5), marginTop: vs(2) },
     webExpanded: { borderRadius: ms(12), borderWidth: 1, padding: ms(14), marginTop: vs(6) },
-    webExpandedTitle: { fontFamily: bold, fontSize: ms(11), textTransform: 'uppercase', letterSpacing: 0.5 },
+    webExpandedTitle: { fontFamily: heading, fontSize: ms(11), textTransform: 'uppercase', letterSpacing: 0.5 },
     webExpandedItems: { flexDirection: 'row', flexWrap: 'wrap', gap: ms(6) },
     webExpandedItem: {
         flexDirection: 'row', alignItems: 'center', gap: ms(5),
@@ -1372,7 +1372,7 @@ const st = StyleSheet.create({
         paddingHorizontal: ms(10), paddingVertical: vs(5),
     },
     webExpandedDot: { width: ms(5), height: ms(5), borderRadius: ms(3) },
-    webExpandedText: { fontFamily: regular, fontSize: ms(10), color: blackColor },
+    webExpandedText: { fontFamily: interRegular, fontSize: ms(10), color: blackColor },
 
     // Biomarkers section
     bioRow: {
@@ -1380,18 +1380,18 @@ const st = StyleSheet.create({
         padding: ms(12), marginBottom: vs(6),
     },
     bioRowTop: { flexDirection: 'row', justifyContent: 'space-between', marginBottom: vs(8) },
-    bioName: { fontFamily: bold, fontSize: ms(12), color: blackColor },
-    bioDelta: { fontFamily: regular, fontSize: ms(9), color: '#9CA3AF', marginTop: vs(1) },
-    bioValue: { fontFamily: bold, fontSize: ms(15) },
-    bioUnit: { fontFamily: regular, fontSize: ms(9), color: '#9CA3AF' },
-    bioTarget: { fontFamily: regular, fontSize: ms(8), color: '#9CA3AF', marginTop: vs(1) },
+    bioName: { fontFamily: interMedium, fontSize: ms(12), color: blackColor },
+    bioDelta: { fontFamily: interRegular, fontSize: ms(9), color: '#9CA3AF', marginTop: vs(1) },
+    bioValue: { fontFamily: interMedium, fontSize: ms(15) },
+    bioUnit: { fontFamily: interRegular, fontSize: ms(9), color: '#9CA3AF' },
+    bioTarget: { fontFamily: interRegular, fontSize: ms(8), color: '#9CA3AF', marginTop: vs(1) },
     bioOrganTags: { flexDirection: 'row', flexWrap: 'wrap', gap: ms(5) },
     bioOrganTag: {
         flexDirection: 'row', alignItems: 'center', gap: ms(3),
         borderRadius: ms(20), paddingHorizontal: ms(8), paddingVertical: vs(3),
         borderWidth: 1,
     },
-    bioOrganTagText: { fontFamily: bold, fontSize: ms(8) },
+    bioOrganTagText: { fontFamily: interMedium, fontSize: ms(8) },
 
     // Lifestyle
     lifeRow: { marginBottom: vs(10) },
@@ -1400,9 +1400,9 @@ const st = StyleSheet.create({
         width: ms(30), height: ms(30), borderRadius: ms(8),
         justifyContent: 'center', alignItems: 'center',
     },
-    lifeLabel: { fontFamily: bold, fontSize: ms(11), color: blackColor },
-    lifeWhy: { fontFamily: regular, fontSize: ms(9), color: '#9CA3AF', marginTop: vs(1) },
-    lifeValue: { fontFamily: bold, fontSize: ms(11), color: '#FF7235' },
+    lifeLabel: { fontFamily: interMedium, fontSize: ms(11), color: blackColor },
+    lifeWhy: { fontFamily: interRegular, fontSize: ms(9), color: '#9CA3AF', marginTop: vs(1) },
+    lifeValue: { fontFamily: interMedium, fontSize: ms(11), color: '#FF7235' },
     lifeBarBg: { height: vs(4), backgroundColor: '#E5E7EB', borderRadius: ms(2), overflow: 'hidden' },
     lifeBarFill: { height: '100%', backgroundColor: '#FF7235', borderRadius: ms(2) },
 
@@ -1417,15 +1417,15 @@ const st = StyleSheet.create({
         justifyContent: 'center', alignItems: 'center',
     },
     recTitleRow: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: vs(3) },
-    recTitle: { fontFamily: bold, fontSize: ms(12), color: blackColor, flex: 1 },
+    recTitle: { fontFamily: interMedium, fontSize: ms(12), color: blackColor, flex: 1 },
     recOrganChip: {
         borderRadius: ms(20), paddingHorizontal: ms(8), paddingVertical: vs(2),
         borderWidth: 1, marginLeft: ms(6),
     },
-    recOrganText: { fontFamily: bold, fontSize: ms(8) },
-    recDesc: { fontFamily: regular, fontSize: ms(10), color: '#6B7280', lineHeight: ms(16), marginBottom: vs(6) },
+    recOrganText: { fontFamily: interMedium, fontSize: ms(8) },
+    recDesc: { fontFamily: interRegular, fontSize: ms(10), color: '#6B7280', lineHeight: ms(16), marginBottom: vs(6) },
     recActionRow: { flexDirection: 'row', alignItems: 'center', gap: ms(4) },
-    recActionText: { fontFamily: bold, fontSize: ms(10), color: primaryColor },
+    recActionText: { fontFamily: interMedium, fontSize: ms(10), color: primaryColor },
 
     // Timeline
     timelineWrap: {},
@@ -1434,6 +1434,6 @@ const st = StyleSheet.create({
     timelineDot: { width: ms(12), height: ms(12), borderRadius: ms(6), marginTop: vs(3) },
     timelineConnector: { width: 2, flex: 1, backgroundColor: '#E5E7EB', minHeight: vs(22) },
     timelineContent: { flex: 1, paddingBottom: vs(18) },
-    timelineTime: { fontFamily: bold, fontSize: ms(10), marginBottom: vs(3) },
-    timelineEvent: { fontFamily: regular, fontSize: ms(11), color: '#374151', lineHeight: ms(17) },
+    timelineTime: { fontFamily: interMedium, fontSize: ms(10), marginBottom: vs(3) },
+    timelineEvent: { fontFamily: interRegular, fontSize: ms(11), color: '#374151', lineHeight: ms(17) },
 });

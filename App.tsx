@@ -345,6 +345,9 @@ import MedicineCartScreen from './src/views/MedicalPharma/MedicineCartScreen';
 import MedicinePaymentSuccessScreen from './src/views/MedicalPharma/PaymentSuccessScreen';
 import MedicineOrderPlacedScreen from './src/views/MedicalPharma/OrderPlacedScreen';
 
+// Set Montserrat-SemiBold as the default font for all Text components
+if (!Text.defaultProps) (Text as any).defaultProps = {};
+(Text.defaultProps as any).style = { fontFamily: 'Montserrat-SemiBold', includeFontPadding: false };
 
 const forFade = ({ current, next }) => {
   const opacity = Animated.add(

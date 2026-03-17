@@ -10,7 +10,7 @@ import {
     Dimensions,
 } from 'react-native';
 import Icon, { Icons } from '../components/Icons';
-import { regular, bold, img_url, login_entry_img } from '../config/Constants';
+import { heading, interMedium, interRegular, img_url, login_entry_img } from '../config/Constants';
 import { useNavigation, CommonActions } from '@react-navigation/native';
 import { connect } from 'react-redux';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -389,7 +389,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     loginText: {
-        fontFamily: regular,
+        fontFamily: interRegular,
         fontSize: ms(16),
         color: blackColor,
         marginTop: vs(10),
@@ -424,12 +424,12 @@ const styles = StyleSheet.create({
         marginLeft: ms(12),
     },
     welcomeText: {
-        fontFamily: bold,
+        fontFamily: interMedium,
         fontSize: ms(16),
         color: whiteColor,
     },
     userName: {
-        fontFamily: regular,
+        fontFamily: interRegular,
         fontSize: ms(12),
         color: whiteColor,
     },
@@ -469,18 +469,18 @@ const styles = StyleSheet.create({
         marginRight: ms(10),
     },
     walletLabel: {
-        fontFamily: bold,
+        fontFamily: interMedium,
         fontSize: ms(14),
         color: blackColor,
         marginBottom: vs(3),
     },
     walletSubtext: {
-        fontFamily: regular,
+        fontFamily: interRegular,
         fontSize: ms(10),
         color: '#6B7280',
     },
     walletAmount: {
-        fontFamily: bold,
+        fontFamily: interMedium,
         fontSize: ms(26),
         color: blackColor,
     },
@@ -516,13 +516,13 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     trustMDTitle: {
-        fontFamily: bold,
+        fontFamily: interMedium,
         fontSize: ms(14),
         color: blackColor,
         marginBottom: vs(2),
     },
     trustMDDesc: {
-        fontFamily: regular,
+        fontFamily: interRegular,
         fontSize: ms(10),
         color: '#6B7280',
     },
@@ -550,7 +550,7 @@ const styles = StyleSheet.create({
         marginBottom: vs(8),
     },
     quickActionLabel: {
-        fontFamily: regular,
+        fontFamily: interMedium,
         fontSize: ms(12),
         color: blackColor,
         textAlign: 'center',
@@ -558,7 +558,7 @@ const styles = StyleSheet.create({
 
     // Section Headers & Cards
     sectionHeader: {
-        fontFamily: bold,
+        fontFamily: heading,
         fontSize: ms(14),
         color: blackColor,
         letterSpacing: 0.5,
@@ -587,12 +587,12 @@ const styles = StyleSheet.create({
     },
     sectionRowTitle: {
         flex: 1,
-        fontFamily: regular,
+        fontFamily: interMedium,
         fontSize: ms(14),
         color: blackColor,
     },
     sectionRowRightText: {
-        fontFamily: regular,
+        fontFamily: interRegular,
         fontSize: ms(13),
         color: '#9CA3AF',
     },
@@ -628,13 +628,13 @@ const styles = StyleSheet.create({
         paddingBottom: vs(65),
     },
     dialogTitle: {
-        fontFamily: bold,
+        fontFamily: heading,
         fontSize: ms(20),
         color: blackColor,
         marginBottom: vs(8),
     },
     dialogMessage: {
-        fontFamily: regular,
+        fontFamily: interRegular,
         fontSize: ms(14),
         color: blackColor,
         textAlign: 'center',
@@ -655,7 +655,7 @@ const styles = StyleSheet.create({
         marginRight: ms(10),
     },
     dialogCancelText: {
-        fontFamily: bold,
+        fontFamily: interMedium,
         fontSize: ms(16),
         color: blackColor,
     },
@@ -671,7 +671,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     dialogLogoutText: {
-        fontFamily: bold,
+        fontFamily: interMedium,
         fontSize: ms(16),
         color: whiteColor,
     },

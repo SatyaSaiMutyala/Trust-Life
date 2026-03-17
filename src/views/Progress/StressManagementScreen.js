@@ -10,7 +10,7 @@ import Svg, { Circle, Defs, LinearGradient as SvgLinearGradient, Stop } from 're
 import { StatusBar2 } from '../../components/StatusBar';
 import Icon, { Icons } from '../../components/Icons';
 import { blackColor, whiteColor, primaryColor, globalGradient2 } from '../../utils/globalColors';
-import { bold, regular } from '../../config/Constants';
+import { heading, interMedium, interRegular } from '../../config/Constants';
 
 // ── Stress Data ──
 const PSS_SCORE = 18; // Perceived Stress Scale (0–40)
@@ -184,7 +184,7 @@ const StressManagementScreen = () => {
                         {STRESS_SCALE.map((item, index) => (
                             <View key={index} style={[styles.scaleRow, item.active && { backgroundColor: '#F8FAFC', borderRadius: ms(10) }]}>
                                 <View style={[styles.scaleDot, { backgroundColor: item.color }]} />
-                                <Text style={[styles.scaleLabel, item.active && { fontFamily: bold, color: blackColor }]}>{item.label}</Text>
+                                <Text style={[styles.scaleLabel, item.active && { fontFamily: interMedium, color: blackColor }]}>{item.label}</Text>
                                 <Text style={[styles.scaleRange, { color: item.color }]}>{item.range}</Text>
                                 {item.active && (
                                     <View style={[styles.scaleActiveBadge, { backgroundColor: item.color }]}>
@@ -324,80 +324,80 @@ const styles = StyleSheet.create({
         backgroundColor: 'rgba(255,255,255,0.3)',
         justifyContent: 'center', alignItems: 'center', marginRight: ms(12),
     },
-    headerTitle: { fontFamily: bold, fontSize: ms(18), color: whiteColor },
+    headerTitle: { fontFamily: heading, fontSize: ms(18), color: whiteColor },
     scrollContent: { paddingBottom: vs(40) },
 
     scoreCard: { backgroundColor: whiteColor, borderRadius: ms(14), padding: ms(16), marginBottom: vs(12) },
     scoreRow: { flexDirection: 'row', alignItems: 'center' },
     ringCenter: { position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, justifyContent: 'center', alignItems: 'center' },
-    ringScore: { fontFamily: bold, fontSize: ms(22), color: blackColor },
-    ringLabel: { fontFamily: regular, fontSize: ms(11), color: '#9CA3AF' },
+    ringScore: { fontFamily: interMedium, fontSize: ms(22), color: blackColor },
+    ringLabel: { fontFamily: interRegular, fontSize: ms(11), color: '#9CA3AF' },
     scoreInfo: { flex: 1, marginLeft: ms(16) },
     adherenceBadge: { backgroundColor: '#DCFCE7', borderRadius: ms(12), paddingHorizontal: ms(14), paddingVertical: vs(4), alignSelf: 'flex-start', marginBottom: vs(8) },
-    adherenceBadgeText: { fontFamily: bold, fontSize: ms(12) },
-    scoreDesc: { fontFamily: regular, fontSize: ms(12), color: '#6B7280', lineHeight: ms(18), marginBottom: vs(8) },
+    adherenceBadgeText: { fontFamily: interMedium, fontSize: ms(12) },
+    scoreDesc: { fontFamily: interRegular, fontSize: ms(12), color: '#6B7280', lineHeight: ms(18), marginBottom: vs(8) },
     streakRow: { flexDirection: 'row', alignItems: 'center', gap: ms(4) },
-    streakText: { fontFamily: bold, fontSize: ms(12) },
+    streakText: { fontFamily: interMedium, fontSize: ms(12) },
     warningRow: { flexDirection: 'row', alignItems: 'center', gap: ms(4), backgroundColor: '#EDE9FE', borderRadius: ms(8), paddingHorizontal: ms(10), paddingVertical: vs(4) },
-    warningText: { fontFamily: bold, fontSize: ms(10), color: '#7C3AED' },
+    warningText: { fontFamily: interMedium, fontSize: ms(10), color: '#7C3AED' },
 
     // Scale
     scaleRow: { flexDirection: 'row', alignItems: 'center', paddingVertical: vs(9), paddingHorizontal: ms(10), borderBottomWidth: 1, borderBottomColor: '#F1F5F9' },
     scaleDot: { width: ms(10), height: ms(10), borderRadius: ms(5), marginRight: ms(10) },
-    scaleLabel: { fontFamily: regular, fontSize: ms(11), color: '#6B7280', flex: 1 },
-    scaleRange: { fontFamily: bold, fontSize: ms(11), marginRight: ms(6) },
+    scaleLabel: { fontFamily: interRegular, fontSize: ms(11), color: '#6B7280', flex: 1 },
+    scaleRange: { fontFamily: interMedium, fontSize: ms(11), marginRight: ms(6) },
     scaleActiveBadge: { borderRadius: ms(8), paddingHorizontal: ms(8), paddingVertical: vs(2) },
-    scaleActiveText: { fontFamily: bold, fontSize: ms(9), color: whiteColor },
+    scaleActiveText: { fontFamily: interMedium, fontSize: ms(9), color: whiteColor },
 
     statsGrid: { flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-between', marginBottom: vs(12) },
     statCard: { width: '48%', backgroundColor: whiteColor, borderRadius: ms(14), padding: ms(14), marginBottom: vs(8), alignItems: 'center' },
     statIcon: { width: ms(40), height: ms(40), borderRadius: ms(12), justifyContent: 'center', alignItems: 'center', marginBottom: vs(8) },
-    statValue: { fontFamily: bold, fontSize: ms(20), color: blackColor },
-    statLabel: { fontFamily: regular, fontSize: ms(12), color: '#6B7280', marginTop: vs(2) },
+    statValue: { fontFamily: interMedium, fontSize: ms(20), color: blackColor },
+    statLabel: { fontFamily: interRegular, fontSize: ms(12), color: '#6B7280', marginTop: vs(2) },
 
     card: { backgroundColor: whiteColor, borderRadius: ms(14), padding: ms(16), marginBottom: vs(12) },
-    cardTitle: { fontFamily: bold, fontSize: ms(15), color: blackColor, marginBottom: vs(14) },
+    cardTitle: { fontFamily: heading, fontSize: ms(15), color: blackColor, marginBottom: vs(14) },
 
     barChart: { flexDirection: 'row', justifyContent: 'space-around', alignItems: 'flex-end' },
     barCol: { alignItems: 'center', flex: 1 },
     barTrack: { width: ms(28), height: vs(70), backgroundColor: '#F1F5F9', borderRadius: ms(6), justifyContent: 'flex-end', overflow: 'hidden' },
     barFill: { width: '100%', borderRadius: ms(6) },
-    barLabel: { fontFamily: regular, fontSize: ms(10), color: '#6B7280', marginTop: vs(6) },
-    barValue: { fontFamily: bold, fontSize: ms(10), color: blackColor, marginTop: vs(2) },
+    barLabel: { fontFamily: interRegular, fontSize: ms(10), color: '#6B7280', marginTop: vs(6) },
+    barValue: { fontFamily: interMedium, fontSize: ms(10), color: blackColor, marginTop: vs(2) },
     barLegend: { flexDirection: 'row', justifyContent: 'center', gap: ms(16), marginTop: vs(12) },
     legendItem: { flexDirection: 'row', alignItems: 'center', gap: ms(4) },
     legendDot: { width: ms(8), height: ms(8), borderRadius: ms(4) },
-    legendText: { fontFamily: regular, fontSize: ms(10), color: '#6B7280' },
+    legendText: { fontFamily: interRegular, fontSize: ms(10), color: '#6B7280' },
 
     // Triggers
     triggerRow: { flexDirection: 'row', alignItems: 'center', paddingVertical: vs(10), borderBottomWidth: 1, borderBottomColor: '#F1F5F9' },
     triggerIcon: { width: ms(42), height: ms(42), borderRadius: ms(12), justifyContent: 'center', alignItems: 'center', marginRight: ms(12) },
     triggerInfo: { flex: 1 },
-    triggerName: { fontFamily: bold, fontSize: ms(13), color: blackColor },
-    triggerFreq: { fontFamily: regular, fontSize: ms(11), color: '#9CA3AF', marginTop: vs(1) },
+    triggerName: { fontFamily: interMedium, fontSize: ms(13), color: blackColor },
+    triggerFreq: { fontFamily: interRegular, fontSize: ms(11), color: '#9CA3AF', marginTop: vs(1) },
     triggerBadge: { borderRadius: ms(12), paddingHorizontal: ms(10), paddingVertical: vs(3) },
-    triggerBadgeText: { fontFamily: bold, fontSize: ms(10) },
+    triggerBadgeText: { fontFamily: interMedium, fontSize: ms(10) },
 
     // Impact
     impactRow: { flexDirection: 'row', alignItems: 'center', paddingVertical: vs(10), borderBottomWidth: 1, borderBottomColor: '#F1F5F9' },
     impactLeft: { flex: 1 },
-    impactMarker: { fontFamily: bold, fontSize: ms(13), color: blackColor },
-    impactDesc: { fontFamily: regular, fontSize: ms(11), color: '#6B7280', marginTop: vs(2), lineHeight: ms(16) },
+    impactMarker: { fontFamily: interMedium, fontSize: ms(13), color: blackColor },
+    impactDesc: { fontFamily: interRegular, fontSize: ms(11), color: '#6B7280', marginTop: vs(2), lineHeight: ms(16) },
     impactBadge: { borderRadius: ms(12), paddingHorizontal: ms(10), paddingVertical: vs(3) },
-    impactBadgeText: { fontFamily: bold, fontSize: ms(10) },
+    impactBadgeText: { fontFamily: interMedium, fontSize: ms(10) },
 
     // Coping
     copingRow: { flexDirection: 'row', alignItems: 'center', paddingVertical: vs(10), borderBottomWidth: 1, borderBottomColor: '#F1F5F9' },
     copingIcon: { width: ms(42), height: ms(42), borderRadius: ms(12), justifyContent: 'center', alignItems: 'center', marginRight: ms(12) },
     copingInfo: { flex: 1 },
-    copingName: { fontFamily: bold, fontSize: ms(13), color: blackColor },
-    copingDetail: { fontFamily: regular, fontSize: ms(11), color: '#6B7280', marginTop: vs(2) },
+    copingName: { fontFamily: interMedium, fontSize: ms(13), color: blackColor },
+    copingDetail: { fontFamily: interRegular, fontSize: ms(11), color: '#6B7280', marginTop: vs(2) },
     copingBadge: { borderRadius: ms(12), paddingHorizontal: ms(10), paddingVertical: vs(3) },
-    copingBadgeText: { fontFamily: bold, fontSize: ms(10) },
+    copingBadgeText: { fontFamily: interMedium, fontSize: ms(10) },
 
     tipRow: { flexDirection: 'row', alignItems: 'center', paddingVertical: vs(8), borderBottomWidth: 1, borderBottomColor: '#F1F5F9' },
     tipIcon: { width: ms(34), height: ms(34), borderRadius: ms(10), backgroundColor: '#F0FDF4', justifyContent: 'center', alignItems: 'center', marginRight: ms(12) },
-    tipText: { fontFamily: regular, fontSize: ms(12), color: '#374151', flex: 1, lineHeight: ms(18) },
+    tipText: { fontFamily: interRegular, fontSize: ms(12), color: '#374151', flex: 1, lineHeight: ms(18) },
 });
 
 export default StressManagementScreen;

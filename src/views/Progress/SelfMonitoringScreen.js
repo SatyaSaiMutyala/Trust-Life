@@ -10,7 +10,7 @@ import Svg, { Circle, Defs, LinearGradient as SvgLinearGradient, Stop } from 're
 import { StatusBar2 } from '../../components/StatusBar';
 import Icon, { Icons } from '../../components/Icons';
 import { blackColor, whiteColor, primaryColor, globalGradient2 } from '../../utils/globalColors';
-import { bold, regular } from '../../config/Constants';
+import { heading, interMedium, interRegular } from '../../config/Constants';
 
 const MONITORING_SCORE = 86;
 const RING_SIZE = ms(120);
@@ -245,7 +245,7 @@ const styles = StyleSheet.create({
         backgroundColor: 'rgba(255,255,255,0.3)',
         justifyContent: 'center', alignItems: 'center', marginRight: ms(12),
     },
-    headerTitle: { fontFamily: bold, fontSize: ms(18), color: whiteColor },
+    headerTitle: { fontFamily: heading, fontSize: ms(18), color: whiteColor },
     scrollContent: { paddingBottom: vs(40) },
 
     // Score Card
@@ -258,18 +258,18 @@ const styles = StyleSheet.create({
         position: 'absolute', top: 0, left: 0, right: 0, bottom: 0,
         justifyContent: 'center', alignItems: 'center',
     },
-    ringScore: { fontFamily: bold, fontSize: ms(22), color: blackColor },
-    ringLabel: { fontFamily: regular, fontSize: ms(11), color: '#9CA3AF' },
+    ringScore: { fontFamily: heading, fontSize: ms(22), color: blackColor },
+    ringLabel: { fontFamily: interRegular, fontSize: ms(11), color: '#9CA3AF' },
     scoreInfo: { flex: 1, marginLeft: ms(16) },
     adherenceBadge: {
         backgroundColor: '#DCFCE7', borderRadius: ms(12),
         paddingHorizontal: ms(14), paddingVertical: vs(4),
         alignSelf: 'flex-start', marginBottom: vs(8),
     },
-    adherenceBadgeText: { fontFamily: bold, fontSize: ms(12), color: '#16A34A' },
-    scoreDesc: { fontFamily: regular, fontSize: ms(12), color: '#6B7280', lineHeight: ms(18), marginBottom: vs(8) },
+    adherenceBadgeText: { fontFamily: interMedium, fontSize: ms(12), color: '#16A34A' },
+    scoreDesc: { fontFamily: interRegular, fontSize: ms(12), color: '#6B7280', lineHeight: ms(18), marginBottom: vs(8) },
     streakRow: { flexDirection: 'row', alignItems: 'center', gap: ms(4) },
-    streakText: { fontFamily: bold, fontSize: ms(12), color: '#F59E0B' },
+    streakText: { fontFamily: interMedium, fontSize: ms(12), color: '#F59E0B' },
 
     // Stats Grid
     statsGrid: {
@@ -284,26 +284,26 @@ const styles = StyleSheet.create({
         width: ms(40), height: ms(40), borderRadius: ms(12),
         justifyContent: 'center', alignItems: 'center', marginBottom: vs(8),
     },
-    statValue: { fontFamily: bold, fontSize: ms(20), color: blackColor },
-    statLabel: { fontFamily: regular, fontSize: ms(12), color: '#6B7280', marginTop: vs(2) },
+    statValue: { fontFamily: interMedium, fontSize: ms(20), color: blackColor },
+    statLabel: { fontFamily: interRegular, fontSize: ms(12), color: '#6B7280', marginTop: vs(2) },
 
     // Card
     card: {
         backgroundColor: whiteColor, borderRadius: ms(14),
         padding: ms(16), marginBottom: vs(12),
     },
-    cardTitle: { fontFamily: bold, fontSize: ms(15), color: blackColor, marginBottom: vs(14) },
+    cardTitle: { fontFamily: heading, fontSize: ms(15), color: blackColor, marginBottom: vs(14) },
 
     // Weekly Calendar
     weekRow: { flexDirection: 'row', justifyContent: 'space-between' },
     dayCol: { alignItems: 'center' },
-    dayLabel: { fontFamily: regular, fontSize: ms(11), color: '#6B7280', marginBottom: vs(6) },
+    dayLabel: { fontFamily: interRegular, fontSize: ms(11), color: '#6B7280', marginBottom: vs(6) },
     dayCircle: {
         width: ms(36), height: ms(36), borderRadius: ms(18),
         borderWidth: 1.5, justifyContent: 'center', alignItems: 'center',
     },
-    dayDate: { fontFamily: regular, fontSize: ms(12), color: '#9CA3AF' },
-    dayCount: { fontFamily: bold, fontSize: ms(10) },
+    dayDate: { fontFamily: interRegular, fontSize: ms(12), color: '#9CA3AF' },
+    dayCount: { fontFamily: interMedium, fontSize: ms(10) },
 
     // Vitals
     vitalRow: {
@@ -316,13 +316,13 @@ const styles = StyleSheet.create({
     },
     vitalInfo: { flex: 1 },
     vitalTopRow: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: vs(4) },
-    vitalName: { fontFamily: bold, fontSize: ms(13), color: blackColor },
+    vitalName: { fontFamily: interMedium, fontSize: ms(13), color: blackColor },
     vitalBadge: { borderRadius: ms(12), paddingHorizontal: ms(8), paddingVertical: vs(2) },
-    vitalBadgeText: { fontFamily: bold, fontSize: ms(9) },
-    vitalReading: { fontFamily: regular, fontSize: ms(11), color: '#6B7280', marginBottom: vs(6) },
+    vitalBadgeText: { fontFamily: interMedium, fontSize: ms(9) },
+    vitalReading: { fontFamily: interRegular, fontSize: ms(11), color: '#6B7280', marginBottom: vs(6) },
     vitalBarTrack: { height: vs(5), backgroundColor: '#F1F5F9', borderRadius: ms(3), overflow: 'hidden', marginBottom: vs(4) },
     vitalBarFill: { height: '100%', borderRadius: ms(3) },
-    vitalLogCount: { fontFamily: regular, fontSize: ms(10), color: '#9CA3AF' },
+    vitalLogCount: { fontFamily: interRegular, fontSize: ms(10), color: '#9CA3AF' },
 
     // Devices
     deviceRow: {
@@ -334,12 +334,12 @@ const styles = StyleSheet.create({
         justifyContent: 'center', alignItems: 'center', marginRight: ms(12),
     },
     deviceInfo: { flex: 1 },
-    deviceName: { fontFamily: bold, fontSize: ms(13), color: blackColor },
-    deviceType: { fontFamily: regular, fontSize: ms(11), color: '#6B7280', marginTop: vs(1) },
-    deviceSync: { fontFamily: regular, fontSize: ms(10), color: '#9CA3AF', marginTop: vs(2) },
+    deviceName: { fontFamily: interMedium, fontSize: ms(13), color: blackColor },
+    deviceType: { fontFamily: interRegular, fontSize: ms(11), color: '#6B7280', marginTop: vs(1) },
+    deviceSync: { fontFamily: interRegular, fontSize: ms(10), color: '#9CA3AF', marginTop: vs(2) },
     deviceStatus: { flexDirection: 'row', alignItems: 'center', borderRadius: ms(12), paddingHorizontal: ms(10), paddingVertical: vs(4), gap: ms(4) },
     deviceDot: { width: ms(6), height: ms(6), borderRadius: ms(3) },
-    deviceStatusText: { fontFamily: bold, fontSize: ms(10) },
+    deviceStatusText: { fontFamily: interMedium, fontSize: ms(10) },
 
     // Tips
     tipRow: {
@@ -351,7 +351,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#F0FDF4', justifyContent: 'center', alignItems: 'center',
         marginRight: ms(12),
     },
-    tipText: { fontFamily: regular, fontSize: ms(12), color: '#374151', flex: 1, lineHeight: ms(18) },
+    tipText: { fontFamily: interRegular, fontSize: ms(12), color: '#374151', flex: 1, lineHeight: ms(18) },
 });
 
 export default SelfMonitoringScreen;

@@ -9,6 +9,7 @@ import {
     KeyboardAvoidingView,
     Platform,
 } from 'react-native';
+import LinearGradient from 'react-native-linear-gradient';
 import { useNavigation } from '@react-navigation/native';
 import { ms, vs } from 'react-native-size-matters';
 import { StatusBar2 } from '../../components/StatusBar';
@@ -16,8 +17,8 @@ import Icon, { Icons } from '../../components/Icons';
 import InputField from '../../utils/InputField';
 import DropdownField from '../../utils/DropdownField';
 import PrimaryButton from '../../utils/primaryButton';
-import { bold, regular } from '../../config/Constants';
-import { blackColor, whiteColor, primaryColor } from '../../utils/globalColors';
+import { heading, interMedium, interRegular } from '../../config/Constants';
+import { blackColor, whiteColor, primaryColor, globalGradient } from '../../utils/globalColors';
 
 const DOSAGE_OPTIONS = [
     '50mg', '100mg', '150mg', '200mg', '250mg', '300mg',
@@ -61,7 +62,14 @@ const AddPrescriptionScreen = () => {
     const isFormValid = medicineName.trim() !== '' && dosage !== '';
 
     return (
-        <SafeAreaView style={styles.container}>
+        <LinearGradient
+            colors={globalGradient}
+            start={{ x: 0, y: 0 }}
+            end={{ x: 0, y: 1 }}
+            locations={[0, 0.22]}
+            style={styles.flex1}
+        >
+            <SafeAreaView style={styles.flex1}>
             <StatusBar2 />
             <KeyboardAvoidingView
                 style={{ flex: 1 }}
@@ -157,14 +165,14 @@ const AddPrescriptionScreen = () => {
                     />
                 </ScrollView>
             </KeyboardAvoidingView>
-        </SafeAreaView>
+            </SafeAreaView>
+        </LinearGradient>
     );
 };
 
 const styles = StyleSheet.create({
-    container: {
+    flex1: {
         flex: 1,
-        backgroundColor: whiteColor,
     },
     scrollContent: {
         paddingHorizontal: ms(20),
@@ -180,26 +188,34 @@ const styles = StyleSheet.create({
         marginHorizontal: ms(-5),
     },
     backButton: {
-        width: ms(40),
-        height: ms(40),
+        width: ms(34),
+        height: ms(34),
+        borderRadius: ms(17),
+        backgroundColor: whiteColor,
         justifyContent: 'center',
-        alignItems: 'flex-start',
+        alignItems: 'center',
+        elevation: 2,
+        shadowColor: blackColor,
+        shadowOffset: { width: 0, height: 1 },
+        shadowOpacity: 0.1,
+        shadowRadius: 2,
+        marginRight: ms(12),
     },
     headerTitle: {
         fontSize: ms(16),
-        fontFamily: bold,
-        color: blackColor,
+        fontFamily: heading,
+        color: whiteColor,
     },
     headerDate: {
         fontSize: ms(12),
-        fontFamily: regular,
-        color: '#888',
+        fontFamily: interRegular,
+        color: 'rgba(255,255,255,0.7)',
         marginTop: vs(2),
     },
     description: {
         fontSize: ms(13),
-        color: '#888',
-        fontFamily: regular,
+        color: '#6B7280',
+        fontFamily: interRegular,
         lineHeight: ms(20),
         marginTop: vs(10),
         marginBottom: vs(20),
@@ -207,7 +223,7 @@ const styles = StyleSheet.create({
 
     // Label
     label: {
-        fontFamily: bold,
+        fontFamily: interMedium,
         fontSize: ms(13),
         color: blackColor,
         marginBottom: vs(6),
@@ -231,7 +247,7 @@ const styles = StyleSheet.create({
         backgroundColor: primaryColor,
     },
     toggleBtnText: {
-        fontFamily: bold,
+        fontFamily: interMedium,
         fontSize: ms(14),
         color: '#6B7280',
     },
@@ -256,7 +272,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     counterValue: {
-        fontFamily: bold,
+        fontFamily: heading,
         fontSize: ms(18),
         color: blackColor,
         minWidth: ms(100),

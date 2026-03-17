@@ -16,7 +16,7 @@ import { StatusBar2 } from '../../components/StatusBar';
 import Loader from '../../components/Loader';
 import Icon, { Icons } from '../../components/Icons';
 import SignUpStepper from '../../components/SignUpStepper';
-import { bold, regular } from '../../config/Constants';
+import { heading, interMedium, interRegular } from '../../config/Constants';
 import {
     blackColor,
     primaryColor,
@@ -229,7 +229,7 @@ const styles = StyleSheet.create({
     },
     headerTitle: {
         flex: 1,
-        fontFamily: bold,
+        fontFamily: heading,
         fontSize: ms(18),
         color: whiteColor,
         marginLeft: ms(12),
@@ -241,7 +241,7 @@ const styles = StyleSheet.create({
         borderRadius:ms(20)
     },
     skipText: {
-        fontFamily: bold,
+        fontFamily: interMedium,
         fontSize: ms(14),
         color: blackColor,
     },
@@ -251,14 +251,14 @@ const styles = StyleSheet.create({
     },
     // --- Title ---
     title: {
-        fontFamily: bold,
+        fontFamily: heading,
         fontSize: ms(18),
         color: blackColor,
         textAlign: 'center',
         marginBottom: vs(8),
     },
     subtitle: {
-        fontFamily: regular,
+        fontFamily: interRegular,
         fontSize: ms(12),
         color: '#6B7280',
         textAlign: 'center',
@@ -287,13 +287,13 @@ const styles = StyleSheet.create({
         marginLeft: ms(12),
     },
     cardTitle: {
-        fontFamily: bold,
+        fontFamily: interMedium,
         fontSize: ms(14),
         color: blackColor,
         marginBottom: vs(2),
     },
     cardSubtitle: {
-        fontFamily: regular,
+        fontFamily: interRegular,
         fontSize: ms(11),
         color: '#9CA3AF',
     },

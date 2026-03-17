@@ -12,7 +12,7 @@ import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { ms, vs } from 'react-native-size-matters';
 import { blackColor, primaryColor, whiteColor } from '../../utils/globalColors';
-import { bold, regular, img_url } from '../../config/Constants';
+import { heading, interMedium, interRegular, img_url } from '../../config/Constants';
 import Icon, { Icons } from '../../components/Icons';
 import { StatusBar4 } from '../../components/StatusBar';
 
@@ -157,7 +157,7 @@ const styles = StyleSheet.create({
     },
     headerTitle: {
         flex: 1,
-        fontFamily: bold,
+        fontFamily: heading,
         fontSize: ms(18),
         color: blackColor,
         marginLeft: ms(12),
@@ -169,7 +169,7 @@ const styles = StyleSheet.create({
         borderRadius: ms(20),
     },
     editBtnText: {
-        fontFamily: bold,
+        fontFamily: interMedium,
         fontSize: ms(12),
         color: whiteColor,
     },
@@ -216,13 +216,13 @@ const styles = StyleSheet.create({
         borderColor: whiteColor,
     },
     profileName: {
-        fontFamily: bold,
+        fontFamily: heading,
         fontSize: ms(16),
         color: blackColor,
         marginTop: vs(10),
     },
     profileGender: {
-        fontFamily: regular,
+        fontFamily: interRegular,
         fontSize: ms(12),
         color: '#6B7280',
         marginTop: vs(2),
@@ -245,7 +245,7 @@ const styles = StyleSheet.create({
         marginBottom: vs(10),
     },
     badgeText: {
-        fontFamily: bold,
+        fontFamily: interMedium,
         fontSize: ms(11),
     },
 
@@ -261,12 +261,12 @@ const styles = StyleSheet.create({
         borderBottomColor: '#F3F4F6',
     },
     infoLabel: {
-        fontFamily: regular,
+        fontFamily: interRegular,
         fontSize: ms(13),
         color: '#6B7280',
     },
     infoValue: {
-        fontFamily: bold,
+        fontFamily: interMedium,
         fontSize: ms(13),
         color: blackColor,
     },

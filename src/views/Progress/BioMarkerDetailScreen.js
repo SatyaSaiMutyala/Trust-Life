@@ -13,7 +13,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import { StatusBar2 } from '../../components/StatusBar';
 import Icon, { Icons } from '../../components/Icons';
 import { blackColor, whiteColor, primaryColor, globalGradient2 } from '../../utils/globalColors';
-import { bold, regular } from '../../config/Constants';
+import { heading, interMedium, interRegular } from '../../config/Constants';
 
 const { width } = Dimensions.get('window');
 const CHART_W = width - ms(64);
@@ -340,7 +340,7 @@ const BioMarkerCard = ({ item, index, expanded, onToggle }) => {
                         </View>
                         <View style={s.rbarLabels}>
                             <Text style={s.rbarLbl}>Low</Text>
-                            <Text style={[s.rbarLbl, { color: primaryColor, fontFamily: bold }]}>Normal: {item.ref}</Text>
+                            <Text style={[s.rbarLbl, { color: primaryColor, fontFamily: interMedium }]}>Normal: {item.ref}</Text>
                             <Text style={s.rbarLbl}>High</Text>
                         </View>
                     </View>
@@ -418,7 +418,7 @@ const BioMarkerCard = ({ item, index, expanded, onToggle }) => {
                         ]).map((row, ri) => (
                             <View key={ri} style={[s.histRow, ri % 2 === 0 && s.histRowAlt]}>
                                 <Text style={[s.histTd, { flex: 1.5 }]}>{row.date}</Text>
-                                <Text style={[s.histTd, { color: statusDeltaColor(row.status), fontFamily: bold }]}>{row.value} <Text style={s.histUnit}>{item.unit}</Text></Text>
+                                <Text style={[s.histTd, { color: statusDeltaColor(row.status), fontFamily: interMedium }]}>{row.value} <Text style={s.histUnit}>{item.unit}</Text></Text>
                                 <Text style={[s.histTd, { color: row.delta?.startsWith('+') ? '#DC2626' : row.delta?.startsWith('-') ? '#16A34A' : MUTED }]}>{row.delta}</Text>
                                 <View style={[s.histPill, { backgroundColor: row.status === 'N' ? '#DCFCE7' : '#FEE2E2' }]}>
                                     <Text style={[s.histPillTx, { color: row.status === 'N' ? '#16A34A' : '#DC2626' }]}>{row.status === 'N' ? 'Normal' : 'Abnormal'}</Text>
@@ -539,7 +539,7 @@ const BioMarkerDetailScreen = () => {
                             <View style={s.heroInfo}>
                                 <Text style={s.heroTitle}>Health Progression Score</Text>
                                 <Text style={s.heroSub}>
-                                    Computed from <Text style={{ color: 'rgba(255,255,255,0.85)', fontFamily: bold }}>{totalMarkers} biomarkers</Text> across 3 dimensions — Status, Stability and Velocity.
+                                    Computed from <Text style={{ color: 'rgba(255,255,255,0.85)', fontFamily: interMedium }}>{totalMarkers} biomarkers</Text> across 3 dimensions — Status, Stability and Velocity.
                                 </Text>
                             </View>
                         </View>
@@ -630,10 +630,10 @@ const s = StyleSheet.create({
     header:          { flexDirection: 'row', alignItems: 'center', paddingHorizontal: ms(16), paddingTop: ms(50), paddingBottom: vs(14) },
     backBtn:         { width: ms(36), height: ms(36), borderRadius: ms(18), backgroundColor: 'rgba(255,255,255,0.25)', justifyContent: 'center', alignItems: 'center' },
     headerTextWrap:  { flex: 1, marginLeft: ms(12) },
-    headerTitle:     { fontFamily: bold, fontSize: ms(18), color: whiteColor },
-    headerSub:       { fontFamily: regular, fontSize: ms(10), color: 'rgba(255,255,255,0.75)', marginTop: vs(2) },
+    headerTitle:     { fontFamily: heading, fontSize: ms(18), color: whiteColor },
+    headerSub:       { fontFamily: interRegular, fontSize: ms(10), color: 'rgba(255,255,255,0.75)',},
     headerCodeBadge: { backgroundColor: 'rgba(255,255,255,0.2)', borderRadius: ms(8), paddingHorizontal: ms(8), paddingVertical: vs(5) },
-    headerCodeText:  { fontFamily: bold, fontSize: ms(10), color: whiteColor },
+    headerCodeText:  { fontFamily: interMedium, fontSize: ms(10), color: whiteColor },
 
     // Hero Band
     hero:          { borderRadius: ms(20), margin: ms(14), marginTop: 0, padding: ms(16), flexDirection: 'column', gap: vs(12), overflow: 'hidden' },
@@ -642,34 +642,34 @@ const s = StyleSheet.create({
     heroDecor2:    { position: 'absolute', bottom: -70, right: 120, width: 160, height: 160, borderRadius: 80, backgroundColor: 'rgba(94,234,212,0.06)' },
     heroRingWrap:  { flexShrink: 0, position: 'relative', justifyContent: 'center', alignItems: 'center', zIndex: 1 },
     heroRingCenter:{ position: 'absolute', alignItems: 'center' },
-    heroNum:       { fontFamily: bold, fontSize: ms(28), color: whiteColor, lineHeight: ms(32) },
-    heroNumLbl:    { fontFamily: regular, fontSize: ms(9), color: 'rgba(255,255,255,0.5)', textTransform: 'uppercase', letterSpacing: 0.8 },
+    heroNum:       { fontFamily: heading, fontSize: ms(28), color: whiteColor, lineHeight: ms(32) },
+    heroNumLbl:    { fontFamily: interRegular, fontSize: ms(9), color: 'rgba(255,255,255,0.5)', textTransform: 'uppercase', letterSpacing: 0.8 },
     heroInfo:      { flex: 1 },
-    heroTitle:     { fontFamily: bold, fontSize: ms(14), color: whiteColor, marginBottom: vs(3) },
-    heroSub:       { fontFamily: regular, fontSize: ms(10), color: 'rgba(255,255,255,0.5)', lineHeight: vs(16), marginBottom: vs(10) },
+    heroTitle:     { fontFamily: heading, fontSize: ms(14), color: whiteColor, marginBottom: vs(3) },
+    heroSub:       { fontFamily: interRegular, fontSize: ms(10), color: 'rgba(255,255,255,0.5)', lineHeight: vs(16), marginBottom: vs(10) },
     subScoresRow:  { flexDirection: 'row', gap: ms(8), zIndex: 1 },
     ssPill:        { flex: 1, borderRadius: ms(10), padding: ms(8) },
     ssPillHead:    { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: vs(5) },
-    ssPillName:    { fontFamily: bold, fontSize: ms(9), textTransform: 'uppercase', letterSpacing: 0.6 },
-    ssPillScore:   { fontFamily: bold, fontSize: ms(14) },
-    ssPillMax:     { fontFamily: regular, fontSize: ms(9), opacity: 0.55 },
+    ssPillName:    { fontFamily: interMedium, fontSize: ms(9), textTransform: 'uppercase', letterSpacing: 0.6 },
+    ssPillScore:   { fontFamily: interMedium, fontSize: ms(14) },
+    ssPillMax:     { fontFamily: interRegular, fontSize: ms(9), opacity: 0.55 },
     ssPillBar:     { height: vs(3), backgroundColor: 'rgba(255,255,255,0.12)', borderRadius: ms(2), overflow: 'hidden', marginBottom: vs(4) },
     ssPillFill:    { height: '100%', borderRadius: ms(2) },
-    ssPillDesc:    { fontFamily: regular, fontSize: ms(9), color: 'rgba(255,255,255,0.4)', lineHeight: vs(14) },
+    ssPillDesc:    { fontFamily: interRegular, fontSize: ms(9), color: 'rgba(255,255,255,0.4)', lineHeight: vs(14) },
 
     // Filters
     filterRow:     { paddingHorizontal: ms(14), gap: ms(8), paddingBottom: vs(12) },
     filterChip:    { paddingHorizontal: ms(14), paddingVertical: vs(6), borderRadius: ms(20), borderWidth: 1, borderColor: primaryColor + '40' },
     filterChipActive: { backgroundColor: primaryColor, borderColor: primaryColor },
-    filterChipTx:  { fontFamily: regular, fontSize: ms(12), color: MUTED },
-    filterChipTxActive: { color: whiteColor, fontFamily: bold },
+    filterChipTx:  { fontFamily: interRegular, fontSize: ms(12), color: MUTED },
+    filterChipTxActive: { color: whiteColor, fontFamily: interMedium },
 
     // Section title
     sectionTitleRow: { flexDirection: 'row', alignItems: 'flex-end', justifyContent: 'space-between', paddingHorizontal: ms(14), marginBottom: vs(10) },
-    sectionTitle:    { fontFamily: bold, fontSize: ms(18), color: blackColor },
-    sectionSub:      { fontFamily: regular, fontSize: ms(11), color: MUTED, marginTop: vs(2) },
+    sectionTitle:    { fontFamily: heading, fontSize: ms(18), color: blackColor },
+    sectionSub:      { fontFamily: interRegular, fontSize: ms(11), color: MUTED, marginTop: vs(2) },
     allTrendsBtn:    { borderWidth: 1, borderColor: primaryColor, borderRadius: ms(8), paddingHorizontal: ms(10), paddingVertical: vs(5) },
-    allTrendsTx:     { fontFamily: bold, fontSize: ms(11), color: primaryColor },
+    allTrendsTx:     { fontFamily: interMedium, fontSize: ms(11), color: primaryColor },
 
     cardsWrap: { paddingHorizontal: ms(14), gap: vs(12) },
 
@@ -681,24 +681,24 @@ const s = StyleSheet.create({
     bmRow2:    { flexDirection: 'row', alignItems: 'center', gap: ms(8), paddingTop: vs(8), borderTopWidth: 0.5, borderTopColor: BORDER },
     bmIcon:    { width: ms(40), height: ms(40), borderRadius: ms(10), justifyContent: 'center', alignItems: 'center', flexShrink: 0 },
     bmMeta:    { flex: 1, minWidth: 0 },
-    bmName:    { fontFamily: bold, fontSize: ms(13), color: blackColor },
-    bmCat:     { fontFamily: regular, fontSize: ms(10), color: MUTED, marginTop: vs(1) },
+    bmName:    { fontFamily: interMedium, fontSize: ms(13), color: blackColor },
+    bmCat:     { fontFamily: interRegular, fontSize: ms(10), color: MUTED, marginTop: vs(1) },
     dirBadge:  { flexDirection: 'row', alignItems: 'center', gap: ms(3), paddingHorizontal: ms(7), paddingVertical: vs(3), borderRadius: ms(6) },
-    dirBadgeTx:{ fontFamily: bold, fontSize: ms(9) },
-    bmVal:     { fontFamily: bold, fontSize: ms(18) },
-    bmUnit:    { fontFamily: regular, fontSize: ms(10), color: MUTED },
-    bmRef:     { fontFamily: regular, fontSize: ms(9), color: '#94A3B8' },
+    dirBadgeTx:{ fontFamily: interMedium, fontSize: ms(9) },
+    bmVal:     { fontFamily: interMedium, fontSize: ms(18) },
+    bmUnit:    { fontFamily: interRegular, fontSize: ms(10), color: MUTED },
+    bmRef:     { fontFamily: interRegular, fontSize: ms(9), color: '#94A3B8' },
     hpsMini:   { alignItems: 'center', flexShrink: 0 },
     hpsMiniRing:{ position: 'relative', width: ms(46), height: ms(46), justifyContent: 'center', alignItems: 'center' },
-    hpsMiniNum:{ position: 'absolute', fontFamily: bold, fontSize: ms(11) },
-    hpsMiniLbl:{ fontFamily: regular, fontSize: ms(8), color: MUTED, textTransform: 'uppercase', letterSpacing: 0.5, marginTop: vs(1) },
+    hpsMiniNum:{ position: 'absolute', fontFamily: interMedium, fontSize: ms(11) },
+    hpsMiniLbl:{ fontFamily: interRegular, fontSize: ms(8), color: MUTED, textTransform: 'uppercase', letterSpacing: 0.5, marginTop: vs(1) },
     divider:   { height: 0.5, backgroundColor: BORDER, marginHorizontal: ms(12) },
 
     // Card Body
     bmBody: { padding: ms(12) },
 
     secLabelRow:  { flexDirection: 'row', alignItems: 'center', marginTop: vs(10), marginBottom: vs(6) },
-    secLabel:     { fontFamily: bold, fontSize: ms(9), color: MUTED, textTransform: 'uppercase', letterSpacing: 0.8, marginRight: ms(8) },
+    secLabel:     { fontFamily: interMedium, fontSize: ms(9), color: MUTED, textTransform: 'uppercase', letterSpacing: 0.8, marginRight: ms(8) },
     secLabelLine: { flex: 1, height: 0.5, backgroundColor: BORDER },
 
     // Range bar
@@ -707,45 +707,45 @@ const s = StyleSheet.create({
     rbarNormal: { position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, backgroundColor: 'rgba(13,148,136,0.12)', borderRadius: ms(4) },
     rbarMarker: { position: 'absolute', top: -vs(5), width: ms(18), height: ms(18), borderRadius: ms(9), borderWidth: 3, borderColor: whiteColor, marginLeft: -ms(9) },
     rbarLabels: { flexDirection: 'row', justifyContent: 'space-between' },
-    rbarLbl:    { fontFamily: regular, fontSize: ms(9), color: '#94A3B8' },
+    rbarLbl:    { fontFamily: interRegular, fontSize: ms(9), color: '#94A3B8' },
 
     // Score Panels
     panelRow:   { flexDirection: 'row', gap: ms(8), marginBottom: vs(4) },
     panel:      { flex: 1, borderRadius: ms(12), padding: ms(10) },
     panelHead:  { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: vs(6) },
-    panelLabel: { fontFamily: bold, fontSize: ms(8), textTransform: 'uppercase', letterSpacing: 0.6 },
-    panelScore: { fontFamily: bold, fontSize: ms(18), lineHeight: ms(20) },
-    panelMax:   { fontFamily: regular, fontSize: ms(9), opacity: 0.6 },
+    panelLabel: { fontFamily: interMedium, fontSize: ms(8), textTransform: 'uppercase', letterSpacing: 0.6 },
+    panelScore: { fontFamily: interMedium, fontSize: ms(18), lineHeight: ms(20) },
+    panelMax:   { fontFamily: interRegular, fontSize: ms(9), opacity: 0.6 },
     panelBar:   { height: vs(5), backgroundColor: 'rgba(0,0,0,0.08)', borderRadius: ms(3), overflow: 'hidden', marginBottom: vs(6) },
     panelFill:  { height: '100%', borderRadius: ms(3) },
     statusPill: { borderRadius: ms(4), paddingHorizontal: ms(5), paddingVertical: vs(2), alignSelf: 'flex-start', marginBottom: vs(4) },
-    statusPillTx:{ fontFamily: bold, fontSize: ms(9) },
+    statusPillTx:{ fontFamily: interMedium, fontSize: ms(9) },
     velBadge:   { borderRadius: ms(4), paddingHorizontal: ms(6), paddingVertical: vs(2), alignSelf: 'flex-start', marginBottom: vs(4) },
-    velBadgeTx: { fontFamily: bold, fontSize: ms(9) },
-    panelDetail:{ fontFamily: regular, fontSize: ms(10), color: '#334155', lineHeight: vs(15) },
+    velBadgeTx: { fontFamily: interMedium, fontSize: ms(9) },
+    panelDetail:{ fontFamily: interRegular, fontSize: ms(10), color: '#334155', lineHeight: vs(15) },
 
     // Chart
     chartCard:  { backgroundColor: '#F8FFFE', borderWidth: 0.5, borderColor: BORDER, borderRadius: ms(10), padding: ms(10), marginBottom: vs(4) },
     chartWrap:  {},
     xLabels:    { flexDirection: 'row', justifyContent: 'space-between', paddingHorizontal: ms(4), marginTop: vs(4) },
-    xLabel:     { fontFamily: regular, fontSize: ms(8), color: MUTED },
+    xLabel:     { fontFamily: interRegular, fontSize: ms(8), color: MUTED },
 
     // History Table
     histTable: { borderWidth: 0.5, borderColor: BORDER, borderRadius: ms(10), overflow: 'hidden', marginBottom: vs(4) },
     histHead:  { flexDirection: 'row', backgroundColor: '#F8FFFE', padding: ms(8), borderBottomWidth: 0.5, borderBottomColor: BORDER },
-    histTh:    { fontFamily: bold, fontSize: ms(9), color: MUTED, textTransform: 'uppercase', letterSpacing: 0.5, flex: 1 },
+    histTh:    { fontFamily: interMedium, fontSize: ms(9), color: MUTED, textTransform: 'uppercase', letterSpacing: 0.5, flex: 1 },
     histRow:   { flexDirection: 'row', alignItems: 'center', padding: ms(8), borderBottomWidth: 0.5, borderBottomColor: BORDER + '80' },
     histRowAlt:{ backgroundColor: 'rgba(13,148,136,0.02)' },
-    histTd:    { fontFamily: regular, fontSize: ms(11), color: blackColor, flex: 1 },
-    histUnit:  { fontFamily: regular, fontSize: ms(9), color: MUTED },
+    histTd:    { fontFamily: interRegular, fontSize: ms(11), color: blackColor, flex: 1 },
+    histUnit:  { fontFamily: interRegular, fontSize: ms(9), color: MUTED },
     histPill:  { borderRadius: ms(4), paddingHorizontal: ms(6), paddingVertical: vs(1) },
-    histPillTx:{ fontFamily: bold, fontSize: ms(9) },
+    histPillTx:{ fontFamily: interMedium, fontSize: ms(9) },
 
     // Insight
     insightBox: { backgroundColor: '#EEF2FF', borderWidth: 0.5, borderColor: 'rgba(67,56,202,0.15)', borderRadius: ms(10), padding: ms(12), flexDirection: 'row', gap: ms(8), marginBottom: vs(10) },
-    insightTx:  { fontFamily: regular, fontSize: ms(11), color: '#4338CA', lineHeight: vs(18), flex: 1 },
+    insightTx:  { fontFamily: interRegular, fontSize: ms(11), color: '#4338CA', lineHeight: vs(18), flex: 1 },
 
     // View Trend btn
     viewTrendBtn: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: ms(6), backgroundColor: primaryColor, borderRadius: ms(10), paddingVertical: vs(10), marginTop: vs(4) },
-    viewTrendTx:  { fontFamily: bold, fontSize: ms(12), color: whiteColor },
+    viewTrendTx:  { fontFamily: interMedium, fontSize: ms(12), color: whiteColor },
 });

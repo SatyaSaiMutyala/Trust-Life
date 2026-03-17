@@ -15,7 +15,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import { StatusBar2 } from '../components/StatusBar';
 import Icon, { Icons } from '../components/Icons';
 import { blackColor, whiteColor, primaryColor, grayColor } from '../utils/globalColors';
-import { bold, regular } from '../config/Constants';
+import { heading, interMedium, interRegular } from '../config/Constants';
 
 // ── Score Gauge (same as HealthScoreDetails) ─────────────────────────────────
 const GAUGE_SIZE = ms(190);
@@ -814,7 +814,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
     },
-    headerTitle: { fontSize: ms(22), fontFamily: bold, color: whiteColor },
+    headerTitle: { fontSize: ms(22), fontFamily: heading, color: whiteColor },
 
     scroll: { paddingTop: vs(14), paddingBottom: vs(20), gap: vs(12) },
 
@@ -824,7 +824,7 @@ const styles = StyleSheet.create({
         padding: ms(16), alignItems: 'center',
     },
     cardTitle: {
-        fontSize: ms(16), fontWeight: '700', color: blackColor,
+        fontSize: ms(16), fontFamily: heading, color: blackColor,
          alignSelf: 'flex-start',
     },
 
@@ -834,9 +834,9 @@ const styles = StyleSheet.create({
         position: 'absolute', width: GAUGE_SIZE, height: GAUGE_SIZE,
         justifyContent: 'center', alignItems: 'center',
     },
-    gaugeScore:  { fontSize: ms(38), fontWeight: 'bold', color: '#166B5E' },
-    gaugeOutOf:  { fontSize: ms(11), color: '#777', marginTop: vs(-2) },
-    gaugeMinMax: { fontSize: ms(13), color: '#666', fontWeight: '600' },
+    gaugeScore:  { fontSize: ms(38), fontFamily: interMedium, color: '#166B5E' },
+    gaugeOutOf:  { fontSize: ms(11), fontFamily: interRegular, color: '#777', marginTop: vs(-2) },
+    gaugeMinMax: { fontSize: ms(13), fontFamily: interMedium, color: '#666' },
 
     stableBadge: {
         backgroundColor: 'rgba(26,126,112,0.1)',
@@ -844,9 +844,9 @@ const styles = StyleSheet.create({
         paddingHorizontal: ms(20), paddingVertical: vs(6),
         marginTop: vs(8),
     },
-    scoreStable: { fontSize: ms(18), fontWeight: 'bold', color: blackColor },
+    scoreStable: { fontSize: ms(18), fontFamily: interMedium, color: blackColor },
     scoreDesc: {
-        fontSize: ms(12), color: '#888', textAlign: 'center',
+        fontSize: ms(12), fontFamily: interRegular, color: '#888', textAlign: 'center',
         lineHeight: ms(20), marginTop: vs(4),
     },
     checkScoreBtn: {
@@ -854,7 +854,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: ms(28), paddingVertical: vs(12),
         marginTop: vs(16), marginBottom: vs(4),
     },
-    checkScoreBtnText: { color: whiteColor, fontSize: ms(13), fontWeight: '700' },
+    checkScoreBtnText: { color: whiteColor, fontSize: ms(13), fontFamily: interMedium },
 
     // ── Health Progression Story ──────────────────────────────────────────────────
     progressionPill: {
@@ -863,7 +863,7 @@ const styles = StyleSheet.create({
         paddingVertical: vs(10), paddingLeft: ms(20), paddingRight: ms(10),
         marginBottom: vs(4), marginTop:ms(10)
     },
-    progressionPillText: { color: whiteColor, fontSize: ms(13), fontWeight: '700' },
+    progressionPillText: { color: whiteColor, fontSize: ms(13), fontFamily: interMedium },
     pillArrows: {
         flexDirection: 'row', alignItems: 'center', gap: ms(4),
     },
@@ -881,7 +881,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: ms(14), paddingVertical: vs(7),
         minWidth: ms(58), alignItems: 'center',
     },
-    tlOvalText: { color: whiteColor, fontSize: ms(13), fontWeight: 'bold' },
+    tlOvalText: { color: whiteColor, fontSize: ms(13), fontFamily: interMedium },
     tlArrow: {
         width: 0, height: 0,
         borderTopWidth: ms(9), borderTopColor: 'transparent',
@@ -892,10 +892,10 @@ const styles = StyleSheet.create({
     tlContent: { flex: 1, paddingTop: vs(4), paddingBottom: vs(12) },
     tlDate: { fontSize: ms(10), color: '#9CA3AF', marginBottom: vs(2) },
     tlConditionRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
-    tlCondition: { fontSize: ms(12), fontWeight: '700', color: blackColor, flex: 1, marginRight: ms(6) },
+    tlCondition: { fontSize: ms(12), fontFamily: interMedium, color: blackColor, flex: 1, marginRight: ms(6) },
     tlPointsRow: { flexDirection: 'row', alignItems: 'center' },
-    tlPoints: { fontSize: ms(12), fontWeight: '700' },
-    tlDoctor: { fontSize: ms(10), color: '#9CA3AF', marginTop: vs(2) },
+    tlPoints: { fontSize: ms(12), fontFamily: interMedium },
+    tlDoctor: { fontSize: ms(10), fontFamily: interRegular, color: '#9CA3AF', marginTop: vs(2) },
 
     viewProgressBtn: {
         flexDirection: 'row', alignItems: 'center',
@@ -903,7 +903,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#F3F4F6', borderRadius: ms(20),
         paddingVertical: vs(7), paddingHorizontal: ms(14),
     },
-    viewProgressText: { fontSize: ms(12), color: primaryColor, fontWeight: '700', marginRight: ms(4) },
+    viewProgressText: { fontSize: ms(12), fontFamily: interMedium, color: primaryColor, marginRight: ms(4) },
 
     // ── Grid ─────────────────────────────────────────────────────────────────────
     grid: { flexDirection: 'row', flexWrap: 'wrap', gap: ms(10), alignSelf: 'stretch' , marginTop:ms(10)},
@@ -913,12 +913,12 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
     },
     gridCellTop: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
-    gridCellLabel: { fontSize: ms(13), fontWeight: '600', color: blackColor, flex: 1 },
+    gridCellLabel: { fontSize: ms(13), fontFamily: interMedium, color: blackColor, flex: 1 },
     gridBadge: {
         width: ms(32), height: ms(32), borderRadius: ms(16),
         backgroundColor: blackColor, justifyContent: 'center', alignItems: 'center',
     },
-    gridBadgeText: { color: whiteColor, fontSize: ms(14), fontWeight: 'bold' },
+    gridBadgeText: { color: whiteColor, fontSize: ms(14), fontFamily: interMedium },
     lifestyleBottom: {
         flexDirection: 'row', alignItems: 'flex-end',
         justifyContent: 'space-between', marginTop: vs(8),
@@ -929,7 +929,7 @@ const styles = StyleSheet.create({
     dataRow: { flexDirection: 'row', alignItems: 'center', paddingVertical: vs(10), alignSelf: 'stretch', borderTopLeftRadius: ms(10), borderTopRightRadius: ms(10) },
     rowBorderTop: { borderTopWidth: 1, borderTopColor: '#F0F0F0' },
     dataRowLabel: { flex: 1, fontSize: ms(13), color: '#333' },
-    dataRowCount: { fontSize: ms(13), fontWeight: '600', color: blackColor, marginRight: ms(8) },
+    dataRowCount: { fontSize: ms(13), fontFamily: interMedium, color: blackColor, marginRight: ms(8) },
 
     // ── Bottom Sheet ─────────────────────────────────────────────────────────────
     sheetOverlay: {
@@ -948,7 +948,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row', alignItems: 'center',
         justifyContent: 'space-between', marginBottom: vs(16),
     },
-    sheetTitle: { fontSize: ms(15), fontWeight: '700', color: blackColor, flex: 1 },
+    sheetTitle: { fontSize: ms(15), fontFamily: heading, color: blackColor, flex: 1 },
     sheetClose: {
         width: ms(30), height: ms(30), borderRadius: ms(15),
         backgroundColor: '#F3F4F6', justifyContent: 'center', alignItems: 'center',
@@ -965,7 +965,7 @@ const styles = StyleSheet.create({
         paddingVertical: vs(10), paddingHorizontal: ms(22),
         marginBottom: vs(16),
     },
-    storyPillText: { color: whiteColor, fontSize: ms(13), fontWeight: '700' },
+    storyPillText: { color: whiteColor, fontSize: ms(13), fontFamily: interMedium },
 
     // ── Breakdown Item ────────────────────────────────────────────────────────────
     bdItem: {
@@ -974,9 +974,9 @@ const styles = StyleSheet.create({
         borderWidth: 1, borderColor: '#F3F4F6',
     },
     bdHeader: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' },
-    bdTitle: { fontSize: ms(13), fontWeight: '700', color: blackColor, flex: 1 },
+    bdTitle: { fontSize: ms(13), fontFamily: interMedium, color: blackColor, flex: 1 },
     bdScoreRow: { flexDirection: 'row', alignItems: 'center', gap: ms(6) },
-    bdScore: { fontSize: ms(13), fontWeight: '700', color: blackColor },
+    bdScore: { fontSize: ms(13), fontFamily: interMedium, color: blackColor },
     bdProgressBg: {
         height: vs(6), backgroundColor: '#E8E8E8',
         borderRadius: ms(3), overflow: 'hidden', marginTop: vs(8),
@@ -990,8 +990,8 @@ const styles = StyleSheet.create({
         padding: ms(10), marginTop: vs(8),
         borderWidth: 1, borderColor: '#E5E7EB',
     },
-    tooltipTitle: { fontSize: ms(12), fontWeight: '700', color: blackColor },
-    tooltipDesc: { fontSize: ms(11), color: '#888', marginTop: vs(2) },
+    tooltipTitle: { fontSize: ms(12), fontFamily: interMedium, color: blackColor },
+    tooltipDesc: { fontSize: ms(11), fontFamily: interRegular, color: '#888', marginTop: vs(2) },
 
     // ── Lifestyle Impact Summary ──
     lisHeader: {
@@ -999,11 +999,12 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         alignItems: 'center',
         alignSelf: 'stretch',
+        marginTop: vs(10),
         marginBottom: vs(4),
     },
     lisViewAll: {
         fontSize: ms(12),
-        fontWeight: '700',
+        fontFamily: interMedium,
         color: primaryColor,
     },
     lisRow: {
@@ -1016,8 +1017,8 @@ const styles = StyleSheet.create({
     lisLabel: {
         flex: 1,
         fontSize: ms(14),
+        fontFamily: interRegular,
         color: '#111111',
-        fontWeight: '400',
     },
     lisBadgeStrong: {
         backgroundColor: '#E8F5E9',
@@ -1027,7 +1028,7 @@ const styles = StyleSheet.create({
     },
     lisBadgeTextStrong: {
         fontSize: ms(13),
-        fontWeight: '600',
+        fontFamily: interMedium,
         color: '#2E7D32',
     },
     lisBadgeModerate: {
@@ -1038,7 +1039,7 @@ const styles = StyleSheet.create({
     },
     lisBadgeTextModerate: {
         fontSize: ms(13),
-        fontWeight: '600',
+        fontFamily: interMedium,
         color: '#E07B00',
     },
     lisBadgePoor: {
@@ -1049,7 +1050,7 @@ const styles = StyleSheet.create({
     },
     lisBadgeTextPoor: {
         fontSize: ms(13),
-        fontWeight: '600',
+        fontFamily: interMedium,
         color: '#DC2626',
     },
 
@@ -1061,7 +1062,7 @@ const styles = StyleSheet.create({
     },
     condScore: {
         fontSize: ms(16),
-        fontWeight: '800',
+        fontFamily: interMedium,
         color: blackColor,
         marginRight: ms(4),
     },
@@ -1079,7 +1080,7 @@ const styles = StyleSheet.create({
     },
     condName: {
         fontSize: ms(14),
-        fontWeight: '700',
+        fontFamily: interMedium,
         color: blackColor,
     },
     condTypeBadge: {
@@ -1090,7 +1091,7 @@ const styles = StyleSheet.create({
     },
     condScore: {
         fontSize: ms(16),
-        fontWeight: '800',
+        fontFamily: interMedium,
         color: blackColor,
         marginRight: ms(4),
     },
@@ -1104,18 +1105,18 @@ const styles = StyleSheet.create({
     },
     condTooltipTitle: {
         fontSize: ms(12),
-        fontWeight: '600',
+        fontFamily: interMedium,
         color: blackColor,
         marginBottom: vs(2),
     },
     condTooltipDesc: {
         fontSize: ms(11),
-        fontWeight: '400',
+        fontFamily: interRegular,
         color: '#6B7280',
     },
     condTypeText: {
         fontSize: ms(10),
-        fontWeight: '600',
+        fontFamily: interMedium,
     },
     bioFooterRow: {
         flexDirection: 'row', alignItems: 'center',
@@ -1127,17 +1128,18 @@ const styles = StyleSheet.create({
         paddingHorizontal: ms(12), paddingVertical: vs(7),
     },
     analyteTrendBtnText: {
-        fontFamily: bold, fontSize: ms(11), color: whiteColor,
+        fontFamily: interMedium, fontSize: ms(11), color: whiteColor,
     },
     condViewAll: {
         flexDirection: 'row',
         alignItems: 'center',
         alignSelf: 'flex-start',
         gap: ms(4),
+        marginTop:ms(8)
     },
     condViewAllText: {
         fontSize: ms(14),
-        fontWeight: '700',
+        fontFamily: interMedium,
         color: primaryColor,
     },
     bioCard: {
@@ -1156,18 +1158,18 @@ const styles = StyleSheet.create({
         marginBottom: vs(10),
     },
     bioCardLabel: {
-        fontFamily: bold,
-        fontSize: ms(14),
+        fontFamily: interMedium,
+        fontSize: ms(13),
         color: blackColor,
     },
     bioCardBadge: {
         borderRadius: ms(12),
         paddingHorizontal: ms(14),
-        paddingVertical: vs(4),
+        paddingVertical: vs(2),
     },
     bioCardBadgeText: {
-        fontFamily: bold,
-        fontSize: ms(12),
+        fontFamily: interMedium,
+        fontSize: ms(11),
     },
     bioRow: {
         flexDirection: 'row',
@@ -1189,7 +1191,7 @@ const styles = StyleSheet.create({
     },
     bioRowLabel: {
         flex: 1,
-        fontFamily: bold,
+        fontFamily: interMedium,
         fontSize: ms(13),
         color: blackColor,
     },
@@ -1201,7 +1203,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     bioRowScore: {
-        fontFamily: bold,
+        fontFamily: interMedium,
         fontSize: ms(12),
     },
     bioRowBadge: {
@@ -1214,27 +1216,27 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     bioRowBadgeText: {
-        fontFamily: bold,
+        fontFamily: interMedium,
         fontSize: ms(11),
     },
     bioCardScoreRow: {
         flexDirection: 'row',
         alignItems: 'center',
         gap: ms(8),
-        marginBottom: vs(6),
+        // marginBottom: vs(6),
     },
     bioCardScore: {
-        fontFamily: bold,
-        fontSize: ms(14),
+        fontFamily: interMedium,
+        fontSize: ms(12),
         color: blackColor,
     },
     bioCardArrow: {
-        fontFamily: regular,
+        fontFamily: interRegular,
         fontSize: ms(14),
         color: '#9CA3AF',
     },
     bioCardDesc: {
-        fontFamily: regular,
+        fontFamily: interRegular,
         fontSize: ms(12),
         color: '#6B7280',
         lineHeight: ms(18),
@@ -1267,7 +1269,7 @@ const styles = StyleSheet.create({
         marginRight: ms(8),
     },
     organGridLabel: {
-        fontFamily: bold,
+        fontFamily: interMedium,
         fontSize: ms(14),
         color: blackColor,
     },
@@ -1277,7 +1279,7 @@ const styles = StyleSheet.create({
         gap: ms(6),
     },
     organGridStatusLabel: {
-        fontFamily: regular,
+        fontFamily: interRegular,
         fontSize: ms(12),
         color: '#6B7280',
     },
@@ -1287,7 +1289,7 @@ const styles = StyleSheet.create({
         paddingVertical: vs(4),
     },
     organGridStatusText: {
-        fontFamily: bold,
+        fontFamily: interMedium,
         fontSize: ms(12),
     },
 
@@ -1297,8 +1299,8 @@ const styles = StyleSheet.create({
         paddingHorizontal: ms(18), paddingVertical: vs(16),
     },
     trustmdBtnLogo: { width: ms(32), height: ms(32) },
-    trustmdBtnTitle: { fontSize: ms(15), fontWeight: '700', color: whiteColor },
-    trustmdBtnSub: { fontSize: ms(11), color: 'rgba(255,255,255,0.75)', marginTop: vs(2) },
+    trustmdBtnTitle: { fontSize: ms(15), fontFamily: interMedium, color: whiteColor },
+    trustmdBtnSub: { fontSize: ms(11), fontFamily: interRegular, color: 'rgba(255,255,255,0.75)', marginTop: vs(2) },
 
     trendBadge: {
         flexDirection: 'row',
@@ -1314,7 +1316,7 @@ const styles = StyleSheet.create({
     },
     trendBadgeText: {
         fontSize: ms(13),
-        fontWeight: '800',
+        fontFamily: interMedium,
         color: '#16A34A',
         letterSpacing: 0.3,
     },
@@ -1324,6 +1326,6 @@ const styles = StyleSheet.create({
         borderRadius: ms(6), paddingHorizontal: ms(8), paddingVertical: vs(5),
     },
     viewBtnText: {
-        fontSize: ms(11), fontFamily: bold, color: whiteColor,
+        fontSize: ms(1), fontFamily: interMedium, color: whiteColor,
     },
 });

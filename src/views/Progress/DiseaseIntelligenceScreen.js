@@ -10,7 +10,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import { StatusBar2 } from '../../components/StatusBar';
 import Icon, { Icons } from '../../components/Icons';
 import { blackColor, whiteColor, primaryColor, globalGradient2 } from '../../utils/globalColors';
-import { bold, regular } from '../../config/Constants';
+import { heading, interMedium, interRegular } from '../../config/Constants';
 
 const { width } = Dimensions.get('window');
 
@@ -355,15 +355,15 @@ const cmStyles = StyleSheet.create({
         backgroundColor: primaryColor + '12', borderWidth: 2, borderColor: primaryColor,
         justifyContent: 'center', alignItems: 'center',
     },
-    centerScore: { fontFamily: bold, fontSize: ms(14), color: primaryColor, marginTop: vs(1) },
-    centerLabel: { fontFamily: regular, fontSize: ms(7), color: primaryColor },
+    centerScore: { fontFamily: interMedium, fontSize: ms(14), color: primaryColor, marginTop: vs(1) },
+    centerLabel: { fontFamily: interRegular, fontSize: ms(7), color: primaryColor },
     node: {
         position: 'absolute', width: NODE_SIZE, height: NODE_SIZE, borderRadius: NODE_SIZE / 2,
         borderWidth: 2, justifyContent: 'center', alignItems: 'center',
         shadowOffset: { width: 0, height: 2 },
     },
-    nodeName: { fontFamily: bold, fontSize: ms(7), marginTop: vs(1) },
-    nodeScore: { fontFamily: bold, fontSize: ms(9) },
+    nodeName: { fontFamily: interMedium, fontSize: ms(7), marginTop: vs(1) },
+    nodeScore: { fontFamily: interMedium, fontSize: ms(9) },
 });
 
 // ── Organ Detail Panel ──────────────────────────────────────────────────────
@@ -569,12 +569,12 @@ const DiseaseIntelligenceScreen = () => {
                     </TouchableOpacity>
                     <View style={{ flex: 1, marginLeft: ms(12) }}>
                         <Text style={s.headerTitle} numberOfLines={1}>
-                            {activeTab === 'insight' ? selectedDisease : 'Disease Intelligence'}
+                            {activeTab === 'insight' ? selectedDisease : selectedDisease}
                         </Text>
                         <Text style={s.headerSub}>
                             {activeTab === 'insight'
                                 ? `${DISEASE_INSIGHTS[selectedDisease].affectedOrgans.length} organs affected`
-                                : 'Multi-organ impact analysis'}
+                                : `${activeTab} impact analysis`}
                         </Text>
                     </View>
                 </View>
@@ -694,7 +694,7 @@ const DiseaseIntelligenceScreen = () => {
                                     return (
                                         <View key={i} style={s.clusterDisease}>
                                             <View style={s.clusterDiseaseTop}>
-                                                <Text style={[s.clusterDiseaseName, d.type === 'active' && { fontFamily: bold }]}>{d.name}</Text>
+                                                <Text style={[s.clusterDiseaseName, d.type === 'active' && { fontFamily: interMedium }]}>{d.name}</Text>
                                                 <Text style={[s.clusterDiseaseType, { color: typeCol }]}>
                                                     {d.type === 'active' ? 'Active' : d.type === 'emerging' ? 'Emerging' : 'Watch Zone'}
                                                 </Text>
@@ -969,8 +969,8 @@ const s = StyleSheet.create({
         width: ms(36), height: ms(36), borderRadius: ms(18),
         backgroundColor: 'rgba(255,255,255,0.3)', justifyContent: 'center', alignItems: 'center',
     },
-    headerTitle: { fontFamily: bold, fontSize: ms(17), color: whiteColor },
-    headerSub: { fontFamily: regular, fontSize: ms(10), color: 'rgba(255,255,255,0.7)', marginTop: vs(2) },
+    headerTitle: { fontFamily: heading, fontSize: ms(17), color: whiteColor },
+    headerSub: { fontFamily: interRegular, fontSize: ms(10), color: 'rgba(255,255,255,0.7)', },
     // Stats bar
     statsBar: {
         flexDirection: 'row', justifyContent: 'space-around',
@@ -979,8 +979,8 @@ const s = StyleSheet.create({
         backgroundColor: 'rgba(255,255,255,0.1)', borderRadius: ms(14),
     },
     statItem: { alignItems: 'center' },
-    statValue: { fontFamily: bold, fontSize: ms(20) },
-    statLabel: { fontFamily: regular, fontSize: ms(9), color: 'rgba(255,255,255,0.6)', marginTop: vs(2) },
+    statValue: { fontFamily: interMedium, fontSize: ms(20) },
+    statLabel: { fontFamily: interRegular, fontSize: ms(9), color: 'rgba(255,255,255,0.6)', marginTop: vs(2) },
 
     // Tabs
     tabScroll: { marginBottom: vs(8), flexGrow: 0 },
@@ -992,7 +992,7 @@ const s = StyleSheet.create({
         borderWidth: 1, borderColor: '#E5E7EB',
     },
     tabActive: { borderColor: primaryColor, backgroundColor: primaryColor + '10' },
-    tabText: { fontFamily: bold, fontSize: ms(9.5), color: '#9CA3AF' },
+    tabText: { fontFamily: interMedium, fontSize: ms(9.5), color: '#9CA3AF' },
     tabTextActive: { color: primaryColor },
 
     // Card
@@ -1000,13 +1000,13 @@ const s = StyleSheet.create({
         backgroundColor: whiteColor, borderRadius: ms(16),
         marginHorizontal: ms(20), padding: ms(16), marginBottom: vs(14),
     },
-    cardTitle: { fontFamily: bold, fontSize: ms(14), color: blackColor, marginBottom: vs(12) },
+    cardTitle: { fontFamily: heading, fontSize: ms(14), color: blackColor, marginBottom: vs(12) },
 
     // Legend
     legendRow: { flexDirection: 'row', justifyContent: 'center', gap: ms(16), marginTop: vs(6) },
     legendItem: { flexDirection: 'row', alignItems: 'center', gap: ms(4) },
     legendDot: { width: ms(8), height: ms(8), borderRadius: ms(4) },
-    legendText: { fontFamily: regular, fontSize: ms(9), color: '#9CA3AF' },
+    legendText: { fontFamily: interRegular, fontSize: ms(9), color: '#9CA3AF' },
 
     // Organ mini cards
     organGrid: {
@@ -1023,17 +1023,17 @@ const s = StyleSheet.create({
         width: ms(34), height: ms(34), borderRadius: ms(10),
         justifyContent: 'center', alignItems: 'center',
     },
-    organMiniScore: { fontFamily: bold, fontSize: ms(18), textAlign: 'right' },
-    organMiniStressLabel: { fontFamily: regular, fontSize: ms(8), color: '#9CA3AF', textAlign: 'right' },
-    organMiniName: { fontFamily: bold, fontSize: ms(12), color: blackColor, marginBottom: vs(2) },
-    organMiniStage: { fontFamily: regular, fontSize: ms(10), marginBottom: vs(8) },
+    organMiniScore: { fontFamily: interMedium, fontSize: ms(18), textAlign: 'right' },
+    organMiniStressLabel: { fontFamily: interRegular, fontSize: ms(8), color: '#9CA3AF', textAlign: 'right' },
+    organMiniName: { fontFamily: interMedium, fontSize: ms(12), color: blackColor, marginBottom: vs(2) },
+    organMiniStage: { fontFamily: interRegular, fontSize: ms(10), marginBottom: vs(8) },
     organMiniBar: { height: vs(4), backgroundColor: '#E5E7EB', borderRadius: ms(2), overflow: 'hidden' },
     organMiniFill: { height: '100%', borderRadius: ms(2) },
-    organMiniTrend: { fontFamily: bold, fontSize: ms(9), marginTop: vs(6) },
+    organMiniTrend: { fontFamily: interMedium, fontSize: ms(9), marginTop: vs(6) },
 
     // Empty panel
     emptyPanel: { alignItems: 'center', justifyContent: 'center', paddingVertical: vs(40), gap: vs(10) },
-    emptyText: { fontFamily: regular, fontSize: ms(13), color: '#9CA3AF' },
+    emptyText: { fontFamily: interRegular, fontSize: ms(13), color: '#9CA3AF' },
 
     // Organ detail panel
     opHeader: { flexDirection: 'row', alignItems: 'center', marginBottom: vs(16) },
@@ -1042,28 +1042,28 @@ const s = StyleSheet.create({
         borderWidth: 1.5, justifyContent: 'center', alignItems: 'center', marginRight: ms(12),
     },
     opIconImg: { width: ms(28), height: ms(28) },
-    opName: { fontFamily: bold, fontSize: ms(16), color: blackColor },
-    opStage: { fontFamily: bold, fontSize: ms(11), marginTop: vs(2) },
+    opName: { fontFamily: heading, fontSize: ms(16), color: blackColor },
+    opStage: { fontFamily: interMedium, fontSize: ms(11), marginTop: vs(2) },
     opScoreWrap: { alignItems: 'center' },
-    opScoreNum: { fontFamily: bold, fontSize: ms(22) },
-    opScoreLabel: { fontFamily: regular, fontSize: ms(8), color: '#9CA3AF' },
+    opScoreNum: { fontFamily: interMedium, fontSize: ms(22) },
+    opScoreLabel: { fontFamily: interRegular, fontSize: ms(8), color: '#9CA3AF' },
 
     // Stage section
     opStageSection: { marginBottom: vs(16) },
-    opStageSectionTitle: { fontFamily: bold, fontSize: ms(11), color: '#6B7280', marginBottom: vs(8) },
+    opStageSectionTitle: { fontFamily: heading, fontSize: ms(11), color: '#6B7280', marginBottom: vs(8) },
     stageBarRow: { flexDirection: 'row', gap: ms(3) },
     stageSegment: { height: vs(5), borderRadius: ms(3), flex: 1 },
-    stageCurrentText: { fontFamily: bold, fontSize: ms(9), marginTop: vs(4) },
+    stageCurrentText: { fontFamily: interMedium, fontSize: ms(9), marginTop: vs(4) },
     stageFooterRow: { flexDirection: 'row', justifyContent: 'space-between', marginTop: vs(8) },
-    stageNormal: { fontFamily: regular, fontSize: ms(9), color: '#16A34A' },
-    stageProjected: { fontFamily: regular, fontSize: ms(9) },
+    stageNormal: { fontFamily: interRegular, fontSize: ms(9), color: '#16A34A' },
+    stageProjected: { fontFamily: interRegular, fontSize: ms(9) },
 
     // Impact card
     opImpactCard: {
         borderRadius: ms(12), borderWidth: 1, padding: ms(14), marginBottom: vs(16),
     },
-    opImpactTitle: { fontFamily: bold, fontSize: ms(11), marginBottom: vs(6) },
-    opImpactText: { fontFamily: regular, fontSize: ms(12), color: '#374151', lineHeight: ms(19) },
+    opImpactTitle: { fontFamily: heading, fontSize: ms(11), marginBottom: vs(6) },
+    opImpactText: { fontFamily: interRegular, fontSize: ms(12), color: '#374151', lineHeight: ms(19) },
 
     // Biomarker impact rows
     bmImpactRow: {
@@ -1071,16 +1071,16 @@ const s = StyleSheet.create({
         marginBottom: vs(6), borderLeftWidth: ms(3),
     },
     bmImpactTop: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: vs(4) },
-    bmImpactName: { fontFamily: bold, fontSize: ms(12), color: blackColor },
-    bmImpactValue: { fontFamily: bold, fontSize: ms(12) },
-    bmImpactDesc: { fontFamily: regular, fontSize: ms(11), color: '#6B7280', lineHeight: ms(16) },
+    bmImpactName: { fontFamily: interMedium, fontSize: ms(12), color: blackColor },
+    bmImpactValue: { fontFamily: interMedium, fontSize: ms(12) },
+    bmImpactDesc: { fontFamily: interRegular, fontSize: ms(11), color: '#6B7280', lineHeight: ms(16) },
 
     // Care tab
     careBullet: {
         width: ms(22), height: ms(22), borderRadius: ms(11),
         justifyContent: 'center', alignItems: 'center', marginRight: ms(2),
     },
-    careBulletNum: { fontFamily: bold, fontSize: ms(10), color: whiteColor },
+    careBulletNum: { fontFamily: interMedium, fontSize: ms(10), color: whiteColor },
 
     // Intervention rows
     interventionRow: {
@@ -1088,52 +1088,52 @@ const s = StyleSheet.create({
         backgroundColor: primaryColor + '08', borderRadius: ms(10),
         paddingHorizontal: ms(12), paddingVertical: vs(10), marginBottom: vs(5),
     },
-    interventionText: { fontFamily: regular, fontSize: ms(12), color: '#374151', flex: 1 },
+    interventionText: { fontFamily: interRegular, fontSize: ms(12), color: '#374151', flex: 1 },
 
     // Biomarkers tab
-    bmHintText: { fontFamily: regular, fontSize: ms(12), color: '#6B7280', lineHeight: ms(19) },
+    bmHintText: { fontFamily: interRegular, fontSize: ms(12), color: '#6B7280', lineHeight: ms(19) },
     filterChip: {
         flexDirection: 'row', alignItems: 'center', gap: ms(5),
         borderRadius: ms(20), paddingHorizontal: ms(12), paddingVertical: vs(6),
         borderWidth: 1, borderColor: '#E5E7EB', backgroundColor: whiteColor,
     },
-    filterChipText: { fontFamily: bold, fontSize: ms(10) },
+    filterChipText: { fontFamily: interMedium, fontSize: ms(10) },
     bmRow: {
         backgroundColor: whiteColor, borderRadius: ms(14),
         marginHorizontal: ms(20), padding: ms(14), marginBottom: vs(8),
     },
     bmRowTop: { flexDirection: 'row', justifyContent: 'space-between', marginBottom: vs(8) },
-    bmRowName: { fontFamily: bold, fontSize: ms(13), color: blackColor },
-    bmRowTarget: { fontFamily: regular, fontSize: ms(10), color: '#9CA3AF', marginTop: vs(2) },
-    bmRowValue: { fontFamily: bold, fontSize: ms(16) },
-    bmRowUnit: { fontFamily: regular, fontSize: ms(10), color: '#9CA3AF' },
-    bmRowStatus: { fontFamily: bold, fontSize: ms(11), marginTop: vs(2) },
+    bmRowName: { fontFamily: interMedium, fontSize: ms(13), color: blackColor },
+    bmRowTarget: { fontFamily: interRegular, fontSize: ms(10), color: '#9CA3AF', marginTop: vs(2) },
+    bmRowValue: { fontFamily: interMedium, fontSize: ms(16) },
+    bmRowUnit: { fontFamily: interRegular, fontSize: ms(10), color: '#9CA3AF' },
+    bmRowStatus: { fontFamily: interMedium, fontSize: ms(11), marginTop: vs(2) },
     bmOrganTags: { flexDirection: 'row', flexWrap: 'wrap', gap: ms(6) },
     bmOrganTag: {
         borderRadius: ms(20), paddingHorizontal: ms(10), paddingVertical: vs(3),
         borderWidth: 1,
     },
-    bmOrganTagText: { fontFamily: bold, fontSize: ms(9) },
+    bmOrganTagText: { fontFamily: interMedium, fontSize: ms(9) },
 
     // Cluster tab
     clusterHeader: { flexDirection: 'row', alignItems: 'flex-start', marginBottom: vs(16) },
-    clusterTitle: { fontFamily: bold, fontSize: ms(14), color: blackColor, marginBottom: vs(4) },
-    clusterSub: { fontFamily: regular, fontSize: ms(11), color: '#6B7280' },
+    clusterTitle: { fontFamily: heading, fontSize: ms(14), color: blackColor, marginBottom: vs(4) },
+    clusterSub: { fontFamily: interRegular, fontSize: ms(11), color: '#6B7280' },
     clusterScoreWrap: {
         backgroundColor: '#FEE2E2', borderRadius: ms(12),
         paddingHorizontal: ms(14), paddingVertical: vs(8), alignItems: 'center', marginLeft: ms(12),
     },
-    clusterScoreNum: { fontFamily: bold, fontSize: ms(22), color: '#DC2626' },
-    clusterScoreLabel: { fontFamily: regular, fontSize: ms(9), color: '#DC2626' },
+    clusterScoreNum: { fontFamily: interMedium, fontSize: ms(22), color: '#DC2626' },
+    clusterScoreLabel: { fontFamily: interRegular, fontSize: ms(9), color: '#DC2626' },
     clusterDisease: { marginBottom: vs(10) },
     clusterDiseaseTop: { flexDirection: 'row', justifyContent: 'space-between', marginBottom: vs(4) },
-    clusterDiseaseName: { fontFamily: regular, fontSize: ms(12), color: blackColor },
-    clusterDiseaseType: { fontFamily: bold, fontSize: ms(10) },
+    clusterDiseaseName: { fontFamily: interRegular, fontSize: ms(12), color: blackColor },
+    clusterDiseaseType: { fontFamily: interMedium, fontSize: ms(10) },
     clusterBar: { height: vs(6), backgroundColor: '#E5E7EB', borderRadius: ms(3), overflow: 'hidden' },
     clusterBarFill: { height: '100%', borderRadius: ms(3) },
     clusterInsight: { borderRadius: ms(12), borderWidth: 1, padding: ms(14), marginTop: vs(12) },
-    clusterInsightTitle: { fontFamily: bold, fontSize: ms(12), marginBottom: vs(6) },
-    clusterInsightText: { fontFamily: regular, fontSize: ms(12), color: '#374151', lineHeight: ms(19) },
+    clusterInsightTitle: { fontFamily: heading, fontSize: ms(12), marginBottom: vs(6) },
+    clusterInsightText: { fontFamily: interRegular, fontSize: ms(12), color: '#374151', lineHeight: ms(19) },
 
     // Timeline
     timelineWrap: {},
@@ -1142,12 +1142,12 @@ const s = StyleSheet.create({
     timelineDot: { width: ms(12), height: ms(12), borderRadius: ms(6), marginTop: vs(3) },
     timelineConnector: { width: 2, flex: 1, backgroundColor: '#E5E7EB', minHeight: vs(22) },
     timelineContent: { flex: 1, paddingBottom: vs(18) },
-    timelineTime: { fontFamily: bold, fontSize: ms(11), marginBottom: vs(3) },
-    timelineEvent: { fontFamily: regular, fontSize: ms(12), color: '#374151', lineHeight: ms(18) },
+    timelineTime: { fontFamily: interMedium, fontSize: ms(11), marginBottom: vs(3) },
+    timelineEvent: { fontFamily: interRegular, fontSize: ms(12), color: '#374151', lineHeight: ms(18) },
 
     // Actions tab
     actionsTitle: {
-        fontFamily: bold, fontSize: ms(14), color: blackColor,
+        fontFamily: heading, fontSize: ms(14), color: blackColor,
         paddingHorizontal: ms(20), marginBottom: vs(12),
     },
     actionCard: {
@@ -1162,19 +1162,19 @@ const s = StyleSheet.create({
         justifyContent: 'center', alignItems: 'center',
     },
     actionTitleRow: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: vs(4) },
-    actionTitle: { fontFamily: bold, fontSize: ms(13), color: blackColor, flex: 1 },
+    actionTitle: { fontFamily: interMedium, fontSize: ms(13), color: blackColor, flex: 1 },
     actionOrganChip: {
         borderRadius: ms(20), paddingHorizontal: ms(8), paddingVertical: vs(2),
         borderWidth: 1, marginLeft: ms(6),
     },
-    actionOrganText: { fontFamily: bold, fontSize: ms(9) },
-    actionDesc: { fontFamily: regular, fontSize: ms(11), color: '#6B7280', lineHeight: ms(17), marginBottom: vs(8) },
+    actionOrganText: { fontFamily: interMedium, fontSize: ms(9) },
+    actionDesc: { fontFamily: interRegular, fontSize: ms(11), color: '#6B7280', lineHeight: ms(17), marginBottom: vs(8) },
     actionBtn: {
         flexDirection: 'row', alignItems: 'center', gap: ms(5),
         backgroundColor: primaryColor + '10', borderRadius: ms(8),
         paddingHorizontal: ms(10), paddingVertical: vs(5), alignSelf: 'flex-start',
     },
-    actionBtnText: { fontFamily: bold, fontSize: ms(10), color: primaryColor },
+    actionBtnText: { fontFamily: interMedium, fontSize: ms(10), color: primaryColor },
 
     // Insight tab
     insightChip: {
@@ -1182,29 +1182,29 @@ const s = StyleSheet.create({
         borderRadius: ms(20), paddingHorizontal: ms(12), paddingVertical: vs(7),
         borderWidth: 1.5, borderColor: '#E5E7EB', backgroundColor: whiteColor,
     },
-    insightChipText: { fontFamily: bold, fontSize: ms(10) },
+    insightChipText: { fontFamily: interMedium, fontSize: ms(10) },
     insightHeader: { flexDirection: 'row', alignItems: 'center', marginBottom: vs(12) },
     insightIconWrap: {
         width: ms(46), height: ms(46), borderRadius: ms(14),
         borderWidth: 1.5, justifyContent: 'center', alignItems: 'center', marginRight: ms(12),
     },
-    insightDiseaseName: { fontFamily: bold, fontSize: ms(15), color: blackColor },
-    insightAffectedLabel: { fontFamily: bold, fontSize: ms(11), marginTop: vs(2) },
-    insightDescription: { fontFamily: regular, fontSize: ms(12), color: '#374151', lineHeight: ms(19) },
+    insightDiseaseName: { fontFamily: heading, fontSize: ms(15), color: blackColor },
+    insightAffectedLabel: { fontFamily: interMedium, fontSize: ms(11), marginTop: vs(2) },
+    insightDescription: { fontFamily: interRegular, fontSize: ms(12), color: '#374151', lineHeight: ms(19) },
     insightOrganRow: { flexDirection: 'row', flexWrap: 'wrap', gap: ms(8), marginTop: vs(4) },
     insightOrganChip: {
         flexDirection: 'row', alignItems: 'center', gap: ms(5),
         borderRadius: ms(20), paddingHorizontal: ms(10), paddingVertical: vs(5),
         borderWidth: 1,
     },
-    insightOrganChipText: { fontFamily: bold, fontSize: ms(10) },
-    insightOrganChipScore: { fontFamily: bold, fontSize: ms(9) },
+    insightOrganChipText: { fontFamily: interMedium, fontSize: ms(10) },
+    insightOrganChipScore: { fontFamily: interMedium, fontSize: ms(9) },
     insightSectionHeader: { flexDirection: 'row', alignItems: 'center', gap: ms(6), marginBottom: vs(10) },
-    insightSectionTitle: { fontFamily: bold, fontSize: ms(12), color: blackColor },
+    insightSectionTitle: { fontFamily: heading, fontSize: ms(12), color: blackColor },
     insightListWrap: { gap: vs(6) },
     insightListRow: { flexDirection: 'row', alignItems: 'flex-start', gap: ms(8) },
     insightDot: { width: ms(6), height: ms(6), borderRadius: ms(3), marginTop: vs(5) },
-    insightListText: { fontFamily: regular, fontSize: ms(12), color: '#374151', flex: 1, lineHeight: ms(18) },
+    insightListText: { fontFamily: interRegular, fontSize: ms(12), color: '#374151', flex: 1, lineHeight: ms(18) },
     insightDoubleRow: {
         flexDirection: 'row', gap: ms(10),
         paddingHorizontal: ms(20), marginBottom: vs(14),

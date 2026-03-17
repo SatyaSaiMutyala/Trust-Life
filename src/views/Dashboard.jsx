@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, Image, View, SafeAreaView, Dimensions, Text, ScrollView, TouchableOpacity, ImageBackground, Linking, FlatList, Pressable, Modal, Touchable } from 'react-native';
 import * as colors from '../assets/css/Colors';
-import { img_url, regular, bold, location, acne } from '../config/Constants';
+import { img_url, regular, bold, heading, interMedium, interRegular, location, acne } from '../config/Constants';
 import { useNavigation, useRoute, useFocusEffect } from '@react-navigation/native';
 import { updateCurrentAddress, updateCurrentLat, updateCurrentLng, currentTag, updateAddress } from '../actions/CurrentAddressActions';
 import axios from 'axios';
@@ -578,7 +578,7 @@ const Dashboard = (props) => {
 
                             <View style={{ flex: 1, marginRight: ms(8) }}>
                                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                                    <Text style={{ color: '#fff', fontSize: ms(15), fontWeight: 'bold' }}>
+                                    <Text style={{ color: '#fff', fontSize: ms(15), fontFamily: interMedium }}>
                                         Hello,
                                     </Text>
                                     <Text
@@ -587,7 +587,7 @@ const Dashboard = (props) => {
                                         style={{
                                             color: '#fff',
                                             fontSize: ms(15),
-                                            fontWeight: 'bold',
+                                            fontFamily: interMedium,
                                             marginLeft: 4,
                                             flexShrink: 1,
                                         }}
@@ -1712,7 +1712,7 @@ const styles = StyleSheet.create({
     },
     topServiceText: {
         fontSize: ms(11),
-        fontWeight: '600',
+        fontFamily: interMedium,
         color: '#000',
         textAlign: 'center',
     },
@@ -1772,7 +1772,7 @@ const styles = StyleSheet.create({
     },
     wellnessLabel: {
         fontSize: ms(12),
-        fontFamily: bold,
+        fontFamily: interMedium,
         color: blackColor,
         textAlign: 'center',
     },
@@ -1800,7 +1800,7 @@ const styles = StyleSheet.create({
     },
     trackText: {
         fontSize: ms(10),
-        fontWeight: 'bold',
+        fontFamily: interMedium,
         color: '#333',
         textAlign: 'center',
         lineHeight: ms(15),
@@ -1813,7 +1813,7 @@ const styles = StyleSheet.create({
     },
     recentTestsHeading: {
         fontSize: ms(16),
-        fontWeight: 'bold',
+        fontFamily: heading,
         color: '#000',
         marginBottom: ms(12),
     },
@@ -1859,18 +1859,19 @@ const styles = StyleSheet.create({
     },
     recentTestName: {
         fontSize: ms(12),
-        fontWeight: 'bold',
+        fontFamily: interMedium,
         color: '#000',
         marginBottom: ms(2),
     },
     recentTestCovers: {
         fontSize: ms(10),
+        fontFamily: interRegular,
         color: '#666',
         marginBottom: ms(4),
     },
     recentTestPrice: {
         fontSize: ms(14),
-        fontWeight: 'bold',
+        fontFamily: interMedium,
         color: '#000',
         marginBottom: ms(8),
     },
@@ -1894,7 +1895,7 @@ const styles = StyleSheet.create({
     },
     needTestsHeading: {
         fontSize: ms(16),
-        fontWeight: 'bold',
+        fontFamily: heading,
         color: '#000',
         marginBottom: ms(12),
     },
@@ -1949,7 +1950,7 @@ const styles = StyleSheet.create({
     },
     needTestName: {
         fontSize: ms(13),
-        fontWeight: 'bold',
+        fontFamily: interMedium,
         color: '#000',
         marginBottom: ms(3),
     },
@@ -1978,6 +1979,7 @@ const styles = StyleSheet.create({
     needTestDesc: {
         flex: 1,
         fontSize: ms(11),
+        fontFamily: interRegular,
         color: '#555',
         lineHeight: ms(16),
     },
@@ -2002,7 +2004,7 @@ const styles = StyleSheet.create({
     },
     viewedTestsHeading: {
         fontSize: ms(16),
-        fontWeight: 'bold',
+        fontFamily: heading,
         color: '#000',
         marginBottom: ms(12),
     },
@@ -2055,12 +2057,13 @@ const styles = StyleSheet.create({
     },
     viewedTestName: {
         fontSize: ms(11),
-        fontWeight: 'bold',
+        fontFamily: interMedium,
         color: '#000',
         marginBottom: ms(2),
     },
     viewedTestCovers: {
         fontSize: ms(10),
+        fontFamily: interRegular,
         color: '#666',
     },
 
@@ -2072,7 +2075,7 @@ const styles = StyleSheet.create({
     },
     popularHeading: {
         fontSize: ms(16),
-        fontWeight: 'bold',
+        fontFamily: heading,
         color: '#000',
         marginBottom: ms(15),
     },
@@ -2103,7 +2106,7 @@ const styles = StyleSheet.create({
     },
     popularText: {
         fontSize: ms(12),
-        fontWeight: '600',
+        fontFamily: interMedium,
         color: '#333',
         textAlign: 'center',
     },
@@ -2119,7 +2122,7 @@ const styles = StyleSheet.create({
     },
     healthStatusHeading: {
         fontSize: ms(16),
-        fontWeight: 'bold',
+        fontFamily: heading,
         color: '#000',
         textAlign: 'center',
         marginBottom: ms(12),
@@ -2162,6 +2165,7 @@ const styles = StyleSheet.create({
     healthDescription: {
         color: 'rgba(255,255,255,0.8)',
         fontSize: ms(10),
+        fontFamily: interRegular,
         lineHeight: ms(15),
     },
     healthGaugeContainer: {
@@ -2178,11 +2182,12 @@ const styles = StyleSheet.create({
     },
     healthRingScore: {
         fontSize: ms(28),
-        fontWeight: 'bold',
+        fontFamily: interMedium,
         color: blackColor,
     },
     healthRingSubtext: {
         fontSize: ms(9),
+        fontFamily: interRegular,
         color: '#666',
         marginTop: vs(1),
     },
@@ -2204,7 +2209,7 @@ const styles = StyleSheet.create({
     },
     healthJourneyHeading: {
         fontSize: ms(16),
-        fontWeight: 'bold',
+        fontFamily: heading,
         color: '#000',
         textAlign: 'center',
         marginBottom: ms(12),
@@ -2269,7 +2274,7 @@ const styles = StyleSheet.create({
     },
     medicalLogHeading: {
         fontSize: ms(16),
-        fontWeight: 'bold',
+        fontFamily: heading,
         color: '#000',
         marginBottom: ms(15),
         textAlign: 'center'
@@ -2303,7 +2308,7 @@ const styles = StyleSheet.create({
     },
     medicalLogText: {
         fontSize: ms(11),
-        fontWeight: '600',
+        fontFamily: interMedium,
         color: '#333',
         textAlign: 'center',
     },
@@ -2317,7 +2322,7 @@ const styles = StyleSheet.create({
     },
     membersSayHeading: {
         fontSize: ms(16),
-        fontWeight: 'bold',
+        fontFamily: heading,
         color: '#000',
         marginBottom: ms(12),
     },
@@ -2344,7 +2349,7 @@ const styles = StyleSheet.create({
     },
     memberName: {
         fontSize: ms(15),
-        fontWeight: 'bold',
+        fontFamily: interMedium,
         color: '#000',
         flex: 1,
     },
@@ -2360,10 +2365,11 @@ const styles = StyleSheet.create({
     memberRatingText: {
         color: '#fff',
         fontSize: ms(12),
-        fontWeight: 'bold',
+        fontFamily: interMedium,
     },
     memberReview: {
         fontSize: ms(11),
+        fontFamily: interRegular,
         color: '#666',
         lineHeight: ms(14),
     },
@@ -2501,6 +2507,7 @@ const styles = StyleSheet.create({
 
     subTitle: {
         fontSize: ms(11),
+        fontFamily: interRegular,
         color: '#666',
         marginTop: 2,
     },
@@ -2524,7 +2531,7 @@ const styles2 = StyleSheet.create({
     },
     hsSectionTitle: {
         fontSize: ms(18),
-        fontWeight: 'bold',
+        fontFamily: heading,
         color: '#000',
         textAlign: 'center',
         marginBottom: ms(12),
@@ -2550,7 +2557,7 @@ const styles2 = StyleSheet.create({
     },
     hsPillText: {
         color: '#fff',
-        fontWeight: 'bold',
+        fontFamily:heading,
         fontSize: ms(14),
         textAlign: 'center',
     },
@@ -2631,7 +2638,7 @@ const styles2 = StyleSheet.create({
     },
     hsScoreNum: {
         fontSize: ms(22),
-        fontWeight: 'bold',
+        fontFamily: interMedium,
         color: '#1A4E44',
         lineHeight: ms(25),
     },
@@ -2666,9 +2673,10 @@ const styles2 = StyleSheet.create({
     },
     hsViewBtnText: {
         fontSize: ms(14),
-        fontWeight: 'bold',
+        fontWeight: '700',
         color: '#000',
         marginRight: ms(4),
+        fontFamily:heading,
     },
 
     // ── Continuity Tracker ──────────────────────────────────────────
@@ -2746,7 +2754,7 @@ const styles2 = StyleSheet.create({
 
     /* Body */
     npSectionCap: { fontSize: ms(9), fontWeight: '900', color: '#1A1A1A', letterSpacing: 1.2, marginBottom: ms(5) },
-    npBodyText: { fontSize: ms(12), color: '#444', lineHeight: ms(18) },
+    npBodyText: { fontSize: ms(12), fontFamily: interRegular, color: '#444', lineHeight: ms(18) },
     npBulletRow: { flexDirection: 'row', alignItems: 'flex-start', gap: ms(6), marginBottom: ms(4) },
     npBulletChar: { fontSize: ms(7), color: '#1A1A1A', marginTop: ms(4) },
     npBulletText: { flex: 1, fontSize: ms(12), color: '#444', lineHeight: ms(17) },
@@ -2804,7 +2812,7 @@ const styles2 = StyleSheet.create({
     },
     macBadgeText: {
         fontSize: ms(13),
-        fontWeight: '600',
+        fontFamily: interMedium,
         color: '#FFFFFF',
     },
     macCardsRow: {
@@ -2827,7 +2835,7 @@ const styles2 = StyleSheet.create({
     },
     macGridCellLabel: {
         fontSize: ms(12),
-        fontWeight: '600',
+        fontFamily: interMedium,
         color: blackColor,
         flex: 1,
     },
@@ -2855,7 +2863,7 @@ const styles2 = StyleSheet.create({
     macGridBadgeText: {
         color: whiteColor,
         fontSize: ms(14),
-        fontWeight: 'bold',
+        fontFamily: interMedium,
     },
 
     /* ── Lifestyle Impact Summary ── */
@@ -2869,7 +2877,7 @@ const styles2 = StyleSheet.create({
     },
     lisSectionTitle: {
         fontSize: ms(17),
-        fontWeight: 'bold',
+        fontFamily: heading,
         color: '#111111',
     },
     lisRow: {
@@ -2881,8 +2889,8 @@ const styles2 = StyleSheet.create({
     lisLabel: {
         flex: 1,
         fontSize: ms(14),
+        fontFamily: interRegular,
         color: '#111111',
-        fontWeight: '400',
     },
     lisBadgeStrong: {
         backgroundColor: '#E8F5E9',
@@ -2922,7 +2930,7 @@ const styles2 = StyleSheet.create({
     },
     notifTitle: {
         fontSize: ms(17),
-        fontWeight: 'bold',
+        fontFamily: heading,
         color: '#111111',
     },
     notifRow: {
@@ -2943,12 +2951,13 @@ const styles2 = StyleSheet.create({
     },
     notifItemTitle: {
         fontSize: ms(13),
-        fontWeight: '600',
+        fontFamily: interMedium,
         color: '#111111',
         marginBottom: ms(3),
     },
     notifItemSub: {
         fontSize: ms(11),
+        fontFamily: interRegular,
         color: '#888888',
         lineHeight: ms(16),
     },
@@ -2982,7 +2991,7 @@ const styles2 = StyleSheet.create({
     },
     vosSectionTitle: {
         fontSize: ms(17),
-        fontWeight: 'bold',
+        fontFamily: heading,
         color: '#111111',
     },
     vosGrid: {
@@ -3019,14 +3028,14 @@ const styles2 = StyleSheet.create({
     },
     vosOrganName: {
         fontSize: ms(12),
-        fontWeight: '600',
+        fontFamily: interMedium,
         color: blackColor,
         marginBottom: ms(2),
         textAlign: 'center',
     },
     vosStatus: {
         fontSize: ms(13),
-        fontWeight: 'bold',
+        fontFamily: interMedium,
         color: '#111111',
         textAlign: 'center',
     },

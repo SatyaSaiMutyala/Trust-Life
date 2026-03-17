@@ -11,7 +11,7 @@ import {
 import LinearGradient from 'react-native-linear-gradient';
 import { useNavigation } from '@react-navigation/native';
 import { StatusBar2 } from '../../components/StatusBar';
-import { bold, regular } from '../../config/Constants';
+import { heading, interMedium, interRegular } from '../../config/Constants';
 import { blackColor, globalGradient, globalGradient2, primaryColor, whiteColor } from '../../utils/globalColors';
 import { ms, vs } from 'react-native-size-matters';
 
@@ -156,7 +156,7 @@ const styles = StyleSheet.create({
     },
     headerTitle: {
         fontSize: ms(22),
-        fontFamily: bold,
+        fontFamily: heading,
         color: whiteColor,
         marginBottom: vs(20),
     },
@@ -193,13 +193,13 @@ const styles = StyleSheet.create({
     },
     bannerTitle: {
         fontSize: ms(15),
-        fontFamily: bold,
+        fontFamily: heading,
         color: blackColor,
         marginBottom: ms(4),
     },
     bannerSubtitle: {
         fontSize: ms(11),
-        fontFamily: regular,
+        fontFamily: interRegular,
         color: '#888',
     },
 
@@ -225,13 +225,13 @@ const styles = StyleSheet.create({
     },
     listCardTitle: {
         fontSize: ms(14),
-        fontFamily: bold,
+        fontFamily: heading,
         color: blackColor,
         marginBottom: ms(3),
     },
     listCardSubtitle: {
         fontSize: ms(11),
-        fontFamily: regular,
+        fontFamily: interRegular,
         color: '#888',
         marginBottom: ms(8),
     },
@@ -248,12 +248,12 @@ const styles = StyleSheet.create({
     },
     badgeLabel: {
         fontSize: ms(11),
-        fontFamily: regular,
+        fontFamily: interRegular,
         color: blackColor,
     },
     badgeCount: {
         fontSize: ms(12),
-        fontFamily: bold,
+        fontFamily: interMedium,
         color: blackColor,
     },
 });

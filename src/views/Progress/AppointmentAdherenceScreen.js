@@ -10,7 +10,7 @@ import Svg, { Circle, Defs, LinearGradient as SvgLinearGradient, Stop } from 're
 import { StatusBar2 } from '../../components/StatusBar';
 import Icon, { Icons } from '../../components/Icons';
 import { blackColor, whiteColor, primaryColor, globalGradient2 } from '../../utils/globalColors';
-import { bold, regular } from '../../config/Constants';
+import { heading, interMedium, interRegular } from '../../config/Constants';
 
 // ── Appointment Data ──
 const TOTAL_APPOINTMENTS = 12;
@@ -162,7 +162,7 @@ const AppointmentAdherenceScreen = () => {
                         </View>
                         <View style={styles.pdcRow}>
                             <Text style={styles.pdcLabel}>Calculated Score</Text>
-                            <Text style={[styles.pdcValue, { color: scoreStatus.color, fontFamily: bold }]}>{ADHERENCE_SCORE}/100</Text>
+                            <Text style={[styles.pdcValue, { color: scoreStatus.color, fontFamily: interMedium }]}>{ADHERENCE_SCORE}/100</Text>
                         </View>
                         <View style={styles.pdcScaleRow}>
                             {[
@@ -270,7 +270,7 @@ const styles = StyleSheet.create({
         backgroundColor: 'rgba(255,255,255,0.3)',
         justifyContent: 'center', alignItems: 'center', marginRight: ms(12),
     },
-    headerTitle: { fontFamily: bold, fontSize: ms(18), color: whiteColor },
+    headerTitle: { fontFamily: heading, fontSize: ms(18), color: whiteColor },
     scrollContent: { paddingBottom: vs(40) },
 
     // Score Card
@@ -283,34 +283,34 @@ const styles = StyleSheet.create({
         position: 'absolute', top: 0, left: 0, right: 0, bottom: 0,
         justifyContent: 'center', alignItems: 'center',
     },
-    ringScore: { fontFamily: bold, fontSize: ms(22), color: blackColor },
-    ringLabel: { fontFamily: regular, fontSize: ms(11), color: '#9CA3AF' },
+    ringScore: { fontFamily: heading, fontSize: ms(22), color: blackColor },
+    ringLabel: { fontFamily: interRegular, fontSize: ms(11), color: '#9CA3AF' },
     scoreInfo: { flex: 1, marginLeft: ms(16) },
     adherenceBadge: {
         backgroundColor: '#DCFCE7', borderRadius: ms(12),
         paddingHorizontal: ms(14), paddingVertical: vs(4),
         alignSelf: 'flex-start', marginBottom: vs(8),
     },
-    adherenceBadgeText: { fontFamily: bold, fontSize: ms(12), color: '#16A34A' },
-    scoreDesc: { fontFamily: regular, fontSize: ms(12), color: '#6B7280', lineHeight: ms(18), marginBottom: vs(8) },
+    adherenceBadgeText: { fontFamily: interMedium, fontSize: ms(12), color: '#16A34A' },
+    scoreDesc: { fontFamily: interRegular, fontSize: ms(12), color: '#6B7280', lineHeight: ms(18), marginBottom: vs(8) },
     streakRow: { flexDirection: 'row', alignItems: 'center', gap: ms(4) },
-    streakText: { fontFamily: bold, fontSize: ms(12), color: '#F59E0B' },
+    streakText: { fontFamily: interMedium, fontSize: ms(12), color: '#F59E0B' },
 
     // PDC Breakdown
     pdcRow: {
         flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center',
         paddingVertical: vs(8), borderBottomWidth: 1, borderBottomColor: '#F1F5F9',
     },
-    pdcLabel: { fontFamily: regular, fontSize: ms(12), color: '#6B7280', flex: 1 },
-    pdcValue: { fontFamily: bold, fontSize: ms(13), color: blackColor },
+    pdcLabel: { fontFamily: interRegular, fontSize: ms(12), color: '#6B7280', flex: 1 },
+    pdcValue: { fontFamily: interMedium, fontSize: ms(13), color: blackColor },
     pdcScaleRow: {
         flexDirection: 'row', justifyContent: 'space-between',
         marginTop: vs(14), paddingTop: vs(10), borderTopWidth: 1, borderTopColor: '#F1F5F9',
     },
     pdcScaleItem: { alignItems: 'center' },
     pdcScaleDot: { width: ms(8), height: ms(8), borderRadius: ms(4), marginBottom: vs(3) },
-    pdcScaleLabel: { fontFamily: regular, fontSize: ms(9), color: '#6B7280' },
-    pdcScaleScore: { fontFamily: bold, fontSize: ms(9), color: blackColor, marginTop: vs(1) },
+    pdcScaleLabel: { fontFamily: interRegular, fontSize: ms(9), color: '#6B7280' },
+    pdcScaleScore: { fontFamily: interMedium, fontSize: ms(9), color: blackColor, marginTop: vs(1) },
 
     // Stats Grid
     statsGrid: {
@@ -325,15 +325,15 @@ const styles = StyleSheet.create({
         width: ms(40), height: ms(40), borderRadius: ms(12),
         justifyContent: 'center', alignItems: 'center', marginBottom: vs(8),
     },
-    statValue: { fontFamily: bold, fontSize: ms(20), color: blackColor },
-    statLabel: { fontFamily: regular, fontSize: ms(12), color: '#6B7280', marginTop: vs(2) },
+    statValue: { fontFamily: interMedium, fontSize: ms(20), color: blackColor },
+    statLabel: { fontFamily: interRegular, fontSize: ms(12), color: '#6B7280', marginTop: vs(2) },
 
     // Card
     card: {
         backgroundColor: whiteColor, borderRadius: ms(14),
         padding: ms(16), marginBottom: vs(12),
     },
-    cardTitle: { fontFamily: bold, fontSize: ms(15), color: blackColor, marginBottom: vs(14) },
+    cardTitle: { fontFamily: heading, fontSize: ms(15), color: blackColor, marginBottom: vs(14) },
 
     // Bar Chart
     barChart: { flexDirection: 'row', justifyContent: 'space-around', alignItems: 'flex-end' },
@@ -343,8 +343,8 @@ const styles = StyleSheet.create({
         borderRadius: ms(6), justifyContent: 'flex-end', overflow: 'hidden',
     },
     barFill: { width: '100%', borderRadius: ms(6) },
-    barLabel: { fontFamily: regular, fontSize: ms(10), color: '#6B7280', marginTop: vs(6) },
-    barValue: { fontFamily: bold, fontSize: ms(10), color: blackColor, marginTop: vs(2) },
+    barLabel: { fontFamily: interRegular, fontSize: ms(10), color: '#6B7280', marginTop: vs(6) },
+    barValue: { fontFamily: interMedium, fontSize: ms(10), color: blackColor, marginTop: vs(2) },
 
     // History
     historyRow: {
@@ -357,11 +357,11 @@ const styles = StyleSheet.create({
         marginRight: ms(12),
     },
     historyInfo: { flex: 1 },
-    historyDoctor: { fontFamily: bold, fontSize: ms(13), color: blackColor },
-    historySpecialty: { fontFamily: regular, fontSize: ms(11), color: '#6B7280', marginTop: vs(1) },
-    historyDate: { fontFamily: regular, fontSize: ms(11), color: '#9CA3AF', marginTop: vs(2) },
+    historyDoctor: { fontFamily: interMedium, fontSize: ms(13), color: blackColor },
+    historySpecialty: { fontFamily: interRegular, fontSize: ms(11), color: '#6B7280', marginTop: vs(1) },
+    historyDate: { fontFamily: interRegular, fontSize: ms(11), color: '#9CA3AF', marginTop: vs(2) },
     historyBadge: { borderRadius: ms(12), paddingHorizontal: ms(10), paddingVertical: vs(3) },
-    historyBadgeText: { fontFamily: bold, fontSize: ms(11) },
+    historyBadgeText: { fontFamily: interMedium, fontSize: ms(11) },
 
     // Tips
     tipRow: {
@@ -373,7 +373,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#F0FDF4', justifyContent: 'center', alignItems: 'center',
         marginRight: ms(12),
     },
-    tipText: { fontFamily: regular, fontSize: ms(12), color: '#374151', flex: 1, lineHeight: ms(18) },
+    tipText: { fontFamily: interRegular, fontSize: ms(12), color: '#374151', flex: 1, lineHeight: ms(18) },
 });
 
 export default AppointmentAdherenceScreen;

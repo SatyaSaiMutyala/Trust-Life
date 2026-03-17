@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import {
     Dimensions, SafeAreaView, StyleSheet, Text, TouchableOpacity,
-    View, Image, ScrollView, FlatList, TextInput,
+    View, Image, ScrollView, FlatList, TextInput, Modal,
+    KeyboardAvoidingView, Platform,
 } from 'react-native';
+import DateTimePicker from '@react-native-community/datetimepicker';
 import LinearGradient from 'react-native-linear-gradient';
 import { useNavigation, useFocusEffect, useRoute } from '@react-navigation/native';
 import { vs, ms } from 'react-native-size-matters';
@@ -12,7 +14,7 @@ import LoadLabReportsAction from '../redux/actions/LabReportsActions';
 import DocumentPicker from 'react-native-document-picker';
 
 import { StatusBar2 } from '../components/StatusBar';
-import { bold, img_url, regular } from '../config/Constants';
+import { heading, interMedium, interRegular, img_url } from '../config/Constants';
 import Icon, { Icons } from '../components/Icons';
 import { blackColor, globalGradient, whiteColor, primaryColor, globalGradient2 } from '../utils/globalColors';
 import MedicalRecordsShimmer from '../components/MedicalRecordsShimmer';
@@ -90,6 +92,12 @@ const MedicalRecordsVault = () => {
     const [isInitialLoad, setIsInitialLoad] = useState(true);
     const [bmSearch, setBmSearch] = useState('');
     const [bmFilter, setBmFilter] = useState('all'); // 'all' | 'abnormal' | 'normal'
+    const [showModal, setShowModal] = useState(false);
+    const [doctorName, setDoctorName] = useState('');
+    const [appointmentDate, setAppointmentDate] = useState('');
+    const [pickedFile, setPickedFile] = useState(null);
+    const [showDatePicker, setShowDatePicker] = useState(false);
+    const [selectedDate, setSelectedDate] = useState(new Date());
 
     useEffect(() => { loadProfilePic(); }, []);
 
@@ -121,12 +129,17 @@ const MedicalRecordsVault = () => {
                 type: [DocumentPicker.types.pdf, DocumentPicker.types.images],
                 allowMultiSelection: false,
             });
-            if (result?.[0]) {
-                navigation.navigate('UploadHealthReport', { file: result[0] });
-            }
+            if (result?.[0]) setPickedFile(result[0]);
         } catch (e) {
             if (!DocumentPicker.isCancel(e)) console.log('File picker error:', e);
         }
+    };
+
+    const handleSubmit = () => {
+        setShowModal(false);
+        setDoctorName('');
+        setAppointmentDate('');
+        setPickedFile(null);
     };
 
     // ── Biomarkers filtered list ───────────────────────────────────────────────
@@ -167,17 +180,6 @@ const MedicalRecordsVault = () => {
                     <Text style={styles.statSub}>of 1 GB plan</Text>
                 </View>
             </View>
-
-            {/* Upload Zone */}
-            <TouchableOpacity style={styles.uploadZone} activeOpacity={0.8}
-                onPress={openFilePicker}>
-                <View style={styles.uploadIconCircle}>
-                    <Icon type={Icons.Ionicons} name="cloud-upload-outline" size={ms(22)} color={primaryColor} />
-                </View>
-                <Text style={styles.uploadTitle}>Upload Lab Report</Text>
-                <Text style={styles.uploadSub}>Tap to upload  <Text style={styles.uploadSubLink}>PDF, JPG or PNG</Text></Text>
-                <Text style={styles.uploadHint}>Supports: Apollo, Thyrocare, SRL, Dr. Lal Pathlabs and more</Text>
-            </TouchableOpacity>
 
             {/* Section Header */}
             <View style={styles.secHeader}>
@@ -400,7 +402,7 @@ const MedicalRecordsVault = () => {
                             <Icon type={Icons.Ionicons} name="arrow-back" color={blackColor} size={ms(20)} />
                         </TouchableOpacity>
                     )}
-                    <Text style={styles.headerTitle} numberOfLines={1}>Medical Records</Text>
+                    <Text style={styles.headerTitle} numberOfLines={1}>Diagnostic Reports</Text>
                     <View style={styles.headerIcons}>
                         <TouchableOpacity style={styles.iconCircle} onPress={() => navigation.navigate('Notifications')}>
                             <Icon type={Icons.MaterialIcons} name="notifications-none" size={ms(20)} color={blackColor} />
@@ -450,6 +452,88 @@ const MedicalRecordsVault = () => {
                         renderLabReportsList()
                     )}
                 </View>
+
+                {/* FAB */}
+                <TouchableOpacity style={styles.fab} activeOpacity={0.85} onPress={() => setShowModal(true)}>
+                    <Icon type={Icons.Ionicons} name="add" size={ms(26)} color={whiteColor} />
+                </TouchableOpacity>
+
+                {/* Add Visit Modal */}
+                <Modal visible={showModal} transparent animationType="slide" onRequestClose={() => setShowModal(false)}>
+                    <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={styles.modalOverlay}>
+                        <TouchableOpacity style={styles.modalBackdrop} activeOpacity={1} onPress={() => setShowModal(false)} />
+                        <View style={styles.modalSheet}>
+                            {/* Modal Header */}
+                            <View style={styles.modalHeader}>
+                                <Text style={styles.modalTitle}>Add Visit Record</Text>
+                                <TouchableOpacity onPress={() => setShowModal(false)} style={styles.modalCloseBtn}>
+                                    <Icon type={Icons.Ionicons} name="close" size={ms(18)} color="#64748B" />
+                                </TouchableOpacity>
+                            </View>
+
+                            {/* Doctor Name */}
+                            <Text style={styles.fieldLabel}>Doctor Name</Text>
+                            <View style={styles.inputWrap}>
+                                <Icon type={Icons.Ionicons} name="person-outline" size={ms(16)} color="#64748B" />
+                                <TextInput
+                                    style={styles.fieldInput}
+                                    placeholder="e.g. Dr. Priya Nair"
+                                    placeholderTextColor="#9CA3AF"
+                                    value={doctorName}
+                                    onChangeText={setDoctorName}
+                                />
+                            </View>
+
+                            {/* Date of Appointment */}
+                            <Text style={styles.fieldLabel}>Date of Appointment</Text>
+                            <TouchableOpacity style={styles.inputWrap} activeOpacity={0.7} onPress={() => setShowDatePicker(true)}>
+                                <Icon type={Icons.Ionicons} name="calendar-outline" size={ms(16)} color="#64748B" />
+                                <Text style={[styles.fieldInput, !appointmentDate && { color: '#9CA3AF' }]}>
+                                    {appointmentDate || 'Select date'}
+                                </Text>
+                                <Icon type={Icons.Ionicons} name="chevron-down" size={ms(14)} color="#64748B" />
+                            </TouchableOpacity>
+                            {showDatePicker && (
+                                <DateTimePicker
+                                    value={selectedDate}
+                                    mode="date"
+                                    display={Platform.OS === 'ios' ? 'spinner' : 'default'}
+                                    onChange={(_e, date) => {
+                                        setShowDatePicker(false);
+                                        if (date) {
+                                            setSelectedDate(date);
+                                            setAppointmentDate(date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }));
+                                        }
+                                    }}
+                                />
+                            )}
+
+                            {/* Upload Document */}
+                            <Text style={styles.fieldLabel}>Upload Document</Text>
+                            <TouchableOpacity style={styles.modalUploadZone} activeOpacity={0.8} onPress={openFilePicker}>
+                                <Icon type={Icons.Ionicons} name="cloud-upload-outline" size={ms(22)} color={primaryColor} />
+                                <View style={{ flex: 1 }}>
+                                    <Text style={styles.modalUploadTitle}>
+                                        {pickedFile ? pickedFile.name : 'Tap to upload'}
+                                    </Text>
+                                    <Text style={styles.modalUploadSub}>
+                                        {pickedFile
+                                            ? pickedFile.size ? `${(pickedFile.size / 1024).toFixed(0)} KB` : 'File selected'
+                                            : 'PDF, JPG or PNG'}
+                                    </Text>
+                                </View>
+                                {pickedFile
+                                    ? <Icon type={Icons.Ionicons} name="checkmark-circle" size={ms(20)} color={primaryColor} />
+                                    : <Icon type={Icons.Ionicons} name="chevron-forward" size={ms(16)} color="#64748B" />}
+                            </TouchableOpacity>
+
+                            {/* Submit */}
+                            <TouchableOpacity style={styles.submitBtn} activeOpacity={0.85} onPress={handleSubmit}>
+                                <Text style={styles.submitBtnText}>Save Record</Text>
+                            </TouchableOpacity>
+                        </View>
+                    </KeyboardAvoidingView>
+                </Modal>
             </LinearGradient>
         </SafeAreaView>
     );
@@ -466,7 +550,7 @@ const styles = StyleSheet.create({
     // Header
     topRow: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: vs(16), paddingHorizontal: ms(20) },
     backButton: { width: ms(34), height: ms(34), borderRadius: ms(17), backgroundColor: whiteColor, justifyContent: 'center', alignItems: 'center', marginRight: ms(12) },
-    headerTitle: { flex: 1, fontSize: ms(20), fontFamily: bold, color: whiteColor },
+    headerTitle: { flex: 1, fontSize: ms(20), fontFamily: heading, color: whiteColor },
     headerIcons: { flexDirection: 'row', alignItems: 'center', gap: ms(10) },
     iconCircle: { backgroundColor: whiteColor, padding: ms(8), borderRadius: ms(20) },
     profileImage: { width: ms(35), height: ms(35), borderRadius: ms(17.5), borderWidth: 1, borderColor: whiteColor },
@@ -476,20 +560,20 @@ const styles = StyleSheet.create({
     tabContainer: { flexDirection: 'row', backgroundColor: 'rgba(255,255,255,0.2)', borderRadius: ms(25), padding: ms(4), marginHorizontal: ms(20), marginBottom: vs(2) },
     tab: { flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: ms(5), paddingVertical: vs(10), borderRadius: ms(22) },
     activeTab: { backgroundColor: whiteColor, elevation: 2, shadowColor: '#000', shadowOffset: { width: 0, height: 2 }, shadowOpacity: 0.1 },
-    tabText: { fontSize: ms(13), fontFamily: bold, color: whiteColor },
+    tabText: { fontSize: ms(13), fontFamily: interMedium, color: whiteColor },
     activeTabText: { color: primaryColor },
     tabBadge: { backgroundColor: primaryColor, borderRadius: ms(8), paddingHorizontal: ms(5), paddingVertical: vs(1) },
-    tabBadgeText: { fontSize: ms(9), fontFamily: bold, color: whiteColor },
+    tabBadgeText: { fontSize: ms(9), fontFamily: interMedium, color: whiteColor },
 
     scrollPad: { paddingHorizontal: ms(14), paddingTop: vs(14) },
 
     // Stats Row
     statsRow: { flexDirection: 'row', gap: ms(8), marginBottom: vs(14) },
     statCard: { flex: 1, backgroundColor: whiteColor, borderRadius: ms(12), padding: ms(11), borderWidth: 0.5, borderColor: primaryColor + '22' },
-    statLabel: { fontFamily: regular, fontSize: ms(9), color: '#64748B', textTransform: 'uppercase', letterSpacing: 0.5, marginBottom: vs(3) },
-    statValue: { fontFamily: bold, fontSize: ms(20), color: blackColor },
+    statLabel: { fontFamily: interRegular, fontSize: ms(9), color: '#64748B', textTransform: 'uppercase', letterSpacing: 0.5, marginBottom: vs(3) },
+    statValue: { fontFamily: interMedium, fontSize: ms(20), color: blackColor },
     statValueUnit: { fontSize: ms(12), color: '#64748B' },
-    statSub: { fontFamily: regular, fontSize: ms(9), color: primaryColor, marginTop: vs(2) },
+    statSub: { fontFamily: interRegular, fontSize: ms(9), color: primaryColor, marginTop: vs(2) },
 
     // Upload Zone
     uploadZone: {
@@ -498,17 +582,17 @@ const styles = StyleSheet.create({
         backgroundColor: primaryColor + '05', marginBottom: vs(16),
     },
     uploadIconCircle: { width: ms(48), height: ms(48), borderRadius: ms(24), backgroundColor: primaryColor + '18', justifyContent: 'center', alignItems: 'center', marginBottom: vs(10) },
-    uploadTitle: { fontFamily: bold, fontSize: ms(14), color: blackColor, marginBottom: vs(4) },
-    uploadSub: { fontFamily: regular, fontSize: ms(12), color: '#64748B' },
-    uploadSubLink: { color: primaryColor, fontFamily: bold },
-    uploadHint: { fontFamily: regular, fontSize: ms(10), color: '#94A3B8', marginTop: vs(8), textAlign: 'center' },
+    uploadTitle: { fontFamily: heading, fontSize: ms(14), color: blackColor, marginBottom: vs(4) },
+    uploadSub: { fontFamily: interRegular, fontSize: ms(12), color: '#64748B' },
+    uploadSubLink: { color: primaryColor, fontFamily: interMedium },
+    uploadHint: { fontFamily: interRegular, fontSize: ms(10), color: '#94A3B8', marginTop: vs(8), textAlign: 'center' },
 
     // Section Header
     secHeader: { flexDirection: 'row', alignItems: 'flex-end', justifyContent: 'space-between', marginBottom: vs(12) },
-    secTitle: { fontFamily: bold, fontSize: ms(15), color: blackColor },
-    secSub: { fontFamily: regular, fontSize: ms(11), color: '#64748B', marginTop: vs(2) },
+    secTitle: { fontFamily: heading, fontSize: ms(15), color: blackColor },
+    secSub: { fontFamily: interRegular, fontSize: ms(11), color: '#64748B', marginTop: vs(2) },
     ghostBtn: { flexDirection: 'row', alignItems: 'center', gap: ms(4), borderWidth: 1, borderColor: primaryColor, borderRadius: ms(8), paddingHorizontal: ms(10), paddingVertical: vs(5) },
-    ghostBtnText: { fontFamily: bold, fontSize: ms(11), color: primaryColor },
+    ghostBtnText: { fontFamily: interMedium, fontSize: ms(11), color: primaryColor },
 
     // Reports Grid
     reportsGrid: { flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-between' },
@@ -521,29 +605,29 @@ const styles = StyleSheet.create({
     reportCardAccent: { position: 'absolute', top: 0, left: 0, right: 0, height: ms(3), backgroundColor: primaryColor, borderRadius: ms(12) },
     reportCardTop: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: vs(8), marginTop: vs(2) },
     pdfBadge: { backgroundColor: '#FEE2E2', borderRadius: ms(4), paddingHorizontal: ms(6), paddingVertical: vs(2) },
-    pdfBadgeText: { fontFamily: bold, fontSize: ms(9), color: '#DC2626', letterSpacing: 0.5 },
+    pdfBadgeText: { fontFamily: interMedium, fontSize: ms(9), color: '#DC2626', letterSpacing: 0.5 },
     reportStatusBadge: { borderRadius: ms(5), paddingHorizontal: ms(7), paddingVertical: vs(2) },
-    reportStatusText: { fontFamily: bold, fontSize: ms(9) },
-    reportName: { fontFamily: bold, fontSize: ms(12), color: blackColor, marginBottom: vs(2) },
-    reportLab: { fontFamily: regular, fontSize: ms(10), color: '#64748B', marginBottom: vs(8) },
+    reportStatusText: { fontFamily: interMedium, fontSize: ms(9) },
+    reportName: { fontFamily: heading, fontSize: ms(12), color: blackColor, marginBottom: vs(2) },
+    reportLab: { fontFamily: interRegular, fontSize: ms(10), color: '#64748B', marginBottom: vs(8) },
     reportMarkers: { flexDirection: 'row', flexWrap: 'wrap', gap: ms(4), marginBottom: vs(8) },
     markerChip: { backgroundColor: primaryColor + '15', borderRadius: ms(4), paddingHorizontal: ms(6), paddingVertical: vs(2) },
-    markerChipText: { fontFamily: bold, fontSize: ms(9), color: primaryColor },
+    markerChipText: { fontFamily: interMedium, fontSize: ms(9), color: primaryColor },
     reportFooter: { flexDirection: 'row', justifyContent: 'space-between', borderTopWidth: 0.5, borderTopColor: primaryColor + '20', paddingTop: vs(8) },
-    reportDate: { fontFamily: regular, fontSize: ms(10), color: '#64748B' },
-    reportSize: { fontFamily: regular, fontSize: ms(10), color: '#94A3B8' },
+    reportDate: { fontFamily: interRegular, fontSize: ms(10), color: '#64748B' },
+    reportSize: { fontFamily: interRegular, fontSize: ms(10), color: '#94A3B8' },
     addReportCard: { justifyContent: 'center', alignItems: 'center', borderStyle: 'dashed', opacity: 0.7 },
-    addReportText: { fontFamily: regular, fontSize: ms(12), color: '#94A3B8', marginTop: vs(4) },
+    addReportText: { fontFamily: interRegular, fontSize: ms(12), color: '#94A3B8', marginTop: vs(4) },
 
     // Biomarker Search + Filter
     bmHeader: { flexDirection: 'row', alignItems: 'center', gap: ms(10), marginBottom: vs(12) },
     searchWrap: { flex: 1, flexDirection: 'row', alignItems: 'center', backgroundColor: whiteColor, borderRadius: ms(8), borderWidth: 0.5, borderColor: primaryColor + '30', paddingHorizontal: ms(10), height: vs(36) },
     searchIcon: { marginRight: ms(6) },
-    searchInput: { flex: 1, fontFamily: regular, fontSize: ms(12), color: blackColor, padding: 0 },
+    searchInput: { flex: 1, fontFamily: interRegular, fontSize: ms(12), color: blackColor, padding: 0 },
     filterGroup: { flexDirection: 'row', gap: ms(5) },
     filterChip: { paddingHorizontal: ms(10), paddingVertical: vs(5), borderRadius: ms(20), borderWidth: 0.5, borderColor: primaryColor + '40', backgroundColor: 'transparent' },
     filterChipActive: { backgroundColor: primaryColor, borderColor: primaryColor },
-    filterChipText: { fontFamily: bold, fontSize: ms(10), color: '#64748B' },
+    filterChipText: { fontFamily: interMedium, fontSize: ms(10), color: '#64748B' },
     filterChipTextActive: { color: whiteColor },
 
     // Biomarker Table
@@ -551,27 +635,65 @@ const styles = StyleSheet.create({
     bmRow: { flexDirection: 'row', alignItems: 'center', paddingVertical: vs(12), paddingHorizontal: ms(12), gap: ms(8) },
     bmRowBorder: { borderBottomWidth: 0.5, borderBottomColor: primaryColor + '10' },
     bmNameCol: { width: ms(90) },
-    bmName: { fontFamily: bold, fontSize: ms(11), color: blackColor },
-    bmCat: { fontFamily: regular, fontSize: ms(9), color: '#64748B', marginTop: vs(1) },
+    bmName: { fontFamily: interMedium, fontSize: ms(11), color: blackColor },
+    bmCat: { fontFamily: interRegular, fontSize: ms(9), color: '#64748B', marginTop: vs(1) },
     bmValueCol: { flex: 1, alignItems: 'center' },
-    bmValue: { fontFamily: bold, fontSize: ms(13), color: blackColor },
-    bmUnit: { fontFamily: regular, fontSize: ms(10), color: '#64748B' },
+    bmValue: { fontFamily: interMedium, fontSize: ms(13), color: blackColor },
+    bmUnit: { fontFamily: interRegular, fontSize: ms(10), color: '#64748B' },
     rangeBar: { height: vs(5), backgroundColor: '#E2E8F0', borderRadius: ms(3), overflow: 'visible', marginTop: vs(4), marginBottom: vs(3), position: 'relative' },
     rangeFill: { height: '100%', borderRadius: ms(3) },
     rangeDot: { position: 'absolute', width: ms(8), height: ms(8), borderRadius: ms(4), borderWidth: 2, borderColor: whiteColor, top: vs(-1.5), transform: [{ translateX: -ms(4) }] },
-    rangeText: { fontFamily: regular, fontSize: ms(9), color: '#94A3B8' },
+    rangeText: { fontFamily: interRegular, fontSize: ms(9), color: '#94A3B8' },
     testedRow: { flexDirection: 'row', alignItems: 'center', gap: ms(3), marginTop: vs(4) },
-    testedText: { fontFamily: regular, fontSize: ms(9), color: '#9CA3AF' },
+    testedText: { fontFamily: interRegular, fontSize: ms(9), color: '#9CA3AF' },
     bmStatusCol: { alignItems: 'flex-end', gap: vs(3) },
     statusPill: { borderRadius: ms(6), paddingHorizontal: ms(7), paddingVertical: vs(2) },
-    statusPillText: { fontFamily: bold, fontSize: ms(9), letterSpacing: 0.2 },
+    statusPillText: { fontFamily: interMedium, fontSize: ms(9), letterSpacing: 0.2 },
     trendRow: { flexDirection: 'row', alignItems: 'center', gap: ms(2), marginTop: vs(2) },
-    trendText: { fontFamily: bold, fontSize: ms(9) },
+    trendText: { fontFamily: interMedium, fontSize: ms(9) },
 
     // Action Row
     actionRow: { flexDirection: 'row', alignItems: 'center', gap: ms(12), backgroundColor: whiteColor, borderRadius: ms(12), padding: ms(14), borderWidth: 0.5, borderColor: primaryColor + '20' },
-    actionTitle: { fontFamily: bold, fontSize: ms(13), color: blackColor, marginBottom: vs(2) },
-    actionSub: { fontFamily: regular, fontSize: ms(11), color: '#64748B' },
+    actionTitle: { fontFamily: heading, fontSize: ms(13), color: blackColor, marginBottom: vs(2) },
+    actionSub: { fontFamily: interRegular, fontSize: ms(11), color: '#64748B' },
     actionBtn: { backgroundColor: primaryColor, borderRadius: ms(8), paddingHorizontal: ms(14), paddingVertical: vs(8) },
-    actionBtnText: { fontFamily: bold, fontSize: ms(12), color: whiteColor },
+    actionBtnText: { fontFamily: interMedium, fontSize: ms(12), color: whiteColor },
+
+    // FAB
+    fab: {
+        position: 'absolute', bottom: vs(24), right: ms(20),
+        width: ms(54), height: ms(54), borderRadius: ms(27),
+        backgroundColor: primaryColor, justifyContent: 'center', alignItems: 'center',
+        elevation: 6, shadowColor: primaryColor, shadowOffset: { width: 0, height: 4 }, shadowOpacity: 0.35, shadowRadius: 6,
+    },
+
+    // Modal
+    modalOverlay: { flex: 1, justifyContent: 'flex-end' },
+    modalBackdrop: { ...StyleSheet.absoluteFillObject, backgroundColor: 'rgba(0,0,0,0.45)' },
+    modalSheet: {
+        backgroundColor: whiteColor, borderTopLeftRadius: ms(24), borderTopRightRadius: ms(24),
+        paddingHorizontal: ms(20), paddingTop: vs(20), paddingBottom: vs(36),
+    },
+    modalHeader: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: vs(18) },
+    modalTitle: { fontFamily: heading, fontSize: ms(16), color: blackColor },
+    modalCloseBtn: { width: ms(30), height: ms(30), borderRadius: ms(15), backgroundColor: '#F1F5F9', justifyContent: 'center', alignItems: 'center' },
+    fieldLabel: { fontFamily: interMedium, fontSize: ms(13), color: '#374151', marginBottom: vs(6) },
+    inputWrap: {
+        flexDirection: 'row', alignItems: 'center', gap: ms(10),
+        borderWidth: 1, borderColor: '#E5E7EB', borderRadius: ms(10),
+        paddingHorizontal: ms(12), paddingVertical: vs(10), marginBottom: vs(14), backgroundColor: '#F9FAFB',
+    },
+    fieldInput: { flex: 1, fontFamily: interRegular, fontSize: ms(13), color: blackColor, padding: 0 },
+    modalUploadZone: {
+        flexDirection: 'row', alignItems: 'center', gap: ms(12),
+        borderWidth: 1.5, borderStyle: 'dashed', borderColor: primaryColor + '55',
+        borderRadius: ms(12), padding: ms(14), backgroundColor: primaryColor + '06', marginBottom: vs(20),
+    },
+    modalUploadTitle: { fontFamily: interMedium, fontSize: ms(13), color: blackColor },
+    modalUploadSub: { fontFamily: interRegular, fontSize: ms(11), color: '#64748B', marginTop: vs(2) },
+    submitBtn: {
+        backgroundColor: primaryColor, borderRadius: ms(12),
+        paddingVertical: vs(13), alignItems: 'center',
+    },
+    submitBtnText: { fontFamily: interMedium, fontSize: ms(14), color: whiteColor },
 });

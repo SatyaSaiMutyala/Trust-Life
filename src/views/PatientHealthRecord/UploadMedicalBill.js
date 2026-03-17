@@ -17,7 +17,7 @@ import { ms, vs } from 'react-native-size-matters';
 import { StatusBar2 } from '../../components/StatusBar';
 import Icon, { Icons } from '../../components/Icons';
 import PrimaryButton from '../../utils/primaryButton';
-import { bold, regular } from '../../config/Constants';
+import { heading, interMedium, interRegular } from '../../config/Constants';
 import {
     blackColor,
     whiteColor,
@@ -182,14 +182,14 @@ const styles = StyleSheet.create({
     // Title
     title: {
         fontSize: ms(18),
-        fontFamily: bold,
+        fontFamily: heading,
         color: blackColor,
         textAlign: 'center',
         marginBottom: vs(8),
     },
     description: {
         fontSize: ms(13),
-        fontFamily: regular,
+        fontFamily: interRegular,
         color: '#6B7280',
         textAlign: 'center',
         lineHeight: ms(20),
@@ -215,13 +215,13 @@ const styles = StyleSheet.create({
     },
     uploadText: {
         fontSize: ms(14),
-        fontFamily: bold,
+        fontFamily: interMedium,
         color: blackColor,
         marginTop: vs(6),
     },
     uploadFormat: {
         fontSize: ms(11),
-        fontFamily: regular,
+        fontFamily: interRegular,
         color: '#6B7280',
         marginTop: vs(2),
     },
@@ -238,7 +238,7 @@ const styles = StyleSheet.create({
     },
     fileNameText: {
         fontSize: ms(12),
-        fontFamily: regular,
+        fontFamily: interRegular,
         color: blackColor,
         marginTop: vs(4),
         paddingHorizontal: ms(20),

@@ -9,7 +9,7 @@ import { ms, vs } from 'react-native-size-matters';
 import { StatusBar2 } from '../../components/StatusBar';
 import Icon, { Icons } from '../../components/Icons';
 import { blackColor, whiteColor, primaryColor, globalGradient2 } from '../../utils/globalColors';
-import { bold, regular } from '../../config/Constants';
+import { heading, interMedium, interRegular } from '../../config/Constants';
 
 const ENGAGEMENTS = [
     {
@@ -148,8 +148,8 @@ const styles = StyleSheet.create({
         justifyContent: 'center', alignItems: 'center',
     },
     headerTextWrap: { marginLeft: ms(10), flex: 1 },
-    headerTitle: { fontFamily: bold, fontSize: ms(18), color: whiteColor },
-    headerSubtitle: { fontFamily: regular, fontSize: ms(11), color: 'rgba(255,255,255,0.8)', marginTop: vs(2) },
+    headerTitle: { fontFamily: heading, fontSize: ms(18), color: whiteColor },
+    headerSubtitle: { fontFamily: interRegular, fontSize: ms(11), color: 'rgba(255,255,255,0.8)', },
 
     banner: {
         flexDirection: 'row', backgroundColor: 'rgba(255,255,255,0.18)',
@@ -157,8 +157,8 @@ const styles = StyleSheet.create({
         justifyContent: 'space-around', alignItems: 'center',
     },
     bannerItem: { alignItems: 'center' },
-    bannerNum: { fontFamily: bold, fontSize: ms(20), color: whiteColor },
-    bannerLbl: { fontFamily: regular, fontSize: ms(10), color: 'rgba(255,255,255,0.8)', marginTop: vs(2) },
+    bannerNum: { fontFamily: interMedium, fontSize: ms(20), color: whiteColor },
+    bannerLbl: { fontFamily: interRegular, fontSize: ms(10), color: 'rgba(255,255,255,0.8)', marginTop: vs(2) },
     bannerDivider: { width: 1, height: vs(32), backgroundColor: 'rgba(255,255,255,0.3)' },
 
     scrollContent: { paddingBottom: vs(40) },
@@ -172,12 +172,12 @@ const styles = StyleSheet.create({
     iconWrap: { width: ms(44), height: ms(44), borderRadius: ms(12), justifyContent: 'center', alignItems: 'center' },
     cardTextWrap: { flex: 1, marginLeft: ms(12) },
     cardTopRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: vs(4) },
-    cardLabel: { fontFamily: bold, fontSize: ms(13), color: blackColor, flex: 1, marginRight: ms(6) },
+    cardLabel: { fontFamily: heading, fontSize: ms(13), color: blackColor, flex: 1, marginRight: ms(6) },
     badge: { borderRadius: ms(20), paddingHorizontal: ms(10), paddingVertical: vs(3) },
-    badgeText: { fontFamily: bold, fontSize: ms(10) },
+    badgeText: { fontFamily: interMedium, fontSize: ms(10) },
     scoreRow: { flexDirection: 'row', alignItems: 'center', marginBottom: vs(3) },
-    scoreVal: { fontFamily: bold, fontSize: ms(12), color: '#374151' },
-    cardDesc: { fontFamily: regular, fontSize: ms(11), color: '#6B7280' },
+    scoreVal: { fontFamily: interMedium, fontSize: ms(12), color: '#374151' },
+    cardDesc: { fontFamily: interRegular, fontSize: ms(11), color: '#6B7280' },
 });
 
 export default MedicalEngagementScreen;
