@@ -179,14 +179,18 @@ import ClinicalMedicalSummary from './src/views/PatientHealthRecord/ClinicalMedi
 import DoctorNotes from './src/views/PatientHealthRecord/DoctorNotes';
 import LabReports from './src/views/PatientHealthRecord/LabReports';
 import MedicationPrescription from './src/views/PatientHealthRecord/MedicationPrescription';
+import MedicationAnalyticsScreen from './src/views/PatientHealthRecord/MedicationAnalyticsScreen';
 import AddPrescriptionScreen from './src/views/PatientHealthRecord/AddPrescriptionScreen';
 import PrescriptionDetail from './src/views/PatientHealthRecord/PrescriptionDetail';
 import PatientNote from './src/views/PatientHealthRecord/PatientNote';
 import NoteDetail from './src/views/PatientHealthRecord/NoteDetail';
 import AddPatientNote from './src/views/PatientHealthRecord/AddPatientNote';
 import MedicalRecords from './src/views/PatientHealthRecord/MedicalRecords';
+import DoctorAnalyticsScreen from './src/views/PatientHealthRecord/DoctorAnalyticsScreen';
+import LabAnalyticsScreen from './src/views/TrustMD/LabAnalyticsScreen';
 import UploadMedicalRecord from './src/views/PatientHealthRecord/UploadMedicalRecord';
 import MedicalBills from './src/views/PatientHealthRecord/MedicalBills';
+import MedicalBillsAnalyticsScreen from './src/views/PatientHealthRecord/MedicalBillsAnalyticsScreen';
 import UploadMedicalBill from './src/views/PatientHealthRecord/UploadMedicalBill';
 import ContinuityTracking from './src/views/ContinuityTracking';
 import HeartRateLog from './src/views/HeartRate/HeartRateLog';
@@ -290,6 +294,7 @@ import AddLabTestScreen from './src/views/TrustMD/AddLabTestScreen';
 import ViewLabTestsScreen from './src/views/TrustMD/ViewLabTestsScreen';
 import ViewLabTestDetailScreen from './src/views/TrustMD/ViewLabTestDetailScreen';
 import TrustMDActionsScreen from './src/views/TrustMD/TrustMDActionsScreen';
+import DiseaseIntelligence from './src/views/DiseaseIntelligence';
 import AsthmaIntroScreen from './src/views/Asthma/AsthmaIntroScreen';
 import AsthmaDashboard from './src/views/Asthma/AsthmaDashboard';
 import AddAsthmaDetails from './src/views/Asthma/AddAsthmaDetails';
@@ -718,14 +723,18 @@ function App() {
               <Stack.Screen name='DoctorNotes' component={DoctorNotes} options={{headerShown:false}}/>
               <Stack.Screen name='LabReports' component={LabReports} options={{headerShown:false}}/>
               <Stack.Screen name='MedicationPrescription' component={MedicationPrescription} options={{headerShown:false}}/>
+              <Stack.Screen name='MedicationAnalyticsScreen' component={MedicationAnalyticsScreen} options={{headerShown:false}}/>
               <Stack.Screen name='AddPrescription' component={AddPrescriptionScreen} options={{headerShown:false}}/>
               <Stack.Screen name='PrescriptionDetail' component={PrescriptionDetail} options={{headerShown:false}}/>
               <Stack.Screen name='PatientNote' component={PatientNote} options={{headerShown:false}}/>
               <Stack.Screen name='NoteDetail' component={NoteDetail} options={{headerShown:false}}/>
               <Stack.Screen name='AddPatientNote' component={AddPatientNote} options={{headerShown:false}}/>
               <Stack.Screen name='MedicalRecords' component={MedicalRecords} options={{headerShown:false}}/>
+              <Stack.Screen name='DoctorAnalyticsScreen' component={DoctorAnalyticsScreen} options={{headerShown:false}}/>
+              <Stack.Screen name='LabAnalyticsScreen' component={LabAnalyticsScreen} options={{headerShown:false}}/>
               <Stack.Screen name='UploadMedicalRecord' component={UploadMedicalRecord} options={{headerShown:false}}/>
               <Stack.Screen name='MedicalBills' component={MedicalBills} options={{headerShown:false}}/>
+              <Stack.Screen name='MedicalBillsAnalyticsScreen' component={MedicalBillsAnalyticsScreen} options={{headerShown:false}}/>
               <Stack.Screen name='UploadMedicalBill' component={UploadMedicalBill} options={{headerShown:false}}/>
               <Stack.Screen name='ContinuityTracking' component={ContinuityTracking} options={{headerShown:false}}/>
               <Stack.Screen name='HeartRateLog' component={HeartRateLog} options={{headerShown:false}}/>
@@ -828,6 +837,7 @@ function App() {
               <Stack.Screen name='ViewLabTestsScreen' component={ViewLabTestsScreen} options={{headerShown:false}}/>
               <Stack.Screen name='ViewLabTestDetailScreen' component={ViewLabTestDetailScreen} options={{headerShown:false}}/>
               <Stack.Screen name='TrustMDActionsScreen' component={TrustMDActionsScreen} options={{headerShown:false}}/>
+              <Stack.Screen name='DiseaseIntelligence' component={DiseaseIntelligence} options={{headerShown:false}}/>
               <Stack.Screen name='AsthmaIntroScreen' component={AsthmaIntroScreen} options={{headerShown:false}}/>
               <Stack.Screen name='AsthmaDashboard' component={AsthmaDashboard} options={{headerShown:false}}/>
               <Stack.Screen name='AddAsthmaDetails' component={AddAsthmaDetails} options={{headerShown:false}}/>

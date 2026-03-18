@@ -13,9 +13,10 @@ import {
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { ms, vs } from 'react-native-size-matters';
-import { StatusBar4 } from '../../components/StatusBar';
+import { StatusBar2, StatusBar4 } from '../../components/StatusBar';
 import Icon, { Icons } from '../../components/Icons';
-import { blackColor, whiteColor, primaryColor } from '../../utils/globalColors';
+import LinearGradient from 'react-native-linear-gradient';
+import { blackColor, whiteColor, primaryColor, globalGradient2 } from '../../utils/globalColors';
 
 const { width } = Dimensions.get('window');
 
@@ -574,8 +575,9 @@ const TrustMDActionsScreen = () => {
     };
 
     return (
+        <LinearGradient colors={globalGradient2} start={{ x: 0, y: 0 }} end={{ x: 0, y: 1 }} locations={[0, 0.35]} style={styles.flex1}>
         <SafeAreaView style={styles.container}>
-            <StatusBar4 />
+            <StatusBar2 />
 
             {/* Header */}
             <View style={styles.header}>
@@ -583,7 +585,6 @@ const TrustMDActionsScreen = () => {
                     <Icon type={Icons.Ionicons} name="arrow-back" size={ms(20)} color={whiteColor} />
                 </TouchableOpacity>
                 <View style={styles.headerCenter}>
-                    <Image source={require('../../assets/img/trustmdlogo.png')} style={styles.headerLogo} resizeMode="contain" />
                     <Text style={styles.headerTitle}>Actions</Text>
                 </View>
                 <View style={styles.patientBadge}>
@@ -622,7 +623,7 @@ const TrustMDActionsScreen = () => {
                             type={Icons.Ionicons}
                             name={tab.icon}
                             size={ms(16)}
-                            color={activeTab === tab.id ? primaryColor : '#999'}
+                            color={activeTab === tab.id ? primaryColor : blackColor}
                         />
                         <Text style={[styles.tabLabel, activeTab === tab.id && styles.tabLabelActive]}>
                             {tab.label}
@@ -638,24 +639,25 @@ const TrustMDActionsScreen = () => {
                 {renderContent()}
             </View>
         </SafeAreaView>
+        </LinearGradient>
     );
 };
 
 export default TrustMDActionsScreen;
 
 const styles = StyleSheet.create({
-    container: { flex: 1, backgroundColor: '#F1F5F9' },
+    container: { flex: 1, backgroundColor: 'transparent' },
+    flex1: { flex: 1 },
 
     // ── Header ──────────────────────────────────────────────────────────────────
     header: {
         flexDirection: 'row', alignItems: 'center',
-        backgroundColor: primaryColor,
         paddingHorizontal: ms(14), paddingTop: ms(48), paddingBottom: ms(14),
         gap: ms(10),
     },
     backBtn: {
         width: ms(34), height: ms(34), borderRadius: ms(17),
-        backgroundColor: 'rgba(255,255,255,0.25)',
+        backgroundColor: 'rgba(255,255,255,0.6)',
         justifyContent: 'center', alignItems: 'center',
     },
     headerCenter: { flexDirection: 'row', alignItems: 'center', flex: 1, gap: ms(6) },
@@ -663,14 +665,14 @@ const styles = StyleSheet.create({
     headerTitle: { fontSize: ms(17), fontWeight: '700', color: whiteColor },
     patientBadge: {
         flexDirection: 'row', alignItems: 'center', gap: ms(4),
-        backgroundColor: whiteColor, borderRadius: ms(20),
+        backgroundColor: 'rgba(255,255,255,0.6)', borderRadius: ms(20),
         paddingHorizontal: ms(10), paddingVertical: vs(5),
         maxWidth: ms(110),
     },
     patientBadgeText: { fontSize: ms(11), color: primaryColor, fontWeight: '600' },
 
     // ── Conditions Bar ──────────────────────────────────────────────────────────
-    conditionsBar: { backgroundColor: whiteColor, borderBottomWidth: 1, borderBottomColor: '#E5E7EB' },
+    conditionsBar: { backgroundColor: 'transparent' },
     conditionsScroll: { paddingHorizontal: ms(14), paddingVertical: vs(8), gap: ms(8) },
     conditionChip: {
         backgroundColor: primaryColor + '15', borderRadius: ms(20),
@@ -685,13 +687,13 @@ const styles = StyleSheet.create({
     allergyChipText: { fontSize: ms(11), color: '#EF4444', fontWeight: '600' },
 
     // ── Tab Bar ─────────────────────────────────────────────────────────────────
-    tabBar: { flexDirection: 'row', backgroundColor: whiteColor, paddingHorizontal: ms(8) },
+    tabBar: { flexDirection: 'row', backgroundColor: 'transparent', paddingHorizontal: ms(8) },
     tabItem: {
         flex: 1, alignItems: 'center', paddingVertical: vs(10), gap: vs(3),
         position: 'relative',
     },
     tabItemActive: {},
-    tabLabel: { fontSize: ms(12), color: '#888', fontWeight: '500' },
+    tabLabel: { fontSize: ms(12), color: blackColor, fontWeight: '500' },
     tabLabelActive: { color: primaryColor, fontWeight: '700' },
     tabUnderline: {
         position: 'absolute', bottom: 0, left: ms(8), right: ms(8),

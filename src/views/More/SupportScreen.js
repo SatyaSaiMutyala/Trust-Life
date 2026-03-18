@@ -14,7 +14,7 @@ import { useNavigation } from '@react-navigation/native';
 import { ms, vs } from 'react-native-size-matters';
 import { StatusBar2, StatusBar3 } from '../../components/StatusBar';
 import Icon, { Icons } from '../../components/Icons';
-import { bold, regular } from '../../config/Constants';
+import { heading, interMedium, interRegular } from '../../config/Constants';
 import { blackColor, whiteColor, primaryColor } from '../../utils/globalColors';
 
 if (Platform.OS === 'android') {
@@ -136,7 +136,7 @@ const styles = StyleSheet.create({
     },
     headerTitle: {
         fontSize: ms(18),
-        fontFamily: bold,
+        fontFamily: interMedium,
         color: blackColor,
     },
     scrollContent: {
@@ -146,7 +146,7 @@ const styles = StyleSheet.create({
     },
     subtitle: {
         fontSize: ms(14),
-        fontFamily: regular,
+        fontFamily: interRegular,
         color: '#6B7280',
         marginBottom: vs(15),
     },
@@ -170,7 +170,7 @@ const styles = StyleSheet.create({
     faqQuestionText: {
         flex: 1,
         fontSize: ms(14),
-        fontFamily: bold,
+        fontFamily: interMedium,
         color: blackColor,
         marginRight: ms(10),
     },
@@ -182,7 +182,7 @@ const styles = StyleSheet.create({
     },
     faqAnswerText: {
         fontSize: ms(13),
-        fontFamily: regular,
+        fontFamily: interRegular,
         color: '#6B7280',
         lineHeight: ms(20),
     },

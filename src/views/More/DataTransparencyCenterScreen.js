@@ -426,7 +426,7 @@
 //         elevation: 2, shadowColor: blackColor, shadowOffset: { width: 0, height: 1 }, shadowOpacity: 0.1, shadowRadius: 2,
 //     },
 //     headerTitle: {
-//         fontFamily: bold,
+//         fontFamily: interMedium,
 //         fontSize: ms(16),
 //         color: whiteColor,
 //         marginLeft: ms(12),
@@ -445,7 +445,7 @@
 //     },
 
 //     reportMainTitle: {
-//         fontFamily: bold,
+//         fontFamily: interMedium,
 //         fontSize: ms(18),
 //         color: blackColor,
 //         marginBottom: vs(8),
@@ -453,7 +453,7 @@
 
 //     // Section heading
 //     sectionHeading: {
-//         fontFamily: bold,
+//         fontFamily: interMedium,
 //         fontSize: ms(14),
 //         color: blackColor,
 //         marginTop: vs(18),
@@ -461,7 +461,7 @@
 //     },
 
 //     subHeading: {
-//         fontFamily: bold,
+//         fontFamily: interMedium,
 //         fontSize: ms(12),
 //         color: '#374151',
 //         marginTop: vs(8),
@@ -470,7 +470,7 @@
 
 //     // Paragraph
 //     reportParagraph: {
-//         fontFamily: regular,
+//         fontFamily: interRegular,
 //         fontSize: ms(12),
 //         color: '#4B5563',
 //         lineHeight: ms(20),
@@ -479,7 +479,7 @@
 
 //     // Statement
 //     statementText: {
-//         fontFamily: regular,
+//         fontFamily: interRegular,
 //         fontSize: ms(12),
 //         color: '#4B5563',
 //         lineHeight: ms(20),
@@ -498,7 +498,7 @@
 //         paddingLeft: ms(4),
 //     },
 //     bulletDot: {
-//         fontFamily: bold,
+//         fontFamily: interMedium,
 //         fontSize: ms(12),
 //         color: primaryColor,
 //         marginRight: ms(8),
@@ -506,13 +506,13 @@
 //     },
 //     bulletText: {
 //         flex: 1,
-//         fontFamily: regular,
+//         fontFamily: interRegular,
 //         fontSize: ms(12),
 //         color: '#4B5563',
 //         lineHeight: ms(20),
 //     },
 //     boldText: {
-//         fontFamily: bold,
+//         fontFamily: interMedium,
 //         color: blackColor,
 //     },
 
@@ -525,7 +525,7 @@
 //         marginBottom: vs(8),
 //     },
 //     tableHeaderText: {
-//         fontFamily: bold,
+//         fontFamily: interMedium,
 //         fontSize: ms(11),
 //         color: '#6B7280',
 //     },
@@ -540,7 +540,7 @@
 //         marginBottom: vs(8),
 //     },
 //     viewLogBtnText: {
-//         fontFamily: bold,
+//         fontFamily: interMedium,
 //         fontSize: ms(12),
 //         color: primaryColor,
 //     },
@@ -565,7 +565,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import { StatusBar2 } from '../../components/StatusBar';
 import Icon, { Icons } from '../../components/Icons';
 import { blackColor, whiteColor, primaryColor, globalGradient } from '../../utils/globalColors';
-import { bold, regular } from '../../config/Constants';
+import { interMedium, interRegular } from '../../config/Constants';
 
 const DataTransparencyCenterScreen = () => {
     const navigation = useNavigation();
@@ -1173,7 +1173,7 @@ const styles = StyleSheet.create({
         elevation: 2, shadowColor: blackColor, shadowOffset: { width: 0, height: 1 }, shadowOpacity: 0.1, shadowRadius: 2,
     },
     headerTitle: {
-        fontFamily: bold,
+        fontFamily: interMedium,
         fontSize: ms(16),
         color: whiteColor,
         marginLeft: ms(12),
@@ -1192,7 +1192,7 @@ const styles = StyleSheet.create({
     },
 
     reportMainTitle: {
-        fontFamily: bold,
+        fontFamily: interMedium,
         fontSize: ms(18),
         color: blackColor,
         marginBottom: vs(8),
@@ -1200,7 +1200,7 @@ const styles = StyleSheet.create({
 
     // Section heading
     sectionHeading: {
-        fontFamily: bold,
+        fontFamily: interMedium,
         fontSize: ms(14),
         color: blackColor,
         marginTop: vs(18),
@@ -1208,7 +1208,7 @@ const styles = StyleSheet.create({
     },
 
     subHeading: {
-        fontFamily: bold,
+        fontFamily: interMedium,
         fontSize: ms(12),
         color: '#374151',
         marginTop: vs(8),
@@ -1217,7 +1217,7 @@ const styles = StyleSheet.create({
 
     // Paragraph
     reportParagraph: {
-        fontFamily: regular,
+        fontFamily: interRegular,
         fontSize: ms(12),
         color: '#4B5563',
         lineHeight: ms(20),
@@ -1226,7 +1226,7 @@ const styles = StyleSheet.create({
 
     // Statement
     statementText: {
-        fontFamily: regular,
+        fontFamily: interRegular,
         fontSize: ms(12),
         color: '#4B5563',
         lineHeight: ms(20),
@@ -1245,7 +1245,7 @@ const styles = StyleSheet.create({
         paddingLeft: ms(4),
     },
     bulletDot: {
-        fontFamily: bold,
+        fontFamily: interMedium,
         fontSize: ms(12),
         color: primaryColor,
         marginRight: ms(8),
@@ -1253,13 +1253,13 @@ const styles = StyleSheet.create({
     },
     bulletText: {
         flex: 1,
-        fontFamily: regular,
+        fontFamily: interRegular,
         fontSize: ms(12),
         color: '#4B5563',
         lineHeight: ms(20),
     },
     boldText: {
-        fontFamily: bold,
+        fontFamily: interMedium,
         color: blackColor,
     },
 
@@ -1272,7 +1272,7 @@ const styles = StyleSheet.create({
         marginBottom: vs(8),
     },
     tableHeaderText: {
-        fontFamily: bold,
+        fontFamily: interMedium,
         fontSize: ms(11),
         color: '#6B7280',
     },
@@ -1287,7 +1287,7 @@ const styles = StyleSheet.create({
         marginBottom: vs(8),
     },
     viewLogBtnText: {
-        fontFamily: bold,
+        fontFamily: interMedium,
         fontSize: ms(12),
         color: primaryColor,
     },

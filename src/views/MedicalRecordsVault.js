@@ -159,6 +159,20 @@ const MedicalRecordsVault = () => {
     const apiReports = labReports?.result ?? [];
     const displayReports = apiReports.length > 0 ? null : DUMMY_REPORTS; // use dummy when API empty
 
+    // ── Smart Report: marker → biomarker lookup ───────────────────────────────
+    // Maps report marker names to bioMarkersData for BioMarkerDetailScreen navigation
+    const MARKER_CODE_MAP = {
+        'Hemoglobin': 'HB001', 'WBC': 'WBC001', 'Platelets': 'PLT001',
+        'Total Chol.': 'CHL003', 'LDL': 'LDL003', 'HDL': 'HDL001',
+        'TSH': 'TSH004', 'Free T4': 'FT4001', 'Free T3': 'FT3001',
+        'HbA1c': 'HBA006', 'Fasting Glucose': 'GLU002',
+        'Vitamin D3': 'VD007', 'Vitamin B12': 'B12001',
+    };
+    const getFirstMarkerCode = (markers) => {
+        const first = markers?.find(m => !m.startsWith('+'));
+        return { name: first || 'Hemoglobin', code: MARKER_CODE_MAP[first] || 'HB001' };
+    };
+
     // ── Render: Lab Reports ───────────────────────────────────────────────────
     const renderLabReportsList = () => (
         <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.scrollPad}>
@@ -325,7 +339,7 @@ const MedicalRecordsVault = () => {
                             activeOpacity={0.7}
                             onPress={() => isAnalyte
                                 ? navigation.navigate('AnalyteTrendScreen', { analyteName: b.name })
-                                : navigation.navigate('BioMarkerDetailScreen', { name: b.name, code: b.code })
+                                : navigation.navigate('BioMarkerDetailScreen', { name: b.name, code: b.code, hideHPS: true })
                             }>
                             {/* Name */}
                             <View style={styles.bmNameCol}>
@@ -384,6 +398,88 @@ const MedicalRecordsVault = () => {
         </ScrollView>
     );
 
+    // ── Render: Smart Reports ─────────────────────────────────────────────────
+    const renderSmartReports = () => (
+        <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.scrollPad}>
+            {/* Section Header */}
+            <View style={styles.secHeader}>
+                <View>
+                    <Text style={styles.secTitle}>Smart Reports</Text>
+                    <Text style={styles.secSub}>AI-analysed · Tap to explore biomarkers</Text>
+                </View>
+                <View style={styles.smartBadge}>
+                    <Icon type={Icons.Ionicons} name="sparkles" size={ms(11)} color={primaryColor} />
+                    <Text style={styles.smartBadgeText}>AI Ready</Text>
+                </View>
+            </View>
+
+            {/* Reports Grid — same card UI as Lab Reports */}
+            <View style={styles.reportsGrid}>
+                {DUMMY_REPORTS.map((item, i) => {
+                    const { name: markerName, code: markerCode } = getFirstMarkerCode(item.markers);
+                    const isFirst = i === 0;
+                    return (
+                        <TouchableOpacity
+                            key={item.id}
+                            style={[styles.reportCard, isFirst && styles.smartReportCardHighlight]}
+                            activeOpacity={0.85}
+                            onPress={() => navigation.navigate('BioMarkerDetailScreen', {
+                                name: markerName,
+                                code: markerCode,
+                                hideHPS: true,
+                            })}>
+                            <View style={[styles.reportCardAccent, isFirst && { backgroundColor: '#7C3AED' }]} />
+                            <View style={styles.reportCardTop}>
+                                <View style={[styles.pdfBadge, isFirst && { backgroundColor: '#EDE9FE' }]}>
+                                    <Text style={[styles.pdfBadgeText, isFirst && { color: '#7C3AED' }]}>
+                                        {isFirst ? 'LIVE' : 'PDF'}
+                                    </Text>
+                                </View>
+                                <View style={[styles.reportStatusBadge,
+                                    { backgroundColor: item.status === 'new' ? primaryColor + '15' : '#F1F5F9' }]}>
+                                    <Text style={[styles.reportStatusText,
+                                        { color: item.status === 'new' ? primaryColor : '#64748B' }]}>
+                                        {item.status === 'new' ? 'New' : 'Reviewed'}
+                                    </Text>
+                                </View>
+                            </View>
+                            <Text style={styles.reportName} numberOfLines={2}>{item.name}</Text>
+                            <Text style={styles.reportLab} numberOfLines={1}>{item.lab}</Text>
+                            <View style={styles.reportMarkers}>
+                                {item.markers.slice(0, 3).map((m, j) => (
+                                    <View key={j} style={styles.markerChip}>
+                                        <Text style={styles.markerChipText}>{m}</Text>
+                                    </View>
+                                ))}
+                                {item.markers.length > 3 && (
+                                    <View style={styles.markerChip}>
+                                        <Text style={styles.markerChipText}>{item.markers[3]}</Text>
+                                    </View>
+                                )}
+                            </View>
+                            <View style={styles.reportFooter}>
+                                <Text style={styles.reportDate}>{item.date}</Text>
+                                <View style={styles.smartArrow}>
+                                    <Icon type={Icons.Ionicons} name="chevron-forward" size={ms(11)} color={primaryColor} />
+                                </View>
+                            </View>
+                        </TouchableOpacity>
+                    );
+                })}
+            </View>
+
+            {/* Info note */}
+            <View style={styles.smartInfoRow}>
+                <Icon type={Icons.Ionicons} name="information-circle-outline" size={ms(14)} color={primaryColor} />
+                <Text style={styles.smartInfoText}>
+                    First report (LIVE) shows AI-extracted biomarker data. Others use stored values.
+                </Text>
+            </View>
+
+            <View style={{ height: vs(40) }} />
+        </ScrollView>
+    );
+
     // ── Main JSX ──────────────────────────────────────────────────────────────
     return (
         <SafeAreaView style={styles.container}>
@@ -402,21 +498,11 @@ const MedicalRecordsVault = () => {
                             <Icon type={Icons.Ionicons} name="arrow-back" color={blackColor} size={ms(20)} />
                         </TouchableOpacity>
                     )}
-                    <Text style={styles.headerTitle} numberOfLines={1}>Diagnostic Reports</Text>
-                    <View style={styles.headerIcons}>
-                        <TouchableOpacity style={styles.iconCircle} onPress={() => navigation.navigate('Notifications')}>
-                            <Icon type={Icons.MaterialIcons} name="notifications-none" size={ms(20)} color={blackColor} />
-                        </TouchableOpacity>
-                        <TouchableOpacity onPress={() => navigation.navigate('Profile')}>
-                            {profilePic ? (
-                                <Image source={{ uri: profilePic }} style={styles.profileImage} />
-                            ) : (
-                                <View style={[styles.profileImage, styles.defaultProfileIcon]}>
-                                    <Icon type={Icons.MaterialIcons} name="person" size={ms(20)} color={blackColor} />
-                                </View>
-                            )}
-                        </TouchableOpacity>
-                    </View>
+                    <Text style={styles.headerTitle} numberOfLines={1}>Diagnostic Reports Vault</Text>
+                    <TouchableOpacity style={styles.analyticsBtn} onPress={() => navigation.navigate('LabAnalyticsScreen')} activeOpacity={0.7}>
+                        <Icon type={Icons.Ionicons} name="bar-chart-outline" size={ms(16)} color={whiteColor} />
+                        <Text style={styles.analyticsBtnText}>Analytics</Text>
+                    </TouchableOpacity>
                 </View>
 
                 {/* Tabs */}
@@ -424,21 +510,17 @@ const MedicalRecordsVault = () => {
                     <TouchableOpacity
                         style={[styles.tab, activeTab === 'Lab' && styles.activeTab]}
                         onPress={() => setActiveTab('Lab')}>
-                        <Icon type={Icons.Ionicons} name="document-text-outline" size={ms(13)}
-                            color={activeTab === 'Lab' ? primaryColor : whiteColor} />
                         <Text style={[styles.tabText, activeTab === 'Lab' && styles.activeTabText]}>Lab Reports</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                        style={[styles.tab, activeTab === 'Smart' && styles.activeTab]}
+                        onPress={() => setActiveTab('Smart')}>
+                        <Text style={[styles.tabText, activeTab === 'Smart' && styles.activeTabText]}>Smart Report</Text>
                     </TouchableOpacity>
                     <TouchableOpacity
                         style={[styles.tab, activeTab === 'Bio' && styles.activeTab]}
                         onPress={() => setActiveTab('Bio')}>
-                        <Icon type={Icons.Ionicons} name="analytics-outline" size={ms(13)}
-                            color={activeTab === 'Bio' ? primaryColor : whiteColor} />
                         <Text style={[styles.tabText, activeTab === 'Bio' && styles.activeTabText]}>Bio-Markers</Text>
-                        {abnormalCount > 0 && (
-                            <View style={styles.tabBadge}>
-                                <Text style={styles.tabBadgeText}>{abnormalCount}</Text>
-                            </View>
-                        )}
                     </TouchableOpacity>
                 </View>
 
@@ -448,15 +530,19 @@ const MedicalRecordsVault = () => {
                         <MedicalRecordsShimmer activeTab={activeTab} />
                     ) : activeTab === 'Bio' ? (
                         renderBioMarkersTab()
+                    ) : activeTab === 'Smart' ? (
+                        renderSmartReports()
                     ) : (
                         renderLabReportsList()
                     )}
                 </View>
 
                 {/* FAB */}
-                <TouchableOpacity style={styles.fab} activeOpacity={0.85} onPress={() => setShowModal(true)}>
-                    <Icon type={Icons.Ionicons} name="add" size={ms(26)} color={whiteColor} />
-                </TouchableOpacity>
+                {activeTab === 'Lab' && (
+                    <TouchableOpacity style={styles.fab} activeOpacity={0.85} onPress={() => setShowModal(true)}>
+                        <Icon type={Icons.Ionicons} name="add" size={ms(26)} color={whiteColor} />
+                    </TouchableOpacity>
+                )}
 
                 {/* Add Visit Modal */}
                 <Modal visible={showModal} transparent animationType="slide" onRequestClose={() => setShowModal(false)}>
@@ -553,6 +639,8 @@ const styles = StyleSheet.create({
     headerTitle: { flex: 1, fontSize: ms(20), fontFamily: heading, color: whiteColor },
     headerIcons: { flexDirection: 'row', alignItems: 'center', gap: ms(10) },
     iconCircle: { backgroundColor: whiteColor, padding: ms(8), borderRadius: ms(20) },
+    analyticsBtn: { flexDirection: 'row', alignItems: 'center', backgroundColor: 'rgba(255,255,255,0.2)', borderRadius: ms(20), paddingHorizontal: ms(12), paddingVertical: vs(6), gap: ms(4) },
+    analyticsBtnText: { fontFamily: interMedium, fontSize: ms(12), color: whiteColor },
     profileImage: { width: ms(35), height: ms(35), borderRadius: ms(17.5), borderWidth: 1, borderColor: whiteColor },
     defaultProfileIcon: { backgroundColor: whiteColor, justifyContent: 'center', alignItems: 'center' },
 
@@ -696,4 +784,12 @@ const styles = StyleSheet.create({
         paddingVertical: vs(13), alignItems: 'center',
     },
     submitBtnText: { fontFamily: interMedium, fontSize: ms(14), color: whiteColor },
+
+    // Smart Report tab
+    smartBadge: { flexDirection: 'row', alignItems: 'center', gap: ms(4), backgroundColor: primaryColor + '15', borderRadius: ms(8), paddingHorizontal: ms(10), paddingVertical: vs(5) },
+    smartBadgeText: { fontFamily: interMedium, fontSize: ms(11), color: primaryColor },
+    smartReportCardHighlight: { borderColor: '#7C3AED' + '40', borderWidth: 1 },
+    smartArrow: { backgroundColor: primaryColor + '12', borderRadius: ms(10), padding: ms(2) },
+    smartInfoRow: { flexDirection: 'row', alignItems: 'flex-start', gap: ms(6), backgroundColor: primaryColor + '08', borderRadius: ms(10), padding: ms(12), marginTop: vs(4) },
+    smartInfoText: { flex: 1, fontFamily: interRegular, fontSize: ms(11), color: '#64748B', lineHeight: vs(16) },
 });

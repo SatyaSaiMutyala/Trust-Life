@@ -17,7 +17,7 @@ import { StatusBar2 } from '../../components/StatusBar';
 import Icon, { Icons } from '../../components/Icons';
 import InputField from '../../utils/InputField';
 import { blackColor, whiteColor, primaryColor, globalGradient } from '../../utils/globalColors';
-import { bold, regular } from '../../config/Constants';
+import { interMedium, interRegular } from '../../config/Constants';
 
 const DURATION_OPTIONS = ['5 mins', '10 mins', '20 mins'];
 const ACCESS_FOR_OPTIONS = ['Medical Reports', 'Medication', 'TrustMD'];
@@ -256,7 +256,7 @@ const styles = StyleSheet.create({
         elevation: 2, shadowColor: blackColor, shadowOffset: { width: 0, height: 1 }, shadowOpacity: 0.1, shadowRadius: 2,
     },
     headerTitle: {
-        fontFamily: bold,
+        fontFamily: interMedium,
         fontSize: ms(16),
         color: whiteColor,
         marginLeft: ms(12),
@@ -269,7 +269,7 @@ const styles = StyleSheet.create({
 
     // Section
     sectionTitle: {
-        fontFamily: bold,
+        fontFamily: interMedium,
         fontSize: ms(14),
         color: blackColor,
         marginBottom: vs(14),
@@ -278,7 +278,7 @@ const styles = StyleSheet.create({
 
     // Field label
     fieldLabel: {
-        fontFamily: bold,
+        fontFamily: interMedium,
         fontSize: ms(13),
         color: blackColor,
         marginBottom: vs(10),
@@ -310,7 +310,7 @@ const styles = StyleSheet.create({
         borderColor: primaryColor,
     },
     checkLabel: {
-        fontFamily: regular,
+        fontFamily: interRegular,
         fontSize: ms(13),
         color: blackColor,
     },
@@ -345,7 +345,7 @@ const styles = StyleSheet.create({
         backgroundColor: primaryColor,
     },
     radioLabel: {
-        fontFamily: regular,
+        fontFamily: interRegular,
         fontSize: ms(13),
         color: blackColor,
     },
@@ -359,7 +359,7 @@ const styles = StyleSheet.create({
     },
     agreementText: {
         flex: 1,
-        fontFamily: regular,
+        fontFamily: interRegular,
         fontSize: ms(12),
         color: '#6B7280',
     },
@@ -376,7 +376,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     submitBtnText: {
-        fontFamily: bold,
+        fontFamily: interMedium,
         fontSize: ms(15),
         color: whiteColor,
     },
@@ -405,13 +405,13 @@ const styles = StyleSheet.create({
         marginBottom: vs(20),
     },
     successTitle: {
-        fontFamily: bold,
+        fontFamily: interMedium,
         fontSize: ms(18),
         color: blackColor,
         marginBottom: vs(4),
     },
     successSubtitle: {
-        fontFamily: bold,
+        fontFamily: interMedium,
         fontSize: ms(16),
         color: blackColor,
     },

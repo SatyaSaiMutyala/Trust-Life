@@ -16,7 +16,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import { StatusBar2 } from '../../components/StatusBar';
 import Icon, { Icons } from '../../components/Icons';
 import { blackColor, whiteColor, primaryColor, globalGradient } from '../../utils/globalColors';
-import { bold, regular } from '../../config/Constants';
+import { heading, interMedium, interRegular } from '../../config/Constants';
 
 const MOCK_MANAGERS = [
     {
@@ -236,7 +236,7 @@ const styles = StyleSheet.create({
         elevation: 2, shadowColor: blackColor, shadowOffset: { width: 0, height: 1 }, shadowOpacity: 0.1, shadowRadius: 2,
     },
     headerTitle: {
-        fontFamily: bold,
+        fontFamily: interMedium,
         fontSize: ms(16),
         color: whiteColor,
         marginLeft: ms(12),
@@ -257,7 +257,7 @@ const styles = StyleSheet.create({
     },
     searchInput: {
         flex: 1,
-        fontFamily: regular,
+        fontFamily: interRegular,
         fontSize: ms(14),
         color: blackColor,
         marginLeft: ms(8),
@@ -283,7 +283,7 @@ const styles = StyleSheet.create({
         marginBottom: vs(10),
     },
     cardDate: {
-        fontFamily: regular,
+        fontFamily: interRegular,
         fontSize: ms(11),
         color: '#9CA3AF',
     },
@@ -310,12 +310,12 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     cardName: {
-        fontFamily: bold,
+        fontFamily: interMedium,
         fontSize: ms(14),
         color: blackColor,
     },
     cardRole: {
-        fontFamily: bold,
+        fontFamily: interMedium,
         fontSize: ms(10),
         marginTop: vs(2),
     },
@@ -333,7 +333,7 @@ const styles = StyleSheet.create({
         paddingVertical: vs(4),
     },
     badgeText: {
-        fontFamily: bold,
+        fontFamily: interMedium,
         fontSize: ms(10),
     },
 
@@ -343,7 +343,7 @@ const styles = StyleSheet.create({
         gap: ms(12),
     },
     contactText: {
-        fontFamily: regular,
+        fontFamily: interRegular,
         fontSize: ms(10),
         color: '#6B7280',
     },
@@ -378,7 +378,7 @@ const styles = StyleSheet.create({
         paddingBottom: vs(60),
     },
     emptyText: {
-        fontFamily: bold,
+        fontFamily: interMedium,
         fontSize: ms(16),
         color: blackColor,
         lineHeight: ms(24),
@@ -393,7 +393,7 @@ const styles = StyleSheet.create({
         gap: ms(6),
     },
     addBtnText: {
-        fontFamily: bold,
+        fontFamily: interMedium,
         fontSize: ms(13),
         color: whiteColor,
     },

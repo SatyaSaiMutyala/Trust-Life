@@ -8,7 +8,7 @@ import { useNavigation, useRoute } from '@react-navigation/native';
 import { StatusBar2 } from '../../components/StatusBar';
 import Icon, { Icons } from '../../components/Icons';
 import { heading, interMedium, interRegular } from '../../config/Constants';
-import { blackColor, whiteColor, primaryColor, globalGradient } from '../../utils/globalColors';
+import { blackColor, whiteColor, primaryColor, globalGradient, globalGradient2 } from '../../utils/globalColors';
 import { ms, vs } from 'react-native-size-matters';
 
 const { width } = Dimensions.get('window');
@@ -150,7 +150,7 @@ const MedCard = ({ m }) => {
 const MedicationPrescription = () => {
     const navigation = useNavigation();
     const route = useRoute();
-    const title = route.params?.title || 'Medication Vault';
+    const title = route.params?.title || 'Prescription Vault';
     const [medFilter, setMedFilter] = useState('all');
 
     const filteredMeds = MEDS.filter(m =>
@@ -161,7 +161,7 @@ const MedicationPrescription = () => {
 
     return (
         <LinearGradient
-            colors={globalGradient}
+            colors={globalGradient2}
             start={{ x: 0, y: 0 }}
             end={{ x: 0, y: 1 }}
             locations={[0, 0.22]}
@@ -176,6 +176,10 @@ const MedicationPrescription = () => {
                         <Icon type={Icons.Ionicons} name="arrow-back" color={blackColor} size={ms(20)} />
                     </TouchableOpacity>
                     <Text style={styles.headerTitle}>{title}</Text>
+                    <TouchableOpacity onPress={() => navigation.navigate('MedicationAnalyticsScreen')} style={styles.analyticsBtn} activeOpacity={0.7}>
+                        <Icon type={Icons.Ionicons} name="bar-chart-outline" color={whiteColor} size={ms(16)} />
+                        <Text style={styles.analyticsBtnText}>Analytics</Text>
+                    </TouchableOpacity>
                 </View>
 
                 <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.scroll}>
@@ -310,6 +314,14 @@ const styles = StyleSheet.create({
     headerTitle: {
         flex: 1, fontFamily: heading, fontSize: ms(18),
         color: whiteColor, marginLeft: ms(12),
+    },
+    analyticsBtn: {
+        flexDirection: 'row', alignItems: 'center',
+        backgroundColor: 'rgba(255,255,255,0.2)',
+        borderRadius: ms(20), paddingHorizontal: ms(12), paddingVertical: vs(6), gap: ms(4),
+    },
+    analyticsBtnText: {
+        fontFamily: interMedium, fontSize: ms(12), color: whiteColor,
     },
 
     // Scroll

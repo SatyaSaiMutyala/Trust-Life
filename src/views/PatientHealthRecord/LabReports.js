@@ -11,7 +11,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { StatusBar2 } from '../../components/StatusBar';
 import Icon, { Icons } from '../../components/Icons';
-import { bold, regular } from '../../config/Constants';
+import { bold, regular, interMedium } from '../../config/Constants';
 import {
     blackColor,
     whiteColor,
@@ -82,9 +82,17 @@ const LabReports = () => {
                         />
                     </TouchableOpacity>
                     <View style={styles.headerTextWrap}>
-                        <Text style={styles.headerTitle}>Lab Reports</Text>
+                        <Text style={styles.headerTitle} numberOfLines={1} ellipsizeMode="tail">Diagnostic Reports Vault</Text>
                         <Text style={styles.headerDate}>{date}</Text>
                     </View>
+                    <TouchableOpacity
+                        onPress={() => navigation.navigate('LabAnalyticsScreen')}
+                        style={styles.analyticsBtn}
+                        activeOpacity={0.7}
+                    >
+                        <Icon type={Icons.Ionicons} name="bar-chart-outline" color={whiteColor} size={ms(16)} />
+                        <Text style={styles.analyticsBtnText}>Analysis</Text>
+                    </TouchableOpacity>
                 </View>
 
                 {/* Report List */}
@@ -127,7 +135,16 @@ const styles = StyleSheet.create({
         shadowRadius: 2,
     },
     headerTextWrap: {
+        flex: 1,
         marginLeft: ms(12),
+    },
+    analyticsBtn: {
+        flexDirection: 'row', alignItems: 'center',
+        backgroundColor: 'rgba(255,255,255,0.2)',
+        borderRadius: ms(20), paddingHorizontal: ms(12), paddingVertical: vs(6), gap: ms(4),
+    },
+    analyticsBtnText: {
+        fontFamily: interMedium, fontSize: ms(12), color: whiteColor,
     },
     headerTitle: {
         fontFamily: bold,

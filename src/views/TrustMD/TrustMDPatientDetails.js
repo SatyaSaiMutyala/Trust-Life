@@ -125,19 +125,6 @@ const TrustMDPatientDetails = () => {
                     </View>
                 </TouchableOpacity>
 
-                {/* ── TrustMD Actions ── */}
-                <TouchableOpacity
-                    style={styles.trustmdActionsBtn}
-                    activeOpacity={0.85}
-                    onPress={() => navigation.navigate('TrustMDActionsScreen')}
-                >
-                    <Image source={require('../../assets/img/trustmdlogo.png')} style={styles.trustmdActionsLogo} resizeMode="contain" />
-                    <View style={{ flex: 1 }}>
-                        <Text style={styles.trustmdActionsTitle}>TrustMD Actions</Text>
-                        <Text style={styles.trustmdActionsSub}>Notes · Order Tests · Prescribe</Text>
-                    </View>
-                    <Icon type={Icons.Ionicons} name="chevron-forward" size={ms(18)} color={whiteColor} />
-                </TouchableOpacity>
 
                 {/* ── Visit Summary ── */}
                 <View style={{padding:ms(10)}}>
@@ -414,16 +401,6 @@ const styles = StyleSheet.create({
         color: '#999',
     },
 
-    // TrustMD Actions Button
-    trustmdActionsBtn: {
-        flexDirection: 'row', alignItems: 'center', gap: ms(12),
-        backgroundColor: primaryColor, borderRadius: ms(16),
-        paddingHorizontal: ms(18), paddingVertical: vs(16),
-        marginBottom: vs(10),
-    },
-    trustmdActionsLogo: { width: ms(32), height: ms(32) },
-    trustmdActionsTitle: { fontSize: ms(15), fontWeight: '700', color: whiteColor },
-    trustmdActionsSub: { fontSize: ms(11), color: 'rgba(255,255,255,0.75)', marginTop: vs(2) },
 
     // Card
     card: {

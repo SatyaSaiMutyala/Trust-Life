@@ -16,7 +16,7 @@ import { ms, vs } from 'react-native-size-matters';
 import { StatusBar2 } from '../../components/StatusBar';
 import Icon, { Icons } from '../../components/Icons';
 import { blackColor, whiteColor, primaryColor, globalGradient, globalGradient2 } from '../../utils/globalColors';
-import { bold, regular } from '../../config/Constants';
+import { heading, interMedium, interRegular } from '../../config/Constants';
 
 const FILTER_TABS = ['All', 'You', 'Family', 'Doctors'];
 
@@ -282,15 +282,15 @@ const styles = StyleSheet.create({
     },
     headerTitle: {
         flex: 1,
-        fontFamily: bold,
-        fontSize: ms(16),
+        fontFamily: heading,
+        fontSize: ms(18),
         color: whiteColor,
         marginLeft: ms(12),
     },
 
     // Subtitle
     subtitle: {
-        fontFamily: bold,
+        fontFamily: interMedium,
         fontSize: ms(16),
         color: blackColor,
         marginTop: vs(8),
@@ -315,7 +315,7 @@ const styles = StyleSheet.create({
     },
     searchInput: {
         flex: 1,
-        fontFamily: regular,
+        fontFamily: interRegular,
         fontSize: ms(14),
         color: blackColor,
         marginLeft: ms(8),
@@ -337,12 +337,12 @@ const styles = StyleSheet.create({
         backgroundColor: primaryColor,
     },
     filterTabText: {
-        fontFamily: regular,
+        fontFamily: interRegular,
         fontSize: ms(12),
         color: blackColor,
     },
     filterTabTextActive: {
-        fontFamily: bold,
+        fontFamily: interMedium,
         color: whiteColor,
     },
 
@@ -380,12 +380,12 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     cardName: {
-        fontFamily: bold,
+        fontFamily: interMedium,
         fontSize: ms(13),
         color: blackColor,
     },
     roleText: {
-        fontFamily: bold,
+        fontFamily: interMedium,
         fontSize: ms(10),
         marginTop: vs(2),
     },
@@ -395,11 +395,11 @@ const styles = StyleSheet.create({
         borderRadius: ms(12),
     },
     statusText: {
-        fontFamily: bold,
+        fontFamily: interMedium,
         fontSize: ms(10),
     },
     viewDuration: {
-        fontFamily: regular,
+        fontFamily: interRegular,
         fontSize: ms(10),
         color: '#16A34A',
         marginTop: vs(6),
@@ -414,13 +414,13 @@ const styles = StyleSheet.create({
         marginLeft: ms(56),
     },
     infoLabel: {
-        fontFamily: regular,
+        fontFamily: interRegular,
         fontSize: ms(11),
         color: '#6B7280',
         marginLeft: ms(6),
     },
     infoValue: {
-        fontFamily: bold,
+        fontFamily: interMedium,
         fontSize: ms(11),
         color: blackColor,
     },
@@ -436,7 +436,7 @@ const styles = StyleSheet.create({
         borderTopColor: '#F3F4F6',
     },
     footerDate: {
-        fontFamily: regular,
+        fontFamily: interRegular,
         fontSize: ms(10),
         color: '#9CA3AF',
     },
@@ -445,7 +445,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     footerPlatform: {
-        fontFamily: regular,
+        fontFamily: interRegular,
         fontSize: ms(10),
         color: '#9CA3AF',
         marginLeft: ms(4),
@@ -468,13 +468,13 @@ const styles = StyleSheet.create({
         marginBottom: vs(20),
     },
     emptyTitle: {
-        fontFamily: bold,
+        fontFamily: interMedium,
         fontSize: ms(16),
         color: blackColor,
         marginBottom: vs(8),
     },
     emptySubtext: {
-        fontFamily: regular,
+        fontFamily: interRegular,
         fontSize: ms(12),
         color: '#6B7280',
         textAlign: 'center',

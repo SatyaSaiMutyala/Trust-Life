@@ -24,6 +24,23 @@ const CATS = [
     { id: 'insurance',  short: 'Ins',  color: '#4338CA',    light: '#EEF2FF' },
 ];
 
+const CAT_BREAKDOWN = [
+    { label: 'Inpatient / IPD',  color: '#7C3AED', amt: '22,300', pct: 59 },
+    { label: 'Diagnostics',      color: '#1D4ED8', amt: '5,600',  pct: 15 },
+    { label: 'Health Services',  color: '#D97706', amt: '5,000',  pct: 13 },
+    { label: 'Pharmacy',         color: '#16A34A', amt: '4,010',  pct: 11 },
+    { label: 'Outpatient / OPD', color: primaryColor, amt: '800', pct: 2  },
+];
+
+const MONTHLY_SPEND = [
+    { month: 'Jan', amt: 21040, pct: 100 },
+    { month: 'Feb', amt: 4900,  pct: 23  },
+    { month: 'Mar', amt: 5350,  pct: 25  },
+    { month: 'Apr', amt: 0,     pct: 0   },
+    { month: 'May', amt: 0,     pct: 0   },
+    { month: 'Jun', amt: 0,     pct: 0   },
+];
+
 const STATUS_META = {
     paid:        { label: 'Paid',        bg: '#F0FDF4', color: '#16A34A' },
     pending:     { label: 'Pending',     bg: '#FEF3C7', color: '#D97706' },
@@ -358,7 +375,15 @@ const MedicalBills = () => {
                     <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backBtn}>
                         <Icon type={Icons.Ionicons} name="arrow-back" color={blackColor} size={ms(20)} />
                     </TouchableOpacity>
-                    <Text style={styles.headerTitle}>Medical Bills</Text>
+                    <Text style={styles.headerTitle} numberOfLines={1} ellipsizeMode="tail">Medical Bills Vault</Text>
+                    <TouchableOpacity
+                        style={styles.analyticsBtn}
+                        onPress={() => navigation.navigate('MedicalBillsAnalyticsScreen')}
+                        activeOpacity={0.7}
+                    >
+                        <Icon type={Icons.Ionicons} name="bar-chart-outline" color={whiteColor} size={ms(16)} />
+                        <Text style={styles.analyticsBtnText}>Analytics</Text>
+                    </TouchableOpacity>
                 </View>
 
                 <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.scroll}>
@@ -420,6 +445,111 @@ const MedicalBills = () => {
                         ))}
                     </View>
 
+                    {/* ── Spend by Category ── */}
+                    <View style={styles.sideCard}>
+                        <View style={styles.sideCardHeader}>
+                            <Text style={styles.sideCardTitle}>Spend by Category</Text>
+                            <Text style={styles.sideCardSub}>2025</Text>
+                        </View>
+                        {CAT_BREAKDOWN.map((c, i) => (
+                            <View key={i} style={styles.cbRow}>
+                                <View style={[styles.cbDot, { backgroundColor: c.color }]} />
+                                <Text style={styles.cbName}>{c.label}</Text>
+                                <View style={styles.cbBarWrap}>
+                                    <View style={[styles.cbBarFill, { width: `${c.pct}%`, backgroundColor: c.color }]} />
+                                </View>
+                                <Text style={styles.cbAmt}>₹{c.amt}</Text>
+                            </View>
+                        ))}
+                    </View>
+
+                    {/* ── Monthly Spend ── */}
+                    <View style={styles.sideCard}>
+                        <View style={styles.sideCardHeader}>
+                            <Text style={styles.sideCardTitle}>Monthly Spend</Text>
+                            <Text style={styles.sideCardSub}>2025</Text>
+                        </View>
+                        <View style={styles.monthlyBars}>
+                            {MONTHLY_SPEND.map((m, i) => (
+                                <View key={i} style={styles.monthlyCol}>
+                                    <View style={styles.monthlyBarTrack}>
+                                        <View style={[
+                                            styles.monthlyBarFill,
+                                            {
+                                                height: `${Math.max(m.pct, 4)}%`,
+                                                backgroundColor: m.pct > 0 ? primaryColor : '#E2E8F0',
+                                                opacity: i === 0 ? 1 : 0.65,
+                                            },
+                                        ]} />
+                                    </View>
+                                    <Text style={[styles.monthlyLbl, i === 0 && { color: primaryColor, fontFamily: interMedium }]}>
+                                        {m.month}
+                                    </Text>
+                                </View>
+                            ))}
+                        </View>
+                    </View>
+
+                    {/* ── Insurance Summary ── */}
+                    <View style={styles.sideCard}>
+                        <View style={styles.sideCardHeader}>
+                            <Text style={styles.sideCardTitle}>Insurance Summary</Text>
+                        </View>
+                        <View style={styles.insSum}>
+                            <Text style={styles.insSumLbl}>Annual limit</Text>
+                            <Text style={styles.insSumVal}>₹5,00,000</Text>
+                        </View>
+                        <View style={styles.insSum}>
+                            <Text style={styles.insSumLbl}>Claimed this year</Text>
+                            <Text style={[styles.insSumVal, { color: '#1D4ED8' }]}>₹24,000</Text>
+                        </View>
+                        <View style={styles.insSumBar}>
+                            <View style={[styles.insSumFill, { width: '4.8%' }]} />
+                        </View>
+                        <Text style={styles.insSumNote}>
+                            ₹4,76,000 remaining ·{' '}
+                            <Text style={{ color: '#16A34A', fontFamily: interMedium }}>95.2% available</Text>
+                        </Text>
+                        <View style={styles.insSumDivider} />
+                        <Text style={styles.insSumSubHead}>Recent Claims</Text>
+                        {[
+                            { name: 'Yashoda · Feb 2025',      status: 'Approved',   sc: '#16A34A' },
+                            { name: 'Care Hospitals · Jan 2025', status: 'Processing', sc: '#D97706' },
+                        ].map((cl, i) => (
+                            <View key={i} style={styles.insClaimRow}>
+                                <Text style={styles.insClaimName}>{cl.name}</Text>
+                                <Text style={[styles.insClaimStatus, { color: cl.sc }]}>{cl.status}</Text>
+                            </View>
+                        ))}
+                    </View>
+
+                    {/* ── Tax Deduction (80D) ── */}
+                    <LinearGradient
+                        colors={['#F0FDF4', '#CCFBF1']}
+                        start={{ x: 0, y: 0 }}
+                        end={{ x: 1, y: 1 }}
+                        style={[styles.sideCard, { borderColor: 'rgba(22,163,74,0.2)' }]}
+                    >
+                        <View style={styles.sideCardHeader}>
+                            <Text style={[styles.sideCardTitle, { color: '#16A34A' }]}>Tax Deduction (80D)</Text>
+                            <Icon type={Icons.Ionicons} name="checkmark-circle" size={ms(16)} color="#16A34A" />
+                        </View>
+                        <Text style={styles.taxDesc}>
+                            Medical expenses eligible for ₹25,000 deduction under Section 80D.
+                            Track your bills here to claim the full benefit.
+                        </Text>
+                        <View style={styles.taxRow}>
+                            <Text style={styles.taxLbl}>Eligible bills this year</Text>
+                            <Text style={styles.taxAmt}>₹42,850</Text>
+                        </View>
+                        <View style={styles.taxBarWrap}>
+                            <View style={styles.taxBarFill} />
+                        </View>
+                        <Text style={styles.taxNote}>
+                            Max limit reached · download report for ITR filing
+                        </Text>
+                    </LinearGradient>
+
                     <View style={{ height: vs(100) }} />
                 </ScrollView>
 
@@ -454,6 +584,20 @@ const styles = StyleSheet.create({
         shadowOffset: { width: 0, height: 1 }, shadowOpacity: 0.1, shadowRadius: 2,
     },
     headerTitle: { flex: 1, fontFamily: heading, fontSize: ms(18), color: whiteColor, marginLeft: ms(12) },
+    analyticsBtn: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        backgroundColor: 'rgba(255,255,255,0.2)',
+        borderRadius: ms(20),
+        paddingHorizontal: ms(12),
+        paddingVertical: vs(6),
+        gap: ms(4),
+    },
+    analyticsBtnText: {
+        fontFamily: interMedium,
+        fontSize: ms(12),
+        color: whiteColor,
+    },
 
     scroll: { paddingHorizontal: ms(16), paddingTop: vs(4) },
 
@@ -626,6 +770,68 @@ const styles = StyleSheet.create({
     },
     actionBtnPrimary: { backgroundColor: primaryColor, borderColor: primaryColor },
     actionBtnTxt: { fontFamily: interMedium, fontSize: ms(11), color: '#64748B' },
+
+    // ── Sidebar Cards ──
+    sideCard: {
+        backgroundColor: whiteColor, borderRadius: ms(14),
+        borderWidth: 0.5, borderColor: primaryColor + '22',
+        padding: ms(14), marginBottom: vs(12),
+    },
+    sideCardHeader: {
+        flexDirection: 'row', alignItems: 'center',
+        justifyContent: 'space-between', marginBottom: vs(12),
+    },
+    sideCardTitle: { fontFamily: interMedium, fontSize: ms(13), color: blackColor },
+    sideCardSub: { fontFamily: interRegular, fontSize: ms(11), color: '#64748B' },
+
+    // Spend by Category rows
+    cbRow: { flexDirection: 'row', alignItems: 'center', gap: ms(8), marginBottom: vs(8) },
+    cbDot: { width: ms(8), height: ms(8), borderRadius: ms(2), flexShrink: 0 },
+    cbName: { fontFamily: interRegular, fontSize: ms(11), color: '#334155', width: ms(110) },
+    cbBarWrap: { flex: 1, height: vs(4), backgroundColor: '#E2E8F0', borderRadius: ms(2), overflow: 'hidden' },
+    cbBarFill: { height: '100%', borderRadius: ms(2) },
+    cbAmt: { fontFamily: interMedium, fontSize: ms(11), color: blackColor, width: ms(50), textAlign: 'right' },
+
+    // Monthly Spend bars
+    monthlyBars: { flexDirection: 'row', alignItems: 'flex-end', height: vs(70), gap: ms(6) },
+    monthlyCol: { flex: 1, alignItems: 'center', height: '100%', justifyContent: 'flex-end' },
+    monthlyBarTrack: { flex: 1, width: '100%', justifyContent: 'flex-end' },
+    monthlyBarFill: { width: '100%', borderRadius: ms(3), minHeight: vs(3) },
+    monthlyLbl: {
+        fontFamily: interRegular, fontSize: ms(9), color: '#64748B',
+        marginTop: vs(4), textAlign: 'center',
+    },
+
+    // Insurance Summary
+    insSum: { flexDirection: 'row', justifyContent: 'space-between', marginBottom: vs(4) },
+    insSumLbl: { fontFamily: interRegular, fontSize: ms(12), color: '#64748B' },
+    insSumVal: { fontFamily: interMedium, fontSize: ms(12), color: blackColor },
+    insSumBar: {
+        height: vs(7), backgroundColor: '#E2E8F0', borderRadius: ms(4),
+        overflow: 'hidden', marginVertical: vs(8),
+    },
+    insSumFill: { height: '100%', backgroundColor: '#1D4ED8', borderRadius: ms(4) },
+    insSumNote: { fontFamily: interRegular, fontSize: ms(11), color: '#64748B' },
+    insSumDivider: { height: 0.5, backgroundColor: primaryColor + '18', marginVertical: vs(10) },
+    insSumSubHead: { fontFamily: interMedium, fontSize: ms(11), color: blackColor, marginBottom: vs(6) },
+    insClaimRow: { flexDirection: 'row', justifyContent: 'space-between', marginBottom: vs(5) },
+    insClaimName: { fontFamily: interRegular, fontSize: ms(12), color: '#64748B' },
+    insClaimStatus: { fontFamily: interMedium, fontSize: ms(12) },
+
+    // Tax Deduction
+    taxDesc: {
+        fontFamily: interRegular, fontSize: ms(12), color: '#16A34A',
+        opacity: 0.8, lineHeight: ms(18), marginBottom: vs(10),
+    },
+    taxRow: { flexDirection: 'row', justifyContent: 'space-between', marginBottom: vs(4) },
+    taxLbl: { fontFamily: interRegular, fontSize: ms(12), color: '#16A34A' },
+    taxAmt: { fontFamily: interMedium, fontSize: ms(12), color: '#16A34A' },
+    taxBarWrap: {
+        height: vs(5), backgroundColor: 'rgba(22,163,74,0.2)',
+        borderRadius: ms(3), overflow: 'hidden', marginBottom: vs(6),
+    },
+    taxBarFill: { height: '100%', width: '100%', backgroundColor: '#16A34A', borderRadius: ms(3) },
+    taxNote: { fontFamily: interRegular, fontSize: ms(10), color: '#16A34A', opacity: 0.7 },
 
     // FAB
     fab: {

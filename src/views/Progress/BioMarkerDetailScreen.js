@@ -456,6 +456,7 @@ const BioMarkerDetailScreen = () => {
     const navigation = useNavigation();
     const route      = useRoute();
     const markerName = route.params?.marker || 'Blood Sugar';
+    const hideHPS    = route.params?.hideHPS === true;
     const config     = BIO_MARKER_CONFIGS[markerName] || BIO_MARKER_CONFIGS['Blood Sugar'];
 
     const [activeFilter, setActiveFilter] = useState('all');
@@ -509,7 +510,7 @@ const BioMarkerDetailScreen = () => {
                     </View>
 
                     {/* ── HPS Hero Band ── */}
-                    <LinearGradient
+                    {!hideHPS && <LinearGradient
                         colors={[primaryColor, '#0A5248']}
                         start={{ x: 0, y: 0 }}
                         end={{ x: 1, y: 1 }}
@@ -571,7 +572,7 @@ const BioMarkerDetailScreen = () => {
                                 <Text style={s.ssPillDesc}>Speed of change</Text>
                             </View>
                         </View>
-                    </LinearGradient>
+                    </LinearGradient>}
 
                     {/* ── Filter Chips ── */}
                     <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={s.filterRow}>

@@ -16,8 +16,8 @@ import { vs, ms } from 'react-native-size-matters';
 import Clipboard from '@react-native-clipboard/clipboard';
 
 // Project utilities
-import { StatusBar2 } from '../components/StatusBar';
-import { bold, regular } from '../config/Constants';
+import { StatusBar2, StatusBar3 } from '../components/StatusBar';
+import { heading, interMedium, interRegular } from '../config/Constants';
 import Icon, { Icons } from '../components/Icons';
 import { blackColor, whiteColor, primaryColor, grayColor } from '../utils/globalColors';
 import PrimaryButton from '../utils/primaryButton';
@@ -63,7 +63,7 @@ const InviteFriends = () => {
 
     return (
         <SafeAreaView style={styles.container}>
-            <StatusBar2 />
+            <StatusBar3 />
 
             <ScrollView
                 style={styles.scrollView}
@@ -227,7 +227,7 @@ const styles = StyleSheet.create({
         borderColor: '#E5E7EB',
     },
     earningsButtonText: {
-        fontFamily: regular,
+        fontFamily: interRegular,
         fontSize: ms(12),
         color: blackColor,
     },
@@ -248,14 +248,14 @@ const styles = StyleSheet.create({
         marginBottom: vs(25),
     },
     title: {
-        fontFamily: bold,
+        fontFamily: heading,
         fontSize: ms(18),
         color: blackColor,
         textAlign: 'center',
         marginBottom: vs(12),
     },
     description: {
-        fontFamily: regular,
+        fontFamily: interRegular,
         fontSize: ms(14),
         color: blackColor,
         textAlign: 'center',
@@ -287,13 +287,13 @@ const styles = StyleSheet.create({
         borderColor: '#E5E7EB',
     },
     earnAmount: {
-        fontFamily: bold,
+        fontFamily: interMedium,
         fontSize: ms(16),
         color: blackColor,
         marginBottom: vs(4),
     },
     planText: {
-        fontFamily: regular,
+        fontFamily: interRegular,
         fontSize: ms(12),
         color: blackColor,
     },
@@ -304,7 +304,7 @@ const styles = StyleSheet.create({
         marginBottom: vs(10),
     },
     shareLabel: {
-        fontFamily: regular,
+        fontFamily: interRegular,
         fontSize: ms(14),
         color: blackColor,
         marginBottom: vs(12),
@@ -320,7 +320,7 @@ const styles = StyleSheet.create({
         width: '100%',
     },
     codeText: {
-        fontFamily: bold,
+        fontFamily: interMedium,
         fontSize: ms(20),
         color: blackColor,
     },
@@ -330,7 +330,7 @@ const styles = StyleSheet.create({
         gap: ms(5),
     },
     copyText: {
-        fontFamily: regular,
+        fontFamily: interRegular,
         fontSize: ms(14),
         color: blackColor,
     },
@@ -344,7 +344,7 @@ const styles = StyleSheet.create({
         marginBottom: vs(10),
     },
     inviteButtonText: {
-        fontFamily: bold,
+        fontFamily: interMedium,
         fontSize: ms(16),
         color: whiteColor,
     },
@@ -355,7 +355,7 @@ const styles = StyleSheet.create({
         // paddingVertical: vs(5),
     },
     howItWorksText: {
-        fontFamily: regular,
+        fontFamily: interRegular,
         fontSize: ms(14),
         color: blackColor,
     },
@@ -382,7 +382,7 @@ const styles = StyleSheet.create({
         position: 'relative',
     },
     modalTitle: {
-        fontFamily: bold,
+        fontFamily: interMedium,
         fontSize: ms(18),
         color: blackColor,
     },
@@ -409,7 +409,7 @@ const styles = StyleSheet.create({
         marginBottom: vs(10),
     },
     stepNumber: {
-        fontFamily: regular,
+        fontFamily: interRegular,
         fontSize: ms(14),
         color: blackColor,
     },
@@ -420,14 +420,14 @@ const styles = StyleSheet.create({
         marginVertical: vs(5),
     },
     stepTitle: {
-        fontFamily: bold,
+        fontFamily: interMedium,
         fontSize: ms(16),
         color: blackColor,
         textAlign: 'center',
         marginBottom: vs(5),
     },
     stepDescription: {
-        fontFamily: regular,
+        fontFamily: interRegular,
         fontSize: ms(14),
         color: blackColor,
         textAlign: 'center',

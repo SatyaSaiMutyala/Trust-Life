@@ -376,9 +376,10 @@ const ClinicalMedicalSummary = () => {
                         <Text style={s.headerTitle}>Medical Summary</Text>
                         <Text style={s.headerSub}>{PATIENT.id}</Text>
                     </View>
-                    <View style={s.patientAvi}>
-                        <Text style={s.patientAviTx}>{PATIENT.initials}</Text>
-                    </View>
+                    <TouchableOpacity style={s.analyticsBtn} onPress={() => navigation.navigate('MedicalBillsAnalyticsScreen')} activeOpacity={0.7}>
+                        <Icon type={Icons.Ionicons} name="bar-chart-outline" size={ms(16)} color={whiteColor} />
+                        <Text style={s.analyticsBtnText}>Analytics</Text>
+                    </TouchableOpacity>
                 </View>
 
                 <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={s.scroll}>
@@ -549,6 +550,8 @@ const s = StyleSheet.create({
     headerSub:     { fontFamily: interRegular, fontSize: ms(10), color: grayColor, marginTop: vs(1) },
     patientAvi:    { width: ms(34), height: ms(34), borderRadius: ms(17), backgroundColor: primaryColor, justifyContent: 'center', alignItems: 'center' },
     patientAviTx:  { fontFamily: interMedium, fontSize: ms(12), color: whiteColor },
+    analyticsBtn:  { flexDirection: 'row', alignItems: 'center', backgroundColor: 'rgba(255,255,255,0.2)', borderRadius: ms(20), paddingHorizontal: ms(12), paddingVertical: vs(6), gap: ms(4) },
+    analyticsBtnText: { fontFamily: interMedium, fontSize: ms(12), color: whiteColor },
 
     scroll: { paddingHorizontal: ms(14) },
 

@@ -21,6 +21,7 @@ import { blackColor, primaryColor, whiteColor } from '../utils/globalColors';
 
 const { width } = Dimensions.get('window');
 
+
 // --- Section Row Item ---
 const SectionRow = ({ icon, iconType, title, onPress, isLast, rightText }) => (
     <TouchableOpacity
@@ -161,6 +162,27 @@ const More = (props) => {
                                 <Text style={styles.trustMDTitle}>TrustMD</Text>
                                 <Text style={styles.trustMDDesc}>Patient health overview for tracking progress and risks.</Text>
                             </View>
+                        </TouchableOpacity>
+
+                        {/* Disease Intelligence Button */}
+                        <TouchableOpacity
+                            style={styles.diBtn}
+                            activeOpacity={0.7}
+                            onPress={() => navigation.navigate('DiseaseIntelligence')}
+                        >
+                            <LinearGradient
+                                colors={[primaryColor + '18', primaryColor + '08']}
+                                style={styles.diBtnGradient}
+                            >
+                                <View style={styles.diBtnIconWrap}>
+                                    <Icon type={Icons.Ionicons} name="body-outline" size={ms(22)} color={primaryColor} />
+                                </View>
+                                <View style={styles.diBtnText}>
+                                    <Text style={styles.diBtnTitle}>Disease Intelligence</Text>
+                                    <Text style={styles.diBtnDesc}>Multi-organ health analysis · Doctor & Patient views</Text>
+                                </View>
+                                <Icon type={Icons.Ionicons} name="chevron-forward" size={ms(18)} color={primaryColor} />
+                            </LinearGradient>
                         </TouchableOpacity>
 
                         {/* Quick Actions */}
@@ -607,6 +629,24 @@ const styles = StyleSheet.create({
         paddingVertical: vs(15),
         marginTop: vs(5),
     },
+
+    // Disease Intelligence Button
+    diBtn: {
+        borderRadius: ms(14), marginBottom: vs(18), overflow: 'hidden',
+        borderWidth: 0.5, borderColor: primaryColor + '30',
+    },
+    diBtnGradient: {
+        flexDirection: 'row', alignItems: 'center',
+        paddingHorizontal: ms(16), paddingVertical: vs(16), gap: ms(12),
+    },
+    diBtnIconWrap: {
+        width: ms(44), height: ms(44), borderRadius: ms(22),
+        backgroundColor: primaryColor + '18',
+        justifyContent: 'center', alignItems: 'center',
+    },
+    diBtnText: { flex: 1 },
+    diBtnTitle: { fontFamily: interMedium, fontSize: ms(14), color: blackColor, marginBottom: vs(2) },
+    diBtnDesc: { fontFamily: interRegular, fontSize: ms(10), color: '#6B7280' },
 
     // Logout Dialog
     dialogOverlay: {

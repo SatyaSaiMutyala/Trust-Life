@@ -293,7 +293,7 @@ const VisitCard = ({ event, expanded, onToggle }) => {
 const MedicalRecords = () => {
     const navigation = useNavigation();
     const route = useRoute();
-    const title = route.params?.title || 'Medical Records';
+    const title = route.params?.title || 'Medical Records Vault';
     const [expanded, setExpanded] = useState({ 1: true });
     const [showModal, setShowModal] = useState(false);
     const [doctorName, setDoctorName] = useState('');
@@ -379,7 +379,11 @@ const MedicalRecords = () => {
                     <TouchableOpacity onPress={() => navigation.goBack()} style={st.backButton}>
                         <Icon type={Icons.Ionicons} name="arrow-back" color={blackColor} size={ms(20)} />
                     </TouchableOpacity>
-                    <Text style={st.headerTitle}>{title}</Text>
+                    <Text style={st.headerTitle} numberOfLines={1} ellipsizeMode="tail">{title}</Text>
+                    <TouchableOpacity onPress={() => navigation.navigate('DoctorAnalyticsScreen')} style={st.analyticsBtn} activeOpacity={0.7}>
+                        <Icon type={Icons.Ionicons} name="bar-chart-outline" color={whiteColor} size={ms(16)} />
+                        <Text style={st.analyticsBtnText}>Analytics</Text>
+                    </TouchableOpacity>
                 </View>
 
                 {renderContent()}
@@ -483,6 +487,8 @@ const st = StyleSheet.create({
     header:      { flexDirection: 'row', alignItems: 'center', paddingBottom: vs(12) },
     backButton:  { width: ms(34), height: ms(34), borderRadius: ms(17), backgroundColor: whiteColor, justifyContent: 'center', alignItems: 'center', elevation: 2, shadowColor: blackColor, shadowOffset: { width: 0, height: 1 }, shadowOpacity: 0.1, shadowRadius: 2 },
     headerTitle: { flex: 1, fontFamily: heading, fontSize: ms(18), color: whiteColor, marginLeft: ms(12) },
+    analyticsBtn: { flexDirection: 'row', alignItems: 'center', backgroundColor: 'rgba(255,255,255,0.2)', borderRadius: ms(20), paddingHorizontal: ms(12), paddingVertical: vs(6), gap: ms(4) },
+    analyticsBtnText: { fontFamily: interMedium, fontSize: ms(12), color: whiteColor },
 
     scrollPad: { paddingTop: vs(4), paddingBottom: vs(40) },
 

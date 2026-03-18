@@ -186,7 +186,7 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, View, Text, SafeAreaView, TouchableOpacity, FlatList, Image, ActivityIndicator, Modal, ScrollView } from 'react-native';
 import * as colors from '../assets/css/Colors';
-import { bold, regular, img_url, empty_list } from '../config/Constants';
+import { heading, interMedium, interRegular, img_url, empty_list } from '../config/Constants';
 import { useNavigation } from '@react-navigation/native';
 import DropShadow from "react-native-drop-shadow";
 import { useDispatch } from 'react-redux';
@@ -585,19 +585,19 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(255,255,255,0.25)', justifyContent: 'center', alignItems: 'center',
     marginRight: ms(10),
   },
-  headerTitle: { fontFamily: bold, fontSize: ms(22), color: whiteColor },
+  headerTitle: { fontFamily: heading, fontSize: ms(22), color: whiteColor },
   dropdown: {
     flexDirection: 'row', alignItems: 'center',
     backgroundColor: whiteColor, borderRadius: ms(20),
     paddingHorizontal: ms(14), paddingVertical: vs(8), gap: ms(6),
   },
-  dropdownText: { fontFamily: regular, fontSize: ms(12), color: blackColor, maxWidth: ms(100) },
+  dropdownText: { fontFamily: interRegular, fontSize: ms(12), color: blackColor, maxWidth: ms(100) },
 
   // Tabs
   tabRow: { flexDirection: 'row', paddingHorizontal: ms(20), marginBottom: vs(2) },
   tab: { flex: 1, alignItems: 'center', paddingVertical: vs(10) },
-  tabText: { fontFamily: regular, fontSize: ms(13), color: blackColor },
-  tabTextActive: { fontFamily: bold, fontSize: ms(13), color: whiteColor },
+  tabText: { fontFamily: interRegular, fontSize: ms(13), color: blackColor },
+  tabTextActive: { fontFamily: interMedium, fontSize: ms(13), color: whiteColor },
   tabIndicatorRow: { flexDirection: 'row', paddingHorizontal: ms(20), marginBottom: vs(12) },
   tabIndicator: { flex: 1, height: ms(3), backgroundColor: '#E5E7EB', borderRadius: ms(2) },
   tabIndicatorActive: { backgroundColor: primaryColor },
@@ -618,24 +618,24 @@ const styles = StyleSheet.create({
     alignItems: 'center', marginBottom: vs(10),
   },
   testTypeBadge: { paddingVertical: vs(4), paddingHorizontal: ms(10), borderRadius: ms(5) },
-  testTypeLabel: { fontFamily: regular, fontSize: ms(10) },
-  statusText: { fontFamily: bold, fontSize: ms(12) },
+  testTypeLabel: { fontFamily: interRegular, fontSize: ms(10) },
+  statusText: { fontFamily: interMedium, fontSize: ms(12) },
   detailRow: { flexDirection: 'row', justifyContent: 'space-between', marginBottom: vs(5) },
-  idText: { fontFamily: regular, fontSize: ms(12), color: colors.grey },
-  dateText: { fontFamily: regular, fontSize: ms(12), color: colors.grey },
-  testNameText: { fontFamily: bold, fontSize: ms(14), color: colors.theme_fg_two, marginBottom: vs(10) },
+  idText: { fontFamily: interRegular, fontSize: ms(12), color: colors.grey },
+  dateText: { fontFamily: interRegular, fontSize: ms(12), color: colors.grey },
+  testNameText: { fontFamily: interMedium, fontSize: ms(14), color: colors.theme_fg_two, marginBottom: vs(10) },
   amountRow: {
     flexDirection: 'row', alignItems: 'center',
     justifyContent: 'space-between', marginBottom: vs(10),
   },
   checkIcon: { width: ms(16), height: ms(16), marginRight: ms(5) },
-  amountLabel: { fontFamily: regular, fontSize: ms(12), color: colors.theme_fg_two, marginRight: ms(5) },
-  amountValue: { fontFamily: bold, fontSize: ms(16), color: colors.theme_fg_two },
+  amountLabel: { fontFamily: interRegular, fontSize: ms(12), color: colors.theme_fg_two, marginRight: ms(5) },
+  amountValue: { fontFamily: interMedium, fontSize: ms(16), color: colors.theme_fg_two },
   viewDetailsButton: {
     paddingVertical: ms(12), marginHorizontal: ms(10),
     borderRadius: ms(40), backgroundColor: '#F3F4F6',
   },
-  viewDetailsText: { fontFamily: bold, fontSize: ms(14), color: blackColor, textAlign: 'center' },
+  viewDetailsText: { fontFamily: interMedium, fontSize: ms(14), color: blackColor, textAlign: 'center' },
 
   // Tele Medical Booking Card
   bookingCard: {
@@ -647,39 +647,39 @@ const styles = StyleSheet.create({
     marginBottom: vs(14),
   },
   bookingBadge: { borderRadius: ms(20), paddingHorizontal: ms(14), paddingVertical: vs(5) },
-  bookingBadgeText: { fontFamily: bold, fontSize: ms(12) },
-  bookingDate: { fontFamily: regular, fontSize: ms(12), color: '#6B7280' },
+  bookingBadgeText: { fontFamily: interMedium, fontSize: ms(12) },
+  bookingDate: { fontFamily: interRegular, fontSize: ms(12), color: '#6B7280' },
   doctorRow: {
     flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between',
     marginBottom: vs(2),
   },
-  doctorName: { fontFamily: bold, fontSize: ms(14), color: blackColor },
+  doctorName: { fontFamily: interMedium, fontSize: ms(14), color: blackColor },
   ratingRow: { flexDirection: 'row', alignItems: 'center', gap: ms(4) },
-  ratingText: { fontFamily: bold, fontSize: ms(13), color: blackColor },
-  specialtyText: { fontFamily: regular, fontSize: ms(12), color: '#6B7280', marginBottom: vs(14) },
+  ratingText: { fontFamily: interMedium, fontSize: ms(13), color: blackColor },
+  specialtyText: { fontFamily: interRegular, fontSize: ms(12), color: '#6B7280', marginBottom: vs(14) },
   appointmentRow: {
     flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between',
     marginBottom: vs(14),
   },
-  appointmentLabel: { fontFamily: bold, fontSize: ms(12), color: blackColor },
-  appointmentValue: { fontFamily: regular, fontSize: ms(12), color: '#374151' },
+  appointmentLabel: { fontFamily: interMedium, fontSize: ms(12), color: blackColor },
+  appointmentValue: { fontFamily: interRegular, fontSize: ms(12), color: '#374151' },
   videoBtn: {
     flexDirection: 'row', alignItems: 'center', justifyContent: 'center',
     backgroundColor: primaryColor, borderRadius: ms(25),
     paddingVertical: vs(12), gap: ms(8), marginBottom: vs(8),
   },
-  videoBtnText: { fontFamily: bold, fontSize: ms(13), color: whiteColor },
-  noteText: { fontFamily: regular, fontSize: ms(11), color: '#6B7280', lineHeight: ms(16) },
+  videoBtnText: { fontFamily: interMedium, fontSize: ms(13), color: whiteColor },
+  noteText: { fontFamily: interRegular, fontSize: ms(11), color: '#6B7280', lineHeight: ms(16) },
   rescheduleBtn: {
     alignItems: 'center', justifyContent: 'center',
     backgroundColor: '#FEF3C7', borderRadius: ms(25), paddingVertical: vs(12),
   },
-  rescheduleBtnText: { fontFamily: bold, fontSize: ms(13), color: '#92400E' },
+  rescheduleBtnText: { fontFamily: interMedium, fontSize: ms(13), color: '#92400E' },
   retryBtn: {
     alignItems: 'center', justifyContent: 'center',
     backgroundColor: primaryColor, borderRadius: ms(25), paddingVertical: vs(12),
   },
-  retryBtnText: { fontFamily: bold, fontSize: ms(13), color: whiteColor },
+  retryBtnText: { fontFamily: interMedium, fontSize: ms(13), color: whiteColor },
 
   // Dropdown Modal
   modalOverlay: {
@@ -690,7 +690,7 @@ const styles = StyleSheet.create({
     backgroundColor: whiteColor, borderRadius: ms(16),
     width: '80%', maxHeight: '60%', padding: ms(20),
   },
-  modalTitle: { fontFamily: bold, fontSize: ms(16), color: blackColor, marginBottom: vs(14) },
+  modalTitle: { fontFamily: interMedium, fontSize: ms(16), color: blackColor, marginBottom: vs(14) },
   modalItem: {
     flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between',
     paddingVertical: vs(12), borderBottomWidth: 1, borderBottomColor: '#F3F4F6',
@@ -699,8 +699,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#F0FDF4', marginHorizontal: ms(-8),
     paddingHorizontal: ms(8), borderRadius: ms(8),
   },
-  modalItemText: { fontFamily: regular, fontSize: ms(14), color: '#374151' },
-  modalItemTextActive: { fontFamily: bold, color: primaryColor },
+  modalItemText: { fontFamily: interRegular, fontSize: ms(14), color: '#374151' },
+  modalItemTextActive: { fontFamily: interMedium, color: primaryColor },
 
   // Empty & Footer
   emptyContainer: {
@@ -709,7 +709,7 @@ const styles = StyleSheet.create({
   },
   emptyImageWrapper: { height: vs(250), width: ms(300), alignSelf: 'center' },
   emptyImage: { height: '100%', width: '100%' },
-  emptyText: { fontFamily: bold, fontSize: ms(14), textAlign: 'center', marginTop: vs(20) },
+  emptyText: { fontFamily: interMedium, fontSize: ms(14), textAlign: 'center', marginTop: vs(20) },
   footerLoader: { paddingVertical: vs(20), alignItems: 'center' },
 });
 

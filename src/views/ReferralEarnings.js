@@ -13,8 +13,8 @@ import { useNavigation } from '@react-navigation/native';
 import { vs, ms } from 'react-native-size-matters';
 
 // Project utilities
-import { StatusBar2 } from '../components/StatusBar';
-import { bold, regular } from '../config/Constants';
+import { StatusBar2, StatusBar3 } from '../components/StatusBar';
+import { heading, interMedium, interRegular } from '../config/Constants';
 import Icon, { Icons } from '../components/Icons';
 import { blackColor, whiteColor, primaryColor } from '../utils/globalColors';
 
@@ -66,7 +66,7 @@ const ReferralEarnings = () => {
 
     return (
         <SafeAreaView style={styles.container}>
-            <StatusBar2 />
+            <StatusBar3 />
 
             <View style={styles.mainContent}>
                 {/* Header */}
@@ -233,20 +233,20 @@ const styles = StyleSheet.create({
         elevation: 3,
     },
     earningsLabel: {
-        fontFamily: regular,
+        fontFamily: interRegular,
         fontSize: ms(14),
         color: blackColor,
         marginBottom: vs(8),
     },
     earningsAmount: {
-        fontFamily: bold,
+        fontFamily: interMedium,
         fontSize: ms(28),
         color: blackColor,
     },
 
     // Section Title
     sectionTitle: {
-        fontFamily: bold,
+        fontFamily: interMedium,
         fontSize: ms(16),
         color: blackColor,
         marginBottom: vs(15),
@@ -265,7 +265,7 @@ const styles = StyleSheet.create({
         marginBottom: vs(15),
     },
     emptyText: {
-        fontFamily: regular,
+        fontFamily: interRegular,
         fontSize: ms(16),
         color: blackColor,
         textAlign: 'center',
@@ -290,13 +290,13 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     referralName: {
-        fontFamily: bold,
+        fontFamily: interMedium,
         fontSize: ms(14),
         color: blackColor,
         marginBottom: vs(3),
     },
     referralDate: {
-        fontFamily: regular,
+        fontFamily: interRegular,
         fontSize: ms(12),
         color: blackColor,
     },
@@ -306,13 +306,13 @@ const styles = StyleSheet.create({
         marginRight: ms(10),
     },
     plusSign: {
-        fontFamily: regular,
+        fontFamily: interRegular,
         fontSize: ms(14),
         color: '#22C55E',
         marginRight: ms(2),
     },
     amountText: {
-        fontFamily: bold,
+        fontFamily: interMedium,
         fontSize: ms(14),
         color: '#22C55E',
     },
@@ -351,13 +351,13 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     modalProfileName: {
-        fontFamily: bold,
+        fontFamily: interMedium,
         fontSize: ms(16),
         color: blackColor,
         marginBottom: vs(3),
     },
     modalProfileDate: {
-        fontFamily: regular,
+        fontFamily: interRegular,
         fontSize: ms(12),
         color: blackColor,
     },
@@ -373,7 +373,7 @@ const styles = StyleSheet.create({
         marginBottom: vs(25),
     },
     amountCreditedLabel: {
-        fontFamily: regular,
+        fontFamily: interRegular,
         fontSize: ms(14),
         color: blackColor,
     },
@@ -382,13 +382,13 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     creditedPlus: {
-        fontFamily: regular,
+        fontFamily: interRegular,
         fontSize: ms(16),
         color: '#22C55E',
         marginRight: ms(2),
     },
     creditedAmount: {
-        fontFamily: bold,
+        fontFamily: interMedium,
         fontSize: ms(16),
         color: '#22C55E',
     },
@@ -413,7 +413,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     stepNumber: {
-        fontFamily: bold,
+        fontFamily: interMedium,
         fontSize: ms(12),
         color: whiteColor,
     },
@@ -429,13 +429,13 @@ const styles = StyleSheet.create({
         paddingBottom: vs(15),
     },
     stepTitle: {
-        fontFamily: bold,
+        fontFamily: interMedium,
         fontSize: ms(14),
         color: blackColor,
         marginBottom: vs(3),
     },
     stepDescription: {
-        fontFamily: regular,
+        fontFamily: interRegular,
         fontSize: ms(13),
         color: blackColor,
         lineHeight: ms(18),

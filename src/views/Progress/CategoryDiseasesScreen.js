@@ -13,7 +13,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import { StatusBar2 } from '../../components/StatusBar';
 import Icon, { Icons } from '../../components/Icons';
 import { blackColor, whiteColor, primaryColor, globalGradient2 } from '../../utils/globalColors';
-import { bold, regular } from '../../config/Constants';
+import { bold, heading, interMedium, interRegular, regular } from '../../config/Constants';
 
 const CATEGORY_META = {
     Acute:               { icon: 'flash',            iconColor: '#EF4444', bg: '#FEF2F2' },
@@ -217,12 +217,12 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     summaryValue: {
-        fontFamily: bold,
+        fontFamily: heading,
         fontSize: ms(20),
         color: blackColor,
     },
     summaryLabel: {
-        fontFamily: regular,
+        fontFamily: interRegular,
         fontSize: ms(10),
         color: '#9CA3AF',
         marginTop: vs(2),
@@ -236,7 +236,7 @@ const styles = StyleSheet.create({
     // Scroll
     scrollContent: { paddingHorizontal: ms(16), paddingBottom: vs(40) },
     sectionLabel: {
-        fontFamily: regular,
+        fontFamily: interRegular,
         fontSize: ms(12),
         color: '#6B7280',
         marginBottom: vs(10),
@@ -264,12 +264,12 @@ const styles = StyleSheet.create({
         justifyContent: 'center', alignItems: 'center',
     },
     cardName: {
-        fontFamily: bold,
+        fontFamily: interMedium,
         fontSize: ms(14),
         color: blackColor,
     },
     cardDate: {
-        fontFamily: regular,
+        fontFamily: interRegular,
         fontSize: ms(10),
         color: '#9CA3AF',
         marginTop: vs(2),
@@ -283,7 +283,7 @@ const styles = StyleSheet.create({
         borderRadius: ms(20),
     },
     stabilityText: {
-        fontFamily: bold,
+        fontFamily: interMedium,
         fontSize: ms(10),
     },
     divider: {
@@ -292,7 +292,7 @@ const styles = StyleSheet.create({
         marginBottom: vs(10),
     },
     cardDescription: {
-        fontFamily: regular,
+        fontFamily: interRegular,
         fontSize: ms(12),
         color: '#6B7280',
         lineHeight: ms(18),
@@ -317,7 +317,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#16A34A',
     },
     activeText: {
-        fontFamily: bold,
+        fontFamily: interMedium,
         fontSize: ms(10),
         color: '#16A34A',
     },
@@ -327,7 +327,7 @@ const styles = StyleSheet.create({
         gap: ms(4),
     },
     viewMoreText: {
-        fontFamily: bold,
+        fontFamily: interMedium,
         fontSize: ms(12),
         color: primaryColor,
     },
