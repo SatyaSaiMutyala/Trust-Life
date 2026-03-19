@@ -12,6 +12,7 @@ import { ms, vs } from 'react-native-size-matters';
 import Icon, { Icons } from '../../components/Icons';
 import { StatusBar2 } from '../../components/StatusBar';
 import { primaryColor, whiteColor, blackColor } from '../../utils/globalColors';
+import { heading, interMedium, interRegular } from '../../config/Constants';
 import PrimaryButton from '../../utils/primaryButton';
 
 // ── Filter options ────────────────────────────────────────────────────────────
@@ -191,7 +192,7 @@ const styles = StyleSheet.create({
   },
   headerTitle: {
     fontSize: ms(24),
-    fontWeight: 'bold',
+    fontFamily: interMedium,
     color: blackColor,
   },
   closeBtn: {
@@ -214,7 +215,7 @@ const styles = StyleSheet.create({
   },
   sectionTitle: {
     fontSize: ms(15),
-    fontWeight: '600',
+    fontFamily: interMedium,
     color: blackColor,
     marginBottom: vs(10),
   },
@@ -242,11 +243,11 @@ const styles = StyleSheet.create({
   chipText: {
     fontSize: ms(13),
     color: '#555',
-    fontWeight: '500',
+    fontFamily: interMedium,
   },
   chipTextSelected: {
     color: blackColor,
-    fontWeight: '600',
+    fontFamily: interMedium,
   },
 
   // Slider
@@ -298,7 +299,7 @@ const styles = StyleSheet.create({
   },
   priceLabelText: {
     fontSize: ms(13),
-    fontWeight: '600',
+    fontFamily: interMedium,
     color: blackColor,
   },
 
@@ -317,7 +318,7 @@ const styles = StyleSheet.create({
   },
   applyBtnText: {
     fontSize: ms(16),
-    fontWeight: '700',
+    fontFamily: interMedium,
     color: whiteColor,
   },
 });

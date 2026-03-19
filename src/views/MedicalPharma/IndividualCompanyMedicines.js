@@ -21,6 +21,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import Icon, { Icons } from '../../components/Icons';
 import { StatusBar2 } from '../../components/StatusBar';
 import { globalGradient, primaryColor, whiteColor, blackColor } from '../../utils/globalColors';
+import { heading, interMedium, interRegular } from '../../config/Constants';
 import { GOOGLE_KEY } from '../../config/Constants';
 
 const { width } = Dimensions.get('window');
@@ -384,8 +385,8 @@ const styles = StyleSheet.create({
   },
   headerTextContainer: { flex: 1, marginRight: ms(8) },
   greetingRow: { flexDirection: 'row', alignItems: 'center' },
-  greetingText: { color: '#fff', fontSize: ms(15), fontWeight: 'bold' },
-  userName: { color: '#fff', fontSize: ms(15), fontWeight: 'bold', marginLeft: 4, flexShrink: 1 },
+  greetingText: { color: '#fff', fontSize: ms(15), fontFamily: interMedium },
+  userName: { color: '#fff', fontSize: ms(15), fontFamily: interMedium, marginLeft: 4, flexShrink: 1 },
   locationText: { color: '#fff', fontSize: ms(10), maxWidth: ms(200) },
   rightHeaderSection: { flexDirection: 'row', alignItems: 'center', gap: ms(6) },
   headerButton: {
@@ -404,7 +405,7 @@ const styles = StyleSheet.create({
   contentContainer: { flex: 1 },
   scrollContent: { paddingTop: ms(10), paddingBottom: ms(30), paddingHorizontal: ms(16) },
 
-  resultsTitle: { fontSize: ms(18), fontWeight: '400', color: blackColor, marginBottom: ms(10) },
+  resultsTitle: { fontSize: ms(18), fontFamily: interRegular, color: blackColor, marginBottom: ms(10) },
 
   // Brand logo
   brandLogoContainer: { alignItems: 'flex-start', marginBottom: ms(15) },
@@ -417,7 +418,7 @@ const styles = StyleSheet.create({
     paddingVertical: vs(7), paddingHorizontal: ms(14), backgroundColor: whiteColor,
   },
   filterChipActive: { backgroundColor: primaryColor, borderColor: primaryColor },
-  filterChipText: { fontSize: ms(12), color: '#555', fontWeight: '500' },
+  filterChipText: { fontSize: ms(12), color: '#555', fontFamily: interMedium },
   filterChipTextActive: { color: whiteColor },
 
   // Cards
@@ -429,21 +430,21 @@ const styles = StyleSheet.create({
   },
   cardBody: { flexDirection: 'row' },
   cardLeft: { flex: 1, padding: ms(14), justifyContent: 'space-between' },
-  cardName: { fontSize: ms(15), fontWeight: 'bold', color: blackColor },
+  cardName: { fontSize: ms(15), fontFamily: interMedium, color: blackColor },
   cardSubtitle: { fontSize: ms(12), color: '#888', marginTop: vs(1) },
   cardRatingRow: { flexDirection: 'row', alignItems: 'center', gap: ms(4), marginTop: vs(4), marginBottom: vs(8) },
-  cardRating: { fontSize: ms(13), color: blackColor, fontWeight: '600' },
+  cardRating: { fontSize: ms(13), color: blackColor, fontFamily: interMedium },
 
   cardPricing: { gap: vs(3) },
   cardPricingLabels: { flexDirection: 'row', justifyContent: 'space-between' },
-  priceLabel: { fontSize: ms(11), color: '#888', fontWeight: '500', flex: 1 },
+  priceLabel: { fontSize: ms(11), color: '#888', fontFamily: interMedium, flex: 1 },
   cardPricingValues: { flexDirection: 'row', justifyContent: 'space-between' },
   priceMrp: {
-    fontSize: ms(13), fontWeight: 'bold', color: blackColor, flex: 1,
+    fontSize: ms(13), fontFamily: interMedium, color: blackColor, flex: 1,
     textDecorationLine: 'line-through', textDecorationColor: '#EF4444',
   },
-  priceDiscount: { fontSize: ms(13), fontWeight: 'bold', color: blackColor, flex: 1 },
-  priceNet: { fontSize: ms(13), fontWeight: 'bold', color: blackColor, flex: 1 },
+  priceDiscount: { fontSize: ms(13), fontFamily: interMedium, color: blackColor, flex: 1 },
+  priceNet: { fontSize: ms(13), fontFamily: interMedium, color: blackColor, flex: 1 },
 
   // Card right
   cardRight: {
@@ -461,7 +462,7 @@ const styles = StyleSheet.create({
     backgroundColor: primaryColor, paddingHorizontal: ms(24), paddingVertical: vs(8),
     borderRadius: ms(8),
   },
-  addBtnText: { color: whiteColor, fontSize: ms(13), fontWeight: 'bold' },
+  addBtnText: { color: whiteColor, fontSize: ms(13), fontFamily: interMedium },
 
   // Qty counter
   qtyRow: { flexDirection: 'row', alignItems: 'center', gap: ms(10) },
@@ -469,7 +470,7 @@ const styles = StyleSheet.create({
     backgroundColor: primaryColor, width: ms(28), height: ms(28), borderRadius: ms(14),
     justifyContent: 'center', alignItems: 'center',
   },
-  qtyText: { fontSize: ms(15), fontWeight: 'bold', color: blackColor },
+  qtyText: { fontSize: ms(15), fontFamily: interMedium, color: blackColor },
 
   // Location Modal
   modalOverlay: { flex: 1, justifyContent: 'flex-end', backgroundColor: 'transparent' },
@@ -484,7 +485,7 @@ const styles = StyleSheet.create({
     width: 40, height: 40, borderRadius: 20, backgroundColor: '#F1F5F9',
     justifyContent: 'center', alignItems: 'center', marginRight: 12,
   },
-  optionTitle: { fontSize: ms(14), fontWeight: '600', color: blackColor },
+  optionTitle: { fontSize: ms(14), fontFamily: interMedium, color: blackColor },
   optionSubtitle: { fontSize: ms(11), color: '#888', marginTop: 2 },
   sheetDivider: { height: 1, backgroundColor: '#EEE', marginVertical: 2 },
 });

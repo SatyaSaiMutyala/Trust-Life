@@ -13,6 +13,7 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 import { StatusBar2 } from '../../components/StatusBar';
 import Icon, { Icons } from '../../components/Icons';
 import { blackColor, whiteColor } from '../../utils/globalColors';
+import { heading, interMedium, interRegular } from '../../config/Constants';
 import PrimaryButton from '../../utils/primaryButton';
 import InputField from '../../utils/InputField';
 import DropdownField from '../../utils/DropdownField';
@@ -152,7 +153,7 @@ const styles = StyleSheet.create({
     },
     headerTitle: {
         fontSize: ms(15),
-        fontWeight: '700',
+        fontFamily: interMedium,
         color: blackColor,
     },
     scroll: {

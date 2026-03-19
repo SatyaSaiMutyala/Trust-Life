@@ -17,6 +17,7 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 import { StatusBar2 } from '../../components/StatusBar';
 import Icon, { Icons } from '../../components/Icons';
 import { blackColor, whiteColor, primaryColor, globalGradient } from '../../utils/globalColors';
+import { heading, interMedium, interRegular } from '../../config/Constants';
 import PrimaryButton from '../../utils/primaryButton';
 
 const { width } = Dimensions.get('window');
@@ -360,7 +361,7 @@ const styles = StyleSheet.create({
     },
     doctorName: {
         fontSize: ms(21),
-        fontWeight: 'bold',
+        fontFamily: interMedium,
         color: whiteColor,
         marginBottom: vs(3),
     },
@@ -380,7 +381,7 @@ const styles = StyleSheet.create({
     specialtyBadgeText: {
         color: blackColor,
         fontSize: ms(11),
-        fontWeight: '500',
+        fontFamily: interMedium,
     },
     ratingRow: {
         flexDirection: 'row',
@@ -388,7 +389,7 @@ const styles = StyleSheet.create({
     },
     ratingVal: {
         fontSize: ms(13),
-        fontWeight: '700',
+        fontFamily: interMedium,
         color: blackColor,
         marginLeft: ms(3),
     },
@@ -433,7 +434,7 @@ const styles = StyleSheet.create({
     },
     sectionTitle: {
         fontSize: ms(15),
-        fontWeight: '700',
+        fontFamily: interMedium,
         color: blackColor,
     },
     calendarBtn: {
@@ -455,7 +456,7 @@ const styles = StyleSheet.create({
     },
     monthText: {
         fontSize: ms(14),
-        fontWeight: '600',
+        fontFamily: interMedium,
         color: blackColor,
     },
 
@@ -468,15 +469,15 @@ const styles = StyleSheet.create({
     dayLabel: {
         fontSize: ms(11),
         color: '#999',
-        fontWeight: '500',
+        fontFamily: interMedium,
     },
     dayLabelToday: {
         color: primaryColor,
-        fontWeight: '600',
+        fontFamily: interMedium,
     },
     dayLabelSelected: {
         color: whiteColor,
-        fontWeight: '600',
+        fontFamily: interMedium,
     },
     dateBubble: {
         width: ms(42),
@@ -495,21 +496,21 @@ const styles = StyleSheet.create({
     dateNum: {
         fontSize: ms(14),
         color: '#555',
-        fontWeight: '600',
+        fontFamily: interMedium,
     },
     dateNumToday: {
         color: primaryColor,
-        fontWeight: '700',
+        fontFamily: interMedium,
     },
     dateNumSelected: {
         color: whiteColor,
-        fontWeight: '700',
+        fontFamily: interMedium,
     },
 
     // Slot header
     slotTitle: {
         fontSize: ms(13),
-        fontWeight: '700',
+        fontFamily: interMedium,
         color: blackColor,
     },
     slotCount: {
@@ -540,7 +541,7 @@ const styles = StyleSheet.create({
     },
     slotTime: {
         fontSize: ms(13),
-        fontWeight: '700',
+        fontFamily: interMedium,
         color: blackColor,
         marginBottom: vs(2),
     },
@@ -556,7 +557,7 @@ const styles = StyleSheet.create({
     },
     slotStatusText: {
         fontSize: ms(9),
-        fontWeight: '500',
+        fontFamily: interMedium,
     },
 
     // Footer

@@ -17,7 +17,7 @@ import Icon, { Icons } from '../../components/Icons';
 import { blackColor, whiteColor, primaryColor } from '../../utils/globalColors';
 import StandaloneBottomBar from '../../components/BottomNavBar/StandaloneBottomBar';
 import DoctorAppointmentsContent from '../Doctor/DoctorAppointmentsContent';
-import { img_url } from '../../config/Constants';
+import { img_url, heading, interMedium, interRegular } from '../../config/Constants';
 
 const todayDate = new Date().toLocaleDateString('en-GB', {
     day: '2-digit',
@@ -230,7 +230,7 @@ const styles = StyleSheet.create({
     },
     headerName: {
         fontSize: ms(15),
-        fontWeight: 'bold',
+        fontFamily: interMedium,
         color: whiteColor,
     },
     headerDate: {
@@ -277,7 +277,7 @@ const styles = StyleSheet.create({
     // Title
     titleText: {
         fontSize: ms(16),
-        fontWeight: '700',
+        fontFamily: interMedium,
         color: blackColor,
         lineHeight: ms(23),
         marginBottom: vs(14),
@@ -315,7 +315,7 @@ const styles = StyleSheet.create({
     },
     hospitalName: {
         fontSize: ms(14),
-        fontWeight: '700',
+        fontFamily: interMedium,
         color: blackColor,
     },
     locationRow: {
@@ -338,7 +338,7 @@ const styles = StyleSheet.create({
     },
     ratingText: {
         fontSize: ms(13),
-        fontWeight: '700',
+        fontFamily: interMedium,
         color: blackColor,
     },
     reviewsText: {

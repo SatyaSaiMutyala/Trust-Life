@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, Image, View, SafeAreaView, Dimensions, Text, ScrollView, TouchableOpacity, ImageBackground, Linking, FlatList, Pressable, Modal, Touchable } from 'react-native';
 import * as colors from '../assets/css/Colors';
-import { img_url, regular, bold, heading, interMedium, interRegular, location, acne } from '../config/Constants';
+import { img_url, heading, interMedium, interRegular } from '../config/Constants';
 import { useNavigation, useRoute, useFocusEffect } from '@react-navigation/native';
 import { updateCurrentAddress, updateCurrentLat, updateCurrentLng, currentTag, updateAddress } from '../actions/CurrentAddressActions';
 import axios from 'axios';
@@ -578,7 +578,7 @@ const Dashboard = (props) => {
 
                             <View style={{ flex: 1, marginRight: ms(8) }}>
                                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                                    <Text style={{ color: '#fff', fontSize: ms(15), fontFamily: interMedium }}>
+                                    <Text style={{ color: '#fff', fontSize: ms(15), fontFamily: heading }}>
                                         Hello,
                                     </Text>
                                     <Text
@@ -1669,6 +1669,7 @@ const styles = StyleSheet.create({
         fontSize: ms(16),
         color: '#000',
         paddingVertical: 0,
+        fontFamily: interRegular,
     },
     healthServiceSection: {
         marginHorizontal: ms(15),
@@ -2673,7 +2674,6 @@ const styles2 = StyleSheet.create({
     },
     hsViewBtnText: {
         fontSize: ms(14),
-        fontWeight: '700',
         color: '#000',
         marginRight: ms(4),
         fontFamily:heading,
@@ -2986,7 +2986,7 @@ const styles2 = StyleSheet.create({
     },
     viewAllText: {
         fontSize: ms(12),
-        fontFamily: bold,
+        fontFamily: interMedium,
         color: primaryColor,
     },
     vosSectionTitle: {

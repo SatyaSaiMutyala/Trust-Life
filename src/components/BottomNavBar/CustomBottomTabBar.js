@@ -12,6 +12,7 @@ import {
 import { ms } from 'react-native-size-matters';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { primaryColor } from '../../utils/globalColors';
+import { interMedium, interRegular } from '../../config/Constants';
 
 const BAR_H = ms(62);
 
@@ -177,12 +178,12 @@ const styles = StyleSheet.create({
   label: {
     color: '#6B7280',
     fontSize: ms(11),
-    fontWeight: '600',
+    fontFamily: interMedium,
     textAlign: 'center',
   },
   labelActive: {
     color: primaryColor,
-    fontWeight: '700',
+    fontFamily: interMedium,
   },
   tabFocused: {
     backgroundColor: primaryColor + '18',

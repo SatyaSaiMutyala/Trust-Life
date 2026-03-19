@@ -14,6 +14,7 @@ import { ms, vs } from 'react-native-size-matters';
 import { StatusBar2 } from '../../components/StatusBar';
 import Icon, { Icons } from '../../components/Icons';
 import { blackColor, whiteColor, primaryColor } from '../../utils/globalColors';
+import { heading, interMedium, interRegular } from '../../config/Constants';
 import PrimaryButton from '../../utils/primaryButton';
 
 const { width } = Dimensions.get('window');
@@ -161,7 +162,7 @@ const sliderStyles = StyleSheet.create({
     labelText: {
         fontSize: ms(12),
         color: '#555',
-        fontWeight: '500',
+        fontFamily: interMedium,
     },
 });
 
@@ -303,7 +304,7 @@ const styles = StyleSheet.create({
     },
     headerTitle: {
         fontSize: ms(18),
-        fontWeight: 'bold',
+        fontFamily: interMedium,
         color: blackColor,
     },
     closeBtn: {
@@ -327,7 +328,7 @@ const styles = StyleSheet.create({
     },
     sectionLabel: {
         fontSize: ms(13),
-        fontWeight: '700',
+        fontFamily: interMedium,
         color: blackColor,
         marginBottom: vs(10),
     },
@@ -355,11 +356,11 @@ const styles = StyleSheet.create({
     chipText: {
         fontSize: ms(12),
         color: '#555',
-        fontWeight: '500',
+        fontFamily: interMedium,
     },
     chipTextActive: {
         color: whiteColor,
-        fontWeight: '600',
+        fontFamily: interMedium,
     },
 
     // Footer
@@ -388,6 +389,6 @@ const styles = StyleSheet.create({
     clearText: {
         fontSize: ms(13),
         color: '#555',
-        fontWeight: '600',
+        fontFamily: interMedium,
     },
 });

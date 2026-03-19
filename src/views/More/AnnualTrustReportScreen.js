@@ -13,7 +13,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import { StatusBar2 } from '../../components/StatusBar';
 import Icon, { Icons } from '../../components/Icons';
 import { blackColor, whiteColor, primaryColor, globalGradient } from '../../utils/globalColors';
-import { bold, regular } from '../../config/Constants';
+import { heading, interMedium, interRegular } from '../../config/Constants';
 
 const AnnualTrustReportScreen = () => {
     const navigation = useNavigation();
@@ -409,8 +409,8 @@ const styles = StyleSheet.create({
         elevation: 2, shadowColor: blackColor, shadowOffset: { width: 0, height: 1 }, shadowOpacity: 0.1, shadowRadius: 2,
     },
     headerTitle: {
-        fontFamily: bold,
-        fontSize: ms(16),
+        fontFamily: heading,
+        fontSize: ms(18),
         color: whiteColor,
         marginLeft: ms(12),
     },
@@ -428,13 +428,13 @@ const styles = StyleSheet.create({
     },
 
     reportMainTitle: {
-        fontFamily: bold,
+        fontFamily: interMedium,
         fontSize: ms(18),
         color: blackColor,
         marginBottom: vs(4),
     },
     reportSubtitle: {
-        fontFamily: bold,
+        fontFamily: interMedium,
         fontSize: ms(13),
         color: primaryColor,
         marginBottom: vs(4),
@@ -442,7 +442,7 @@ const styles = StyleSheet.create({
 
     // Section heading
     sectionHeading: {
-        fontFamily: bold,
+        fontFamily: interMedium,
         fontSize: ms(14),
         color: blackColor,
         marginTop: vs(18),
@@ -450,7 +450,7 @@ const styles = StyleSheet.create({
     },
 
     subHeading: {
-        fontFamily: bold,
+        fontFamily: interMedium,
         fontSize: ms(12),
         color: '#374151',
         marginTop: vs(8),
@@ -459,7 +459,7 @@ const styles = StyleSheet.create({
 
     // Paragraph
     reportParagraph: {
-        fontFamily: regular,
+        fontFamily: interRegular,
         fontSize: ms(12),
         color: '#4B5563',
         lineHeight: ms(20),
@@ -468,7 +468,7 @@ const styles = StyleSheet.create({
 
     // Statement
     statementText: {
-        fontFamily: regular,
+        fontFamily: interRegular,
         fontSize: ms(12),
         color: '#4B5563',
         lineHeight: ms(20),
@@ -487,7 +487,7 @@ const styles = StyleSheet.create({
         paddingLeft: ms(4),
     },
     bulletDot: {
-        fontFamily: bold,
+        fontFamily: interMedium,
         fontSize: ms(12),
         color: primaryColor,
         marginRight: ms(8),
@@ -495,13 +495,13 @@ const styles = StyleSheet.create({
     },
     bulletText: {
         flex: 1,
-        fontFamily: regular,
+        fontFamily: interRegular,
         fontSize: ms(12),
         color: '#4B5563',
         lineHeight: ms(20),
     },
     boldText: {
-        fontFamily: bold,
+        fontFamily: interMedium,
         color: blackColor,
     },
 });

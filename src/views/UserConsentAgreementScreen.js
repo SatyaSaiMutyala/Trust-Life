@@ -6,7 +6,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import { StatusBar2 } from '../components/StatusBar';
 import Icon, { Icons } from '../components/Icons';
 import * as colors from '../assets/css/Colors';
-import { regular, bold } from '../config/Constants';
+import { heading, interMedium, interRegular } from '../config/Constants';
 import { blackColor, globalGradient, primaryColor, whiteColor } from '../utils/globalColors';
 
 const BulletItem = ({ text }) => (
@@ -43,7 +43,7 @@ const UserConsentAgreementScreen = () => {
                 <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.scrollContent}>
                     <View style={styles.contentCard}>
 
-                        <Text style={styles.mainHeading}>USER CONSENT AGREEMENT</Text>
+                        {/* <Text style={styles.mainHeading}>USER CONSENT AGREEMENT</Text> */}
                         <Text style={styles.effectiveDate}>Effective Date: 01/04/2026</Text>
                         <Text style={styles.paragraph}>
                             This User Consent Agreement ("Consent Agreement") forms part of the Terms of Service and Privacy Policy of TrustLife.
@@ -213,25 +213,25 @@ const styles = StyleSheet.create({
         elevation: 2, shadowColor: blackColor,
         shadowOffset: { width: 0, height: 1 }, shadowOpacity: 0.1, shadowRadius: 2,
     },
-    headerTitle: { fontFamily: bold, fontSize: ms(16), color: whiteColor, marginLeft: ms(12) },
+    headerTitle: { fontFamily: heading, fontSize: ms(18), color: whiteColor, marginLeft: ms(12) },
     scrollContent: { paddingHorizontal: ms(20), paddingBottom: vs(40) },
     contentCard: { borderRadius: ms(14), padding: ms(20) },
     mainHeading: {
-        fontFamily: bold, fontSize: ms(18), color: colors.black,
+        fontFamily: interMedium, fontSize: ms(18), color: colors.black,
         marginBottom: vs(5), textAlign: 'center',
     },
-    effectiveDate: { fontFamily: regular, fontSize: ms(12), color: '#6B7280', marginBottom: vs(15) },
+    effectiveDate: { fontFamily: interRegular, fontSize: ms(12), color: '#6B7280', marginBottom: vs(15) },
     subHeading: {
-        fontFamily: bold, fontSize: ms(14), color: '#374151',
+        fontFamily: interMedium, fontSize: ms(14), color: '#374151',
         marginTop: vs(12), marginBottom: vs(4),
     },
     paragraph: {
-        fontFamily: regular, fontSize: ms(12), color: '#4B5563',
+        fontFamily: interRegular, fontSize: ms(12), color: '#4B5563',
         lineHeight: ms(20), marginBottom: vs(8),
     },
-    boldText: { fontFamily: bold, color: colors.black },
+    boldText: { fontFamily: interMedium, color: colors.black },
     importantText: {
-        fontFamily: bold, fontSize: ms(12), color: '#DC2626',
+        fontFamily: interMedium, fontSize: ms(12), color: '#DC2626',
         lineHeight: ms(20), marginTop: vs(4), marginBottom: vs(8),
         backgroundColor: '#FEE2E2', padding: ms(10), borderRadius: ms(8),
     },
@@ -240,11 +240,11 @@ const styles = StyleSheet.create({
         marginBottom: vs(6), paddingLeft: ms(4),
     },
     bulletDot: {
-        fontFamily: bold, fontSize: ms(14), color: colors.theme_fg,
+        fontFamily: interMedium, fontSize: ms(14), color: colors.theme_fg,
         marginRight: ms(8), lineHeight: ms(20),
     },
     bulletText: {
-        flex: 1, fontFamily: regular, fontSize: ms(12),
+        flex: 1, fontFamily: interRegular, fontSize: ms(12),
         color: '#4B5563', lineHeight: ms(20),
     },
     consentFooter: {
@@ -262,9 +262,9 @@ const styles = StyleSheet.create({
         marginRight: ms(10), marginTop: ms(1),
     },
     checkboxChecked: { backgroundColor: primaryColor, borderColor: primaryColor },
-    checkmark: { color: whiteColor, fontSize: ms(12), fontFamily: bold },
+    checkmark: { color: whiteColor, fontSize: ms(12), fontFamily: interMedium },
     checkboxText: {
-        flex: 1, fontFamily: regular, fontSize: ms(12),
+        flex: 1, fontFamily: interRegular, fontSize: ms(12),
         color: '#374151', lineHeight: ms(18),
     },
     buttonRow: { flexDirection: 'row', gap: ms(10), marginTop: vs(8) },
@@ -272,18 +272,18 @@ const styles = StyleSheet.create({
         flex: 1, height: vs(44), backgroundColor: '#F3F4F6',
         borderRadius: ms(10), justifyContent: 'center', alignItems: 'center',
     },
-    declineButtonText: { fontFamily: bold, fontSize: ms(14), color: blackColor },
+    declineButtonText: { fontFamily: interMedium, fontSize: ms(14), color: blackColor },
     agreeButton: {
         flex: 2, height: vs(44), backgroundColor: primaryColor,
         borderRadius: ms(10), justifyContent: 'center', alignItems: 'center',
     },
     agreeButtonDisabled: { backgroundColor: '#A7D7CC' },
-    agreeButtonText: { fontFamily: bold, fontSize: ms(14), color: whiteColor },
+    agreeButtonText: { fontFamily: interMedium, fontSize: ms(14), color: whiteColor },
     finalDisclaimer: {
         marginTop: vs(20), padding: ms(15),
         backgroundColor: '#FEF2F2', borderRadius: ms(10),
         borderWidth: 1, borderColor: '#FEE2E2',
     },
-    disclaimerTitle: { fontFamily: bold, fontSize: ms(12), color: '#991B1B', marginBottom: vs(5) },
-    disclaimerText: { fontFamily: regular, fontSize: ms(12), color: '#4B5563', lineHeight: ms(18) },
+    disclaimerTitle: { fontFamily: interMedium, fontSize: ms(12), color: '#991B1B', marginBottom: vs(5) },
+    disclaimerText: { fontFamily: interRegular, fontSize: ms(12), color: '#4B5563', lineHeight: ms(18) },
 });

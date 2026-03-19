@@ -11,7 +11,7 @@ import { StatusBar2 } from '../../components/StatusBar';
 import Icon, { Icons } from '../../components/Icons';
 import { heading, interMedium, interRegular } from '../../config/Constants';
 import { blackColor, globalGradient2, grayColor, primaryColor, whiteColor } from '../../utils/globalColors';
-
+    
 const { width } = Dimensions.get('window');
 
 // ── Palette ──────────────────────────────────────────────────────────────────
@@ -259,7 +259,6 @@ const VisitCard = ({ event, expanded, onToggle }) => {
                     <View style={s.noteBox}>
                         <Text style={[s.noteText, { fontStyle: 'italic', color: MUTED }]}>{event.cc}</Text>
                     </View>
-
                     <SectionLabel text="Vitals" />
                     <View style={s.vitalsGrid}>
                         {event.vitals.map((v, i) => (
@@ -269,12 +268,10 @@ const VisitCard = ({ event, expanded, onToggle }) => {
                             </View>
                         ))}
                     </View>
-
                     <SectionLabel text="Doctor's Notes" />
                     <View style={s.noteBox}>
                         <Text style={s.noteText}>{event.notes}</Text>
                     </View>
-
                     <SectionLabel text="Diagnoses" />
                     <View style={s.tagRow}>
                         {event.dx.map((d, i) => (
@@ -283,7 +280,6 @@ const VisitCard = ({ event, expanded, onToggle }) => {
                             </View>
                         ))}
                     </View>
-
                     {event.labs.length > 0 && (
                         <>
                             <SectionLabel text="Lab Reports from this Visit" />
@@ -316,7 +312,6 @@ const VisitCard = ({ event, expanded, onToggle }) => {
                             ))}
                         </>
                     )}
-
                     <SectionLabel text="Medications at this Visit" />
                     <View style={s.medSection}>
                         {event.meds.map((m, mi) => {
@@ -335,7 +330,6 @@ const VisitCard = ({ event, expanded, onToggle }) => {
                             );
                         })}
                     </View>
-
                     <View style={s.fuBanner}>
                         <View style={{ flex: 1 }}>
                             <Text style={s.fuDoc}>Follow-up: {event.fu.doc}</Text>
@@ -343,7 +337,6 @@ const VisitCard = ({ event, expanded, onToggle }) => {
                         </View>
                         <Text style={s.fuDate}>{event.fu.date}</Text>
                     </View>
-
                 </View>
             )}
         </View>

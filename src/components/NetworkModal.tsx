@@ -12,7 +12,7 @@ import NetInfo from '@react-native-community/netinfo';
 import LinearGradient from 'react-native-linear-gradient';
 import { ms, vs } from 'react-native-size-matters';
 import Icon, { Icons } from './Icons';
-import { bold, regular } from '../config/Constants';
+import { interMedium, interRegular } from '../config/Constants';
 import { primaryColor, whiteColor, blackColor } from '../utils/globalColors';
 
 const { width } = Dimensions.get('window');
@@ -157,14 +157,14 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: ms(20),
-    fontFamily: bold,
+    fontFamily: interMedium,
     color: blackColor,
     marginBottom: vs(10),
     textAlign: 'center',
   },
   message: {
     fontSize: ms(13),
-    fontFamily: regular,
+    fontFamily: interRegular,
     color: '#666',
     textAlign: 'center',
     lineHeight: ms(20),
@@ -183,7 +183,7 @@ const styles = StyleSheet.create({
   },
   reconnectText: {
     fontSize: ms(13),
-    fontFamily: regular,
+    fontFamily: interRegular,
     color: primaryColor,
   },
 });

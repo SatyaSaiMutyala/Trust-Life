@@ -14,7 +14,7 @@ import { ms, vs } from 'react-native-size-matters';
 import { StatusBar4 } from '../../components/StatusBar';
 import Icon, { Icons } from '../../components/Icons';
 import { blackColor, whiteColor, primaryColor } from '../../utils/globalColors';
-import { bold, regular } from '../../config/Constants';
+import { interMedium, interRegular } from '../../config/Constants';
 
 const PLAN_BENEFITS = [
     {
@@ -252,25 +252,25 @@ const styles = StyleSheet.create({
         shadowColor: '#000', shadowOpacity: 0.08, shadowRadius: 10, shadowOffset: { width: 0, height: 4 },
     },
     statItem: { flex: 1, alignItems: 'center', gap: vs(3) },
-    statValue: { fontFamily: bold, fontSize: ms(15), color: blackColor },
-    statLabel: { fontFamily: regular, fontSize: ms(9), color: '#9CA3AF', letterSpacing: 0.5 },
+    statValue: { fontFamily: interMedium, fontSize: ms(15), color: blackColor },
+    statLabel: { fontFamily: interRegular, fontSize: ms(9), color: '#9CA3AF', letterSpacing: 0.5 },
     statDivider: { width: 1, backgroundColor: '#E5E7EB', marginVertical: vs(4) },
 
     // Body
     body: { paddingHorizontal: ms(16), paddingTop: vs(18) },
-    planName: { fontFamily: bold, fontSize: ms(18), color: blackColor, marginBottom: vs(5) },
-    planDesc: { fontFamily: regular, fontSize: ms(13), color: '#6B7280', lineHeight: ms(20), marginBottom: vs(14) },
+    planName: { fontFamily: interMedium, fontSize: ms(18), color: blackColor, marginBottom: vs(5) },
+    planDesc: { fontFamily: interRegular, fontSize: ms(13), color: '#6B7280', lineHeight: ms(20), marginBottom: vs(14) },
     coverageRow: {
         flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center',
         backgroundColor: whiteColor, borderRadius: ms(12), paddingHorizontal: ms(16), paddingVertical: vs(12),
         marginBottom: vs(20),
         elevation: 2, shadowColor: '#000', shadowOpacity: 0.05, shadowRadius: 6, shadowOffset: { width: 0, height: 2 },
     },
-    coverageLabel: { fontFamily: regular, fontSize: ms(13), color: '#6B7280' },
-    coverageValue: { fontFamily: bold, fontSize: ms(16), color: blackColor },
+    coverageLabel: { fontFamily: interRegular, fontSize: ms(13), color: '#6B7280' },
+    coverageValue: { fontFamily: interMedium, fontSize: ms(16), color: blackColor },
 
     // Section title
-    sectionTitle: { fontFamily: bold, fontSize: ms(16), color: blackColor, marginBottom: vs(10) },
+    sectionTitle: { fontFamily: interMedium, fontSize: ms(16), color: blackColor, marginBottom: vs(10) },
 
     // Benefits
     benefitCard: {
@@ -282,9 +282,9 @@ const styles = StyleSheet.create({
         width: ms(36), height: ms(36), borderRadius: ms(10),
         backgroundColor: '#EFF6FF', justifyContent: 'center', alignItems: 'center', marginRight: ms(12),
     },
-    benefitTitle: { flex: 1, fontFamily: bold, fontSize: ms(13), color: blackColor },
+    benefitTitle: { flex: 1, fontFamily: interMedium, fontSize: ms(13), color: blackColor },
     benefitDetail: {
-        fontFamily: regular, fontSize: ms(12), color: '#6B7280', lineHeight: ms(18),
+        fontFamily: interRegular, fontSize: ms(12), color: '#6B7280', lineHeight: ms(18),
         marginTop: vs(10), paddingTop: vs(10), borderTopWidth: 1, borderTopColor: '#F3F4F6',
     },
 
@@ -298,17 +298,17 @@ const styles = StyleSheet.create({
         flexDirection: 'row', alignItems: 'center', backgroundColor: '#F3F4F6',
         borderRadius: ms(10), paddingHorizontal: ms(12), paddingVertical: vs(8), gap: ms(8), marginBottom: vs(12),
     },
-    nearbyInput: { flex: 1, fontFamily: regular, fontSize: ms(13), color: blackColor, padding: 0 },
+    nearbyInput: { flex: 1, fontFamily: interRegular, fontSize: ms(13), color: blackColor, padding: 0 },
     hospitalRow: { flexDirection: 'row', alignItems: 'center', gap: ms(10), paddingVertical: vs(8), borderTopWidth: 1, borderTopColor: '#F3F4F6' },
     hospitalIconWrap: { width: ms(36), height: ms(36), borderRadius: ms(18), backgroundColor: '#F3F4F6', justifyContent: 'center', alignItems: 'center' },
-    hospitalName: { fontFamily: bold, fontSize: ms(13), color: blackColor },
-    hospitalMeta: { fontFamily: regular, fontSize: ms(11), color: '#9CA3AF', marginTop: vs(2) },
+    hospitalName: { fontFamily: interMedium, fontSize: ms(13), color: blackColor },
+    hospitalMeta: { fontFamily: interRegular, fontSize: ms(11), color: '#9CA3AF', marginTop: vs(2) },
 
     // Reviews
     reviewsHeader: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: vs(10) },
     ratingBadge: { flexDirection: 'row', alignItems: 'center', gap: ms(4) },
-    ratingVal: { fontFamily: bold, fontSize: ms(14), color: blackColor },
-    ratingCount: { fontFamily: regular, fontSize: ms(12), color: '#9CA3AF' },
+    ratingVal: { fontFamily: interMedium, fontSize: ms(14), color: blackColor },
+    ratingCount: { fontFamily: interRegular, fontSize: ms(12), color: '#9CA3AF' },
     reviewCard: {
         backgroundColor: whiteColor, borderRadius: ms(14), padding: ms(14), marginBottom: vs(10),
         elevation: 2, shadowColor: '#000', shadowOpacity: 0.05, shadowRadius: 6, shadowOffset: { width: 0, height: 2 },
@@ -318,10 +318,10 @@ const styles = StyleSheet.create({
         width: ms(38), height: ms(38), borderRadius: ms(19),
         backgroundColor: primaryColor, justifyContent: 'center', alignItems: 'center',
     },
-    reviewInitials: { fontFamily: bold, fontSize: ms(13), color: whiteColor },
-    reviewName: { fontFamily: bold, fontSize: ms(13), color: blackColor, marginBottom: vs(3) },
+    reviewInitials: { fontFamily: interMedium, fontSize: ms(13), color: whiteColor },
+    reviewName: { fontFamily: interMedium, fontSize: ms(13), color: blackColor, marginBottom: vs(3) },
     starsRow: { flexDirection: 'row', gap: ms(2) },
-    reviewText: { fontFamily: regular, fontSize: ms(12), color: '#4B5563', lineHeight: ms(18) },
+    reviewText: { fontFamily: interRegular, fontSize: ms(12), color: '#4B5563', lineHeight: ms(18) },
 
     // Bottom CTA
     bottomBar: {
@@ -331,13 +331,13 @@ const styles = StyleSheet.create({
         borderTopWidth: 1, borderTopColor: '#F0F0F0',
         elevation: 10, shadowColor: '#000', shadowOpacity: 0.08, shadowRadius: 10, shadowOffset: { width: 0, height: -3 },
     },
-    premiumLabel: { fontFamily: regular, fontSize: ms(11), color: '#9CA3AF' },
-    premiumValue: { fontFamily: bold, fontSize: ms(18), color: blackColor },
-    premiumPer: { fontFamily: regular, fontSize: ms(12), color: '#9CA3AF' },
+    premiumLabel: { fontFamily: interRegular, fontSize: ms(11), color: '#9CA3AF' },
+    premiumValue: { fontFamily: interMedium, fontSize: ms(18), color: blackColor },
+    premiumPer: { fontFamily: interRegular, fontSize: ms(12), color: '#9CA3AF' },
     buyBtn: {
         flexDirection: 'row', alignItems: 'center', gap: ms(8),
         backgroundColor: primaryColor, borderRadius: ms(30),
         paddingHorizontal: ms(22), paddingVertical: vs(12),
     },
-    buyBtnText: { fontFamily: bold, fontSize: ms(14), color: whiteColor },
+    buyBtnText: { fontFamily: interMedium, fontSize: ms(14), color: whiteColor },
 });

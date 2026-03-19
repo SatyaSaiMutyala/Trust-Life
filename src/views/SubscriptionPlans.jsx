@@ -14,7 +14,7 @@ import { StatusBar2 } from '../components/StatusBar';
 import LinearGradient from 'react-native-linear-gradient';
 import { blackColor, globalGradient, primaryColor, whiteColor } from '../utils/globalColors';
 import { s, vs, ms } from 'react-native-size-matters';
-import { bold, regular } from '../config/Constants';
+import { interMedium, interRegular } from '../config/Constants';
 
 const plansData = [
     {
@@ -359,14 +359,14 @@ const styles = StyleSheet.create({
     },
     title: {
         fontSize: ms(20),
-        fontFamily: bold,
+        fontFamily: interMedium,
         color: blackColor,
         textAlign: 'center',
         marginBottom: vs(8),
     },
     subtitle: {
         fontSize: ms(12),
-        fontFamily: regular,
+        fontFamily: interRegular,
         color: '#666',
         textAlign: 'center',
         lineHeight: ms(18),
@@ -416,7 +416,7 @@ const styles = StyleSheet.create({
     },
     planName: {
         fontSize: ms(15),
-        fontFamily: bold,
+        fontFamily: interMedium,
         color: blackColor,
     },
     cardRight: {
@@ -424,18 +424,18 @@ const styles = StyleSheet.create({
     },
     planPrice: {
         fontSize: ms(18),
-        fontFamily: bold,
+        fontFamily: interMedium,
         color: blackColor,
     },
     planPeriod: {
         fontSize: ms(11),
-        fontFamily: regular,
+        fontFamily: interRegular,
         color: blackColor,
         marginTop: vs(2),
     },
     expiryText: {
         fontSize: ms(12),
-        fontFamily: regular,
+        fontFamily: interRegular,
         color: '#6B7280',
         marginTop: vs(10),
         marginLeft: ms(32),
@@ -448,7 +448,7 @@ const styles = StyleSheet.create({
     },
     includesLabel: {
         fontSize: ms(12),
-        fontFamily: regular,
+        fontFamily: interRegular,
         color: '#666',
         marginBottom: vs(4),
     },
@@ -464,13 +464,13 @@ const styles = StyleSheet.create({
     },
     includeText: {
         fontSize: ms(12),
-        fontFamily: regular,
+        fontFamily: interRegular,
         color: blackColor,
     },
     viewMore: {
         fontSize: ms(12),
         color: primaryColor,
-        fontFamily: bold,
+        fontFamily: interMedium,
         marginTop: vs(8),
         marginLeft: ms(10),
     },
@@ -487,7 +487,7 @@ const styles = StyleSheet.create({
     managePlanText: {
         flex: 1,
         fontSize: ms(13),
-        fontFamily: bold,
+        fontFamily: interMedium,
         color: blackColor,
         marginLeft: ms(8),
     },
@@ -505,7 +505,7 @@ const styles = StyleSheet.create({
     },
     upgradeButtonText: {
         fontSize: ms(14),
-        fontFamily: bold,
+        fontFamily: interMedium,
         color: primaryColor,
     },
 
@@ -522,7 +522,7 @@ const styles = StyleSheet.create({
     },
     continueText: {
         fontSize: ms(16),
-        fontFamily: bold,
+        fontFamily: interMedium,
         color: whiteColor,
     },
     compareRow: {
@@ -534,7 +534,7 @@ const styles = StyleSheet.create({
     },
     compareText: {
         fontSize: ms(13),
-        fontFamily: bold,
+        fontFamily: interMedium,
         color: blackColor,
     },
 
@@ -548,12 +548,12 @@ const styles = StyleSheet.create({
     },
     cancelButtonText: {
         fontSize: ms(15),
-        fontFamily: bold,
+        fontFamily: interMedium,
         color: '#DC2626',
     },
     cancelNote: {
         fontSize: ms(11),
-        fontFamily: regular,
+        fontFamily: interRegular,
         color: '#6B7280',
         textAlign: 'center',
         marginTop: vs(10),
@@ -583,7 +583,7 @@ const styles = StyleSheet.create({
     },
     modalTitle: {
         fontSize: ms(16),
-        fontFamily: bold,
+        fontFamily: interMedium,
         color: blackColor,
         flex: 1,
     },
@@ -612,7 +612,7 @@ const styles = StyleSheet.create({
     },
     reasonText: {
         fontSize: ms(13),
-        fontFamily: regular,
+        fontFamily: interRegular,
         color: blackColor,
         flex: 1,
     },
@@ -626,7 +626,7 @@ const styles = StyleSheet.create({
     },
     modalCancelButtonText: {
         fontSize: ms(15),
-        fontFamily: bold,
+        fontFamily: interMedium,
         color: '#DC2626',
     },
 });

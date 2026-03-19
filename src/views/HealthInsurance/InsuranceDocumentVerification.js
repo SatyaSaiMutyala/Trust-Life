@@ -8,7 +8,7 @@ import { ms, vs } from 'react-native-size-matters';
 import { StatusBar4 } from '../../components/StatusBar';
 import Icon, { Icons } from '../../components/Icons';
 import { blackColor, whiteColor, primaryColor } from '../../utils/globalColors';
-import { bold, regular } from '../../config/Constants';
+import { interMedium, interRegular } from '../../config/Constants';
 
 const DOCUMENTS = [
     {
@@ -111,7 +111,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center', alignItems: 'center',
     },
     headerTitle: {
-        fontFamily: bold,
+        fontFamily: interMedium,
         fontSize: ms(17),
         color: blackColor,
     },
@@ -122,14 +122,14 @@ const styles = StyleSheet.create({
     },
 
     infoText: {
-        fontFamily: regular,
+        fontFamily: interRegular,
         fontSize: ms(13),
         color: '#6B7280',
         lineHeight: ms(21),
         marginBottom: vs(24),
     },
     infoTextBold: {
-        fontFamily: bold,
+        fontFamily: interMedium,
         color: blackColor,
     },
 
@@ -152,7 +152,7 @@ const styles = StyleSheet.create({
         borderStyle: 'solid',
     },
     uploadTitle: {
-        fontFamily: bold,
+        fontFamily: interMedium,
         fontSize: ms(14),
         color: blackColor,
         textAlign: 'center',
@@ -161,7 +161,7 @@ const styles = StyleSheet.create({
         color: '#16A34A',
     },
     uploadSubtitle: {
-        fontFamily: regular,
+        fontFamily: interRegular,
         fontSize: ms(12),
         color: '#9CA3AF',
     },
@@ -191,12 +191,12 @@ const styles = StyleSheet.create({
         marginBottom: vs(8),
     },
     reviewBtnText: {
-        fontFamily: bold,
+        fontFamily: interMedium,
         fontSize: ms(15),
         color: whiteColor,
     },
     secureText: {
-        fontFamily: regular,
+        fontFamily: interRegular,
         fontSize: ms(11),
         color: '#9CA3AF',
     },

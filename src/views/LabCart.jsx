@@ -2,7 +2,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { StyleSheet, SafeAreaView, Text, ScrollView, View, TextInput, TouchableOpacity, Image, Dimensions, Keyboard, FlatList, TouchableHighlight, BackHandler, Alert, Modal } from 'react-native';
 import * as colors from '../assets/css/Colors';
-import { bold, regular, light, api_url, other_charges, offer_img, location, user_details_img, customer_lab_place_order, customer_get_profile } from '../config/Constants';
+import { interMedium, interRegular, light, api_url, other_charges, offer_img, location, user_details_img, customer_lab_place_order, customer_get_profile } from '../config/Constants';
 import Icon, { Icons } from '../components/Icons';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { connect, useDispatch, useSelector } from 'react-redux';
@@ -608,7 +608,7 @@ const LabCart = (props) => {
         return (
             <TouchableHighlight onPress={selectList.bind(this, item.id, item.lab_name)
             } style={{ width: '100%', height: 50, backgroundColor: colors.theme_fg_three, borderWidth: 3, borderRadius: 10, borderColor: colors.theme_color, marginBottom: 10, justifyContent: 'flex-start' }} underlayColor={'#00ccff'} >
-                <Text style={{ color: press ? colors.theme_bg_three : colors.theme_color, fontSize: 18, marginLeft: 10, fontWeight: 'bold' }}>{item.title}</Text>
+                <Text style={{ color: press ? colors.theme_bg_three : colors.theme_color, fontSize: 18, marginLeft: 10, fontFamily: interMedium }}>{item.title}</Text>
             </TouchableHighlight>
         );
     }
@@ -750,7 +750,7 @@ const LabCart = (props) => {
                             <TouchableOpacity
                                 onPress={() => navigation.navigate("LabDetails", { lab_id: 1, lab_name: 'Newlab', name: 'Home' })}
                             >
-                                <Text style={{ fontSize: 16, fontWeight: 900, color: primaryColor, marginLeft: 10 }}>ADD MORE TESTS</Text>
+                                <Text style={{ fontSize: 16, fontFamily: interMedium, color: primaryColor, marginLeft: 10 }}>ADD MORE TESTS</Text>
                             </TouchableOpacity>
                         </View>
                         <View style={{ marginVertical: 20, marginHorizontal: ms(15), flexDirection: 'column', justifyContent: 'center', alignItems: 'center', backgroundColor: '#F8FAFC', borderRadius: 20, paddingVertical: 10 }}>
@@ -807,7 +807,7 @@ const LabCart = (props) => {
                                             <Text
                                                 style={{
                                                     fontSize: ms(9),
-                                                    fontWeight: '600',
+                                                    fontFamily: interMedium,
                                                     color: '#FFFFFF'
                                                 }}
                                             >
@@ -820,7 +820,7 @@ const LabCart = (props) => {
                                             <Text
                                                 style={{
                                                     fontSize: ms(13),
-                                                    fontWeight: 'bold',
+                                                    fontFamily: interMedium,
                                                     color: '#000000',
                                                     lineHeight: ms(16),
                                                 }}
@@ -841,7 +841,7 @@ const LabCart = (props) => {
                                         <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginTop: 5 }}>
                                             <Text style={{
                                                 fontSize: ms(14),
-                                                fontWeight: 'bold',
+                                                fontFamily: interMedium,
                                                 color: '#000000',
                                             }}>
                                                 ₹{row.price}
@@ -856,7 +856,7 @@ const LabCart = (props) => {
                                             }}>
                                                 <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }} >
                                                     <Icon type={Icons.Feather} name='x' size={16} color='#FF725E' />
-                                                    <Text style={{ marginLeft: 10, fontSize: 13, fontWeight: 900, color: '#FF725E' }}>Remove</Text>
+                                                    <Text style={{ marginLeft: 10, fontSize: 13, fontFamily: interMedium, color: '#FF725E' }}>Remove</Text>
                                                 </View>
                                             </TouchableOpacity>
                                         </View>
@@ -885,7 +885,7 @@ const LabCart = (props) => {
                             {appliedCoupon && discountAmount > 0 ? (
                                 <View style={{ backgroundColor: '#E8F5E9', borderRadius: 8, padding: ms(12), flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
                                     <View style={{ flex: 1 }}>
-                                        <Text style={{ fontSize: ms(15), fontWeight: '700', color: '#0D8B7A', marginBottom: 2 }}>
+                                        <Text style={{ fontSize: ms(15), fontFamily: interMedium, color: '#0D8B7A', marginBottom: 2 }}>
                                             {appliedCoupon.title}
                                         </Text>
                                         <Text style={{ fontSize: 13, color: '#666' }}>
@@ -922,7 +922,7 @@ const LabCart = (props) => {
                         </View>
 
                         <View style={{ backgroundColor: '#F8FAFC', borderRadius: 15, padding: ms(15), margin: ms(15) }}>
-                            <Text style={{ fontSize: ms(16), color: colors.theme_fg_two, fontFamily: bold, marginBottom: ms(10) }}>Booking Type</Text>
+                            <Text style={{ fontSize: ms(16), color: colors.theme_fg_two, fontFamily: interMedium, marginBottom: ms(10) }}>Booking Type</Text>
 
                             {/* Booking Type Toggle */}
                             <View style={{ flexDirection: 'row', backgroundColor: primaryColor, borderRadius: 12, padding: ms(5), paddingVertical: ms(10), justifyContent: 'space-between' }}>
@@ -939,7 +939,7 @@ const LabCart = (props) => {
                                         justifyContent: 'center',
                                     }}>
                                     <Icon type={Icons.Ionicons} name="home-outline" color={booking_type == 1 ? primaryColor : '#fff'} size={ms(18)} style={{ marginRight: ms(4) }} />
-                                    <Text style={{ color: booking_type == 1 ? primaryColor : '#fff', fontSize: ms(12), fontWeight: '600' }}>Collect From Home</Text>
+                                    <Text style={{ color: booking_type == 1 ? primaryColor : '#fff', fontSize: ms(12), fontFamily: interMedium }}>Collect From Home</Text>
                                 </TouchableOpacity>
 
                                 <TouchableOpacity
@@ -955,7 +955,7 @@ const LabCart = (props) => {
                                         justifyContent: 'center',
                                     }}>
                                     <Icon type={Icons.Feather} name="map" color={booking_type == 2 ? primaryColor : '#fff'} size={ms(18)} style={{ marginRight: ms(4) }} />
-                                    <Text style={{ color: booking_type == 2 ? primaryColor : '#fff', fontSize: ms(12), fontWeight: '600' }}>Direct Appointment</Text>
+                                    <Text style={{ color: booking_type == 2 ? primaryColor : '#fff', fontSize: ms(12), fontFamily: interMedium }}>Direct Appointment</Text>
                                 </TouchableOpacity>
                             </View>
 
@@ -1006,7 +1006,7 @@ const LabCart = (props) => {
                                             <View style={{ width: s(40), height: 4, backgroundColor: '#ccc', borderRadius: 2 }} />
                                         </View>
                                         <View style={{ justifyContent: 'space-between', alignItems: 'center', flexDirection: 'row' }}>
-                                            <Text style={{ fontSize: ms(15), fontWeight: '600', color: '#000', marginBottom: ms(8) }}>Select TRUSTlab Center</Text>
+                                            <Text style={{ fontSize: ms(15), fontFamily: interMedium, color: '#000', marginBottom: ms(8) }}>Select TRUSTlab Center</Text>
                                             <TouchableOpacity onPress={() => setShowListModel(false)}>
                                                 <Icon type={Icons.AntDesign} name="close" size={18} color='#000' />
                                             </TouchableOpacity>
@@ -1083,7 +1083,7 @@ const LabCart = (props) => {
                                     <>
                                         <View style={{ marginTop: ms(18), justifyContent: 'space-between', alignItems: 'center', flexDirection: 'row' }}>
                                             <View>
-                                                <Text style={{ color: '#000', fontWeight: 900, fontSize:ms(13) }}>Patient Address</Text>
+                                                <Text style={{ color: '#000', fontFamily: interMedium, fontSize:ms(13) }}>Patient Address</Text>
                                             </View>
                                             <TouchableOpacity onPress={() => navigation.navigate('Address')}>
                                                 <Text style={{ color: primaryColor }}>Change</Text>
@@ -1094,7 +1094,7 @@ const LabCart = (props) => {
                                                 <Image style={{ height: 25, width: 25 }} source={location} />
                                             </View>
                                             <View style={{ flex: 1 }}>
-                                                <Text numberOfLines={2} style={{ fontFamily: regular, fontSize: ms(12), color: '#635F5F' }}>{address?.address}</Text>
+                                                <Text numberOfLines={2} style={{ fontFamily: interRegular, fontSize: ms(12), color: '#635F5F' }}>{address?.address}</Text>
                                             </View>
                                         </View>
                                     </>
@@ -1102,7 +1102,7 @@ const LabCart = (props) => {
                                     <>
                                         <View style={{ marginTop: ms(18), justifyContent: 'space-between', alignItems: 'center', flexDirection: 'row' }}>
                                             <View>
-                                                <Text style={{ color: '#000', fontWeight: 900, fontSize:ms(13) }}>Patient Address</Text>
+                                                <Text style={{ color: '#000', fontFamily: interMedium, fontSize:ms(13) }}>Patient Address</Text>
                                             </View>
                                             <TouchableOpacity onPress={() => navigation.navigate('Address')}>
                                                 <Text style={{ color: '#1F2B7B' }}>Change</Text>
@@ -1113,7 +1113,7 @@ const LabCart = (props) => {
                                                 <Image style={{ height: 25, width: 25 }} source={location} />
                                             </View>
                                             <View>
-                                                <Text numberOfLines={2} style={{ fontFamily: regular, fontSize: ms(12), color: '#635F5F' }}>{address?.address}</Text>
+                                                <Text numberOfLines={2} style={{ fontFamily: interRegular, fontSize: ms(12), color: '#635F5F' }}>{address?.address}</Text>
                                             </View>
                                         </View>
                                     </>
@@ -1131,7 +1131,7 @@ const LabCart = (props) => {
                             }}>
                                 {/* Header */}
                                 <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: ms(10) }}>
-                                    <Text style={{ fontSize: ms(13), fontWeight: 'bold', color: colors.theme_fg_two }}>Add Patient Details</Text>
+                                    <Text style={{ fontSize: ms(13), fontFamily: interMedium, color: colors.theme_fg_two }}>Add Patient Details</Text>
                                     <TouchableOpacity
                                         // onPress={() => navigation.navigate('ViewAllPatients')}
                                         onPress={() => setPatientModeal(true)}
@@ -1144,7 +1144,7 @@ const LabCart = (props) => {
                                             paddingHorizontal: ms(10),
                                             paddingVertical: ms(4)
                                         }}>
-                                        <Text style={{ color: primaryColor, fontSize: ms(13), fontWeight: '500' }}>+ Add Patient</Text>
+                                        <Text style={{ color: primaryColor, fontSize: ms(13), fontFamily: interMedium }}>+ Add Patient</Text>
                                     </TouchableOpacity>
                                 </View>
 
@@ -1195,7 +1195,7 @@ const LabCart = (props) => {
                                                 <Text
                                                     style={{
                                                         fontSize: moderateScale(18),
-                                                        fontWeight: '700',
+                                                        fontFamily: interMedium,
                                                         color: '#000',
                                                     }}>
                                                     Add Patient Details
@@ -1228,7 +1228,7 @@ const LabCart = (props) => {
                                                     <Text
                                                         style={{
                                                             fontSize: moderateScale(12),
-                                                            fontWeight: '400',
+                                                            fontFamily: interRegular,
                                                             color: dateOfBirth ? '#000' : '#9E9E9E',
                                                         }}>
                                                         {dateOfBirth || 'Date of birth'}
@@ -1274,7 +1274,7 @@ const LabCart = (props) => {
                                                         style={{
                                                             flex: 1,
                                                             fontSize: moderateScale(12),
-                                                            fontWeight: '400',
+                                                            fontFamily: interRegular,
                                                             color: '#000',
                                                             padding: 0,
                                                         }}
@@ -1305,7 +1305,7 @@ const LabCart = (props) => {
                                                         <Text
                                                             style={{
                                                                 fontSize: moderateScale(12),
-                                                                fontWeight: '400',
+                                                                fontFamily: interRegular,
                                                                 color: patientGender ? '#000' : '#9E9E9E',
                                                             }}>
                                                             {patientGender || 'Select Gender'}
@@ -1366,7 +1366,7 @@ const LabCart = (props) => {
                                                         <Text
                                                             style={{
                                                                 fontSize: moderateScale(12),
-                                                                fontWeight: '400',
+                                                                fontFamily: interRegular,
                                                                 color: patientRelation ? '#000' : '#9E9E9E',
                                                             }}>
                                                             {patientRelation || 'Select relation'}
@@ -1446,7 +1446,7 @@ const LabCart = (props) => {
                                                     <Icon type={Icons.AntDesign} name='user' size={20} color={primaryColor} />
                                                 </View>
                                                 <View>
-                                                    <Text style={{ fontSize: ms(13), fontWeight: 'bold', color: colors.theme_fg_two }}>
+                                                    <Text style={{ fontSize: ms(13), fontFamily: interMedium, color: colors.theme_fg_two }}>
                                                         {item.first_name || item.name}, {item.age} Yrs
                                                     </Text>
                                                     <Text style={{ fontSize: ms(12), color: '#888' }}>{item.gender}</Text>
@@ -1501,15 +1501,15 @@ const LabCart = (props) => {
                             backgroundColor: '#F8FAFC',
                         }}>
                             <View style={{ paddingVertical: ms(5) }} >
-                                <Text style={{ fontSize: ms(15), color: colors.theme_fg_two, fontFamily: bold }}>Bill Details</Text>
+                                <Text style={{ fontSize: ms(15), color: colors.theme_fg_two, fontFamily: interMedium }}>Bill Details</Text>
                             </View>
                             <View>
                                 <View style={{ flexDirection: 'row', justifyContent: 'center', }}>
                                     <View style={{ width: '50%', alignItems: 'flex-start' }}>
-                                        <Text style={{ fontSize: ms(12), color: colors.grey, fontFamily: regular, }}>Item Total</Text>
+                                        <Text style={{ fontSize: ms(12), color: colors.grey, fontFamily: interRegular, }}>Item Total</Text>
                                     </View>
                                     <View style={{ width: '50%', alignItems: 'flex-end' }}>
-                                        <Text style={{ fontSize: ms(13), color: '#4E4D50', fontWeight: 900 }}>{global.currency}
+                                        <Text style={{ fontSize: ms(13), color: '#4E4D50', fontFamily: interMedium }}>{global.currency}
                                             {totalPrice}
                                         </Text>
                                     </View>
@@ -1519,12 +1519,12 @@ const LabCart = (props) => {
                                 {appliedCoupon && discountAmount > 0 && (
                                     <View style={{ flexDirection: 'row', justifyContent: 'center', marginTop: ms(8), alignItems: 'center' }}>
                                         <View style={{ width: '50%', alignItems: 'flex-start' }}>
-                                            <Text style={{ fontSize: ms(12), color: '#0D8B7A', fontFamily: regular }}>
+                                            <Text style={{ fontSize: ms(12), color: '#0D8B7A', fontFamily: interRegular }}>
                                                 Coupon ({appliedCoupon.type === 'discount' ? `${appliedCoupon.amount}%` : `₹${appliedCoupon.amount}`})
                                             </Text>
                                         </View>
                                         <View style={{ width: '50%', alignItems: 'flex-end', flexDirection: 'row', justifyContent: 'flex-end' }}>
-                                            <Text style={{ fontSize: ms(12), color: '#0D8B7A', fontFamily: regular, marginRight: ms(8) }}>
+                                            <Text style={{ fontSize: ms(12), color: '#0D8B7A', fontFamily: interRegular, marginRight: ms(8) }}>
                                                 - {global.currency}{discountAmount.toFixed(2)}
                                             </Text>
                                             <TouchableOpacity onPress={handleRemoveCoupon}>
@@ -1537,29 +1537,29 @@ const LabCart = (props) => {
                                 {props.promo != undefined &&
                                     <View style={{ flexDirection: 'row', justifyContent: 'center', marginTop: 5 }}>
                                         <View style={{ width: '50%', alignItems: 'flex-start' }}>
-                                            <Text style={{ fontSize: 14, color: colors.grey, fontFamily: regular }}>Promo - ({props.promo.promo_code})</Text>
+                                            <Text style={{ fontSize: 14, color: colors.grey, fontFamily: interRegular }}>Promo - ({props.promo.promo_code})</Text>
                                         </View>
                                         <View style={{ width: '50%', alignItems: 'flex-end', color: colors.theme_fg_two }}>
-                                            <Text style={{ fontSize: 14, color: colors.grey, fontFamily: regular }}>- {global.currency}{props.discount}</Text>
+                                            <Text style={{ fontSize: 14, color: colors.grey, fontFamily: interRegular }}>- {global.currency}{props.discount}</Text>
                                         </View>
                                     </View>
                                 }
                                 <View style={{ margin: 5 }} />
                                 <View style={{ flexDirection: 'row', justifyContent: 'center', }}>
                                     <View style={{ width: '50%', alignItems: 'flex-start' }}>
-                                        <Text style={{ fontSize: ms(12), color: colors.grey, fontFamily: regular, }}>Taxes</Text>
+                                        <Text style={{ fontSize: ms(12), color: colors.grey, fontFamily: interRegular, }}>Taxes</Text>
                                     </View>
                                     <View style={{ width: '50%', alignItems: 'flex-end' }}>
-                                        <Text style={{ fontSize: ms(12), color: '#4E4D50', fontWeight: 900 }}>{global.currency}{props.tax}</Text>
+                                        <Text style={{ fontSize: ms(12), color: '#4E4D50', fontFamily: interMedium }}>{global.currency}{props.tax}</Text>
                                     </View>
                                 </View>
                                 <View style={{ margin: ms(8) }} />
                                 <View style={{ flexDirection: 'row', justifyContent: 'center', }}>
                                     <View style={{ width: '50%', alignItems: 'flex-start' }}>
-                                        <Text style={{ fontSize: ms(15), color: colors.theme_fg_two, fontFamily: bold, }}>Grand Total</Text>
+                                        <Text style={{ fontSize: ms(15), color: colors.theme_fg_two, fontFamily: interMedium, }}>Grand Total</Text>
                                     </View>
                                     <View style={{ width: '50%', alignItems: 'flex-end' }}>
-                                        <Text style={{ fontSize: ms(15), color: colors.theme_fg_two, fontFamily: bold }}>{global.currency}
+                                        <Text style={{ fontSize: ms(15), color: colors.theme_fg_two, fontFamily: interMedium }}>{global.currency}
                                             {(parseFloat(totalPrice || 0) - parseFloat(discountAmount || 0)).toFixed(2)}
                                         </Text>
                                     </View>
@@ -1708,7 +1708,7 @@ const styles = StyleSheet.create({
         marginBottom: ms(10),
     },
     headerTitle: {
-        fontFamily: bold,
+        fontFamily: interMedium,
         fontSize: ms(18),
         color: blackColor,
         marginLeft: ms(10),
@@ -1747,7 +1747,7 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         height: 45,
         backgroundColor: colors.light_blue,
-        fontFamily: regular,
+        fontFamily: interRegular,
         fontSize: 14,
         color: colors.theme_fg_two,
         marginLeft: 10,
@@ -1758,7 +1758,7 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         // height: 45,
         width: '90%',
-        fontFamily: regular,
+        fontFamily: interRegular,
         fontSize: 14,
         color: colors.theme_fg_two,
     },
@@ -1775,7 +1775,7 @@ const styles = StyleSheet.create({
     booking_type_active_fg: {
         fontSize: 14,
         color: colors.theme_fg_three,
-        fontFamily: bold,
+        fontFamily: interMedium,
         padding: 10
     },
     booking_type_inactive_bg: {
@@ -1790,7 +1790,7 @@ const styles = StyleSheet.create({
     booking_type_inactive_fg: {
         fontSize: 14,
         color: colors.theme_fg_two,
-        fontFamily: regular,
+        fontFamily: interRegular,
         padding: 10
     },
     header: {
@@ -1852,15 +1852,15 @@ const styles = StyleSheet.create({
     },
     modalTitle: {
         fontSize: ms(18),
-        fontWeight: 'bold',
+        fontFamily: interMedium,
         color: '#333',
         marginBottom: vs(6),
-        fontFamily: bold,
+        fontFamily: interMedium,
     },
     modalSubtitle: {
         fontSize: ms(12),
         color: '#666',
-        fontFamily: regular,
+        fontFamily: interRegular,
     },
     errorListContainer: {
         maxHeight: vs(250),
@@ -1895,7 +1895,7 @@ const styles = StyleSheet.create({
         flex: 1,
         fontSize: ms(14),
         color: '#333',
-        fontFamily: regular,
+        fontFamily: interRegular,
         lineHeight: ms(20),
     },
     modalCloseButton: {
@@ -1914,8 +1914,8 @@ const styles = StyleSheet.create({
     modalCloseButtonText: {
         color: '#fff',
         fontSize: ms(16),
-        fontWeight: 'bold',
-        fontFamily: bold,
+        fontFamily: interMedium,
+        fontFamily: interMedium,
     },
 });
 

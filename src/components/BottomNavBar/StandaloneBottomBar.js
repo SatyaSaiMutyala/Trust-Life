@@ -9,6 +9,7 @@ import { useNavigation } from '@react-navigation/native';
 import { ms, vs } from 'react-native-size-matters';
 import Icon, { Icons } from '../Icons';
 import { whiteColor, primaryColor } from '../../utils/globalColors';
+import { interMedium, interRegular } from '../../config/Constants';
 
 // activeTab: 'back' | 'doctors' | 'appointments' | 'more'
 const StandaloneBottomBar = ({ activeTab = 'doctors', onTabChange, tab2Label = 'Doctors', tab2Icon = 'stethoscope', tab2IconType, tab2Screen = 'DoctorConsultation' }) => {
@@ -99,10 +100,10 @@ const styles = StyleSheet.create({
     navLabel: {
         fontSize: ms(10),
         color: '#888',
-        fontWeight: '500',
+        fontFamily: interMedium,
     },
     navLabelActive: {
         color: primaryColor,
-        fontWeight: '700',
+        fontFamily: interMedium,
     },
 });

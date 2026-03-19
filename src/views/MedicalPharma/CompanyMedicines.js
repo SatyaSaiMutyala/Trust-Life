@@ -21,6 +21,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import Icon, { Icons } from '../../components/Icons';
 import { StatusBar2 } from '../../components/StatusBar';
 import { globalGradient, primaryColor, whiteColor, blackColor } from '../../utils/globalColors';
+import { heading, interMedium, interRegular } from '../../config/Constants';
 import { GOOGLE_KEY } from '../../config/Constants';
 
 const { width } = Dimensions.get('window');
@@ -329,12 +330,12 @@ const styles = StyleSheet.create({
   greetingText: {
     color: '#fff',
     fontSize: ms(15),
-    fontWeight: 'bold',
+    fontFamily: interMedium,
   },
   userName: {
     color: '#fff',
     fontSize: ms(15),
-    fontWeight: 'bold',
+    fontFamily: interMedium,
     marginLeft: 4,
     flexShrink: 1,
   },
@@ -398,7 +399,7 @@ const styles = StyleSheet.create({
   },
   categoryTitle: {
     fontSize: ms(16),
-    fontWeight: 'bold',
+    fontFamily: interMedium,
     color: blackColor,
     marginBottom: ms(15),
     textAlign: 'center',
@@ -432,7 +433,7 @@ const styles = StyleSheet.create({
   },
   brandName: {
     fontSize: ms(10),
-    fontWeight: '600',
+    fontFamily: interMedium,
     color: '#333',
     textAlign: 'center',
     lineHeight: ms(14),
@@ -484,7 +485,7 @@ const styles = StyleSheet.create({
   },
   optionTitle: {
     fontSize: ms(14),
-    fontWeight: '600',
+    fontFamily: interMedium,
     color: blackColor,
   },
   optionSubtitle: {

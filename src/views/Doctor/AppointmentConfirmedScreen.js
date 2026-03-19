@@ -13,6 +13,7 @@ import { ms, vs } from 'react-native-size-matters';
 import Icon, { Icons } from '../../components/Icons';
 import { StatusBar2 } from '../../components/StatusBar';
 import { blackColor, whiteColor, primaryColor } from '../../utils/globalColors';
+import { heading, interMedium, interRegular } from '../../config/Constants';
 import PrimaryButton from '../../utils/primaryButton';
 
 const InfoCard = ({ title, children }) => (
@@ -155,7 +156,7 @@ const styles = StyleSheet.create({
     },
     confirmedTitle: {
         fontSize: ms(19),
-        fontWeight: '800',
+        fontFamily: interMedium,
         color: blackColor,
         marginBottom: vs(6),
     },
@@ -176,7 +177,7 @@ const styles = StyleSheet.create({
     arriveText: {
         color: whiteColor,
         fontSize: ms(13),
-        fontWeight: '600',
+        fontFamily: interMedium,
     },
     idLabel: {
         fontSize: ms(11),
@@ -185,7 +186,7 @@ const styles = StyleSheet.create({
     },
     idValue: {
         fontSize: ms(15),
-        fontWeight: '700',
+        fontFamily: interMedium,
         color: blackColor,
     },
 
@@ -203,7 +204,7 @@ const styles = StyleSheet.create({
     },
     cardTitle: {
         fontSize: ms(13),
-        fontWeight: '700',
+        fontFamily: interMedium,
         color: blackColor,
         marginBottom: vs(6),
     },
@@ -228,7 +229,7 @@ const styles = StyleSheet.create({
     directionText: {
         fontSize: ms(13),
         color: primaryColor,
-        fontWeight: '600',
+        fontFamily: interMedium,
     },
 
     // ── Detail row ──
@@ -244,7 +245,7 @@ const styles = StyleSheet.create({
     detailValue: {
         fontSize: ms(12),
         color: blackColor,
-        fontWeight: '500',
+        fontFamily: interMedium,
     },
 
     // ── Support ──
@@ -262,7 +263,7 @@ const styles = StyleSheet.create({
     supportLink: {
         fontSize: ms(13),
         color: primaryColor,
-        fontWeight: '600',
+        fontFamily: interMedium,
     },
 
     // ── Footer ──

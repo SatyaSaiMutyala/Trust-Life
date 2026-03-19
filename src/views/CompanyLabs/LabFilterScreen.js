@@ -13,6 +13,7 @@ import { ms, vs } from 'react-native-size-matters';
 import Icon, { Icons } from '../../components/Icons';
 import { StatusBar2 } from '../../components/StatusBar';
 import { globalGradient, primaryColor, whiteColor, blackColor } from '../../utils/globalColors';
+import { heading, interMedium, interRegular } from '../../config/Constants';
 
 const filterData = {
   Gender: [
@@ -182,8 +183,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: ms(20),
   },
   headerTitle: {
-    fontSize: ms(22),
-    fontWeight: 'bold',
+    fontSize: ms(18),
+    fontFamily: heading,
     color: blackColor,
   },
   closeButton: {
@@ -205,7 +206,7 @@ const styles = StyleSheet.create({
   },
   sectionTitle: {
     fontSize: ms(14),
-    fontWeight: '600',
+    fontFamily: interMedium,
     color: blackColor,
     marginBottom: ms(12),
   },
@@ -230,7 +231,7 @@ const styles = StyleSheet.create({
   },
   chipText: {
     fontSize: ms(13),
-    fontWeight: '500',
+    fontFamily: interRegular,
     color: blackColor,
   },
   chipTextActive: {
@@ -254,7 +255,7 @@ const styles = StyleSheet.create({
   },
   applyText: {
     fontSize: ms(16),
-    fontWeight: 'bold',
+    fontFamily: interMedium,
     color: whiteColor,
   },
 });

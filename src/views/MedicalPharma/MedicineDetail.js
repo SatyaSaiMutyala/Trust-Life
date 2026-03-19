@@ -15,6 +15,7 @@ import { ms, vs } from 'react-native-size-matters';
 import Icon, { Icons } from '../../components/Icons';
 import { StatusBar2 } from '../../components/StatusBar';
 import { primaryColor, whiteColor, blackColor } from '../../utils/globalColors';
+import { heading, interMedium, interRegular } from '../../config/Constants';
 
 const { width } = Dimensions.get('window');
 
@@ -382,7 +383,7 @@ const styles = StyleSheet.create({
   cartBadgeText: {
     color: whiteColor,
     fontSize: ms(9),
-    fontWeight: 'bold',
+    fontFamily: interMedium,
   },
   handImage: {
     width: ms(180),
@@ -412,7 +413,7 @@ const styles = StyleSheet.create({
   discountBadgeText: {
     color: whiteColor,
     fontSize: ms(12),
-    fontWeight: '700',
+    fontFamily: interMedium,
   },
 
   // Title row
@@ -424,7 +425,7 @@ const styles = StyleSheet.create({
   },
   medicineName: {
     fontSize: ms(20),
-    fontWeight: 'bold',
+    fontFamily: interMedium,
     color: blackColor,
   },
   medicineSubtitle: {
@@ -437,7 +438,7 @@ const styles = StyleSheet.create({
   },
   ratingNum: {
     fontSize: ms(14),
-    fontWeight: 'bold',
+    fontFamily: interMedium,
     color: blackColor,
     marginTop: vs(1),
   },
@@ -455,7 +456,7 @@ const styles = StyleSheet.create({
   },
   priceText: {
     fontSize: ms(16),
-    fontWeight: 'bold',
+    fontFamily: interMedium,
     color: blackColor,
   },
   mrpText: {
@@ -473,7 +474,7 @@ const styles = StyleSheet.create({
   addBtnText: {
     color: whiteColor,
     fontSize: ms(14),
-    fontWeight: '700',
+    fontFamily: interMedium,
   },
   qtyRow: {
     flexDirection: 'row',
@@ -492,12 +493,12 @@ const styles = StyleSheet.create({
   qtyBtnText: {
     color: whiteColor,
     fontSize: ms(16),
-    fontWeight: 'bold',
+    fontFamily: interMedium,
   },
   qtyValue: {
     color: whiteColor,
     fontSize: ms(14),
-    fontWeight: '700',
+    fontFamily: interMedium,
     marginHorizontal: ms(8),
   },
 
@@ -518,11 +519,11 @@ const styles = StyleSheet.create({
   tabText: {
     fontSize: ms(13),
     color: '#666',
-    fontWeight: '500',
+    fontFamily: interMedium,
   },
   tabTextActive: {
     color: whiteColor,
-    fontWeight: '600',
+    fontFamily: interMedium,
   },
 
   // Description
@@ -553,14 +554,14 @@ const styles = StyleSheet.create({
   },
   infoChipValue: {
     fontSize: ms(14),
-    fontWeight: '600',
+    fontFamily: interMedium,
     color: blackColor,
   },
 
   // Section title
   sectionTitle: {
     fontSize: ms(16),
-    fontWeight: 'bold',
+    fontFamily: interMedium,
     color: blackColor,
     marginBottom: vs(12),
   },
@@ -584,7 +585,7 @@ const styles = StyleSheet.create({
   useChipLabel: {
     fontSize: ms(13),
     color: '#444',
-    fontWeight: '500',
+    fontFamily: interMedium,
   },
 
   // Dosage
@@ -601,7 +602,7 @@ const styles = StyleSheet.create({
   dosageText: {
     fontSize: ms(13),
     color: '#444',
-    fontWeight: '500',
+    fontFamily: interMedium,
     flex: 1,
   },
 
@@ -615,7 +616,7 @@ const styles = StyleSheet.create({
   safetyText: {
     fontSize: ms(13),
     color: '#E53935',
-    fontWeight: '500',
+    fontFamily: interMedium,
     flex: 1,
   },
 
@@ -640,7 +641,7 @@ const styles = StyleSheet.create({
   },
   productDetailValue: {
     fontSize: ms(13),
-    fontWeight: '600',
+    fontFamily: interMedium,
     color: blackColor,
   },
 
@@ -654,7 +655,7 @@ const styles = StyleSheet.create({
   writeReviewText: {
     fontSize: ms(13),
     color: primaryColor,
-    fontWeight: '600',
+    fontFamily: interMedium,
   },
 
   // Rating summary
@@ -669,7 +670,7 @@ const styles = StyleSheet.create({
   },
   ratingBigNum: {
     fontSize: ms(32),
-    fontWeight: 'bold',
+    fontFamily: interMedium,
     color: blackColor,
   },
   ratingStarsRow: {
@@ -726,12 +727,12 @@ const styles = StyleSheet.create({
   },
   reviewAvatarText: {
     color: whiteColor,
-    fontWeight: 'bold',
+    fontFamily: interMedium,
     fontSize: ms(13),
   },
   reviewerName: {
     fontSize: ms(13),
-    fontWeight: '600',
+    fontFamily: interMedium,
     color: blackColor,
   },
   reviewerStars: {

@@ -386,16 +386,15 @@ const CheckHealthStatus = () => {
                 <View style={styles.card}>
                     <View style={styles.lisHeader}>
                         <Text style={[styles.cardTitle, { flex: 1 }]}>Bio-Markers Stability</Text>
+                        <TouchableOpacity onPress={() => setShowBioInfo(!showBioInfo)} style={{ padding: ms(4) }}>
+                            <Icon type={Icons.Ionicons} name="information-circle-outline" size={ms(20)} color="#9CA3AF" />
+                        </TouchableOpacity>
                         <View style={styles.trendBadge}>
                             <Icon type={Icons.Ionicons} name="trending-up" size={ms(13)} color="#16A34A" />
                             <Text style={styles.trendBadgeText}>+9</Text>
                         </View>
                         <TouchableOpacity onPress={() => navigation.navigate('BioMarkerDetailScreen')} style={styles.viewBtn}>
                             <Text style={styles.viewBtnText}>View</Text>
-                            <Icon type={Icons.Ionicons} name="chevron-forward" size={ms(11)} color={whiteColor} />
-                        </TouchableOpacity>
-                        <TouchableOpacity onPress={() => setShowBioInfo(!showBioInfo)} style={{ padding: ms(4) }}>
-                            <Icon type={Icons.Ionicons} name="information-circle-outline" size={ms(20)} color="#9CA3AF" />
                         </TouchableOpacity>
                     </View>
                     {showBioInfo && (
@@ -641,10 +640,10 @@ const CheckHealthStatus = () => {
                         </View>
                     )}
                     {[
-                        { label: 'Physical Activity',     status: 'Active',     statusType: 'strong', prevScore: '72/100', currScore: '76/100', desc: '8,200 steps/day • 720 MET-min/week', id: 'sleep', impact: '+4', impactColor: '#16A34A', screen: 'ProgressPhysicalActivityScreen' },
-                        { label: 'Diet',   status: 'Good',   statusType: 'strong', prevScore: '65/100', currScore: '72/100', desc: 'Mostly healthy diet, condition-aware', id: 'activity', impact: '+8', impactColor: '#16A34A', screen: 'DietPatternScreen' },
-                        { label: 'Sleep',    status: 'Good', statusType: 'strong', prevScore: '62/100', currScore: '68/100', desc: '6.5hrs avg • 82% efficiency', id: 'diet', impact: '-2', impactColor: '#F59E0B', screen: 'ProgressSleepPatternScreen' },
-                        { label: 'Stress',    status: 'Moderate', statusType: 'moderate', prevScore: '52/100', currScore: '55/100', desc: 'PSS: 18/40 • HRV: 42ms', id: 'stress', impact: '-2', impactColor: '#F59E0B', screen: 'StressManagementScreen' },
+                        { label: 'Physical Activity', status: 'Active',   statusType: 'strong',   doing: true,  diseases: ['Diabetes', 'Obesity'],        desc: '8,200 steps/day • 720 MET-min/week',     screen: 'ProgressPhysicalActivityScreen' },
+                        { label: 'Diet',             status: 'Good',     statusType: 'strong',   doing: true,  diseases: ['Cholesterol', 'Hypertension'],  desc: 'Mostly healthy diet, condition-aware',   screen: 'DietPatternScreen' },
+                        { label: 'Sleep',            status: 'Good',     statusType: 'moderate', doing: false, diseases: ['Fatigue', 'Anxiety'],            desc: '6.5hrs avg • 82% efficiency',            screen: 'ProgressSleepPatternScreen' },
+                        { label: 'Stress',           status: 'Moderate', statusType: 'moderate', doing: false, diseases: ['Hypertension', 'Heart Disease'], desc: 'PSS: 18/40 • HRV: 42ms',                screen: 'StressManagementScreen' },
                     ].map((item, index) => (
                         <TouchableOpacity key={index} style={[styles.bioCard, { flexDirection: 'row', alignItems: 'center' }]} activeOpacity={0.7} onPress={() => item.screen ? navigation.navigate(item.screen) : null}>
                             <View style={{ flex: 1 }}>
@@ -655,9 +654,8 @@ const CheckHealthStatus = () => {
                                     </View>
                                 </View>
                                 <View style={styles.bioCardScoreRow}>
-                                    <Text style={styles.bioCardScore}>{item.prevScore}</Text>
-                                    <Text style={styles.bioCardArrow}>→</Text>
-                                    <Text style={styles.bioCardScore}>{item.currScore}</Text>
+                                    <Icon type={Icons.Ionicons} name={item.doing ? 'arrow-down' : 'arrow-up'} size={ms(13)} color={item.doing ? '#16A34A' : '#E11D48'} />
+                                    <Text style={[styles.bioCardDiseaseText, { color: item.doing ? '#16A34A' : '#E11D48' }]}>{item.diseases.join(' • ')}</Text>
                                 </View>
                                 <Text style={styles.bioCardDesc}>{item.desc}</Text>
                             </View>
@@ -871,7 +869,6 @@ const styles = StyleSheet.create({
         width: ms(22), height: ms(22), borderRadius: ms(11),
         justifyContent: 'center', alignItems: 'center',
     },
-
     // ── Timeline ──────────────────────────────────────────────────────────────
     tlRow: { flexDirection: 'row', alignItems: 'flex-start' },
     tlLeft: { alignItems: 'center', width: ms(88), marginRight: ms(8) },
@@ -1222,12 +1219,16 @@ const styles = StyleSheet.create({
     bioCardScoreRow: {
         flexDirection: 'row',
         alignItems: 'center',
-        gap: ms(8),
-        // marginBottom: vs(6),
+        gap: ms(4),
+        marginBottom: vs(4),
+    },
+    bioCardDiseaseText: {
+        fontFamily: interMedium,
+        fontSize: ms(12),
     },
     bioCardScore: {
         fontFamily: interMedium,
-        fontSize: ms(12),
+        fontSize: ms(11),
         color: blackColor,
     },
     bioCardArrow: {
@@ -1237,7 +1238,7 @@ const styles = StyleSheet.create({
     },
     bioCardDesc: {
         fontFamily: interRegular,
-        fontSize: ms(12),
+        fontSize: ms(11),
         color: '#6B7280',
         lineHeight: ms(18),
     },
@@ -1326,6 +1327,6 @@ const styles = StyleSheet.create({
         borderRadius: ms(6), paddingHorizontal: ms(8), paddingVertical: vs(5),
     },
     viewBtnText: {
-        fontSize: ms(1), fontFamily: interMedium, color: whiteColor,
+        fontSize: ms(12), fontFamily: interMedium, color: whiteColor,
     },
 });

@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, Image, StyleSheet } from 'react-native';
-import { bold, regular } from '../config/Constants';
+import { interMedium, interRegular } from '../config/Constants';
 import { primaryColor, whiteColor } from '../utils/globalColors';
 import { ms, vs } from 'react-native-size-matters';
 
@@ -98,7 +98,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#E5E7EB',
     },
     stepNumber: {
-        fontFamily: bold,
+        fontFamily: interMedium,
         fontSize: ms(12),
         color: '#6B7280',
     },
@@ -112,7 +112,7 @@ const styles = StyleSheet.create({
         resizeMode: 'contain',
     },
     stepLabel: {
-        fontFamily: regular,
+        fontFamily: interRegular,
         fontSize: ms(9),
         color: '#6B7280',
         textAlign: 'center',

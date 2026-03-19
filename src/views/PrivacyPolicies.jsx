@@ -95,7 +95,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import { StatusBar2 } from '../components/StatusBar';
 import Icon, { Icons } from '../components/Icons';
 import * as colors from '../assets/css/Colors';
-import { regular, bold } from '../config/Constants';
+import { heading, interMedium, interRegular } from '../config/Constants';
 import { blackColor, globalGradient, primaryColor, whiteColor } from '../utils/globalColors';
 
 const PrivacyPolicies = () => {
@@ -305,8 +305,8 @@ const styles = StyleSheet.create({
         shadowRadius: 2,
     },
     headerTitle: {
-        fontFamily: bold,
-        fontSize: ms(16),
+        fontFamily: heading,
+        fontSize: ms(18),
         color: whiteColor,
         marginLeft: ms(12),
     },
@@ -319,7 +319,7 @@ const styles = StyleSheet.create({
         padding: ms(20),
     },
     mainHeading: {
-        fontFamily: bold,
+        fontFamily: interMedium,
         fontSize: ms(18),
         color: colors.black,
         marginTop: vs(20),
@@ -327,44 +327,44 @@ const styles = StyleSheet.create({
         textAlign: 'center',
     },
     effectiveDate: {
-        fontFamily: regular,
+        fontFamily: interRegular,
         fontSize: ms(12),
         color: '#6B7280',
         marginBottom: vs(2),
     },
     lastUpdated: {
-        fontFamily: regular,
+        fontFamily: interRegular,
         fontSize: ms(12),
         color: '#6B7280',
         marginBottom: vs(15),
     },
     sectionHeading: {
-        fontFamily: bold,
+        fontFamily: interMedium,
         fontSize: ms(16),
         color: colors.black,
         marginTop: vs(18),
         marginBottom: vs(10),
     },
     subHeading: {
-        fontFamily: bold,
+        fontFamily: interMedium,
         fontSize: ms(14),
         color: '#374151',
         marginTop: vs(12),
         marginBottom: vs(4),
     },
     paragraph: {
-        fontFamily: regular,
+        fontFamily: interRegular,
         fontSize: ms(12),
         color: '#4B5563',
         lineHeight: ms(20),
         marginBottom: vs(8),
     },
     boldText: {
-        fontFamily: bold,
+        fontFamily: interMedium,
         color: colors.black,
     },
     noteText: {
-        fontFamily: regular,
+        fontFamily: interRegular,
         fontSize: ms(11),
         color: '#6B7280',
         lineHeight: ms(18),
@@ -373,7 +373,7 @@ const styles = StyleSheet.create({
         fontStyle: 'italic',
     },
     importantText: {
-        fontFamily: bold,
+        fontFamily: interMedium,
         fontSize: ms(12),
         color: '#DC2626',
         lineHeight: ms(20),
@@ -384,7 +384,7 @@ const styles = StyleSheet.create({
         borderRadius: ms(8),
     },
     disclaimerText: {
-        fontFamily: regular,
+        fontFamily: interRegular,
         fontSize: ms(12),
         color: '#4B5563',
         lineHeight: ms(20),
@@ -403,7 +403,7 @@ const styles = StyleSheet.create({
         borderColor: '#FEE2E2',
     },
     disclaimerTitle: {
-        fontFamily: bold,
+        fontFamily: interMedium,
         fontSize: ms(12),
         color: '#991B1B',
         marginBottom: vs(5),
@@ -420,7 +420,7 @@ const styles = StyleSheet.create({
         paddingLeft: ms(4),
     },
     bulletDot: {
-        fontFamily: bold,
+        fontFamily: interMedium,
         fontSize: ms(14),
         color: colors.theme_fg,
         marginRight: ms(8),
@@ -428,7 +428,7 @@ const styles = StyleSheet.create({
     },
     bulletText: {
         flex: 1,
-        fontFamily: regular,
+        fontFamily: interRegular,
         fontSize: ms(12),
         color: '#4B5563',
         lineHeight: ms(20),
@@ -459,7 +459,7 @@ const styles = StyleSheet.create({
         marginBottom: vs(8),
     },
     statusTitle: {
-        fontFamily: bold,
+        fontFamily: interMedium,
         fontSize: ms(14),
         color: colors.black,
     },
@@ -469,7 +469,7 @@ const styles = StyleSheet.create({
         marginBottom: vs(6),
     },
     statusText: {
-        fontFamily: regular,
+        fontFamily: interRegular,
         fontSize: ms(12),
         color: '#4B5563',
         flex: 1,
@@ -481,7 +481,7 @@ const styles = StyleSheet.create({
         borderRadius: ms(20),
     },
     badgeTextGreen: {
-        fontFamily: bold,
+        fontFamily: interMedium,
         fontSize: ms(10),
         color: '#16A34A',
     },
@@ -492,19 +492,19 @@ const styles = StyleSheet.create({
         borderRadius: ms(20),
     },
     badgeTextRed: {
-        fontFamily: bold,
+        fontFamily: interMedium,
         fontSize: ms(10),
         color: '#DC2626',
     },
     statusFooter: {
-        fontFamily: regular,
+        fontFamily: interRegular,
         fontSize: ms(11),
         color: '#6B7280',
         marginTop: vs(8),
         marginBottom: vs(4),
     },
     statusNote: {
-        fontFamily: regular,
+        fontFamily: interRegular,
         fontSize: ms(11),
         color: '#4B5563',
         marginTop: vs(8),
@@ -521,7 +521,7 @@ const styles = StyleSheet.create({
         borderColor: colors.theme_fg,
     },
     actionButtonText: {
-        fontFamily: bold,
+        fontFamily: interMedium,
         fontSize: ms(11),
         color: colors.theme_fg,
     },
@@ -534,13 +534,13 @@ const styles = StyleSheet.create({
         borderRadius: ms(8),
     },
     controlTitle: {
-        fontFamily: bold,
+        fontFamily: interMedium,
         fontSize: ms(13),
         color: '#3B82F6',
         marginBottom: vs(4),
     },
     controlDescription: {
-        fontFamily: regular,
+        fontFamily: interRegular,
         fontSize: ms(11),
         color: '#6B7280',
         lineHeight: ms(18),
@@ -554,7 +554,7 @@ const styles = StyleSheet.create({
         alignSelf: 'flex-start',
     },
     controlButtonText: {
-        fontFamily: bold,
+        fontFamily: interMedium,
         fontSize: ms(11),
         color: colors.white,
     },
@@ -592,7 +592,7 @@ const styles = StyleSheet.create({
     },
     checkboxText: {
         flex: 1,
-        fontFamily: regular,
+        fontFamily: interRegular,
         fontSize: ms(11),
         color: primaryColor,
         lineHeight: ms(18),
@@ -612,7 +612,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     declineButtonText: {
-        fontFamily: bold,
+        fontFamily: interMedium,
         fontSize: ms(12),
         color: '#6B7280',
     },
@@ -628,7 +628,7 @@ const styles = StyleSheet.create({
         opacity: 0.5,
     },
     agreeButtonText: {
-        fontFamily: bold,
+        fontFamily: interMedium,
         fontSize: ms(12),
         color: whiteColor,
     },
@@ -642,7 +642,7 @@ const styles = StyleSheet.create({
     },
     navRowText: {
         flex: 1,
-        fontFamily: regular,
+        fontFamily: interRegular,
         fontSize: ms(14),
         color: blackColor,
     },

@@ -21,6 +21,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import Icon, { Icons } from '../../components/Icons';
 import { StatusBar2 } from '../../components/StatusBar';
 import { globalGradient, primaryColor, whiteColor, blackColor } from '../../utils/globalColors';
+import { heading, interMedium, interRegular } from '../../config/Constants';
 import { GOOGLE_KEY } from '../../config/Constants';
 
 const { width } = Dimensions.get('window');
@@ -379,12 +380,12 @@ const styles = StyleSheet.create({
   greetingText: {
     color: '#fff',
     fontSize: ms(15),
-    fontWeight: 'bold',
+    fontFamily: interMedium,
   },
   userName: {
     color: '#fff',
     fontSize: ms(15),
-    fontWeight: 'bold',
+    fontFamily: interMedium,
     marginLeft: 4,
     flexShrink: 1,
   },
@@ -447,7 +448,7 @@ const styles = StyleSheet.create({
   },
   resultsTitle: {
     fontSize: ms(18),
-    fontWeight: '400',
+    fontFamily: interRegular,
     color: blackColor,
   },
 
@@ -462,7 +463,7 @@ const styles = StyleSheet.create({
   },
   descriptionTitle: {
     fontSize: ms(14),
-    fontWeight: 'bold',
+    fontFamily: interMedium,
     color: blackColor,
     textAlign: 'center',
     marginBottom: vs(10),
@@ -474,12 +475,12 @@ const styles = StyleSheet.create({
   },
   viewMoreText: {
     color: primaryColor,
-    fontWeight: '600',
+    fontFamily: interMedium,
   },
 
   sectionTitle: {
     fontSize: ms(16),
-    fontWeight: 'bold',
+    fontFamily: interMedium,
     color: blackColor,
     marginBottom: ms(15),
   },
@@ -523,7 +524,7 @@ const styles = StyleSheet.create({
   cardPriceLabel: {
     fontSize: ms(11),
     color: '#888',
-    fontWeight: '500',
+    fontFamily: interMedium,
     flex: 1,
   },
   cardPricingValues: {
@@ -532,7 +533,7 @@ const styles = StyleSheet.create({
   },
   cardMrp: {
     fontSize: ms(13),
-    fontWeight: 'bold',
+    fontFamily: interMedium,
     color: blackColor,
     flex: 1,
     textDecorationLine: 'line-through',
@@ -540,13 +541,13 @@ const styles = StyleSheet.create({
   },
   cardDiscount: {
     fontSize: ms(13),
-    fontWeight: 'bold',
+    fontFamily: interMedium,
     color: blackColor,
     flex: 1,
   },
   cardNet: {
     fontSize: ms(13),
-    fontWeight: 'bold',
+    fontFamily: interMedium,
     color: blackColor,
     flex: 1,
   },
@@ -576,7 +577,7 @@ const styles = StyleSheet.create({
   cardAddText: {
     color: whiteColor,
     fontSize: ms(12),
-    fontWeight: 'bold',
+    fontFamily: interMedium,
   },
 
   // Location Bottom Sheet
@@ -622,7 +623,7 @@ const styles = StyleSheet.create({
   },
   optionTitle: {
     fontSize: ms(14),
-    fontWeight: '600',
+    fontFamily: interMedium,
     color: blackColor,
   },
   optionSubtitle: {

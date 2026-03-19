@@ -21,7 +21,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import Icon, { Icons } from '../../components/Icons';
 import { StatusBar2 } from '../../components/StatusBar';
 import { globalGradient, primaryColor, whiteColor, blackColor, grayColor, lightGrayColor } from '../../utils/globalColors';
-import { GOOGLE_KEY } from '../../config/Constants';
+import { GOOGLE_KEY, interMedium, interRegular } from '../../config/Constants';
 
 const { width } = Dimensions.get('window');
 
@@ -439,12 +439,12 @@ const styles = StyleSheet.create({
   greetingText: {
     color: '#fff',
     fontSize: ms(15),
-    fontWeight: 'bold',
+    fontFamily: interMedium,
   },
   userName: {
     color: '#fff',
     fontSize: ms(15),
-    fontWeight: 'bold',
+    fontFamily: interMedium,
     marginLeft: 4,
     flexShrink: 1,
   },
@@ -507,7 +507,7 @@ const styles = StyleSheet.create({
   },
   resultsTitle: {
     fontSize: ms(18),
-    fontWeight: '400',
+    fontFamily: interRegular,
     color: blackColor,
   },
   companyLogoContainer: {
@@ -542,7 +542,7 @@ const styles = StyleSheet.create({
   },
   filterChipText: {
     fontSize: ms(13),
-    fontWeight: '500',
+    fontFamily: interRegular,
     color: blackColor,
   },
   filterChipTextActive: {
@@ -568,7 +568,7 @@ const styles = StyleSheet.create({
   },
   cardTestName: {
     fontSize: ms(13),
-    fontWeight: 'bold',
+    fontFamily: interMedium,
     color: blackColor,
     lineHeight: ms(18),
     marginBottom: vs(12),
@@ -584,7 +584,7 @@ const styles = StyleSheet.create({
   cardPriceLabel: {
     fontSize: ms(12),
     color: '#888',
-    fontWeight: '500',
+    fontFamily: interRegular,
     flex: 1,
     textAlign:'center'
   },
@@ -594,7 +594,7 @@ const styles = StyleSheet.create({
   },
   cardMrp: {
     fontSize: ms(13),
-    fontWeight: 'bold',
+    fontFamily: interMedium,
     color: blackColor,
     flex: 1,
     textAlign:'center',
@@ -603,14 +603,14 @@ const styles = StyleSheet.create({
   },
   cardDiscount: {
     fontSize: ms(13),
-    fontWeight: 'bold',
+    fontFamily: interMedium,
     color: blackColor,
     flex: 1,
     textAlign:'center'
   },
   cardNet: {
     fontSize: ms(13),
-    fontWeight: 'bold',
+    fontFamily: interMedium,
     color: blackColor,
     flex: 1,
     textAlign:'center'
@@ -637,17 +637,17 @@ const styles = StyleSheet.create({
   cardReportIn: {
     fontSize: ms(10),
     color: '#555',
-    fontWeight: '500',
+    fontFamily: interRegular,
   },
   cardReportDays: {
     fontSize: ms(18),
-    fontWeight: 'bold',
+    fontFamily: interMedium,
     color: blackColor,
   },
   cardReportLabel: {
     fontSize: ms(10),
     color: '#555',
-    fontWeight: '500',
+    fontFamily: interRegular,
     marginBottom: vs(6),
   },
   cardAddButton: {
@@ -659,7 +659,7 @@ const styles = StyleSheet.create({
   cardAddText: {
     color: whiteColor,
     fontSize: ms(12),
-    fontWeight: 'bold',
+    fontFamily: interMedium,
   },
 
   // Location Bottom Sheet
@@ -705,7 +705,7 @@ const styles = StyleSheet.create({
   },
   optionTitle: {
     fontSize: ms(14),
-    fontWeight: '600',
+    fontFamily: interMedium,
     color: blackColor,
   },
   optionSubtitle: {

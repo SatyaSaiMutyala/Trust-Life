@@ -565,7 +565,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import { StatusBar2 } from '../../components/StatusBar';
 import Icon, { Icons } from '../../components/Icons';
 import { blackColor, whiteColor, primaryColor, globalGradient } from '../../utils/globalColors';
-import { interMedium, interRegular } from '../../config/Constants';
+import { heading, interMedium, interRegular } from '../../config/Constants';
 
 const DataTransparencyCenterScreen = () => {
     const navigation = useNavigation();
@@ -1173,8 +1173,8 @@ const styles = StyleSheet.create({
         elevation: 2, shadowColor: blackColor, shadowOffset: { width: 0, height: 1 }, shadowOpacity: 0.1, shadowRadius: 2,
     },
     headerTitle: {
-        fontFamily: interMedium,
-        fontSize: ms(16),
+        fontFamily: heading,
+        fontSize: ms(18),
         color: whiteColor,
         marginLeft: ms(12),
     },

@@ -12,6 +12,7 @@ import { ms, vs } from 'react-native-size-matters';
 import { StatusBar2 } from '../../components/StatusBar';
 import Icon, { Icons } from '../../components/Icons';
 import { blackColor, whiteColor, primaryColor } from '../../utils/globalColors';
+import { heading, interMedium, interRegular } from '../../config/Constants';
 import StandaloneBottomBar from '../../components/BottomNavBar/StandaloneBottomBar';
 
 // ── Constants ─────────────────────────────────────────────────────────────────
@@ -212,7 +213,7 @@ const styles = StyleSheet.create({
     },
     headerTitle: {
         fontSize: ms(20),
-        fontWeight: 'bold',
+        fontFamily: interMedium,
         color: blackColor,
     },
 
@@ -229,11 +230,11 @@ const styles = StyleSheet.create({
     tabLabel: {
         fontSize: ms(13),
         color: '#888',
-        fontWeight: '500',
+        fontFamily: interMedium,
     },
     tabLabelActive: {
         color: primaryColor,
-        fontWeight: '700',
+        fontFamily: interMedium,
     },
     tabUnderline: {
         position: 'absolute',
@@ -282,7 +283,7 @@ const styles = StyleSheet.create({
     },
     statusText: {
         fontSize: ms(12),
-        fontWeight: '600',
+        fontFamily: interMedium,
     },
     cardDate: {
         fontSize: ms(11),
@@ -298,7 +299,7 @@ const styles = StyleSheet.create({
     },
     doctorName: {
         fontSize: ms(14),
-        fontWeight: 'bold',
+        fontFamily: interMedium,
         color: blackColor,
     },
     ratingRow: {
@@ -309,7 +310,7 @@ const styles = StyleSheet.create({
     ratingText: {
         fontSize: ms(13),
         color: blackColor,
-        fontWeight: '600',
+        fontFamily: interMedium,
     },
     specialty: {
         fontSize: ms(12),
@@ -341,11 +342,11 @@ const styles = StyleSheet.create({
     amountLabel: {
         fontSize: ms(13),
         color: '#555',
-        fontWeight: '500',
+        fontFamily: interMedium,
     },
     amountValue: {
         fontSize: ms(14),
-        fontWeight: 'bold',
+        fontFamily: interMedium,
         color: blackColor,
     },
 
@@ -359,7 +360,7 @@ const styles = StyleSheet.create({
     outlineBtnText: {
         fontSize: ms(13),
         color: blackColor,
-        fontWeight: '500',
+        fontFamily: interMedium,
     },
     filledBtn: {
         borderRadius: ms(18),
@@ -370,7 +371,7 @@ const styles = StyleSheet.create({
     filledBtnText: {
         fontSize: ms(13),
         color: whiteColor,
-        fontWeight: '600',
+        fontFamily: interMedium,
     },
 
     // Empty

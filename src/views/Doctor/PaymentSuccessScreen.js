@@ -4,6 +4,7 @@ import { useNavigation, useRoute } from '@react-navigation/native';
 import { ms, vs } from 'react-native-size-matters';
 import Icon, { Icons } from '../../components/Icons';
 import { StatusBar2 } from '../../components/StatusBar';
+import { heading, interMedium, interRegular } from '../../config/Constants';
 
 const PaymentSuccessScreen = () => {
     const navigation = useNavigation();
@@ -65,13 +66,13 @@ const styles = StyleSheet.create({
     },
     amount: {
         fontSize: ms(32),
-        fontWeight: '800',
+        fontFamily: interMedium,
         color: '#1B1B1B',
         marginBottom: vs(6),
     },
     title: {
         fontSize: ms(18),
-        fontWeight: '700',
+        fontFamily: interMedium,
         color: '#1B1B1B',
         marginBottom: vs(10),
     },

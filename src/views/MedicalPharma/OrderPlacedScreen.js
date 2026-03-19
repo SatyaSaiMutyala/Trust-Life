@@ -13,7 +13,7 @@ import { ms, vs } from 'react-native-size-matters';
 import { StatusBar4 } from '../../components/StatusBar';
 import Icon, { Icons } from '../../components/Icons';
 import { blackColor, whiteColor, primaryColor } from '../../utils/globalColors';
-import { bold, regular } from '../../config/Constants';
+import { interMedium, interRegular } from '../../config/Constants';
 
 const ORDER_ITEMS = [
     {
@@ -170,19 +170,19 @@ const styles = StyleSheet.create({
         marginBottom: vs(12),
     },
     orderPlacedTitle: {
-        fontFamily: bold,
+        fontFamily: interMedium,
         fontSize: ms(20),
         color: blackColor,
         marginBottom: vs(6),
     },
     orderDateTime: {
-        fontFamily: regular,
+        fontFamily: interRegular,
         fontSize: ms(12),
         color: '#6B7280',
         marginBottom: vs(10),
     },
     orderDesc: {
-        fontFamily: regular,
+        fontFamily: interRegular,
         fontSize: ms(12),
         color: '#6B7280',
         textAlign: 'center',
@@ -191,7 +191,7 @@ const styles = StyleSheet.create({
         marginBottom: vs(10),
     },
     waitingText: {
-        fontFamily: regular,
+        fontFamily: interRegular,
         fontSize: ms(12),
         color: primaryColor,
     },
@@ -210,13 +210,13 @@ const styles = StyleSheet.create({
         marginBottom: vs(12),
     },
     cardTitle: {
-        fontFamily: bold,
+        fontFamily: interMedium,
         fontSize: ms(14),
         color: blackColor,
         marginBottom: vs(10),
     },
     itemCount: {
-        fontFamily: regular,
+        fontFamily: interRegular,
         fontSize: ms(12),
         color: '#6B7280',
         marginBottom: vs(10),
@@ -250,7 +250,7 @@ const styles = StyleSheet.create({
         zIndex: 1,
     },
     discountBadgeText: {
-        fontFamily: bold,
+        fontFamily: interMedium,
         fontSize: ms(7),
         color: whiteColor,
     },
@@ -262,12 +262,12 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     itemName: {
-        fontFamily: bold,
+        fontFamily: interMedium,
         fontSize: ms(13),
         color: blackColor,
     },
     itemSubtitle: {
-        fontFamily: regular,
+        fontFamily: interRegular,
         fontSize: ms(11),
         color: '#9CA3AF',
         marginTop: vs(2),
@@ -279,12 +279,12 @@ const styles = StyleSheet.create({
         marginTop: vs(4),
     },
     itemPrice: {
-        fontFamily: bold,
+        fontFamily: interMedium,
         fontSize: ms(13),
         color: blackColor,
     },
     itemMrp: {
-        fontFamily: regular,
+        fontFamily: interRegular,
         fontSize: ms(11),
         color: '#9CA3AF',
         textDecorationLine: 'line-through',
@@ -298,7 +298,7 @@ const styles = StyleSheet.create({
         borderTopColor: '#F3F4F6',
     },
     viewMoreText: {
-        fontFamily: regular,
+        fontFamily: interRegular,
         fontSize: ms(13),
         color: primaryColor,
     },
@@ -314,19 +314,19 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     receiverName: {
-        fontFamily: bold,
+        fontFamily: interMedium,
         fontSize: ms(13),
         color: blackColor,
     },
     receiverPhone: {
-        fontFamily: regular,
+        fontFamily: interRegular,
         fontSize: ms(11),
         color: '#9CA3AF',
         marginTop: vs(2),
     },
     receiverAddress: {
         flex: 1,
-        fontFamily: regular,
+        fontFamily: interRegular,
         fontSize: ms(12),
         color: '#6B7280',
         lineHeight: ms(18),
@@ -340,12 +340,12 @@ const styles = StyleSheet.create({
         marginBottom: vs(12),
     },
     summaryLabel: {
-        fontFamily: regular,
+        fontFamily: interRegular,
         fontSize: ms(12),
         color: '#6B7280',
     },
     summaryValue: {
-        fontFamily: bold,
+        fontFamily: interMedium,
         fontSize: ms(13),
         color: blackColor,
     },
@@ -355,7 +355,7 @@ const styles = StyleSheet.create({
         gap: ms(6),
     },
     paidText: {
-        fontFamily: bold,
+        fontFamily: interMedium,
         fontSize: ms(13),
         color: primaryColor,
     },
@@ -369,12 +369,12 @@ const styles = StyleSheet.create({
         marginBottom: vs(20),
     },
     supportText: {
-        fontFamily: regular,
+        fontFamily: interRegular,
         fontSize: ms(12),
         color: '#6B7280',
     },
     supportLink: {
-        fontFamily: bold,
+        fontFamily: interMedium,
         fontSize: ms(12),
         color: primaryColor,
     },

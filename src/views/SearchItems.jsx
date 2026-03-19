@@ -6,7 +6,7 @@ import { useNavigation } from '@react-navigation/native';
 import { blackColor, whiteColor, primaryColor } from '../utils/globalColors';
 import { s, vs, ms } from 'react-native-size-matters';
 import axios from 'axios';
-import { api_url, BaseUrl } from '../config/Constants';
+import { api_url, BaseUrl, heading, interMedium, interRegular } from '../config/Constants';
 import axiosInstance from './AxiosInstance';
 import LinearGradient from 'react-native-linear-gradient';
 
@@ -242,7 +242,7 @@ const SearchItems = () => {
                     <Text
                         style={{
                             fontSize: ms(8),
-                            fontWeight: '600',
+                            fontFamily: interMedium,
                             color: whiteColor
                         }}
                         numberOfLines={1}
@@ -258,7 +258,7 @@ const SearchItems = () => {
                     <Text
                         style={{
                             fontSize: ms(14),
-                            fontWeight: 'bold',
+                            fontFamily: interMedium,
                             color: '#000000',
                             lineHeight: ms(18),
                         }}
@@ -282,7 +282,7 @@ const SearchItems = () => {
                 <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginTop: vs(5) }}>
                     <Text style={{
                         fontSize: ms(16),
-                        fontWeight: 'bold',
+                        fontFamily: interMedium,
                         color: '#000000',
                     }}>
                         ₹{item.mrp}
@@ -549,7 +549,7 @@ const styles = StyleSheet.create({
     headerTitle: {
         flex: 1,
         fontSize: ms(20),
-        fontWeight: '600',
+        fontFamily: interMedium,
         color: blackColor,
         marginLeft: s(15),
     },
@@ -580,7 +580,7 @@ const styles = StyleSheet.create({
     },
     sectionTitle: {
         fontSize: ms(16),
-        fontWeight: '600',
+        fontFamily: interMedium,
         color: blackColor,
         marginBottom: vs(12),
     },
@@ -603,11 +603,11 @@ const styles = StyleSheet.create({
     chipText: {
         fontSize: ms(14),
         color: '#666',
-        fontWeight: '500',
+        fontFamily: interMedium,
     },
     chipTextSelected: {
         color: whiteColor,
-        fontWeight: '600',
+        fontFamily: interMedium,
     },
     // Card Styles
     cardContainer: {
@@ -632,7 +632,7 @@ const styles = StyleSheet.create({
     removeButtonText: {
         marginLeft: ms(5),
         fontSize: ms(12),
-        fontWeight: '900',
+        fontFamily: interMedium,
         color: '#FF725E'
     },
     addButton: {
@@ -647,7 +647,7 @@ const styles = StyleSheet.create({
     },
     addButtonText: {
         fontSize: ms(12),
-        fontWeight: 'bold',
+        fontFamily: interMedium,
         color: whiteColor
     },
     emptyContainer: {
@@ -693,7 +693,7 @@ const styles = StyleSheet.create({
     },
     cartBarText: {
         fontSize: ms(14),
-        fontWeight: '600',
+        fontFamily: interMedium,
         color: '#000',
     },
     goToCartButton: {
@@ -705,7 +705,7 @@ const styles = StyleSheet.create({
     goToCartButtonText: {
         color: whiteColor,
         fontSize: ms(14),
-        fontWeight: 'bold',
+        fontFamily: interMedium,
     }
 });
 
@@ -753,7 +753,7 @@ const loginStyles = StyleSheet.create({
     },
     modalTitle: {
         fontSize: ms(18),
-        fontWeight: 'bold',
+        fontFamily: interMedium,
         color: '#333',
         marginBottom: vs(2),
         textAlign: 'center',
@@ -789,7 +789,7 @@ const loginStyles = StyleSheet.create({
     buttonText: {
         color: '#fff',
         fontSize: ms(14),
-        fontWeight: 'bold',
+        fontFamily: interMedium,
         letterSpacing: 0.5,
     },
     cancelButton: {
@@ -800,6 +800,6 @@ const loginStyles = StyleSheet.create({
     cancelText: {
         color: '#999',
         fontSize: ms(15),
-        fontWeight: '600',
+        fontFamily: interMedium,
     },
 });

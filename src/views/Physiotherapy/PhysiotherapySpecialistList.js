@@ -17,6 +17,7 @@ import { StatusBar2 } from '../../components/StatusBar';
 import Icon, { Icons } from '../../components/Icons';
 import LinearGradient from 'react-native-linear-gradient';
 import { blackColor, whiteColor, primaryColor, globalGradient2 } from '../../utils/globalColors';
+import { heading, interMedium, interRegular } from '../../config/Constants';
 
 const { width } = Dimensions.get('window');
 const CARD_GAP = ms(12);
@@ -148,21 +149,21 @@ const styles = StyleSheet.create({
     gradient: { flex: 1 },
     header: { flexDirection: 'row', alignItems: 'center', paddingHorizontal: ms(15), paddingTop: ms(50), paddingBottom: ms(10) },
     backBtn: { width: ms(35), height: ms(35), borderRadius: ms(17.5), backgroundColor: 'rgba(255,255,255,0.3)', justifyContent: 'center', alignItems: 'center', marginRight: ms(12) },
-    headerTitle: { fontSize: ms(16), fontWeight: 'bold', color: whiteColor, flex: 1 },
+    headerTitle: { fontSize: ms(16), fontFamily: interMedium, color: whiteColor, flex: 1 },
     searchBar: { flexDirection: 'row', alignItems: 'center', backgroundColor: whiteColor, borderRadius: ms(25), marginHorizontal: ms(15), paddingHorizontal: ms(14), paddingVertical: vs(10), gap: ms(8), marginBottom: vs(10), elevation: 4, shadowColor: '#000', shadowOpacity: 0.08, shadowRadius: 8, shadowOffset: { width: 0, height: 3 } },
     searchInput: { flex: 1, fontSize: ms(13), color: blackColor, padding: 0 },
     filterWrapper: { height: vs(44), marginBottom: ms(5) },
     filterRow: { paddingHorizontal: ms(15), alignItems: 'center' },
     filterChip: { flexDirection: 'row', alignItems: 'center', paddingHorizontal: ms(12), paddingVertical: vs(7), borderRadius: ms(20), backgroundColor: whiteColor, marginRight: ms(8), gap: ms(3) },
-    filterChipText: { fontSize: ms(12), color: '#444', fontWeight: '500', marginHorizontal: ms(2) },
+    filterChipText: { fontSize: ms(12), color: '#444', fontFamily: interMedium, marginHorizontal: ms(2) },
     grid: { paddingHorizontal: ms(15), paddingBottom: vs(20) },
     card: { width: CARD_WIDTH, backgroundColor: whiteColor, borderRadius: ms(16), marginBottom: ms(12), padding: ms(14), alignItems: 'center' },
     avatarWrap: { position: 'relative', marginBottom: vs(8) },
     avatarBg: { width: ms(72), height: ms(72), borderRadius: ms(36), overflow: 'hidden' },
     statusDot: { position: 'absolute', bottom: ms(2), right: ms(2), width: ms(12), height: ms(12), borderRadius: ms(6), borderWidth: 2, borderColor: whiteColor },
-    physioName: { fontSize: ms(12), fontWeight: '700', color: blackColor, textAlign: 'center', marginBottom: vs(4) },
+    physioName: { fontSize: ms(12), fontFamily: interMedium, color: blackColor, textAlign: 'center', marginBottom: vs(4) },
     ratingRow: { flexDirection: 'row', alignItems: 'center' },
-    ratingText: { fontSize: ms(11), fontWeight: '600', color: blackColor, marginLeft: ms(2) },
+    ratingText: { fontSize: ms(11), fontFamily: interMedium, color: blackColor, marginLeft: ms(2) },
     reviewText: { fontSize: ms(10), color: '#999' },
     emptyWrap: { alignItems: 'center', paddingTop: vs(60), gap: vs(10) },
     emptyText: { fontSize: ms(14), color: '#999' },

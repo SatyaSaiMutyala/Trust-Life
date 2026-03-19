@@ -11,7 +11,7 @@ import {
 } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { img_url } from '../../config/Constants';
+import { img_url, heading, interMedium, interRegular } from '../../config/Constants';
 import LinearGradient from 'react-native-linear-gradient';
 import { ms, vs } from 'react-native-size-matters';
 import { StatusBar2 } from '../../components/StatusBar';
@@ -175,20 +175,20 @@ const styles = StyleSheet.create({
     avatarCircle: { width: ms(42), height: ms(42), borderRadius: ms(21), backgroundColor: whiteColor, justifyContent: 'center', alignItems: 'center', overflow: 'hidden' },
     avatarImage: { width: ms(42), height: ms(42), borderRadius: ms(21) },
     headerTextWrap: { flex: 1 },
-    headerName: { fontSize: ms(15), fontWeight: 'bold', color: whiteColor },
+    headerName: { fontSize: ms(15), fontFamily: interMedium, color: whiteColor },
     headerDate: { fontSize: ms(11), color: 'rgba(255,255,255,0.8)', marginTop: vs(2) },
     headerRight: { flexDirection: 'row', gap: ms(8) },
     iconBtn: { width: ms(36), height: ms(36), borderRadius: ms(18), backgroundColor: whiteColor, justifyContent: 'center', alignItems: 'center' },
     searchBar: { flexDirection: 'row', alignItems: 'center', backgroundColor: whiteColor, borderRadius: ms(25), marginHorizontal: ms(15), paddingHorizontal: ms(14), paddingVertical: vs(10), gap: ms(8), marginBottom: vs(14), elevation: 2, shadowColor: '#000', shadowOpacity: 0.06, shadowRadius: 6, shadowOffset: { width: 0, height: 2 } },
     searchPlaceholder: { flex: 1, fontSize: ms(13), color: '#AAAAAA' },
-    titleText: { fontSize: ms(16), fontWeight: '700', color: blackColor, textAlign: 'center', lineHeight: ms(22), marginBottom: vs(14), paddingHorizontal: ms(20) },
+    titleText: { fontSize: ms(16), fontFamily: interMedium, color: blackColor, textAlign: 'center', lineHeight: ms(22), marginBottom: vs(14), paddingHorizontal: ms(20) },
     grid: { paddingHorizontal: ms(15), paddingBottom: vs(20) },
     card: { width: CARD_WIDTH, backgroundColor: whiteColor, borderRadius: ms(20), marginBottom: ms(12), elevation: 3, shadowColor: '#000', shadowOpacity: 0.08, shadowRadius: 6, shadowOffset: { width: 0, height: 2 } },
     cardImageWrap: { padding: ms(6) },
     cardImage: { width: '100%', height: ms(90), borderRadius: ms(12), backgroundColor: '#F1F5F9' },
     cardFooter: { alignItems: 'center', paddingVertical: vs(10) },
     cardPill: { flexDirection: 'row', alignItems: 'center', gap: ms(4), backgroundColor: '#EFEFEF', borderRadius: ms(20), paddingHorizontal: ms(12), paddingVertical: vs(5) },
-    cardName: { fontSize: ms(12), fontWeight: '600', color: blackColor },
+    cardName: { fontSize: ms(12), fontFamily: interMedium, color: blackColor },
     emptyWrap: { alignItems: 'center', paddingTop: vs(60), gap: vs(10) },
     emptyText: { fontSize: ms(14), color: '#999' },
 });

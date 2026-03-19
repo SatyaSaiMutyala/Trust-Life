@@ -16,6 +16,7 @@ import { ms, vs } from 'react-native-size-matters';
 import { StatusBar2 } from '../../components/StatusBar';
 import Icon, { Icons } from '../../components/Icons';
 import { blackColor, whiteColor, primaryColor } from '../../utils/globalColors';
+import { heading, interMedium, interRegular } from '../../config/Constants';
 
 const STATUS_STYLE = {
     Confirmed: { bg: '#E8F5E9', color: '#4CAF50' },
@@ -324,7 +325,7 @@ const styles = StyleSheet.create({
     headerTitle: {
         flex: 1,
         fontSize: ms(15),
-        fontWeight: 'bold',
+        fontFamily: interMedium,
         color: blackColor,
     },
     headerDate: {
@@ -344,7 +345,7 @@ const styles = StyleSheet.create({
     appointmentId: {
         fontSize: ms(13),
         color: blackColor,
-        fontWeight: '500',
+        fontFamily: interMedium,
         flex: 1,
     },
     statusBadge: {
@@ -354,7 +355,7 @@ const styles = StyleSheet.create({
     },
     statusText: {
         fontSize: ms(12),
-        fontWeight: '600',
+        fontFamily: interMedium,
     },
     sectionCard: {
         backgroundColor: whiteColor,
@@ -364,7 +365,7 @@ const styles = StyleSheet.create({
     },
     sectionTitle: {
         fontSize: ms(14),
-        fontWeight: 'bold',
+        fontFamily: interMedium,
         color: blackColor,
         marginBottom: vs(10),
     },
@@ -379,7 +380,7 @@ const styles = StyleSheet.create({
     },
     counsellorName: {
         fontSize: ms(14),
-        fontWeight: '600',
+        fontFamily: interMedium,
         color: blackColor,
     },
     ratingRow: {
@@ -390,7 +391,7 @@ const styles = StyleSheet.create({
     ratingText: {
         fontSize: ms(14),
         color: blackColor,
-        fontWeight: '600',
+        fontFamily: interMedium,
     },
     counsellorSpecialty: {
         fontSize: ms(12),
@@ -399,7 +400,7 @@ const styles = StyleSheet.create({
     },
     consultLabel: {
         fontSize: ms(13),
-        fontWeight: '600',
+        fontFamily: interMedium,
         color: blackColor,
         marginBottom: vs(3),
     },
@@ -426,14 +427,14 @@ const styles = StyleSheet.create({
     paymentValue: {
         fontSize: ms(13),
         color: blackColor,
-        fontWeight: '500',
+        fontFamily: interMedium,
     },
     noteSection: {
         paddingVertical: vs(14),
     },
     noteLabel: {
         fontSize: ms(13),
-        fontWeight: '600',
+        fontFamily: interMedium,
         color: blackColor,
         marginBottom: vs(6),
     },
@@ -464,12 +465,12 @@ const styles = StyleSheet.create({
     directionBtnText: {
         fontSize: ms(14),
         color: blackColor,
-        fontWeight: '500',
+        fontFamily: interMedium,
     },
     cancelText: {
         fontSize: ms(14),
         color: '#E53935',
-        fontWeight: '600',
+        fontFamily: interMedium,
     },
     completedHeader: {
         alignItems: 'center',
@@ -477,7 +478,7 @@ const styles = StyleSheet.create({
     },
     completedStatusText: {
         fontSize: ms(16),
-        fontWeight: '700',
+        fontFamily: interMedium,
         color: '#4CAF50',
         marginBottom: vs(8),
     },
@@ -492,12 +493,12 @@ const styles = StyleSheet.create({
     completedId: {
         fontSize: ms(13),
         color: blackColor,
-        fontWeight: '500',
+        fontFamily: interMedium,
     },
     feedbackLabel: {
         fontSize: ms(13),
         color: blackColor,
-        fontWeight: '500',
+        fontFamily: interMedium,
         marginBottom: vs(8),
     },
     starsRow: {
@@ -513,7 +514,7 @@ const styles = StyleSheet.create({
     },
     rescheduleBtnText: {
         fontSize: ms(15),
-        fontWeight: '700',
+        fontFamily: interMedium,
         color: whiteColor,
     },
     feedbackInput: {
@@ -537,7 +538,7 @@ const styles = StyleSheet.create({
     },
     submitFeedbackBtnText: {
         fontSize: ms(15),
-        fontWeight: '700',
+        fontFamily: interMedium,
         color: whiteColor,
     },
     successOverlay: {
@@ -566,12 +567,12 @@ const styles = StyleSheet.create({
     },
     successRatingText: {
         fontSize: ms(15),
-        fontWeight: '700',
+        fontFamily: interMedium,
         color: blackColor,
     },
     successThankText: {
         fontSize: ms(14),
-        fontWeight: '600',
+        fontFamily: interMedium,
         color: blackColor,
     },
     modalOverlay: {
@@ -598,7 +599,7 @@ const styles = StyleSheet.create({
     },
     sheetTitle: {
         fontSize: ms(16),
-        fontWeight: 'bold',
+        fontFamily: interMedium,
         color: blackColor,
     },
     sheetCloseBtn: {
@@ -618,7 +619,7 @@ const styles = StyleSheet.create({
     reasonText: {
         fontSize: ms(14),
         color: blackColor,
-        fontWeight: '500',
+        fontFamily: interMedium,
         flex: 1,
     },
     radio: {
@@ -648,7 +649,7 @@ const styles = StyleSheet.create({
     },
     cancelBtnText: {
         fontSize: ms(15),
-        fontWeight: '700',
+        fontFamily: interMedium,
         color: whiteColor,
     },
 });

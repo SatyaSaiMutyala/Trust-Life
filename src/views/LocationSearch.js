@@ -208,7 +208,7 @@ import {
 import { scale, verticalScale, moderateScale } from 'react-native-size-matters';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Icon from 'react-native-vector-icons/Ionicons';
-import { GOOGLE_KEY } from '../config/Constants';
+import { GOOGLE_KEY, heading, interMedium, interRegular } from '../config/Constants';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Icons } from '../components/Icons';
@@ -421,8 +421,8 @@ const styles = StyleSheet.create({
     marginRight: scale(10),
   },
   headerTitle: {
-    fontSize: moderateScale(18),
-    fontWeight: 'bold',
+    fontSize: ms(18),
+    fontFamily: heading,
     color: '#000',
   },
   searchBarContainer: {
@@ -445,11 +445,12 @@ const styles = StyleSheet.create({
     fontSize: moderateScale(16),
     color: '#000',
     paddingVertical: 0,
+    fontFamily: interRegular,
   },
   resultsHeader: {
     fontSize: moderateScale(16),
     color: '#000',
-    fontWeight: '600',
+    fontFamily: interMedium,
     paddingHorizontal: scale(15),
     paddingTop: verticalScale(15),
     paddingBottom: verticalScale(10),
@@ -460,13 +461,14 @@ const styles = StyleSheet.create({
   },
   itemName: {
     fontSize: moderateScale(16),
-    fontWeight: '500',
+    fontFamily: interMedium,
     color: '#000',
     marginBottom: verticalScale(2),
   },
   itemLocation: {
     fontSize: moderateScale(14),
     color: '#8E8E93',
+    fontFamily: interRegular,
   },
   separator: {
     height: StyleSheet.hairlineWidth,

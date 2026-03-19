@@ -3,7 +3,7 @@ import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { ms, vs } from 'react-native-size-matters';
 import Icon, { Icons } from '../../components/Icons';
-import { bold, regular } from '../../config/Constants';
+import { interMedium, interRegular } from '../../config/Constants';
 
 const InsurancePaymentSuccess = () => {
     const navigation = useNavigation();
@@ -54,13 +54,13 @@ const styles = StyleSheet.create({
     },
     amount: {
         fontSize: ms(32),
-        fontFamily: bold,
+        fontFamily: interMedium,
         color: '#1B1B1B',
         marginBottom: vs(6),
     },
     title: {
         fontSize: ms(16),
-        fontFamily: bold,
+        fontFamily: interMedium,
         color: '#1B1B1B',
     },
 });

@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { StyleSheet, View, Text, SafeAreaView, ScrollView, TouchableOpacity, Image, ActivityIndicator } from 'react-native';
 import Icon, { Icons } from '../components/Icons';
 import * as colors from '../assets/css/Colors';
-import { regular, bold, testTube, testTubeLab, secondBaseUrl, api_url, text, } from '../config/Constants';
+import { heading, interMedium, interRegular, testTube, testTubeLab, secondBaseUrl, api_url, text, } from '../config/Constants';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { LoadLabCartItemsAction } from '../redux/actions/LabCartItemsActions';
 import { AddToCartAction } from '../redux/actions/AddToCartActions';
@@ -230,7 +230,7 @@ const SelectedTest = (props) => {
                         <View style={styles.contentCard}>
                             <Text style={styles.testName}>{data.test_name || 'Glycosylated Haemoglobin (GHb/HbA1c)'}</Text>
                             <Text style={styles.chosenText}>
-                                Chosen by <Text style={{ color: primaryColor, fontWeight: 'bold' }}>500+</Text> user recently
+                                Chosen by <Text style={{ color: primaryColor, fontFamily: interMedium }}>500+</Text> user recently
                             </Text>
 
                             {/* Gender & Availability Row */}
@@ -262,7 +262,7 @@ const SelectedTest = (props) => {
                                 <View style={styles.detailItem}>
                                     <Icon type={Icons.MaterialCommunityIcons} name="clock-outline" color={primaryColor} size={ms(18)} />
                                     <Text style={[styles.detailText, { marginLeft: ms(10) }]}>
-                                        <Text style={{ fontWeight: 'bold' }}>12 Hr</Text> Fasting Required
+                                        <Text style={{ fontFamily: interMedium }}>12 Hr</Text> Fasting Required
                                     </Text>
                                 </View>
                             </View>
@@ -565,7 +565,7 @@ const styles = StyleSheet.create({
     },
     headerTitle: {
         fontSize: ms(18),
-        fontWeight: 'bold',
+        fontFamily: interMedium,
         color: whiteColor,
         marginLeft: ms(12),
         flex: 1,
@@ -597,7 +597,7 @@ const styles = StyleSheet.create({
     cartBadgeText: {
         color: whiteColor,
         fontSize: ms(10),
-        fontWeight: 'bold',
+        fontFamily: interMedium,
     },
 
     // Address Bar
@@ -617,7 +617,7 @@ const styles = StyleSheet.create({
         color: blackColor,
     },
     addressLabel: {
-        fontWeight: 'bold',
+        fontFamily: interMedium,
         color: blackColor,
     },
 
@@ -631,7 +631,7 @@ const styles = StyleSheet.create({
     },
     testName: {
         fontSize: ms(18),
-        fontWeight: 'bold',
+        fontFamily: interMedium,
         color: blackColor,
         marginBottom: vs(5),
     },
@@ -654,7 +654,7 @@ const styles = StyleSheet.create({
     infoText: {
         fontSize: ms(13),
         color: blackColor,
-        fontWeight: '500',
+        fontFamily: interMedium,
     },
     detailsList: {
         marginBottom: vs(15),
@@ -676,7 +676,7 @@ const styles = StyleSheet.create({
     detailText: {
         fontSize: ms(13),
         color: blackColor,
-        fontWeight: '500',
+        fontFamily: interMedium,
     },
     priceRow: {
         flexDirection: 'row',
@@ -685,7 +685,7 @@ const styles = StyleSheet.create({
     },
     price: {
         fontSize: ms(20),
-        fontWeight: 'bold',
+        fontFamily: interMedium,
         color: blackColor,
     },
     taxText: {
@@ -713,7 +713,7 @@ const styles = StyleSheet.create({
     removeButtonText: {
         marginLeft: ms(8),
         fontSize: ms(13),
-        fontWeight: '900',
+        fontFamily: interMedium,
         color: '#FF725E',
     },
     addButton: {
@@ -725,7 +725,7 @@ const styles = StyleSheet.create({
     },
     addButtonText: {
         fontSize: ms(14),
-        fontWeight: 'bold',
+        fontFamily: interMedium,
         color: whiteColor,
     },
 
@@ -736,7 +736,7 @@ const styles = StyleSheet.create({
     },
     sectionTitle: {
         fontSize: ms(16),
-        fontWeight: 'bold',
+        fontFamily: interMedium,
         color: blackColor,
         marginBottom: vs(10),
     },
@@ -757,12 +757,12 @@ const styles = StyleSheet.create({
     testIncludedText: {
         fontSize: ms(13),
         color: blackColor,
-        fontWeight: '500',
+        fontFamily: interMedium,
     },
     viewAllText: {
         fontSize: ms(13),
         color: primaryColor,
-        fontWeight: 'bold',
+        fontFamily: interMedium,
         marginTop: vs(5),
     },
 
@@ -796,7 +796,7 @@ const styles = StyleSheet.create({
     },
     doctorName: {
         fontSize: ms(15),
-        fontWeight: 'bold',
+        fontFamily: interMedium,
         color: blackColor,
     },
     doctorSpeciality: {
@@ -845,12 +845,12 @@ const styles = StyleSheet.create({
     },
     packageBadgeText: {
         fontSize: ms(8),
-        fontWeight: '600',
+        fontFamily: interMedium,
         color: whiteColor,
     },
     packageName: {
         fontSize: ms(15),
-        fontWeight: 'bold',
+        fontFamily: interMedium,
         color: blackColor,
         marginTop:ms(10)
     },
@@ -861,7 +861,7 @@ const styles = StyleSheet.create({
     },
     packagePrice: {
         fontSize: ms(15),
-        fontWeight: 'bold',
+        fontFamily: interMedium,
         color: blackColor,
     },
     packageAddBtn: {
@@ -873,7 +873,7 @@ const styles = StyleSheet.create({
     },
     packageAddText: {
         fontSize: ms(12),
-        fontWeight: 'bold',
+        fontFamily: interMedium,
         color: primaryColor,
     },
 
@@ -899,11 +899,11 @@ const styles = StyleSheet.create({
     bundleSave: {
         fontSize: ms(11),
         color: '#3B82F6',
-        fontWeight: 'bold',
+        fontFamily: interMedium,
     },
     bundleTitle: {
         fontSize: ms(14),
-        fontWeight: 'bold',
+        fontFamily: interMedium,
         color: blackColor,
         marginTop: vs(2),
     },
@@ -919,7 +919,7 @@ const styles = StyleSheet.create({
         left: ms(17),
         fontSize: ms(9),
         color: blackColor,
-        fontWeight: '600',
+        fontFamily: interMedium,
         textAlign: 'center',
     },
     checkbox: {
@@ -950,7 +950,7 @@ const styles = StyleSheet.create({
     },
     faqQuestion: {
         fontSize: ms(14),
-        fontWeight: '600',
+        fontFamily: interMedium,
         color: blackColor,
         flex: 1,
         marginRight: ms(10),
@@ -982,7 +982,7 @@ const styles = StyleSheet.create({
     },
     bottomPrice: {
         fontSize: ms(16),
-        fontWeight: '600',
+        fontFamily: interMedium,
         color: blackColor,
     },
     bottomTaxText: {
@@ -999,7 +999,7 @@ const styles = StyleSheet.create({
     goToCartText: {
         color: whiteColor,
         fontSize: ms(15),
-        fontWeight: 'bold',
+        fontFamily: interMedium,
     },
 
     // Branding
@@ -1033,7 +1033,7 @@ const styles = StyleSheet.create({
     },
     modalTitle: {
         fontSize: ms(18),
-        fontWeight: 'bold',
+        fontFamily: interMedium,
         color: blackColor,
     },
     modalItem: {
@@ -1047,7 +1047,7 @@ const styles = StyleSheet.create({
     modalItemText: {
         color: blackColor,
         fontSize: ms(14),
-        fontWeight: '500',
+        fontFamily: interMedium,
     },
 });
 
@@ -1089,7 +1089,7 @@ const loginStyles = StyleSheet.create({
     },
     modalTitle: {
         fontSize: ms(18),
-        fontWeight: 'bold',
+        fontFamily: interMedium,
         color: '#333',
         marginBottom: vs(2),
         textAlign: 'center',
@@ -1122,7 +1122,7 @@ const loginStyles = StyleSheet.create({
     buttonText: {
         color: '#fff',
         fontSize: ms(14),
-        fontWeight: 'bold',
+        fontFamily: interMedium,
         letterSpacing: 0.5,
     },
     cancelButton: {
@@ -1133,7 +1133,7 @@ const loginStyles = StyleSheet.create({
     cancelText: {
         color: '#999',
         fontSize: ms(15),
-        fontWeight: '600',
+        fontFamily: interMedium,
     },
 });
 

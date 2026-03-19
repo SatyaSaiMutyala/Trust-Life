@@ -13,6 +13,7 @@ import { StatusBar2 } from '../../components/StatusBar';
 import Icon, { Icons } from '../../components/Icons';
 import LinearGradient from 'react-native-linear-gradient';
 import { blackColor, whiteColor, primaryColor, globalGradient2 } from '../../utils/globalColors';
+import { heading, interMedium, interRegular } from '../../config/Constants';
 import PrimaryButton from '../../utils/primaryButton';
 
 const DashedDivider = () => (
@@ -223,7 +224,7 @@ const styles = StyleSheet.create({
     },
     headerTitle: {
         fontSize: ms(15),
-        fontWeight: '700',
+        fontFamily: interMedium,
         color: whiteColor,
     },
 
@@ -264,7 +265,7 @@ const styles = StyleSheet.create({
     },
     doctorName: {
         fontSize: ms(13),
-        fontWeight: '700',
+        fontFamily: interMedium,
         color: blackColor,
         marginBottom: vs(2),
     },
@@ -282,7 +283,7 @@ const styles = StyleSheet.create({
     },
     ratingText: {
         fontSize: ms(11),
-        fontWeight: '600',
+        fontFamily: interMedium,
         color: blackColor,
     },
     reviewsText: {
@@ -294,7 +295,7 @@ const styles = StyleSheet.create({
     // Section title
     sectionTitle: {
         fontSize: ms(13),
-        fontWeight: '500',
+        fontFamily: interMedium,
         color: blackColor,
         marginBottom: vs(10),
     },
@@ -308,7 +309,7 @@ const styles = StyleSheet.create({
     appointmentDate: {
         fontSize: ms(12),
         color: '#444',
-        fontWeight: '500',
+        fontFamily: interMedium,
     },
     changeDateBtn: {
         paddingHorizontal: ms(12),
@@ -319,7 +320,7 @@ const styles = StyleSheet.create({
     changeDateText: {
         fontSize: ms(11),
         color: primaryColor,
-        fontWeight: '500',
+        fontFamily: interMedium,
     },
 
     // Consultation type
@@ -331,7 +332,7 @@ const styles = StyleSheet.create({
     },
     consultTypeLabel: {
         fontSize: ms(14),
-        fontWeight: '700',
+        fontFamily: interMedium,
         color: blackColor,
     },
     consultTypeDesc: {
@@ -345,7 +346,7 @@ const styles = StyleSheet.create({
     addText: {
         fontSize: ms(13),
         color: primaryColor,
-        fontWeight: '700',
+        fontFamily: interMedium,
     },
     patientBlock: {
         marginTop: vs(4),
@@ -366,7 +367,7 @@ const styles = StyleSheet.create({
     },
     patientName: {
         fontSize: ms(13),
-        fontWeight: '600',
+        fontFamily: interMedium,
         color: blackColor,
     },
     patientDob: {
@@ -391,7 +392,7 @@ const styles = StyleSheet.create({
     detailValue: {
         fontSize: ms(12),
         color: blackColor,
-        fontWeight: '500',
+        fontFamily: interMedium,
     },
 
     // Price
@@ -407,16 +408,16 @@ const styles = StyleSheet.create({
     priceValue: {
         fontSize: ms(12),
         color: blackColor,
-        fontWeight: '500',
+        fontFamily: interMedium,
     },
     priceTotalLabel: {
         fontSize: ms(13),
-        fontWeight: '700',
+        fontFamily: interMedium,
         color: blackColor,
     },
     priceTotalValue: {
         fontSize: ms(13),
-        fontWeight: '700',
+        fontFamily: interMedium,
         color: blackColor,
     },
 
@@ -424,7 +425,7 @@ const styles = StyleSheet.create({
     policyLink: {
         fontSize: ms(12),
         color: '#3B82F6',
-        fontWeight: '400',
+        fontFamily: interRegular,
     },
     policyCard: {
         borderRadius: ms(12),

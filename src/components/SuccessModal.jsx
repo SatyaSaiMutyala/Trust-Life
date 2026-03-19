@@ -11,7 +11,7 @@ import {
 import { ms, vs } from 'react-native-size-matters';
 import LinearGradient from 'react-native-linear-gradient';
 import Icon, { Icons } from './Icons';
-import { bold, regular } from '../config/Constants';
+import { interMedium, interRegular } from '../config/Constants';
 import { primaryColor, whiteColor, blackColor, globalGradient } from '../utils/globalColors';
 
 const { width } = Dimensions.get('window');
@@ -181,14 +181,14 @@ const styles = StyleSheet.create({
     },
     title: {
         fontSize: ms(22),
-        fontFamily: bold,
+        fontFamily: interMedium,
         color: blackColor,
         marginBottom: vs(10),
         textAlign: 'center',
     },
     message: {
         fontSize: ms(14),
-        fontFamily: regular,
+        fontFamily: interRegular,
         color: '#666',
         textAlign: 'center',
         marginBottom: vs(25),
@@ -206,7 +206,7 @@ const styles = StyleSheet.create({
     },
     buttonText: {
         fontSize: ms(16),
-        fontFamily: bold,
+        fontFamily: interMedium,
         color: whiteColor,
     },
 });

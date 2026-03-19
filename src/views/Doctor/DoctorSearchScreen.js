@@ -18,6 +18,7 @@ import { ms, vs } from 'react-native-size-matters';
 import { StatusBar2 } from '../../components/StatusBar';
 import Icon, { Icons } from '../../components/Icons';
 import { blackColor, whiteColor, primaryColor } from '../../utils/globalColors';
+import { heading, interMedium, interRegular } from '../../config/Constants';
 
 const { width } = Dimensions.get('window');
 const CARD_GAP = ms(12);
@@ -200,7 +201,7 @@ const styles = StyleSheet.create({
     },
     headerTitle: {
         fontSize: ms(16),
-        fontWeight: 'bold',
+        fontFamily: interMedium,
         color: blackColor,
     },
 
@@ -250,7 +251,7 @@ const styles = StyleSheet.create({
     filterChipText: {
         fontSize: ms(12),
         color: '#444',
-        fontWeight: '500',
+        fontFamily: interMedium,
         marginHorizontal: ms(4),
     },
 
@@ -294,7 +295,7 @@ const styles = StyleSheet.create({
     },
     doctorName: {
         fontSize: ms(12),
-        fontWeight: '700',
+        fontFamily: interMedium,
         color: blackColor,
         textAlign: 'center',
         marginBottom: vs(4),
@@ -306,7 +307,7 @@ const styles = StyleSheet.create({
     },
     ratingText: {
         fontSize: ms(11),
-        fontWeight: '600',
+        fontFamily: interMedium,
         color: blackColor,
         marginLeft: ms(2),
     },
@@ -328,7 +329,7 @@ const styles = StyleSheet.create({
     specialtyText: {
         fontSize: ms(10),
         color: '#444',
-        fontWeight: '500',
+        fontFamily: interMedium,
         flex: 1,
     },
 

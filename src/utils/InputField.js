@@ -7,7 +7,7 @@ import {
     StyleSheet,
 } from 'react-native';
 import Icon, { Icons } from '../components/Icons';
-import { bold, regular } from '../config/Constants';
+import { interMedium, interRegular } from '../config/Constants';
 import { blackColor, whiteColor } from './globalColors';
 import { ms, vs } from 'react-native-size-matters';
 
@@ -105,7 +105,7 @@ const styles = StyleSheet.create({
         marginBottom: vs(10),
     },
     label: {
-        fontFamily: bold,
+        fontFamily: interMedium,
         fontSize: ms(13),
         color: blackColor,
         marginBottom: vs(6),
@@ -126,12 +126,12 @@ const styles = StyleSheet.create({
         fontSize: ms(14),
         color: blackColor,
         paddingVertical: 0,
-        fontFamily: regular,
+        fontFamily: interRegular,
     },
     suffixText: {
         fontSize: ms(14),
         color: '#A0A0A0',
-        fontFamily: bold,
+        fontFamily: interMedium,
         marginRight: ms(5),
     },
 });

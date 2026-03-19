@@ -14,7 +14,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import { StatusBar4 } from '../../components/StatusBar';
 import Icon, { Icons } from '../../components/Icons';
 import { blackColor, whiteColor, primaryColor, grayColor } from '../../utils/globalColors';
-import { bold, regular } from '../../config/Constants';
+import { interMedium, interRegular } from '../../config/Constants';
 import { PricingButton } from 'react-native-elements/dist/pricing/PricingCard';
 import PrimaryButton from '../../utils/primaryButton';
 
@@ -230,7 +230,7 @@ const styles = StyleSheet.create({
     },
     headerTitle: {
         flex: 1,
-        fontFamily: bold,
+        fontFamily: interMedium,
         fontSize: ms(16),
         color: blackColor,
         marginLeft: ms(12),
@@ -259,7 +259,7 @@ const styles = StyleSheet.create({
     },
     addressText: {
         flex: 1,
-        fontFamily: regular,
+        fontFamily: interRegular,
         fontSize: ms(12),
         color: '#6B7280',
     },
@@ -290,12 +290,12 @@ const styles = StyleSheet.create({
         paddingVertical: vs(5),
     },
     storeBadgeText: {
-        fontFamily: bold,
+        fontFamily: interMedium,
         fontSize: ms(11),
         color: whiteColor,
     },
     addItemsText: {
-        fontFamily: regular,
+        fontFamily: interRegular,
         fontSize: ms(13),
         color: blackColor,
     },
@@ -328,7 +328,7 @@ const styles = StyleSheet.create({
         zIndex: 1,
     },
     discountBadgeText: {
-        fontFamily: bold,
+        fontFamily: interMedium,
         fontSize: ms(7),
         color: whiteColor,
     },
@@ -340,12 +340,12 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     cartItemName: {
-        fontFamily: bold,
+        fontFamily: interMedium,
         fontSize: ms(13),
         color: blackColor,
     },
     cartItemSubtitle: {
-        fontFamily: regular,
+        fontFamily: interRegular,
         fontSize: ms(11),
         color: '#9CA3AF',
         marginTop: vs(2),
@@ -357,12 +357,12 @@ const styles = StyleSheet.create({
         marginTop: vs(4),
     },
     cartItemPrice: {
-        fontFamily: bold,
+        fontFamily: interMedium,
         fontSize: ms(13),
         color: blackColor,
     },
     cartItemMrp: {
-        fontFamily: regular,
+        fontFamily: interRegular,
         fontSize: ms(11),
         color: '#9CA3AF',
         textDecorationLine: 'line-through',
@@ -385,11 +385,11 @@ const styles = StyleSheet.create({
     },
     qtyBtnText: {
         fontSize: ms(14),
-        fontWeight: '600',
+        fontFamily: interMedium,
         color: blackColor,
     },
     qtyValue: {
-        fontFamily: bold,
+        fontFamily: interMedium,
         fontSize: ms(13),
         color: blackColor,
         paddingHorizontal: ms(6),
@@ -412,12 +412,12 @@ const styles = StyleSheet.create({
         gap: ms(10),
     },
     couponText: {
-        fontFamily: regular,
+        fontFamily: interRegular,
         fontSize: ms(13),
         color: blackColor,
     },
     applyText: {
-        fontFamily: bold,
+        fontFamily: interMedium,
         fontSize: ms(13),
         color: primaryColor,
     },
@@ -430,7 +430,7 @@ const styles = StyleSheet.create({
         marginBottom: vs(12),
     },
     receiverTitle: {
-        fontFamily: bold,
+        fontFamily: interMedium,
         fontSize: ms(13),
         color: blackColor,
         marginBottom: vs(12),
@@ -441,12 +441,12 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
     },
     receiverName: {
-        fontFamily: bold,
+        fontFamily: interMedium,
         fontSize: ms(13),
         color: blackColor,
     },
     receiverPhone: {
-        fontFamily: regular,
+        fontFamily: interRegular,
         fontSize: ms(11),
         color: '#9CA3AF',
         marginTop: vs(2),
@@ -460,7 +460,7 @@ const styles = StyleSheet.create({
         marginBottom: vs(12),
     },
     billTitle: {
-        fontFamily: bold,
+        fontFamily: interMedium,
         fontSize: ms(13),
         color: blackColor,
         marginBottom: vs(14),
@@ -472,12 +472,12 @@ const styles = StyleSheet.create({
         marginBottom: vs(10),
     },
     billLabel: {
-        fontFamily: regular,
+        fontFamily: interRegular,
         fontSize: ms(12),
         color: '#6B7280',
     },
     billValue: {
-        fontFamily: regular,
+        fontFamily: interRegular,
         fontSize: ms(12),
         color: blackColor,
     },
@@ -488,12 +488,12 @@ const styles = StyleSheet.create({
         borderStyle: 'dashed',
     },
     grandTotalLabel: {
-        fontFamily: bold,
+        fontFamily: interMedium,
         fontSize: ms(13),
         color: blackColor,
     },
     grandTotalValue: {
-        fontFamily: bold,
+        fontFamily: interMedium,
         fontSize: ms(13),
         color: blackColor,
     },
@@ -505,12 +505,12 @@ const styles = StyleSheet.create({
         marginBottom: vs(10),
     },
     policyText: {
-        fontFamily: regular,
+        fontFamily: interRegular,
         fontSize: ms(12),
         color: '#6B7280',
     },
     policyLink: {
-        fontFamily: regular,
+        fontFamily: interRegular,
         fontSize: ms(12),
         color: primaryColor,
     },
@@ -528,7 +528,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     proceedBtnText: {
-        fontFamily: bold,
+        fontFamily: interMedium,
         fontSize: ms(15),
         color: whiteColor,
     },

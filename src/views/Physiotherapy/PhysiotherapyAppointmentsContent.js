@@ -10,6 +10,7 @@ import { useNavigation } from '@react-navigation/native';
 import { ms, vs } from 'react-native-size-matters';
 import Icon, { Icons } from '../../components/Icons';
 import { blackColor, whiteColor, primaryColor } from '../../utils/globalColors';
+import { heading, interMedium, interRegular } from '../../config/Constants';
 
 const TABS = ['All', 'Current', 'Completed', 'Cancelled'];
 
@@ -174,34 +175,34 @@ export default PhysiotherapyAppointmentsContent;
 const styles = StyleSheet.create({
     container: { flex: 1, backgroundColor: '#F1F5F9' },
     header: { paddingHorizontal: ms(16), paddingTop: ms(50), paddingBottom: vs(15) },
-    headerTitle: { fontSize: ms(20), fontWeight: 'bold', color: blackColor },
+    headerTitle: { fontSize: ms(20), fontFamily: interMedium, color: blackColor },
     tabBar: { flexDirection: 'row', justifyContent: 'center', paddingHorizontal: ms(10) },
     tabItem: { alignItems: 'center', paddingHorizontal: ms(12), paddingBottom: vs(8) },
-    tabLabel: { fontSize: ms(13), color: '#888', fontWeight: '500' },
-    tabLabelActive: { color: primaryColor, fontWeight: '700' },
+    tabLabel: { fontSize: ms(13), color: '#888', fontFamily: interMedium },
+    tabLabelActive: { color: primaryColor, fontFamily: interMedium },
     tabUnderline: { position: 'absolute', bottom: 0, left: ms(12), right: ms(12), height: 3, backgroundColor: primaryColor, borderRadius: 2 },
     tabDivider: { height: 1, backgroundColor: '#E5E7EB', marginBottom: vs(10) },
     listContent: { paddingHorizontal: ms(14), paddingBottom: vs(20), gap: vs(12) },
     card: { backgroundColor: whiteColor, borderRadius: ms(12), padding: ms(14), marginTop: ms(10) },
     cardTopRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: vs(8) },
     statusBadge: { borderRadius: ms(20), paddingHorizontal: ms(12), paddingVertical: vs(3) },
-    statusText: { fontSize: ms(12), fontWeight: '600' },
+    statusText: { fontSize: ms(12), fontFamily: interMedium },
     cardDate: { fontSize: ms(11), color: '#888' },
     physioRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: vs(2) },
-    physioName: { fontSize: ms(14), fontWeight: 'bold', color: blackColor },
+    physioName: { fontSize: ms(14), fontFamily: interMedium, color: blackColor },
     ratingRow: { flexDirection: 'row', alignItems: 'center', gap: ms(3) },
-    ratingText: { fontSize: ms(13), color: blackColor, fontWeight: '600' },
+    ratingText: { fontSize: ms(13), color: blackColor, fontFamily: interMedium },
     specialty: { fontSize: ms(12), color: '#666', marginBottom: vs(6) },
     addressSection: { marginBottom: vs(6) },
     addressLabel: { fontSize: ms(11), color: '#999', marginBottom: vs(1) },
     addressText: { fontSize: ms(12), color: '#555' },
     amountRow: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: vs(10) },
-    amountLabel: { fontSize: ms(13), color: '#555', fontWeight: '500' },
-    amountValue: { fontSize: ms(14), fontWeight: 'bold', color: blackColor },
+    amountLabel: { fontSize: ms(13), color: '#555', fontFamily: interMedium },
+    amountValue: { fontSize: ms(14), fontFamily: interMedium, color: blackColor },
     outlineBtn: { borderRadius: ms(18), paddingVertical: vs(10), alignItems: 'center', backgroundColor: '#F1F5F9' },
-    outlineBtnText: { fontSize: ms(13), color: blackColor, fontWeight: '500' },
+    outlineBtnText: { fontSize: ms(13), color: blackColor, fontFamily: interMedium },
     filledBtn: { borderRadius: ms(18), backgroundColor: primaryColor, paddingVertical: vs(10), alignItems: 'center' },
-    filledBtnText: { fontSize: ms(13), color: whiteColor, fontWeight: '600' },
+    filledBtnText: { fontSize: ms(13), color: whiteColor, fontFamily: interMedium },
     emptyContainer: { alignItems: 'center', paddingTop: vs(80) },
     emptyText: { fontSize: ms(14), color: '#999' },
 });

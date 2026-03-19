@@ -21,9 +21,11 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import Icon, { Icons } from '../../components/Icons';
 import { StatusBar2 } from '../../components/StatusBar';
 import { globalGradient, primaryColor, whiteColor, blackColor, grayColor } from '../../utils/globalColors';
-import { GOOGLE_KEY } from '../../config/Constants';
+import { GOOGLE_KEY, interMedium, interRegular } from '../../config/Constants';
 
 const { width } = Dimensions.get('window');
+
+const TABS = ['NABL', 'Non-NABL'];
 
 const CompanyLabTests = () => {
   const navigation = useNavigation();
@@ -31,6 +33,7 @@ const CompanyLabTests = () => {
   const [profilePic, setProfilePic] = useState(null);
   const [locationModal, setLocationModal] = useState(false);
   const [savedLocation, setSavedLocation] = useState(null);
+  const [activeTab, setActiveTab] = useState('NABL');
 
   useEffect(() => {
     loadSavedLocation();
@@ -80,37 +83,30 @@ const CompanyLabTests = () => {
     );
   };
 
-  // Lab data organized by category
-  const labCategories = [
-    {
-      title: 'NABL Accurate labs',
-      labs: [
-        { id: 1, name: 'TrustLab DIAGNOSTICS', image: require('../../assets/img/app3dlogo.png') },
-        { id: 2, name: 'VIJAYA DIAGNOSTIC CENTRE', image: require('../../assets/img/vijayalogo.png') },
-        { id: 3, name: 'teNET DIAGNOSTICS', image: require('../../assets/img/tenetlogo.png') },
-        { id: 4, name: 'Apollo DIAGNOSTICS', image: require('../../assets/img/apollologo.png') },
-        { id: 5, name: 'METROPOLIS', image: require('../../assets/img/metropoleslogo.png') },
-        { id: 6, name: 'agilus >> diagnostics', image: require('../../assets/img/agiluslogo.png') },
-        { id: 7, name: 'AMPATH', image: require('../../assets/img/ampatlogo.png') },
-        { id: 8, name: 'LUCID MEDICAL DIAGNOSTICS', image: require('../../assets/img/lucidlogo.png') },
-        { id: 9, name: 'Unipath SPECIALTY LABORATORIES LTD.', image: require('../../assets/img/unipathlogo.png') },
-      ]
-    },
-    {
-      title: 'NON -NABL Accurate labs',
-      labs: [
-        { id: 10, name: 'TrustLab DIAGNOSTICS', image: require('../../assets/img/app3dlogo.png') },
-        { id: 11, name: 'VIJAYA DIAGNOSTIC CENTRE', image: require('../../assets/img/vijayalogo.png') },
-        { id: 12, name: 'teNET DIAGNOSTICS', image: require('../../assets/img/tenetlogo.png') },
-        { id: 13, name: 'Apollo DIAGNOSTICS', image: require('../../assets/img/apollologo.png') },
-        { id: 14, name: 'METROPOLIS', image: require('../../assets/img/metropoleslogo.png') },
-        { id: 15, name: 'agilus >> diagnostics', image: require('../../assets/img/agiluslogo.png') },
-        { id: 16, name: 'AMPATH', image: require('../../assets/img/ampatlogo.png') },
-        { id: 17, name: 'LUCID MEDICAL DIAGNOSTICS', image: require('../../assets/img/lucidlogo.png') },
-        { id: 18, name: 'Unipath SPECIALTY LABORATORIES LTD.', image: require('../../assets/img/unipathlogo.png') },
-      ]
-    }
-  ];
+  const labData = {
+    'NABL': [
+      { id: 1, name: 'TrustLab DIAGNOSTICS', image: require('../../assets/img/app3dlogo.png') },
+      { id: 2, name: 'VIJAYA DIAGNOSTIC CENTRE', image: require('../../assets/img/vijayalogo.png') },
+      { id: 3, name: 'teNET DIAGNOSTICS', image: require('../../assets/img/tenetlogo.png') },
+      { id: 4, name: 'Apollo DIAGNOSTICS', image: require('../../assets/img/apollologo.png') },
+      { id: 5, name: 'METROPOLIS', image: require('../../assets/img/metropoleslogo.png') },
+      { id: 6, name: 'agilus >> diagnostics', image: require('../../assets/img/agiluslogo.png') },
+      { id: 7, name: 'AMPATH', image: require('../../assets/img/ampatlogo.png') },
+      { id: 8, name: 'LUCID MEDICAL DIAGNOSTICS', image: require('../../assets/img/lucidlogo.png') },
+      { id: 9, name: 'Unipath SPECIALTY LABORATORIES LTD.', image: require('../../assets/img/unipathlogo.png') },
+    ],
+    'Non-NABL': [
+      { id: 10, name: 'TrustLab DIAGNOSTICS', image: require('../../assets/img/app3dlogo.png') },
+      { id: 11, name: 'VIJAYA DIAGNOSTIC CENTRE', image: require('../../assets/img/vijayalogo.png') },
+      { id: 12, name: 'teNET DIAGNOSTICS', image: require('../../assets/img/tenetlogo.png') },
+      { id: 13, name: 'Apollo DIAGNOSTICS', image: require('../../assets/img/apollologo.png') },
+      { id: 14, name: 'METROPOLIS', image: require('../../assets/img/metropoleslogo.png') },
+      { id: 15, name: 'agilus >> diagnostics', image: require('../../assets/img/agiluslogo.png') },
+      { id: 16, name: 'AMPATH', image: require('../../assets/img/ampatlogo.png') },
+      { id: 17, name: 'LUCID MEDICAL DIAGNOSTICS', image: require('../../assets/img/lucidlogo.png') },
+      { id: 18, name: 'Unipath SPECIALTY LABORATORIES LTD.', image: require('../../assets/img/unipathlogo.png') },
+    ],
+  };
 
   const renderLabGrid = (labs) => {
     // Split into chunks of 3 for 3-column grid
@@ -249,21 +245,29 @@ const CompanyLabTests = () => {
           </TouchableOpacity>
         </View>
 
+        {/* Tabs */}
+        <View style={styles.tabRow}>
+          {TABS.map((tab) => (
+            <TouchableOpacity
+              key={tab}
+              style={[styles.tab, activeTab === tab && styles.tabActive]}
+              onPress={() => setActiveTab(tab)}
+              activeOpacity={0.7}
+            >
+              <Text style={[styles.tabText, activeTab === tab && styles.tabTextActive]}>{tab}</Text>
+            </TouchableOpacity>
+          ))}
+        </View>
+
         {/* Main Content */}
         <ScrollView
           showsVerticalScrollIndicator={false}
           style={styles.contentContainer}
           contentContainerStyle={styles.contentContainerStyle}
         >
-          {labCategories.map((category, index) => (
-            <View key={index} style={styles.categorySection}>
-              <Text style={styles.categoryTitle}>{category.title}</Text>
-              <View style={styles.labsGridContainer}>
-                {renderLabGrid(category.labs)}
-              </View>
-              {/* {index < labCategories.length - 1 && <View style={styles.categoryDivider} />} */}
-            </View>
-          ))}
+          <View style={styles.labsGridContainer}>
+            {renderLabGrid(labData[activeTab])}
+          </View>
 
           {/* Bottom padding */}
           <View style={{ height: ms(30) }} />
@@ -357,12 +361,12 @@ const styles = StyleSheet.create({
   greetingText: {
     color: '#fff',
     fontSize: ms(15),
-    fontWeight: 'bold',
+    fontFamily: interMedium,
   },
   userName: {
     color: '#fff',
     fontSize: ms(15),
-    fontWeight: 'bold',
+    fontFamily: interMedium,
     marginLeft: 4,
     flexShrink: 1,
   },
@@ -412,9 +416,35 @@ const styles = StyleSheet.create({
     color: '#000',
     paddingVertical: 0,
   },
+  tabRow: {
+    flexDirection: 'row',
+    marginHorizontal: ms(15),
+    marginBottom: vs(12),
+    backgroundColor: 'rgba(255,255,255,0.2)',
+    borderRadius: ms(25),
+    padding: ms(4),
+  },
+  tab: {
+    flex: 1,
+    alignItems: 'center',
+    paddingVertical: vs(8),
+    borderRadius: ms(22),
+  },
+  tabActive: {
+    backgroundColor: primaryColor,
+  },
+  tabText: {
+    fontFamily: interRegular,
+    fontSize: ms(13),
+    color: whiteColor,
+  },
+  tabTextActive: {
+    fontFamily: interMedium,
+    fontSize: ms(13),
+    color: whiteColor,
+  },
   contentContainer: {
     flex: 1,
-    // backgroundColor: whiteColor,
     borderTopLeftRadius: ms(25),
     borderTopRightRadius: ms(25),
   },
@@ -422,18 +452,8 @@ const styles = StyleSheet.create({
     paddingTop: ms(20),
     paddingBottom: ms(30),
   },
-  categorySection: {
-    paddingHorizontal: ms(15),
-    marginBottom: ms(20),
-  },
-  categoryTitle: {
-    fontSize: ms(16),
-    fontWeight: 'bold',
-    color: blackColor,
-    marginBottom: ms(15),
-    textAlign:'center'
-  },
   labsGridContainer: {
+    paddingHorizontal: ms(15),
     width: '100%',
   },
   gridRow: {
@@ -466,7 +486,7 @@ const styles = StyleSheet.create({
   },
   labName: {
     fontSize: ms(10),
-    fontWeight: '600',
+    fontFamily: interMedium,
     color: '#333',
     textAlign: 'center',
     lineHeight: ms(14),
@@ -523,7 +543,7 @@ const styles = StyleSheet.create({
   },
   optionTitle: {
     fontSize: ms(14),
-    fontWeight: '600',
+    fontFamily: interMedium,
     color: blackColor,
   },
   optionSubtitle: {

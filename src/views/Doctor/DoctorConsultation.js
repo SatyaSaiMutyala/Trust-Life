@@ -11,7 +11,7 @@ import {
 } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { img_url } from '../../config/Constants';
+import { img_url, heading, interMedium, interRegular } from '../../config/Constants';
 import LinearGradient from 'react-native-linear-gradient';
 import { ms, vs } from 'react-native-size-matters';
 import { StatusBar2 } from '../../components/StatusBar';
@@ -224,7 +224,7 @@ const styles = StyleSheet.create({
     },
     headerName: {
         fontSize: ms(15),
-        fontWeight: 'bold',
+        fontFamily: interMedium,
         color: whiteColor,
     },
     headerDate: {
@@ -277,7 +277,7 @@ const styles = StyleSheet.create({
     // ── Title ──
     titleText: {
         fontSize: ms(16),
-        fontWeight: '700',
+        fontFamily: interMedium,
         color: blackColor,
         textAlign: 'center',
         lineHeight: ms(22),
@@ -325,7 +325,7 @@ const styles = StyleSheet.create({
     },
     cardName: {
         fontSize: ms(13),
-        fontWeight: '600',
+        fontFamily: interMedium,
         color: blackColor,
     },
 

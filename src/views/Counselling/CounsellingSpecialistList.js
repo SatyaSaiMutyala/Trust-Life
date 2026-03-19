@@ -17,6 +17,7 @@ import { StatusBar2 } from '../../components/StatusBar';
 import Icon, { Icons } from '../../components/Icons';
 import LinearGradient from 'react-native-linear-gradient';
 import { blackColor, whiteColor, primaryColor, globalGradient2 } from '../../utils/globalColors';
+import { heading, interMedium, interRegular } from '../../config/Constants';
 
 const { width } = Dimensions.get('window');
 const CARD_GAP = ms(12);
@@ -184,7 +185,7 @@ const styles = StyleSheet.create({
     },
     headerTitle: {
         fontSize: ms(16),
-        fontWeight: 'bold',
+        fontFamily: interMedium,
         color: whiteColor,
         flex: 1,
     },
@@ -235,7 +236,7 @@ const styles = StyleSheet.create({
     filterChipText: {
         fontSize: ms(12),
         color: '#444',
-        fontWeight: '500',
+        fontFamily: interMedium,
         marginHorizontal: ms(2),
     },
 
@@ -276,7 +277,7 @@ const styles = StyleSheet.create({
     },
     counsellorName: {
         fontSize: ms(12),
-        fontWeight: '700',
+        fontFamily: interMedium,
         color: blackColor,
         textAlign: 'center',
         marginBottom: vs(4),
@@ -287,7 +288,7 @@ const styles = StyleSheet.create({
     },
     ratingText: {
         fontSize: ms(11),
-        fontWeight: '600',
+        fontFamily: interMedium,
         color: blackColor,
         marginLeft: ms(2),
     },

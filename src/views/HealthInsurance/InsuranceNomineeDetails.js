@@ -8,7 +8,7 @@ import { ms, vs } from 'react-native-size-matters';
 import { StatusBar4 } from '../../components/StatusBar';
 import Icon, { Icons } from '../../components/Icons';
 import { blackColor, whiteColor, primaryColor } from '../../utils/globalColors';
-import { bold, regular } from '../../config/Constants';
+import { interMedium, interRegular } from '../../config/Constants';
 
 const RELATIONSHIPS = ['Spouse', 'Child', 'Parent', 'Sibling', 'Other'];
 
@@ -68,7 +68,7 @@ const InsuranceNomineeDetails = () => {
                                 style={styles.pickerItem}
                                 onPress={() => { setRelationship(rel); setShowRelPicker(false); }}
                             >
-                                <Text style={[styles.pickerItemText, relationship === rel && { color: primaryColor, fontFamily: bold }]}>
+                                <Text style={[styles.pickerItemText, relationship === rel && { color: primaryColor, fontFamily: interMedium }]}>
                                     {rel}
                                 </Text>
                             </TouchableOpacity>
@@ -144,7 +144,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center', alignItems: 'center',
     },
     headerTitle: {
-        fontFamily: bold,
+        fontFamily: interMedium,
         fontSize: ms(17),
         color: blackColor,
     },
@@ -155,7 +155,7 @@ const styles = StyleSheet.create({
     },
 
     infoText: {
-        fontFamily: regular,
+        fontFamily: interRegular,
         fontSize: ms(13),
         color: '#6B7280',
         lineHeight: ms(20),
@@ -163,7 +163,7 @@ const styles = StyleSheet.create({
     },
 
     label: {
-        fontFamily: bold,
+        fontFamily: interMedium,
         fontSize: ms(13),
         color: blackColor,
         marginBottom: vs(6),
@@ -180,7 +180,7 @@ const styles = StyleSheet.create({
     },
     input: {
         flex: 1,
-        fontFamily: regular,
+        fontFamily: interRegular,
         fontSize: ms(13),
         color: blackColor,
         padding: 0,
@@ -207,7 +207,7 @@ const styles = StyleSheet.create({
         borderBottomColor: '#F3F4F6',
     },
     pickerItemText: {
-        fontFamily: regular,
+        fontFamily: interRegular,
         fontSize: ms(13),
         color: blackColor,
     },
@@ -237,12 +237,12 @@ const styles = StyleSheet.create({
         marginBottom: vs(8),
     },
     confirmBtnText: {
-        fontFamily: bold,
+        fontFamily: interMedium,
         fontSize: ms(15),
         color: whiteColor,
     },
     secureText: {
-        fontFamily: regular,
+        fontFamily: interRegular,
         fontSize: ms(11),
         color: '#9CA3AF',
     },

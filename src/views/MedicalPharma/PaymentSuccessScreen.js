@@ -11,7 +11,7 @@ import { ms, vs } from 'react-native-size-matters';
 import LinearGradient from 'react-native-linear-gradient';
 import Icon, { Icons } from '../../components/Icons';
 import { whiteColor } from '../../utils/globalColors';
-import { bold, regular } from '../../config/Constants';
+import { interMedium, interRegular } from '../../config/Constants';
 
 const PaymentSuccessScreen = () => {
     const navigation = useNavigation();
@@ -72,19 +72,19 @@ const styles = StyleSheet.create({
         marginBottom: vs(24),
     },
     amount: {
-        fontFamily: bold,
+        fontFamily: interMedium,
         fontSize: ms(36),
         color: whiteColor,
         marginBottom: vs(10),
     },
     title: {
-        fontFamily: bold,
+        fontFamily: interMedium,
         fontSize: ms(18),
         color: whiteColor,
         marginBottom: vs(8),
     },
     subtitle: {
-        fontFamily: regular,
+        fontFamily: interRegular,
         fontSize: ms(13),
         color: 'rgba(255,255,255,0.8)',
         textAlign: 'center',
